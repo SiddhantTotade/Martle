@@ -21,13 +21,13 @@ class UserSerializer(serializers.ModelSerializer):
 # Project Serializer
 
 # --------- Customer Serializer
-class CustomerSerializer(serializers.Serializer):
+class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
         fields = '__all__'
 
     def create(self, validated_data):
-        customer = Customer.objects.create(name=validated_data['name'], address=validated_data['address'], locality=validated_data['locality'], city = validated_data['city'], country = validated_data['country'], zipcode = validated_data['zipcode'])
+        customer = Customer.objects.create(user=validated_data['user'],name=validated_data['name'], address=validated_data['address'], locality=validated_data['locality'], city = validated_data['city'],state = validated_data['state'], country = validated_data['country'], zipcode = validated_data['zipcode'])
         customer.save()
         return customer
 
