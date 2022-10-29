@@ -34,6 +34,15 @@ class ProductView(APIView):
             return JsonResponse("Product added successfully", safe = False)
         return JsonResponse("Failed to add product",safe = False)
 
+    def put(self, request):
+        print("PUT")
+        return JsonResponse("PUT Method Called", safe=False)
+
+    def delete(self, request):
+        print("DELETE")
+        return JsonResponse("DELETE Method Called", safe=False)
+
+
 
 class CustomerView(APIView):
     def get(self, request, pk):
