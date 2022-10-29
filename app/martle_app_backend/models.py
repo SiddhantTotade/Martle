@@ -1,7 +1,4 @@
-from distutils.command.upload import upload
 from email.policy import default
-from random import choices
-from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
@@ -70,7 +67,6 @@ def send_email_token(sender,instance,created,**kwargs):
 
 # Project Models
 
-
 # --------- Customer Model
 class Customer(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -79,7 +75,7 @@ class Customer(models.Model):
     locality = models.CharField(max_length = 30)
     city = models.CharField(max_length = 30)
     state = models.CharField(choices = STATE_CHOICES, max_length = 50)
-    country = models.IntegerField()
+    zipcode = models.IntegerField()
     country = CountryField()
 
     def __str__(self):
@@ -91,6 +87,7 @@ class Customer(models.Model):
 
 # --------- Product Model
 class Product(models.Model):
+    id = models.AutoField(primary_key = True)
     product_title = models.CharField(max_length = 200)
     product_selling_price = models.FloatField()
     product_discounted_price = models.FloatField()
@@ -141,7 +138,7 @@ class OrderPlaced(models.Model):
 # --------- Comment Model
 class Comment(models.Model):
     user = models.ForeignKey(User,on_delete = models.CASCADE)
-    post = models.ForeignKey(Product, on_delete = models.CASCADE)
+    product = models.ForeignKey(Product, on_delete = models.CASCADE)
     date = models.DateField(auto_now_add = True)
     content = models.TextField()
 
