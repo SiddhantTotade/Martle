@@ -1,5 +1,3 @@
-from dataclasses import field
-import email
 from .models import *
 from .helpers import *
 from rest_framework import serializers

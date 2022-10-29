@@ -8,6 +8,8 @@ from .manager import *
 from django.conf import settings
 
 # Create your models here.
+
+# User Authentication Models
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
@@ -40,3 +42,8 @@ def send_email_token(sender,instance,created,**kwargs):
             send_mail(subject,message,email_from,recipient_list)
         except Exception as e:
             print(e)
+
+
+
+
+# Project Models
