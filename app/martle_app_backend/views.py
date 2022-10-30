@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
@@ -16,31 +16,43 @@ def home(request):
 class ProductView(APIView):
     def get(self, request):
         # getting all products
-        product = Product.objects.all()
+        all_products = Product.objects.all()
 
         # checking products exist or not
-        if product: 
-            product_serializer = ProductSerializer(product, many = True)
-            return JsonResponse(product_serializer.data, safe = False)
+        if all_products: 
+            product_serialized_data = ProductSerializer(all_products, many = True)
+            return JsonResponse(product_serialized_data.data, safe = False)
         return JsonResponse("No Product in database",safe = False)
 
     def post(self, request):
-        product_data = JSONParser().parse(request)
-        product_serializer = ProductSerializer(data = product_data)
+        # getting product data which is going to be save
+        product_json_data = JSONParser().parse(request)
+        product_serialized_data = ProductSerializer(data = product_json_data)
 
-        # saving customer data
-        if product_serializer.is_valid():
-            product_serializer.save()
+        # saving product data
+        if product_serialized_data.is_valid():
+            product_serialized_data.save()
             return JsonResponse("Product added successfully", safe = False)
         return JsonResponse("Failed to add product",safe = False)
 
-    def put(self, request):
-        print("PUT")
-        return JsonResponse("PUT Method Called", safe=False)
+    # updating product using pk
+    def put(self, request, pk):
+        # getting product data which is going to be update
+        product_json_data = JSONParser().parse(request)
+        product_by_id = Product.objects.get(pk = pk)
+        product_serialized_data = ProductSerializer(product_by_id, data = product_json_data)
 
-    def delete(self, request):
-        print("DELETE")
-        return JsonResponse("DELETE Method Called", safe=False)
+        # saving customer data
+        if product_serialized_data.is_valid():
+            product_serialized_data.save()
+            return JsonResponse("Product updated successfull", safe = False)
+        return JsonResponse("Failed to update product", safe = False)
+
+    # deleting product by pk
+    def delete(self, request, pk):
+        product_by_id = Product.objects.get(pk = pk)
+        product_by_id.delete()
+        return JsonResponse("Deleted successfull", safe = False)
 
 
 
@@ -48,23 +60,42 @@ class CustomerView(APIView):
     def get(self, request, pk):
 
         #getting customers by id
-        customer = Customer.objects.all()
+        all_customers = Customer.objects.all()
 
         # checking customer exist or not
-        if customer:
-            customer_serializer = customer_data_serializer.serialize('json', customer)
+        if all_customers:
+            customer_serializer = customer_data_serializer.serialize('json', all_customers)
             return JsonResponse(customer_serializer, safe = False)
         return JsonResponse("No customer found",safe = False)
 
+
+    # saving customer data
     def post(self, request):
-        customer_data = JSONParser().parse(request)
-        customer_serializer = CustomerSerializer(data = customer_data)
-        print("Not Valid")
-        print(customer_serializer)
+        # getting customer data which is going to be save
+        customer_json_data = JSONParser().parse(request)
+        customer_serialized_data = CustomerSerializer(data = customer_json_data)
 
         # saving customer data
-        if customer_serializer.is_valid():
-            print("Valid")
-            customer_serializer.save()
+        if customer_serialized_data.is_valid():
+            customer_serialized_data.save()
             return JsonResponse("Customer added successfully", safe = False)
         return JsonResponse("Failed to add customer",safe = False)
+
+    # updating customer using pk
+    def put(self, request, pk):
+        # getting customer modified data which is going to be update
+        customer_json_data = JSONParser().parse(request)
+        customer_by_id = Customer.objects.get(pk = pk)
+        customer_serialized_data = CustomerSerializer(customer_by_id, data = customer_json_data)
+
+        # saving customer data
+        if customer_serialized_data.is_valid():
+            customer_serialized_data.save()
+            return JsonResponse("Customer updated successfull", safe = False)
+        return JsonResponse("Failed to update customer", safe = False)
+
+    # deleting customer by pk
+    def delete(self, request, pk):
+        customer_by_id = Customer.objects.get(pk = pk)
+        customer_by_id.delete()
+        return JsonResponse("Customer deleted successfull", safe = False)
