@@ -57,7 +57,7 @@ class ProductView(APIView):
 
 
 class CustomerView(APIView):
-    def get(self, request, pk):
+    def get(self, request):
 
         #getting customers by id
         all_customers = Customer.objects.all()
