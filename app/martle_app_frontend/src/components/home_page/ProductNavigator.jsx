@@ -5,12 +5,12 @@ import DevicesOtherIcon from '@mui/icons-material/DevicesOther';
 import ImportantDevicesIcon from '@mui/icons-material/ImportantDevices';
 import CheckroomIcon from '@mui/icons-material/Checkroom';
 
-const style = 'flex flex-col justify-center items-center bg-blue-400 mt-3 rounded-lg p-2 hover:scale-110 hover:duration-200 hover:bg-sky-600 translate-x-0 translate-y-0'
+const style = 'flex flex-col justify-center items-center bg-blue-400 mt-3 rounded-lg p-2 hover:scale-125 hover:duration-200 duration-200 hover:bg-sky-600 translate-x-0 translate-y-0'
 
 export default function ProductNavigator() {
     return (
-        <div className='flex justify-center'>
-            <div className='flex justify-center items-center gap-2 absolute'>
+        <div>
+            <div className='flex justify-center items-center gap-5'>
                 <a href="/" className={style}>
                     <PhoneAndroidIcon />
                     <p>Mobiles</p>
