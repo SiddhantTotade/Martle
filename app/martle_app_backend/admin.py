@@ -8,6 +8,7 @@ from django.utils.html import format_html
 admin.site.register(User)
 admin.site.register(Customer)
 admin.site.register(Product)
+admin.site.register(ProductImage)
 admin.site.register(Cart)
 admin.site.register(OrderPlaced)
 admin.site.register(Comment)
@@ -21,7 +22,7 @@ class CustomerModelAdmin(admin.ModelAdmin):
 
 # -------- Product Admin
 class ProductModelAdmin(admin.ModelAdmin):
-    list_display = ['id','product_title', 'product_selling_price', 'product_discounted_price', 'product_description', 'product_details', 'product_brand', 'product_category']
+    list_display = ['id','product_title', 'product_selling_price', 'product_discounted_price', 'product_description', 'product_details', 'product_brand', 'product_category', 'product_image']
 
     inlines = [ProductImage]
 
@@ -31,6 +32,9 @@ class ProductModelAdmin(admin.ModelAdmin):
 # -------- Product Images Admin
 class ProductImageAdmin(admin.StackedInline):
     model = ProductImage
+
+class ProductImgAdmin(admin.ModelAdmin):
+    pass
 
 
 # -------- Cart Admin
