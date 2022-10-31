@@ -1,4 +1,3 @@
-import '../../../src/index.css'
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import DevicesOtherIcon from '@mui/icons-material/DevicesOther';
