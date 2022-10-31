@@ -6,43 +6,42 @@ from django.utils.html import format_html
 
 # Registering Models
 admin.site.register(User)
-admin.site.register(Customer)
-admin.site.register(Product)
-admin.site.register(ProductImage)
-admin.site.register(Cart)
-admin.site.register(OrderPlaced)
 admin.site.register(Comment)
 
 
 # Classes for registering models
 
 # -------- Customer Admin
+@admin.register(Customer)
 class CustomerModelAdmin(admin.ModelAdmin):
-    list_display = ['id','user','name','locality','city','country','zipcode']
-
-# -------- Product Admin
-class ProductModelAdmin(admin.ModelAdmin):
-    list_display = ['id','product_title', 'product_selling_price', 'product_discounted_price', 'product_description', 'product_details', 'product_brand', 'product_category', 'product_image']
-
-    inlines = [ProductImage]
-
-    class Meta:
-        model = Product
+    list_display = ['id', 'user', 'name', 'address', 'locality', 'city', 'state', 'zipcode', 'country']
 
 # -------- Product Images Admin
 class ProductImageAdmin(admin.StackedInline):
     model = ProductImage
 
+# -------- Product Admin
+@admin.register(Product)
+class ProductModelAdmin(admin.ModelAdmin):
+    list_display = ['id','product_title', 'product_selling_price', 'product_discounted_price', 'product_description', 'product_details', 'product_brand', 'product_category', 'product_image']
+
+    inlines = [ProductImageAdmin]
+
+    class Meta:
+        model = Product
+
+@admin.register(ProductImage)
 class ProductImgAdmin(admin.ModelAdmin):
     pass
 
-
 # -------- Cart Admin
+@admin.register(Cart)
 class CartModelAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'product', 'quantity']
 
 
 # -------- Order Placed Admin
+@admin.register(OrderPlaced)
 class OrderPlacedAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'customer', 'customer_info', 'product', 'product_info', 'quantity', 'ordered_date', 'status']
 

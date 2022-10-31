@@ -9,10 +9,6 @@ from .serializers import *
 
 # Create your views here.
 
-def home(request):
-    return JsonResponse("Good to gooo..",safe=False)
-
-
 class ProductView(APIView):
     def get(self, request):
         # getting all products

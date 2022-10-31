@@ -1,4 +1,3 @@
-from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
@@ -45,7 +44,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     def name(self):
-        return self.first_name+" "+self.last_name
+        return self.first_name + " " + self.last_name
 
     def str(self):
         return self.email
@@ -105,7 +104,7 @@ class Product(models.Model):
 class ProductImage(models.Model):
     product_image = models.ForeignKey(Product, default = None, on_delete = models.CASCADE)
     product_image_url = models.CharField(max_length = 500, default = None, null = True, blank = True)
-    product_img_upload = models.ImageField(upload_to = 'product_images')
+    product_img_upload = models.ImageField(null = False, blank = False, default = None ,upload_to = 'product_images')
 
     def __str__(self):
         return self(self.product_image.id)
