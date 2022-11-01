@@ -1,22 +1,15 @@
 import React from "react";
-import NavBar from "./components/base_components/NavBar";
-import HeaderSwiper from "./components/home_page/HeaderSwiper"
-import ProductNavigator from "./components/home_page/ProductNavigator";
-import ProductCarousel from "./components/home_page/ProductCarousel";
-import RandomCardsPick from "./components/home_page/RandomPickCards";
-import Footer from "./components/base_components/Footer";
+import Home from "./Home";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ProductTable from "./components/products_page/ProductTable";
 
-export default function Home() {
+export default function App() {
   return (
-    <>
-      <NavBar />
-      <HeaderSwiper />
-      <ProductNavigator />
-      <ProductCarousel />
-      <ProductCarousel />
-      <RandomCardsPick />
-      <ProductCarousel />
-      <Footer />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/product-upload" element={<ProductTable />} />
+      </Routes>
+    </Router>
   )
 }
