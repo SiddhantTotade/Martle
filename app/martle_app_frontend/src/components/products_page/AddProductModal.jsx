@@ -1,23 +1,67 @@
-import * as React from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Component } from 'react';
+import { Button } from '@mui/material';
 
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 1300,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
     boxShadow: 24,
     p: 4,
 };
 
+const buttonStyle = {
+    background: '#0062e1',
+    color: 'white',
+    mt: '10px',
+    '&:hover': {
+        background: '#1976d2',
+        color: 'white'
+    }
+}
+
 
 export default class AddProductModal extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = { productData: [] }
+        this.handleSubmit = this.handleSubmit.bind(this)
+        // this.handleFileSelected = this.handleFileSelected.bind(this)
+    }
+
+    componentDidMount() {
+        fetch('http://127.0.0.1:8000/admin/api/product')
+            .then((res) => res.json())
+            .then(data => { this.setState({ productData: data }) })
+    }
+
+    handleSubmit(event) {
+        event.preventDefault()
+        fetch('http://127.0.0.1:8000/api/product', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                product_title: event.target.product_title.value,
+                product_selling_price: event.target.product_selling_price.value,
+                product_discounted_price: event.target.product_discounted_price.value,
+                product_description: event.target.product_description.value,
+                product_details: event.target.product_details.value,
+                product_brand: event.target.product_brand.value,
+                product_category: event.target.product_category.value,
+                product_image: this.product_image
+            })
+        }).then(res => res.json()).then((result) => { alert(result) }, (error) => { alert('Failed') })
+    }
 
     render() {
 
@@ -25,11 +69,47 @@ export default class AddProductModal extends Component {
             <div>
                 <Modal {...this.props} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
                     <Box sx={style}>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                            Text in a modal
-                        </Typography>
+                        <Typography id="modal-modal-title" variant="h6" component="h2" className='flex justify-center items-center'>Add Product</Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                            <form onSubmit={this.handleSubmit} >
+                                <div>
+                                    <div className='flex flex-col mt-2'>
+                                        <label htmlFor=""><small>Product Title</small></label>
+                                        <input type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Name' name='product_title' />
+                                    </div>
+                                    <div className='flex flex-col mt-2'>
+                                        <label htmlFor=""><small>Product Selling Price</small></label>
+                                        <input type='number' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Selling Price' name='product_selling_price' />
+                                    </div>
+                                    <div className='flex flex-col mt-2'>
+                                        <label htmlFor=""><small>Product Discounted Price</small></label>
+                                        <input type='number' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Discounted Price' name='product_discounted_price' />
+                                    </div>
+                                    <div className='flex flex-col mt-2'>
+                                        <label htmlFor=""><small>Product Description</small></label>
+                                        <textarea type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Description' name='product_description' />
+                                    </div>
+                                    <div className='flex flex-col mt-2'>
+                                        <label htmlFor=""><small>Product Details</small></label>
+                                        <textarea type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Details' name='product_details' />
+                                    </div>
+                                    <div className='flex flex-col mt-2'>
+                                        <label htmlFor=""><small>Product Brand</small></label>
+                                        <input type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Brand' name='product_brand' />
+                                    </div>
+                                    <div className='flex flex-col mt-2'>
+                                        <label htmlFor="category"><small>Product Category</small></label>
+                                        <select className='border-2 border-black rounded-md pl-2 p-1' name="category" id=""></select>
+                                    </div>
+                                    <div className='flex flex-col mt-2'>
+                                        <label htmlFor=""><small>Product Images</small></label>
+                                        <input type='file' multiple className='border-2 border-black rounded-md pl-2 p-1' name='product_image' />
+                                    </div>
+                                </div>
+                                <div>
+                                    <Button type='submit' onClick={this.props.onClose} sx={buttonStyle}>Save Product</Button>
+                                </div>
+                            </form>
                         </Typography>
                     </Box>
                 </Modal>
