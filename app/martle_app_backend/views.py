@@ -9,6 +9,11 @@ from .serializers import *
 
 # Create your views here.
 
+# def add_product(request):
+#     form = AddProductForm(request.POST)
+#     print(form)
+#     return JsonResponse(form,safe=False)
+
 class ProductView(APIView):
     def get(self, request):
         # getting all products

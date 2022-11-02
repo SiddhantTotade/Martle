@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,6 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
+import AddProductModal from './AddProductModal'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -27,12 +30,22 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 0,
     },
 }));
+
+const buttonStyle = {
+    background: '#0062e1',
+    color: 'white',
+    '&:hover': {
+        background: '#1976d2',
+        color: 'white'
+    }
+}
+
 export default class ProductTables extends React.Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
-            data: []
+            data: [], addModalShow: false
         }
     }
 
@@ -51,6 +64,8 @@ export default class ProductTables extends React.Component {
     render() {
 
         const empData = this.state.data
+        let addModalClose = () => this.setState({ addModalShow: false })
+
         const rows = empData.map((item) =>
             <StyledTableRow key={item.id}>
                 <StyledTableCell component="th" scope="row">{item.product_title}</StyledTableCell>
@@ -58,26 +73,41 @@ export default class ProductTables extends React.Component {
                 <StyledTableCell align="right">{item.product_discounted_price}</StyledTableCell>
                 <StyledTableCell align="right">{item.product_description}</StyledTableCell>
                 <StyledTableCell align="right">{item.product_brand}</StyledTableCell>
+                <StyledTableCell align="right">
+                    <div className="flex justify-end items-center gap-5">
+                        <Link to={`/product/${item.id}`} className="text-green-600">Edit</Link>
+                        <Link to={`/product/${item.id}`} className="text-red-600">Delete</Link>
+                    </div>
+                </StyledTableCell>
             </StyledTableRow>
         );
 
         return (
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableCell>Product Name</StyledTableCell>
-                            <StyledTableCell align="right">Product selling price</StyledTableCell>
-                            <StyledTableCell align="right">Product discounted price</StyledTableCell>
-                            <StyledTableCell align="right">Product Description</StyledTableCell>
-                            <StyledTableCell align="right">Product brand</StyledTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <div>
+                <div className='w-4/5 m-auto mt-20'>
+                    <div className='flex justify-start'>
+                        <Button sx={buttonStyle} onClick={() => this.setState({ addModalShow: true })}>Add Product</Button>
+                    </div>
+                    <TableContainer component={Paper} className="mt-2">
+                        <Table aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell>Product Name</StyledTableCell>
+                                    <StyledTableCell align="right">Product selling price</StyledTableCell>
+                                    <StyledTableCell align="right">Product discounted price</StyledTableCell>
+                                    <StyledTableCell align="right">Product Description</StyledTableCell>
+                                    <StyledTableCell align="right">Product brand</StyledTableCell>
+                                    <StyledTableCell align="right">Product action</StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {rows}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <AddProductModal open={this.state.addModalShow} onClose={addModalClose} />
+                </div>
+            </div>
         );
     }
 }
