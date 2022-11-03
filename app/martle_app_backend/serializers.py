@@ -38,7 +38,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        product = Product.objects.create(product_title=validated_data['product_title'], product_selling_price=validated_data['product_selling_price'], product_discounted_price=validated_data['product_discounted_price'], product_description = validated_data['product_description'], product_details = validated_data['product_details'], product_brand = validated_data['product_brand'], product_category = validated_data['product_category'], product_image = validated_data['product_image'])
+        product = Product.objects.create(product_title=validated_data['product_title'], product_selling_price=validated_data['product_selling_price'], product_discounted_price=validated_data['product_discounted_price'], product_description = validated_data['product_description'], product_details = validated_data['product_details'], product_brand = validated_data['product_brand'], product_category = validated_data['product_category'])
         product.save()
         return product
 

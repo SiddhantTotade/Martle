@@ -5,6 +5,11 @@ import Modal from '@mui/material/Modal';
 import { Component } from 'react';
 import { Button } from '@mui/material';
 
+let CATEGORY_CHOICES = [('Mobile'), ('Laptop'),
+('Top Wear'), ('Bottom Wear'), ('Watch'),
+('Printer'), ('Fan'), ('Earbuds'),
+('Camera'), ('Oil'), ('Shower'), ('Museli'), ('Cleaner'), ('Computer and Accessories')]
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -31,13 +36,16 @@ export default class AddProductModal extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { productData: [] }
+        this.state = { productData: [], value: '1' }
         this.handleSubmit = this.handleSubmit.bind(this)
-        // this.handleFileSelected = this.handleFileSelected.bind(this)
+        this.handleFileSelected = this.handleFileSelected.bind(this)
     }
 
+    product_image = 'product_image.png'
+    imagesrc = 'http://127.0.0.1:8000/api/product' + this.product_image
+
     componentDidMount() {
-        fetch('http://127.0.0.1:8000/admin/api/product')
+        fetch('http://127.0.0.1:8000/api/product')
             .then((res) => res.json())
             .then(data => { this.setState({ productData: data }) })
     }
@@ -47,8 +55,8 @@ export default class AddProductModal extends Component {
         fetch('http://127.0.0.1:8000/api/product', {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Accept': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data'
             },
             body: JSON.stringify({
                 product_title: event.target.product_title.value,
@@ -60,7 +68,19 @@ export default class AddProductModal extends Component {
                 product_category: event.target.product_category.value,
                 product_image: this.product_image
             })
-        }).then(res => res.json()).then((result) => { alert(result) }, (error) => { alert('Failed') })
+        }).then(res => res.json()).then((result) => { alert(result) }, (error) => { console.log(error); })
+    }
+
+    handleFileSelected(event) {
+        event.preventDefault()
+        this.product_image = event.target.files[0].name
+        const formData = new FormData()
+        formData.append('product_image', event.target.files[0], event.target.files[0].name)
+
+        fetch('http://127.0.0.1:8000/api/product', {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json()).then((result) => { this.imagesrc = 'http://127.0.0.1:8000/api/product' + result }, (err) => console.log(err))
     }
 
     render() {
@@ -99,15 +119,18 @@ export default class AddProductModal extends Component {
                                     </div>
                                     <div className='flex flex-col mt-2'>
                                         <label htmlFor="category"><small>Product Category</small></label>
-                                        <select className='border-2 border-black rounded-md pl-2 p-1' name="category" id=""></select>
+                                        <select className='border-2 border-black rounded-md pl-2 p-1' name="product_category" id="" value={this.state.value} onChange={(e) => { this.setState({ value: e.target.value }) }}>
+                                            <option value='1' disabled>Select Product Category</option>
+                                            {CATEGORY_CHOICES.map(items => (<option key={items} value={items}>{items}</option>))}
+                                        </select>
                                     </div>
                                     <div className='flex flex-col mt-2'>
                                         <label htmlFor=""><small>Product Images</small></label>
-                                        <input type='file' multiple className='border-2 border-black rounded-md pl-2 p-1' name='product_image' />
+                                        <input type='file' onChange={this.handleFileSelected} multiple className='border-2 border-black rounded-md pl-2 p-1' name='product_image' />
                                     </div>
                                 </div>
                                 <div>
-                                    <Button type='submit' onClick={this.props.onClose} sx={buttonStyle}>Save Product</Button>
+                                    <Button type='submit' sx={buttonStyle}>Save Product</Button>
                                 </div>
                             </form>
                         </Typography>

@@ -94,7 +94,6 @@ class Product(models.Model):
     product_details = models.TextField()
     product_brand = models.CharField(max_length = 50)
     product_category = models.CharField(choices = CATEGORY_CHOICES, max_length=5)
-    product_image = models.ImageField(default = None ,upload_to = "product_images")
 
     def __str__(self):
         return (str(self.id) + " - " + str(self.product_title) + " - " + str(self.product_category))
@@ -107,7 +106,7 @@ class ProductImage(models.Model):
     product_img_upload = models.ImageField(null = False, blank = False, default = None ,upload_to = 'product_images')
 
     def __str__(self):
-        return self(self.product_image.id)
+        return str(self.product_image.id) + " - "+ str(self.product_image.product_title)
 
 
 # --------- Cart Model
