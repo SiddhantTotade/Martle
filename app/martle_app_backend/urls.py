@@ -1,10 +1,6 @@
 from django.urls import re_path
 from .views import *
 from .auth_views import *
-from rest_framework.routers import DefaultRouter
-
-router = DefaultRouter()
-router.register('prod/',Test,basename='prod')
 
 urlpatterns = [
 

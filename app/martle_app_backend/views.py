@@ -21,10 +21,7 @@ class ProductImageView(APIView):
     def delete(self,request):
         pass
 
-class Test(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    # return JsonResponse(serializer_class,safe=False)
+
 
 class ProductView(APIView):
     def get(self, request):

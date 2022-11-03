@@ -101,7 +101,7 @@ class Product(models.Model):
 
 # --------- Product Image Model
 class ProductImage(models.Model):
-    product_image = models.ForeignKey(Product, default = None, on_delete = models.CASCADE, related_name = 'product_data')
+    product_image = models.ForeignKey(Product, default = None, on_delete = models.CASCADE, related_name = 'product_images')
     product_image_url = models.CharField(max_length = 500, default = None, null = True, blank = True)
     product_img_file = models.ImageField(null = False, blank = False, default = None ,upload_to = 'product_images')
 
