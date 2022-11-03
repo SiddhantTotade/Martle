@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
-# Project Serializer
+# Project Serializers
 
 # --------- Customer Serializer
 class CustomerSerializer(serializers.ModelSerializer):
@@ -31,17 +31,29 @@ class CustomerSerializer(serializers.ModelSerializer):
         customer.save()
         return customer
 
+# --------- Product Image Serializer
+class ProductImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = '__all__'
+
+    def create(self, validated_data):
+        product_image = ProductImage.objects.create(product_image=validated_data['product_image'], product_image_url=validated_data['product_image_url'], product_img_file=validated_data['product_img_file'])
+        product_image.save()
+        return product_image
+
 # --------- Product Serializer
 class ProductSerializer(serializers.ModelSerializer):
+
+    product_data = ProductImageSerializer(many = True, read_only = True)
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = ['id', 'product_title', 'product_selling_price', 'product_discounted_price', 'product_description', 'product_details', 'product_brand', 'product_category', 'product_data']
 
     def create(self, validated_data):
         product = Product.objects.create(product_title=validated_data['product_title'], product_selling_price=validated_data['product_selling_price'], product_discounted_price=validated_data['product_discounted_price'], product_description = validated_data['product_description'], product_details = validated_data['product_details'], product_brand = validated_data['product_brand'], product_category = validated_data['product_category'])
         product.save()
         return product
-
 
 # --------- Cart Serializer
 class CartSerializer(serializers.ModelSerializer):
