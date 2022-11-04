@@ -3,25 +3,31 @@ from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework import viewsets
 from django.core import serializers as customer_data_serializer
 from django.core.files.storage import default_storage
 from .models import *
 from .serializers import *
+from rest_framework.decorators import api_view
 
 # Create your views here.
 
-class ProductImageView(APIView):
-    def get(self, request):
-        pass
-    def post(self,request):
-        pass
-    def put(self,request):
-        pass
-    def delete(self,request):
-        pass
+@csrf_exempt
+def saveFile(request):
+    file = request.FILES['product_image']
+    file_name = default_storage.save(file.name,file)
+    return JsonResponse(file_name,safe = False)
 
+class SetImageView(APIView):
+    def get(self, request, pk):
+        product_image = ProductImage.objects.all()
+        # product_image_serializer = ProductImageSerializer(product_image, many = True)
 
+        if product_image:
+            product_image_data = ProductImageSerializer(product_image, many = True)
+            return JsonResponse(product_image_data.data, safe=False)
+        return JsonResponse("Problem",safe=False)
 
 class ProductView(APIView):
     def get(self, request):

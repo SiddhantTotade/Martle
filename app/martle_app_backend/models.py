@@ -103,7 +103,7 @@ class Product(models.Model):
 class ProductImage(models.Model):
     product_image = models.ForeignKey(Product, default = None, on_delete = models.CASCADE, related_name = 'product_images')
     product_image_url = models.CharField(max_length = 500, default = None, null = True, blank = True)
-    product_img_file = models.ImageField(null = False, blank = False, default = None ,upload_to = 'product_images')
+    product_img_file = models.ImageField(upload_to = 'product_images')
 
     def __str__(self):
         return str(self.product_image.id) + " - "+ str(self.product_image.product_title)
