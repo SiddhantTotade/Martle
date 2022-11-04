@@ -5,10 +5,10 @@ import Modal from '@mui/material/Modal';
 import { Component } from 'react';
 import { Button } from '@mui/material';
 
-let CATEGORY_CHOICES = [('Mobile'), ('Laptop'),
-('Top Wear'), ('Bottom Wear'), ('Watch'),
-('Printer'), ('Fan'), ('Earbuds'),
-('Camera'), ('Oil'), ('Shower'), ('Museli'), ('Cleaner'), ('Computer and Accessories')]
+let CATEGORY_CHOICES = [('M', 'Mobile'), ('L', 'Laptop'),
+('TW', 'Top Wear'), ('BW', 'Bottom Wear'), ('W', 'Watch'),
+('P', 'Printer'), ('F', 'Fan'), ('EB', 'Earbuds'),
+('C', 'Camera'), ('O', 'Oil'), ('SH', 'Shower'), ('MU', 'Museli'), ('CL', 'Cleaner'), ('CA', 'Computer and Accessories')]
 
 const style = {
     position: 'absolute',
@@ -37,17 +37,9 @@ export default class AddProductModal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            product_title: "",
-            product_selling_price: "",
-            product_discounted_price: "",
-            product_description: "",
-            product_details: "",
-            product_brand: "",
-            product_category: "",
-            product_image: "",
+            product_data: []
         }
-        this.changeHandler = this.changeHandler.bind(this);
-        this.submitForm = this.submitForm.bind(this);
+        this.changeHandler = this.changeHandler.bind(this)
         this.handleFile = this.handleFile.bind(this)
     }
 
@@ -57,57 +49,52 @@ export default class AddProductModal extends Component {
     componentDidMount() {
         fetch('http://127.0.0.1:8000/api/product')
             .then((res) => res.json())
-            .then(data => { this.setState({ productData: data }) })
+            .then(data => { this.setState({ product_data: data }) })
     }
 
     changeHandler(event) {
-        // this.setState({
-        //     [event.target.name]: event.target.value
-        // });
-        // const formData = new FormData
-        // fetch('http://127.0.0.1:8000/media/product_images', {
-        //     method: 'POST',
-        //     body: formData
-        // }).then(res => res.json()).then((result) => { this.imagesrc = 'http://127.0.0.1:8000/media/' + result }, (err) => console.log(err))
-
-        // console.log(event.target.value);
+        event.preventDefault()
+        fetch('http://127.0.0.1:8000/api/product', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                product_title: event.target.product_title.value,
+                product_selling_price: event.target.product_selling_price.value,
+                product_discounted_price: event.target.product_discounted_price.value,
+                product_description: event.target.product_description.value,
+                product_details: event.target.product_details.value,
+                product_brand: event.target.product_brand.value,
+                product_category: event.target.product_category.value,
+            })
+        }).then(res => res.json()).then((result) => { alert(result) }, (error) => { console.log(error) })
+        console.log(JSON.stringify({
+            product_title: event.target.product_title.value,
+            product_selling_price: event.target.product_selling_price.value,
+            product_discounted_price: event.target.product_discounted_price.value,
+            product_description: event.target.product_description.value,
+            product_details: event.target.product_details.value,
+            product_brand: event.target.product_brand.value,
+            product_category: event.target.product_category.value,
+        }));
     }
 
     handleFile(event) {
         console.log(event.target.value);
-        this.product_image = event.target.name
+        this.product_image = event.target.files[0].name
         const formData = new FormData()
         formData.append('product_image', event.target.files[0], event.target.files[0].name)
         console.log(formData);
-        fetch('http://127.0.0.1:8000/api/product-images/savefile/', {
+        fetch('http://127.0.0.1:8000/api/product-images/savefile', {
             method: 'POST',
-            body: formData
+            body: JSON.stringify({
+                product_img_file: this.product_image
+            }) + formData
         }).then(res => res.json()).then((result) => { this.imagesrc = 'http://127.0.0.1:8000/media/' + result }, (err) => console.log(err))
     }
 
-    submitForm() {
-        fetch('http://127.0.0.1:8000/api/media/', {
-            method: 'POST',
-            body: JSON.stringify(this.state),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-        })
-            .then(response => response.json())
-            .then((data) => console.log(data));
-
-        this.setState({
-            product_title: "",
-            product_selling_price: "",
-            product_discounted_price: "",
-            product_description: "",
-            product_details: "",
-            product_brand: "",
-            product_category: "",
-            product_image: "",
-
-        });
-    }
 
     render() {
 
@@ -117,38 +104,38 @@ export default class AddProductModal extends Component {
                     <Box sx={style}>
                         <Typography id="modal-modal-title" variant="h6" component="h2" className='flex justify-center items-center'>Add Product</Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            <form onSubmit={this.submitForm} >
+                            <form onSubmit={this.changeHandler} >
                                 <div className='flex justify-between gap-10'>
                                     <div className='w-4/5'>
                                         <div className='flex flex-col mt-2'>
                                             <label htmlFor=""><small>Product Title</small></label>
-                                            <input type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Name' name='product_title' value={this.state.product_title} onChange={this.changeHandler} />
+                                            <input type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Name' name='product_title' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <label htmlFor=""><small>Product Selling Price</small></label>
-                                            <input type='number' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Selling Price' name='product_selling_price' value={this.state.product_selling_price} onChange={this.changeHandler} />
+                                            <input type='number' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Selling Price' name='product_selling_price' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <label htmlFor=""><small>Product Discounted Price</small></label>
-                                            <input type='number' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Discounted Price' name='product_discounted_price' value={this.state.product_discounted_price} onChange={this.changeHandler} />
+                                            <input type='number' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Discounted Price' name='product_discounted_price' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <label htmlFor=""><small>Product Description</small></label>
-                                            <textarea type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Description' name='product_description' value={this.state.product_description} onChange={this.changeHandler} />
+                                            <textarea type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Description' name='product_description' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <label htmlFor=""><small>Product Details</small></label>
-                                            <textarea type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Details' name='product_details' value={this.state.product_details} onChange={this.changeHandler} />
+                                            <textarea type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Details' name='product_details' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <label htmlFor=""><small>Product Brand</small></label>
-                                            <input type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Brand' name='product_brand' value={this.state.product_brand} onChange={this.changeHandler} />
+                                            <input type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Brand' name='product_brand' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <label htmlFor="category"><small>Product Category</small></label>
-                                            <select className='border-2 border-black rounded-md pl-2 p-1' name="product_category" id="" value={this.state.product_category} onChange={this.changeHandler}>
+                                            <select className='border-2 border-black rounded-md pl-2 p-1' name="product_category" id="">
                                                 <option disabled>Select Product Category</option>
-                                                {CATEGORY_CHOICES.map(items => (<option key={items} value={items}>{items}</option>))}
+                                                {CATEGORY_CHOICES.map(items => (<option key={items} value={items[0]}>{items}</option>))}
                                             </select>
                                         </div>
                                     </div>
@@ -159,7 +146,7 @@ export default class AddProductModal extends Component {
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <label htmlFor=""><small>Preview</small></label>
-                                            <img src={this.imagesrc} alt="" className='border-2 border-red-600 h-96' />
+                                            <img src={this.imagesrc} alt="" className='border-2 border-red-600' />
                                         </div>
                                     </div>
                                 </div>

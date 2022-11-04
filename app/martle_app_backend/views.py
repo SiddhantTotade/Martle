@@ -16,7 +16,7 @@ from rest_framework.decorators import api_view
 @csrf_exempt
 def saveFile(request):
     file = request.FILES['product_image']
-    file_name = default_storage.save(file.name,file)
+    file_name = default_storage.save(file)
     return JsonResponse(file_name,safe = False)
 
 class SetImageView(APIView):
@@ -44,6 +44,8 @@ class ProductView(APIView):
         # getting product data which is going to be save
         product_json_data = JSONParser().parse(request)
         product_serialized_data = ProductSerializer(data = product_json_data)
+        print(product_serialized_data)
+
 
         # saving product data
         if product_serialized_data.is_valid():
