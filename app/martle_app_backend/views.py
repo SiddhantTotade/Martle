@@ -15,9 +15,10 @@ from rest_framework.decorators import api_view
 
 @csrf_exempt
 def saveFile(request):
-    file = request.FILES['product_image']
-    file_name = default_storage.save(file)
-    return JsonResponse(file_name,safe = False)
+    print("Save")
+    # file = request.FILES['product_image']
+    # file_name = default_storage.save(file)
+    # return JsonResponse(file_name,safe = False)
 
 class SetImageView(APIView):
     def get(self, request, pk):
