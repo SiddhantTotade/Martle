@@ -9,27 +9,19 @@ from django.core import serializers as customer_data_serializer
 from django.core.files.storage import default_storage
 from .models import *
 from .serializers import *
+from rest_framework import permissions
 from rest_framework.decorators import api_view
 
 # Create your views here.
 
-@csrf_exempt
-def saveFile(request):
-    print("Save")
-    # file = request.FILES['product_image']
-    # file_name = default_storage.save(file)
-    # return JsonResponse(file_name,safe = False)
+class SetImageView(viewsets.ModelViewSet):
+    queryset = ProductImage.objects.all()
+    serializer_class = ProductImageSerializer
 
-class SetImageView(APIView):
-    def get(self, request, pk):
-        product_image = ProductImage.objects.all()
-        # product_image_serializer = ProductImageSerializer(product_image, many = True)
-
-        if product_image:
-            product_image_data = ProductImageSerializer(product_image, many = True)
-            return JsonResponse(product_image_data.data, safe=False)
-        return JsonResponse("Problem",safe=False)
-
+    def post(self,request):
+        product_image = request.data['product_image']
+        product_image_url = request.data['product_image_url']    
+        product_img_url = request.data['product_img_file']
 class ProductView(APIView):
     def get(self, request):
         # getting all products
@@ -45,8 +37,6 @@ class ProductView(APIView):
         # getting product data which is going to be save
         product_json_data = JSONParser().parse(request)
         product_serialized_data = ProductSerializer(data = product_json_data)
-        print(product_serialized_data)
-
 
         # saving product data
         if product_serialized_data.is_valid():

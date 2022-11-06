@@ -1,6 +1,10 @@
 from django.urls import re_path
 from .views import *
 from .auth_views import *
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+# router.register(r"images",SetImageView, basename='product_images')
 
 urlpatterns = [
 
@@ -9,7 +13,7 @@ urlpatterns = [
     re_path(r"^verify-otp$",VerifyOTP.as_view()),
 
     # Media Route
-    re_path(r"^product-images/savefile$",saveFile),
+    re_path(r"^product-images/savefile/$",SetImageView.as_view({'get':'list'})),
 
     # Application Route
     re_path(r"^product$",ProductView.as_view()),

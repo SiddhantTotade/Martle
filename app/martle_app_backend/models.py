@@ -106,7 +106,7 @@ class ProductImage(models.Model):
     product_img_file = models.ImageField(upload_to = 'product_images')
 
     def __str__(self):
-        return str(self.product_image.id)
+        return str(self.product_image.id) + " - "+ str(self.product_image.product_title)
 
 
 # --------- Cart Model
