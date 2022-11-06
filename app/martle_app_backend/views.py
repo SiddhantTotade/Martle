@@ -11,20 +11,26 @@ from .models import *
 from .serializers import *
 from rest_framework import permissions
 from rest_framework.decorators import api_view
+from rest_framework.parsers import MultiPartParser,FormParser
 
 # Create your views here.
 
 class SetImageView(viewsets.ModelViewSet):
-    # queryset = ProductImage.objects.all() 
-    # serializer_class = ProductImageSerializer
+    queryset = ProductImage.objects.all() 
+    serializer_class = ProductImageSerializer
+    parser_classes = (FormParser,MultiPartParser)
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def post(self,request):
-        product_image_id = int(request.data['product_image'])
-        product_url = request.data['product_image_url']    
-        product_file = request.FILES.getlist('product_img_file')
+    def post(self, serializer):
+        serializer.save(product_image = 6)
 
-        print(product_image_id,product_url)
-        print(product_file)
+    # def post(self,request):
+    #     product_image_id = int(request.data['product_image'])
+    #     product_url = request.data['product_image_url']    
+    #     product_file = request.FILES.getlist('product_img_file')
+
+    #     print(product_image_id,product_url)
+    #     print(product_file)
 
         # create = ProductImage.objects.get_or_create(product_image = int(product_image_id),product_image_url = product_url,product_img_file = product_file)
         

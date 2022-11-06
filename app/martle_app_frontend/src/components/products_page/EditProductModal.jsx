@@ -106,6 +106,7 @@ export default class AddProductModal extends Component {
             method: 'POST',
             body: fileData
         }).then(res => res.json()).then((result) => { alert(result) }, (err) => console.log(err))
+        console.log(event.target.files);
     }
 
     imagePreview(event) {
@@ -117,8 +118,6 @@ export default class AddProductModal extends Component {
             product_image_file: this.fileArray
         })
     }
-
-
 
     render() {
 
