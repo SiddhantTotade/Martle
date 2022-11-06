@@ -63,8 +63,8 @@ export default class AddProductModal extends Component {
         this.state = {
             product_data: [], product_image_file: [null]
         }
-        this.changeHandler = this.changeHandler.bind(this)
-        this.handleFile = this.handleFile.bind(this)
+        this.updateProduct = this.updateProduct.bind(this)
+        this.uploadImage = this.uploadImage.bind(this)
         this.imagePreview = this.imagePreview.bind(this)
     }
 
@@ -77,7 +77,7 @@ export default class AddProductModal extends Component {
             .then(data => { this.setState({ product_data: data }) })
     }
 
-    changeHandler(event) {
+    updateProduct(event) {
         event.preventDefault()
         fetch(`http://127.0.0.1:8000/api/product/${this.props.id}`, {
             method: 'PUT',
@@ -97,6 +97,17 @@ export default class AddProductModal extends Component {
         }).then(res => res.json()).then((result) => { console.log(result) }, (error) => { console.log(error) })
     }
 
+    uploadImage(event) {
+        const fileData = new FormData()
+        fileData.append('product_image', this.props.id)
+        fileData.append('product_image_url', event.target.product_image_url)
+        fileData.append('product_img_file', event.target.files)
+        fetch('http://127.0.0.1:8000/api/product-images/savefile/', {
+            method: 'POST',
+            body: fileData
+        }).then(res => res.json()).then((result) => { alert(result) }, (err) => console.log(err))
+    }
+
     imagePreview(event) {
         this.fileObj.push(event.target.files)
         for (let i = 0; i < this.fileObj[0].length; i++) {
@@ -107,17 +118,6 @@ export default class AddProductModal extends Component {
         })
     }
 
-    handleFile(event) {
-
-        const fileData = new FormData()
-        fileData.append('product_image', this.props.id)
-        fileData.append('product_image_url', event.target.product_image_url)
-        fileData.append('product_img_file', event.target.files)
-        fetch('http://127.0.0.1:8000/api/product-images/savefile/', {
-            method: 'POST',
-            body: fileData
-        }).then(res => res.json()).then((result) => { alert(result) }, (err) => console.log(err))
-    }
 
 
     render() {
@@ -129,7 +129,7 @@ export default class AddProductModal extends Component {
                         <Typography id="modal-modal-title" variant="h6" component="h2" className='flex justify-center items-center'>Edit Product</Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                             <div className='flex gap-5 justify-between'>
-                                <form onSubmit={this.changeHandler} className='w-full' >
+                                <form onSubmit={this.updateProduct} className='w-full' >
                                     <div className='w-full max-w-lg'>
                                         <div className='flex flex-col mt-2'>
                                             <span className='flex'><small>Product id</small></span>
@@ -171,14 +171,14 @@ export default class AddProductModal extends Component {
                                         <Button type='submit' sx={buttonStyle}>Update Product</Button>
                                     </div>
                                 </form>
-                                <form className='w-full'>
+                                <form onSubmit={this.uploadImage} className='w-full'>
                                     <div className='w-full max-w-sm'>
                                         <div className='flex flex-col mt-2'>
                                             <span className='flex justify-between'>
                                                 <small>Product Images URL</small>
                                                 <small className='text-red-500'>*Optional</small>
                                             </span>
-                                            <input type='url' multiple className='border-2  rounded-md pl-2 p-1' name='product_image_url' onChange={this.handleFile} />
+                                            <input type='url' multiple className='border-2  rounded-md pl-2 p-1' name='product_image_url' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span className='flex justify-between'>
