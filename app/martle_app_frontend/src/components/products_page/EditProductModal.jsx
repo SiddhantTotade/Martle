@@ -97,7 +97,7 @@ export default class AddProductModal extends Component {
         }).then(res => res.json()).then((result) => { console.log(result) }, (error) => { console.log(error) })
     }
 
-    imagePreview(event){
+    imagePreview(event) {
         this.fileObj.push(event.target.files)
         for (let i = 0; i < this.fileObj[0].length; i++) {
             this.fileArray.push(URL.createObjectURL(this.fileObj[0][i]))
@@ -105,12 +105,10 @@ export default class AddProductModal extends Component {
         this.setState({
             product_image_file: this.fileArray
         })
-
-        this.handleFile()
     }
 
     handleFile(event) {
-        
+
         const fileData = new FormData()
         fileData.append('product_image', this.props.id)
         fileData.append('product_image_url', event.target.product_image_url)
@@ -130,9 +128,9 @@ export default class AddProductModal extends Component {
                     <Box sx={style}>
                         <Typography id="modal-modal-title" variant="h6" component="h2" className='flex justify-center items-center'>Edit Product</Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            <form onSubmit={this.changeHandler} >
-                                <div className='flex justify-between gap-10'>
-                                    <div className='w-4/5 max-w-lg'>
+                            <div className='flex gap-5 justify-between'>
+                                <form onSubmit={this.changeHandler} className='w-full' >
+                                    <div className='w-full max-w-lg'>
                                         <div className='flex flex-col mt-2'>
                                             <span className='flex'><small>Product id</small></span>
                                             <input type='text' defaultValue={this.props.id} disabled className='border-2 rounded-md pl-2 p-1' name='product_id' />
@@ -169,7 +167,12 @@ export default class AddProductModal extends Component {
                                             </select>
                                         </div>
                                     </div>
-                                    <div className='w-4/5 max-w-sm'>
+                                    <div className='grid'>
+                                        <Button type='submit' sx={buttonStyle}>Update Product</Button>
+                                    </div>
+                                </form>
+                                <form className='w-full'>
+                                    <div className='w-full max-w-sm'>
                                         <div className='flex flex-col mt-2'>
                                             <span className='flex justify-between'>
                                                 <small>Product Images URL</small>
@@ -195,14 +198,14 @@ export default class AddProductModal extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className='grid'>
-                                    <Button type='submit' sx={buttonStyle}>Update Product</Button>
-                                </div>
-                            </form>
+                                    <div className='grid mt-8'>
+                                        <Button type='submit' sx={buttonStyle}>Upload Images</Button>
+                                    </div>
+                                </form>
+                            </div>
                         </Typography>
                     </Box>
-                </Modal>
+                </Modal >
             </div >
         );
     }
