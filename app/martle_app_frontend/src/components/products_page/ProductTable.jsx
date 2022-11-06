@@ -7,9 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import AddProductModal from './AddProductModal'
+import EditProductModal from './EditProductModal'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -40,12 +40,21 @@ const buttonStyle = {
     }
 }
 
+const editButton = {
+    background: '#50c955',
+    color: 'white',
+    '&:hover': {
+        background: '#41a345',
+        color: 'white'
+    }
+}
+
 export default class ProductTables extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            data: [], addModalShow: false
+            data: [], addModalShow: false, editModalShow: false, title: ''
         }
     }
 
@@ -63,10 +72,13 @@ export default class ProductTables extends React.Component {
 
     render() {
 
-        const empData = this.state.data
+        const prodData = this.state.data
+        console.log();
+        const { id, title, selling_price, discounted_price, description, details, brand, category } = this.state
         let addModalClose = () => this.setState({ addModalShow: false })
+        let editModalClose = () => this.setState({ editModalShow: false })
 
-        const rows = empData.map((item) =>
+        const rows = prodData.map((item) =>
             <StyledTableRow key={item.id}>
                 <StyledTableCell component="th" scope="row">{item.product_title}</StyledTableCell>
                 <StyledTableCell align="right">{item.product_selling_price}</StyledTableCell>
@@ -75,8 +87,8 @@ export default class ProductTables extends React.Component {
                 <StyledTableCell align="right">{item.product_brand}</StyledTableCell>
                 <StyledTableCell align="right">
                     <div className="flex justify-end items-center gap-5">
-                        <Link to={`/product/${item.id}`} className="text-green-600">Edit</Link>
-                        <Link to={`/product/${item.id}`} className="text-red-600">Delete</Link>
+                        <Button onClick={() => this.setState({ editModalShow: true, id: item.id, title: item.product_title, selling_price: item.product_selling_price, discounted_price: item.product_discounted_price, description: item.product_description, details: item.product_details, brand: item.product_brand, category: item.product_category })} sx={editButton}>Edit</Button>
+                        <Button onClick={()=>this.setState({})} className="text-red-600">Delete</Button>
                     </div>
                 </StyledTableCell>
             </StyledTableRow>
@@ -106,6 +118,7 @@ export default class ProductTables extends React.Component {
                         </Table>
                     </TableContainer>
                     <AddProductModal open={this.state.addModalShow} onClose={addModalClose} />
+                    <EditProductModal open={this.state.editModalShow} id={id} title={title} selling_price={selling_price} discounted_price={discounted_price} description={description} details={details} brand={brand} category={category} onClose={editModalClose} />
                 </div>
             </div>
         );

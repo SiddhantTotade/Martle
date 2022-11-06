@@ -15,13 +15,19 @@ from rest_framework.decorators import api_view
 # Create your views here.
 
 class SetImageView(viewsets.ModelViewSet):
-    queryset = ProductImage.objects.all()
-    serializer_class = ProductImageSerializer
+    # queryset = ProductImage.objects.all() 
+    # serializer_class = ProductImageSerializer
 
     def post(self,request):
-        product_image = request.data['product_image']
-        product_image_url = request.data['product_image_url']    
-        product_img_url = request.data['product_img_file']
+        product_image_id = int(request.data['product_image'])
+        product_url = request.data['product_image_url']    
+        product_file = request.FILES.getlist('product_img_file')
+
+        print(product_image_id,product_url)
+        print(product_file)
+
+        # create = ProductImage.objects.get_or_create(product_image = int(product_image_id),product_image_url = product_url,product_img_file = product_file)
+        
 class ProductView(APIView):
     def get(self, request):
         # getting all products

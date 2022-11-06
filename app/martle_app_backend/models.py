@@ -96,7 +96,7 @@ class Product(models.Model):
     product_category = models.CharField(choices = CATEGORY_CHOICES, max_length=5)
 
     def __str__(self):
-        return (str(self.id) + " - " + str(self.product_title) + " - " + str(self.product_category))
+        return str(self.id)
 
 
 # --------- Product Image Model

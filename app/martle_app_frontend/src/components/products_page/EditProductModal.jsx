@@ -65,21 +65,22 @@ export default class AddProductModal extends Component {
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.handleFile = this.handleFile.bind(this)
+        this.imagePreview = this.imagePreview.bind(this)
     }
 
     product_image = 'product-image'
     imagesrc = 'http://127.0.0.1:8000/media/' + this.product_image
 
     componentDidMount() {
-        fetch('http://127.0.0.1:8000/api/product')
+        fetch(`http://127.0.0.1:8000/api/product/${this.props.id}`)
             .then((res) => res.json())
             .then(data => { this.setState({ product_data: data }) })
     }
 
     changeHandler(event) {
         event.preventDefault()
-        fetch('http://127.0.0.1:8000/api/product', {
-            method: 'POST',
+        fetch(`http://127.0.0.1:8000/api/product/${this.props.id}`, {
+            method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -93,10 +94,10 @@ export default class AddProductModal extends Component {
                 product_brand: event.target.product_brand.value,
                 product_category: event.target.product_category.value,
             })
-        }).then(res => res.json()).then((result) => { alert(result) }, (error) => { console.log(error) })
+        }).then(res => res.json()).then((result) => { console.log(result) }, (error) => { console.log(error) })
     }
 
-    handleFile(event) {
+    imagePreview(event){
         this.fileObj.push(event.target.files)
         for (let i = 0; i < this.fileObj[0].length; i++) {
             this.fileArray.push(URL.createObjectURL(this.fileObj[0][i]))
@@ -104,15 +105,20 @@ export default class AddProductModal extends Component {
         this.setState({
             product_image_file: this.fileArray
         })
-        this.product_image = event.target.files[0].name
-        const formData = new FormData()
-        formData.append('product_image', event.target.files[0], event.target.files[0].name)
-        fetch('http://127.0.0.1:8000/api/product-images/savefile', {
+
+        this.handleFile()
+    }
+
+    handleFile(event) {
+        
+        const fileData = new FormData()
+        fileData.append('product_image', this.props.id)
+        fileData.append('product_image_url', event.target.product_image_url)
+        fileData.append('product_img_file', event.target.files)
+        fetch('http://127.0.0.1:8000/api/product-images/savefile/', {
             method: 'POST',
-            body: JSON.stringify({
-                product_img_file: this.image
-            }) + formData
-        }).then(res => res.json()).then((result) => { this.imagesrc = 'http://127.0.0.1:8000/media/' + result }, (err) => console.log(err))
+            body: fileData
+        }).then(res => res.json()).then((result) => { alert(result) }, (err) => console.log(err))
     }
 
 
@@ -122,38 +128,42 @@ export default class AddProductModal extends Component {
             <div>
                 <Modal {...this.props} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
                     <Box sx={style}>
-                        <Typography id="modal-modal-title" variant="h6" component="h2" className='flex justify-center items-center'>Add Product</Typography>
+                        <Typography id="modal-modal-title" variant="h6" component="h2" className='flex justify-center items-center'>Edit Product</Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                             <form onSubmit={this.changeHandler} >
                                 <div className='flex justify-between gap-10'>
                                     <div className='w-4/5 max-w-lg'>
                                         <div className='flex flex-col mt-2'>
+                                            <span className='flex'><small>Product id</small></span>
+                                            <input type='text' defaultValue={this.props.id} disabled className='border-2 rounded-md pl-2 p-1' name='product_id' />
+                                        </div>
+                                        <div className='flex flex-col mt-2'>
                                             <span><small>Product Title</small></span>
-                                            <input required type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Name' name='product_title' />
+                                            <input type='text' defaultValue={this.props.title} className='border-2 rounded-md pl-2 p-1' placeholder='Enter Product Name' name='product_title' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Product Selling Price</small></span>
-                                            <input required  type='number' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Selling Price' name='product_selling_price' />
+                                            <input type='number' defaultValue={this.props.selling_price} className='border-2 rounded-md pl-2 p-1' placeholder='Enter Product Selling Price' name='product_selling_price' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Product Discounted Price</small></span>
-                                            <input required type='number' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Discounted Price' name='product_discounted_price' />
+                                            <input type='number' defaultValue={this.props.discounted_price} className='border-2 rounded-md pl-2 p-1' placeholder='Enter Product Discounted Price' name='product_discounted_price' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Product Description</small></span>
-                                            <textarea required type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Description' name='product_description' />
+                                            <textarea type='text' defaultValue={this.props.description} className='border-2 rounded-md pl-2 p-1' placeholder='Enter Product Description' name='product_description' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Product Details</small></span>
-                                            <textarea required type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Details' name='product_details' />
+                                            <textarea type='text' defaultValue={this.props.details} className='border-2 rounded-md pl-2 p-1' placeholder='Enter Product Details' name='product_details' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Product Brand</small></span>
-                                            <input required type='text' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Brand' name='product_brand' />
+                                            <input type='text' defaultValue={this.props.brand} className='border-2 rounded-md pl-2 p-1' placeholder='Enter Product Brand' name='product_brand' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Product Category</small></span>
-                                            <select className='border-2 border-black rounded-md pl-2 p-1' name="product_category" id="">
+                                            <select className='border-2 rounded-md pl-2 p-1' name="product_category" id="">
                                                 <option disabled>Select Product Category</option>
                                                 {CATEGORY_CHOICES.map(items => (<option key={items} value={items[0]}>{items}</option>))}
                                             </select>
@@ -161,12 +171,18 @@ export default class AddProductModal extends Component {
                                     </div>
                                     <div className='w-4/5 max-w-sm'>
                                         <div className='flex flex-col mt-2'>
-                                            <span><small>Product Images URL</small></span>
-                                            <input type='url' multiple className='border-2 border-black rounded-md pl-2 p-1' name='product_url' onChange={this.handleFile} />
+                                            <span className='flex justify-between'>
+                                                <small>Product Images URL</small>
+                                                <small className='text-red-500'>*Optional</small>
+                                            </span>
+                                            <input type='url' multiple className='border-2  rounded-md pl-2 p-1' name='product_image_url' onChange={this.handleFile} />
                                         </div>
                                         <div className='flex flex-col mt-2'>
-                                            <span><small>Product Images Files</small></span>
-                                            <input type='file' multiple className='border-2 border-black rounded-md pl-2 p-1' name='product_image' onChange={this.handleFile} />
+                                            <span className='flex justify-between'>
+                                                <small>Product Images Files</small>
+                                                <small className='text-red-500'>*Optional</small>
+                                            </span>
+                                            <input type='file' multiple className='border-2 rounded-md pl-2 p-1' name='product_img_file' onChange={this.imagePreview} />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Preview</small></span>
@@ -181,7 +197,7 @@ export default class AddProductModal extends Component {
                                     </div>
                                 </div>
                                 <div className='grid'>
-                                    <Button type='submit' sx={buttonStyle}>Save Product</Button>
+                                    <Button type='submit' sx={buttonStyle}>Update Product</Button>
                                 </div>
                             </form>
                         </Typography>
