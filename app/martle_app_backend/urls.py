@@ -13,7 +13,7 @@ urlpatterns = [
     re_path(r"^verify-otp$",VerifyOTP.as_view()),
 
     # Media Route
-    re_path(r"^product-images/savefile/$",SetImageView.as_view({'get':'list'})),
+    re_path(r"^product-images/savefile/$",SetImageView),
 
     # Application Route
     re_path(r"^product$",ProductView.as_view()),

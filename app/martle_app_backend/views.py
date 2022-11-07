@@ -12,17 +12,26 @@ from .serializers import *
 from rest_framework import permissions
 from rest_framework.decorators import api_view
 from rest_framework.parsers import MultiPartParser,FormParser
+from rest_framework.response import Response
+from rest_framework import status
 
 # Create your views here.
+@api_view(['POST'])
+def SetImageView(request):
+    if request.method == 'GET':
+        images = ProductImage.objects.all()
+        image_serializer = ProductImageSerializer(images, many = True)
+        return JsonResponse(image_serializer.data,safe = False)
 
-class SetImageView(viewsets.ModelViewSet):
-    queryset = ProductImage.objects.all() 
-    serializer_class = ProductImageSerializer
-    parser_classes = (FormParser,MultiPartParser)
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-    def post(self, serializer):
-        serializer.save(product_image = 6)
+    elif request.method == "POST":
+        image = JSONParser().parse(request)
+        product_serializer = ProductImageSerializer(data = image)
+        if product_serializer.is_valid():
+            product_serializer.save()
+            return JsonResponse("Uploaded",safe = False)
+        return JsonResponse("Not Uploaded",safe = False)
+    # def post(self, serializer):
+    #     return JsonResponse({"message": "Hello for today! See you tomorrow!"})
 
     # def post(self,request):
     #     product_image_id = int(request.data['product_image'])
@@ -32,7 +41,7 @@ class SetImageView(viewsets.ModelViewSet):
     #     print(product_image_id,product_url)
     #     print(product_file)
 
-        # create = ProductImage.objects.get_or_create(product_image = int(product_image_id),product_image_url = product_url,product_img_file = product_file)
+    # create = ProductImage.objects.get_or_create(product_image = int(product_image_id),product_image_url = product_url,product_img_file = product_file)
         
 class ProductView(APIView):
     def get(self, request):

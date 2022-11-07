@@ -104,7 +104,8 @@ export default class AddProductModal extends Component {
         fileData.append('product_img_file', event.target.files)
         fetch('http://127.0.0.1:8000/api/product-images/savefile/', {
             method: 'POST',
-            body: fileData
+            body: fileData,
+            'Content-Type':'multipart/form-data'
         }).then(res => res.json()).then((result) => { alert(result) }, (err) => console.log(err))
         console.log(event.target.files);
     }
