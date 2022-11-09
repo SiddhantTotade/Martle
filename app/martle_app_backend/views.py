@@ -16,7 +16,9 @@ from rest_framework.response import Response
 from rest_framework import status
 
 # Create your views here.
-@api_view(['POST'])
+
+#  Function for image upload
+@api_view(['GET','POST'])
 def SetImageView(request):
     if request.method == 'GET':
         images = ProductImage.objects.all()
@@ -24,30 +26,15 @@ def SetImageView(request):
         return JsonResponse(image_serializer.data,safe = False)
 
     elif request.method == "POST":
-        # image = JSONParser().parse(request)
         product_id = int(request.data['product_image'])
         product_url = request.data['product_image_url']
-        product_file = request.data['product_img_file']
-
+        product_file = request.FILES.getlist('product_img_file')
         product_new_id = Product.objects.get(id = product_id)
 
-        print(product_id)
+        for file in product_file:
+            Product.id = ProductImage.objects.create(product_image=product_new_id,product_image_url=product_url,product_img_file=file)
+        return JsonResponse("Images Uploaded Successfully",safe = False)
 
-        Product.id = ProductImage.objects.create(product_image=product_new_id,product_image_url=product_url,product_img_file=product_file)
-        return JsonResponse("Not Uploaded",safe = False)
-    # def post(self, serializer):
-    #     return JsonResponse({"message": "Hello for today! See you tomorrow!"})
-
-    # def post(self,request):
-    #     product_image_id = int(request.data['product_image'])
-    #     product_url = request.data['product_image_url']    
-    #     product_file = request.FILES.getlist('product_img_file')
-
-    #     print(product_image_id,product_url)
-    #     print(product_file)
-
-    # create = ProductImage.objects.get_or_create(product_image = int(product_image_id),product_image_url = product_url,product_img_file = product_file)
-        
 class ProductView(APIView):
     def get(self, request):
         # getting all products

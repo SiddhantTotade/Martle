@@ -61,15 +61,15 @@ export default class AddProductModal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            product_data: [], product_image_file: [null], img: ""
+            product_data: [], product_img_file: []
         }
         this.updateProduct = this.updateProduct.bind(this)
         this.uploadImage = this.uploadImage.bind(this)
         this.imagePreview = this.imagePreview.bind(this)
     }
 
-    product_image = 'product-image'
-    imagesrc = 'http://127.0.0.1:8000/media/' + this.product_image
+    product_image = 'productimg.jpg'
+    imagesrc = 'http://127.0.0.1:8000/api/product-images/savefile/' + this.product_image
 
     componentDidMount() {
         fetch(`http://127.0.0.1:8000/api/product/${this.props.id}`)
@@ -97,30 +97,25 @@ export default class AddProductModal extends Component {
         }).then(res => res.json()).then((result) => { console.log(result) }, (error) => { console.log(error) })
     }
 
-    image(e) {
-        var file = e.target.files
-        let reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onload = () => {
-            this.setState({
-                img: reader.result
-            })
-        };
-        reader.onerror = (err) => {
-            console.log(err);
-        }
-        console.log(reader)
-    }
-
-    uploadImage(event) {
-        const fileData = new FormData()
+    uploadImage = (event) => {
+        // e.preventDefault()
+        let fileData = new FormData()
+        this.product_image = event.target.files
+        console.log(this.product_image);
         fileData.append('product_image', this.props.id)
         fileData.append('product_image_url', event.target.product_image_url)
-        fileData.append('product_img_file', event.target.files)
+        if (event.target.files.length > 1) {
+            for (let i = 0; i < event.target.files.length; i++) {
+                fileData.append('product_img_file', event.target.files[i], event.target.files[i].name)
+                console.log(event.target.files[i].name);
+            }
+        }
+        console.log(fileData);
         fetch('http://127.0.0.1:8000/api/product-images/savefile/', {
             method: 'POST',
             body: fileData,
-        }).then(res => res.json()).then((result) => { alert(result) }, (err) => console.log(err))
+            // headers: { 'content-type': 'multipart/form-data' },
+        }).then(res => res.json()).then((result) => { console.log(result) }, (err) => console.log(err))
     }
 
     imagePreview(event) {
@@ -198,7 +193,7 @@ export default class AddProductModal extends Component {
                                                 <small>Product Images Files</small>
                                                 <small className='text-red-500'>*Optional</small>
                                             </span>
-                                            <input type='file' multiple className='border-2 rounded-md pl-2 p-1' name='product_img_file' onChange={this.imagePreview} />
+                                            <input type='file' multiple className='border-2 rounded-md pl-2 p-1' name='product_img_file' onChange={this.uploadImage} />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Preview</small></span>
