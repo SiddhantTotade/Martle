@@ -98,7 +98,6 @@ export default class AddProductModal extends Component {
     }
 
     uploadImage = (event) => {
-        // e.preventDefault()
         let fileData = new FormData()
         this.product_image = event.target.files
         console.log(this.product_image);
@@ -110,11 +109,9 @@ export default class AddProductModal extends Component {
                 console.log(event.target.files[i].name);
             }
         }
-        console.log(fileData);
         fetch('http://127.0.0.1:8000/api/product-images/savefile/', {
             method: 'POST',
             body: fileData,
-            // headers: { 'content-type': 'multipart/form-data' },
         }).then(res => res.json()).then((result) => { console.log(result) }, (err) => console.log(err))
     }
 
@@ -193,7 +190,7 @@ export default class AddProductModal extends Component {
                                                 <small>Product Images Files</small>
                                                 <small className='text-red-500'>*Optional</small>
                                             </span>
-                                            <input type='file' multiple className='border-2 rounded-md pl-2 p-1' name='product_img_file' onChange={this.uploadImage} />
+                                            <input type='file' multiple className='border-2 rounded-md pl-2 p-1' name='product_img_file' onChange={this.imagePreview} />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Preview</small></span>

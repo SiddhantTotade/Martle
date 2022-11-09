@@ -32,6 +32,7 @@ def SetImageView(request):
         product_new_id = Product.objects.get(id = product_id)
 
         for file in product_file:
+            print(product_id)
             Product.id = ProductImage.objects.create(product_image=product_new_id,product_image_url=product_url,product_img_file=file)
         return JsonResponse("Images Uploaded Successfully",safe = False)
 

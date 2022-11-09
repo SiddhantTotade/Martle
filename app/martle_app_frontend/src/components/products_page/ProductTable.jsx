@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import AddProductModal from './AddProductModal'
 import EditProductModal from './EditProductModal'
+import DeleteProductModal from './DeleteProductModal';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -41,10 +42,19 @@ const buttonStyle = {
 }
 
 const editButton = {
-    background: '#50c955',
+    background: '#41a345',
     color: 'white',
     '&:hover': {
-        background: '#41a345',
+        background: '#50c955',
+        color: 'white'
+    }
+}
+
+const deleteButton = {
+    background: '#cf0d0d',
+    color: 'white',
+    '&:hover': {
+        background: '#ed0909',
         color: 'white'
     }
 }
@@ -54,7 +64,7 @@ export default class ProductTables extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: [], addModalShow: false, editModalShow: false, title: ''
+            data: [], addModalShow: false, editModalShow: false, deleteModalShow: false, title: ''
         }
     }
 
@@ -77,6 +87,7 @@ export default class ProductTables extends React.Component {
         const { id, title, selling_price, discounted_price, description, details, brand, category } = this.state
         let addModalClose = () => this.setState({ addModalShow: false })
         let editModalClose = () => this.setState({ editModalShow: false })
+        let deleteModalClose = () => this.setState({ deleteModalShow: false })
 
         const rows = prodData.map((item) =>
             <StyledTableRow key={item.id}>
@@ -88,7 +99,7 @@ export default class ProductTables extends React.Component {
                 <StyledTableCell align="right">
                     <div className="flex justify-end items-center gap-5">
                         <Button onClick={() => this.setState({ editModalShow: true, id: item.id, title: item.product_title, selling_price: item.product_selling_price, discounted_price: item.product_discounted_price, description: item.product_description, details: item.product_details, brand: item.product_brand, category: item.product_category })} sx={editButton}>Edit</Button>
-                        <Button onClick={()=>this.setState({})} className="text-red-600">Delete</Button>
+                        <Button onClick={() => this.setState({ deleteModalShow: true, id: item.id })} sx={deleteButton}>Delete</Button>
                     </div>
                 </StyledTableCell>
             </StyledTableRow>
@@ -119,6 +130,7 @@ export default class ProductTables extends React.Component {
                     </TableContainer>
                     <AddProductModal open={this.state.addModalShow} onClose={addModalClose} />
                     <EditProductModal open={this.state.editModalShow} id={id} title={title} selling_price={selling_price} discounted_price={discounted_price} description={description} details={details} brand={brand} category={category} onClose={editModalClose} />
+                    <DeleteProductModal open={this.state.deleteModalShow} id={id} onClose={deleteModalClose} />
                 </div>
             </div>
         );
