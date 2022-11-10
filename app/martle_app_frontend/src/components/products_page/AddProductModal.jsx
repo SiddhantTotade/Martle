@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Component } from 'react';
 import { Button } from '@mui/material';
-import Carousel from 'react-multi-carousel'
 import "react-multi-carousel/lib/styles.css";
 
 let CATEGORY_CHOICES = [('M', 'Mobile'), ('L', 'Laptop'),
@@ -21,26 +20,6 @@ const style = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
-};
-
-const responsive = {
-    superLargeDesktop: {
-        // the naming can be any, depends on you.
-        breakpoint: { max: 4000, min: 3000 },
-        items: 1
-    },
-    desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 1
-    },
-    tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 2
-    },
-    mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 1
-    }
 };
 
 const buttonStyle = {
@@ -94,6 +73,7 @@ export default class AddProductModal extends Component {
                 product_category: event.target.product_category.value,
             })
         }).then(res => res.json()).then((result) => { alert(result) }, (error) => { console.log(error) })
+        console.log(event.target.product_title.value, event.target.product_selling_price.value, event.target.product_discounted_price.value, event.target.product_description.value, event.target.product_details.value, event.target.product_brand.value, event.target.product_category.value);
     }
 
     handleFile(event) {
@@ -115,7 +95,6 @@ export default class AddProductModal extends Component {
         }).then(res => res.json()).then((result) => { this.imagesrc = 'http://127.0.0.1:8000/media/' + result }, (err) => console.log(err))
     }
 
-
     render() {
 
         return (
@@ -133,7 +112,7 @@ export default class AddProductModal extends Component {
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Product Selling Price</small></span>
-                                            <input required  type='number' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Selling Price' name='product_selling_price' />
+                                            <input required type='number' className='border-2 border-black rounded-md pl-2 p-1' placeholder='Enter Product Selling Price' name='product_selling_price' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Product Discounted Price</small></span>
@@ -157,26 +136,6 @@ export default class AddProductModal extends Component {
                                                 <option disabled>Select Product Category</option>
                                                 {CATEGORY_CHOICES.map(items => (<option key={items} value={items[0]}>{items}</option>))}
                                             </select>
-                                        </div>
-                                    </div>
-                                    <div className='w-4/5 max-w-sm'>
-                                        <div className='flex flex-col mt-2'>
-                                            <span><small>Product Images URL</small></span>
-                                            <input type='url' multiple className='border-2 border-black rounded-md pl-2 p-1' name='product_url' onChange={this.handleFile} />
-                                        </div>
-                                        <div className='flex flex-col mt-2'>
-                                            <span><small>Product Images Files</small></span>
-                                            <input type='file' multiple className='border-2 border-black rounded-md pl-2 p-1' name='product_image' onChange={this.handleFile} />
-                                        </div>
-                                        <div className='flex flex-col mt-2'>
-                                            <span><small>Preview</small></span>
-                                            <div className='object-contain'>
-                                                <Carousel responsive={responsive} className='w-full object-contain'>
-                                                    {(this.fileArray || []).map(url => (
-                                                        <img src={url} alt="product" className='w-96 h-96 object-contain' />
-                                                    ))}
-                                                </Carousel>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

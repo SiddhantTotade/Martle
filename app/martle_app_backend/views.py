@@ -45,7 +45,7 @@ class ProductView(APIView):
         if all_products: 
             product_serialized_data = ProductSerializer(all_products, many = True)
             return JsonResponse(product_serialized_data.data, safe = False)
-        return JsonResponse("No Product in database",safe = False)
+        return JsonResponse("NULL",safe = False)
 
     def post(self, request):
         # getting product data which is going to be save

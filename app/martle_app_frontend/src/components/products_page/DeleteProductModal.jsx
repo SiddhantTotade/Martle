@@ -5,6 +5,8 @@ import Modal from '@mui/material/Modal';
 import { Component } from 'react';
 import { Button } from '@mui/material';
 import "react-multi-carousel/lib/styles.css";
+import { Snackbar } from '@mui/material';
+import { SnackbarProvider } from 'notistack';
 
 const style = {
     position: 'absolute',
@@ -15,26 +17,6 @@ const style = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
-};
-
-const responsive = {
-    superLargeDesktop: {
-        // the naming can be any, depends on you.
-        breakpoint: { max: 4000, min: 3000 },
-        items: 1
-    },
-    desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 1
-    },
-    tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 2
-    },
-    mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 1
-    }
 };
 
 const buttonStyle = {
@@ -51,7 +33,16 @@ export default class DeleteProductModal extends Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            open: false
+        }
         this.deleteProduct = this.deleteProduct.bind(this)
+        this.handleOpen = this.handleOpen.bind(this)
+    }
+
+    handleOpen = () => {
+        console.log("Clicked");
+        this.setState({ open: true })
     }
 
     componentDidMount() {
@@ -64,10 +55,13 @@ export default class DeleteProductModal extends Component {
         event.preventDefault()
         fetch(`http://127.0.0.1:8000/api/product/${this.props.id}`, {
             method: 'DELETE',
-        }).then(res => res.json()).then((result) => { console.log(result) }, (error) => { console.log(error) })
+        }).then(res => res.json()).then(() => { this.handleOpen() }, (error) => { console.log(error) })
     }
 
+
     render() {
+
+        const { open } = this.state
 
         return (
             <div>
@@ -88,6 +82,9 @@ export default class DeleteProductModal extends Component {
                         </Typography>
                     </Box>
                 </Modal >
+                <SnackbarProvider maxSnack={2}>
+                    <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} severity='success' autoHideDuration={3000} variant='filled' open={open} message="Deleted Successfully" />
+                </SnackbarProvider>
             </div >
         );
     }

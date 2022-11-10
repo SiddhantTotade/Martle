@@ -68,28 +68,31 @@ export default class ProductTables extends React.Component {
         }
     }
 
-    fetchData() {
-        fetch("http://127.0.0.1:8000/api/product")
-            .then(res => res.json())
-            .then((data) => {
-                this.setState({ data: data })
-            })
-    }
-
     componentDidMount() {
-        this.fetchData();
+        fetch("http://127.0.0.1:8000/api/product", {
+            method: "GET"
+        }).then(res => console.log(res)).then((data) => { this.setState({ data: data }) })
     }
 
     render() {
 
-        const prodData = this.state.data
-        console.log();
-        const { id, title, selling_price, discounted_price, description, details, brand, category } = this.state
+        let prodData = this.state.data
+        let { id, title, selling_price, discounted_price, description, details, brand, category } = this.state
         let addModalClose = () => this.setState({ addModalShow: false })
         let editModalClose = () => this.setState({ editModalShow: false })
         let deleteModalClose = () => this.setState({ deleteModalShow: false })
 
-        const rows = prodData.map((item) =>
+        let tempTable =
+            < StyledTableRow >
+                <StyledTableCell component="th" scope="row">No Product Data</StyledTableCell>
+                <StyledTableCell>No Product Data</StyledTableCell>
+                <StyledTableCell>No Product Data</StyledTableCell>
+                <StyledTableCell>No Product Data</StyledTableCell>
+                <StyledTableCell>No Product Data</StyledTableCell>
+                <StyledTableCell>No Product Data</StyledTableCell>
+            </StyledTableRow >
+
+        let rows = prodData.map((item) =>
             <StyledTableRow key={item.id}>
                 <StyledTableCell component="th" scope="row">{item.product_title}</StyledTableCell>
                 <StyledTableCell align="right">{item.product_selling_price}</StyledTableCell>
@@ -112,7 +115,7 @@ export default class ProductTables extends React.Component {
                         <Button sx={buttonStyle} onClick={() => this.setState({ addModalShow: true })}>Add Product</Button>
                     </div>
                     <TableContainer component={Paper} className="mt-2">
-                        <Table aria-label="customized table">
+                        <Table>
                             <TableHead>
                                 <TableRow>
                                     <StyledTableCell>Product Name</StyledTableCell>
@@ -124,7 +127,7 @@ export default class ProductTables extends React.Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows}
+                                {rows.length === 0 ? tempTable : rows}
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -132,7 +135,7 @@ export default class ProductTables extends React.Component {
                     <EditProductModal open={this.state.editModalShow} id={id} title={title} selling_price={selling_price} discounted_price={discounted_price} description={description} details={details} brand={brand} category={category} onClose={editModalClose} />
                     <DeleteProductModal open={this.state.deleteModalShow} id={id} onClose={deleteModalClose} />
                 </div>
-            </div>
+            </div >
         );
     }
 }
