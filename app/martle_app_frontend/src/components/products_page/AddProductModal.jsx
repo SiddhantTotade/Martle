@@ -3,8 +3,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Component } from 'react';
-import { Button } from '@mui/material';
+import { Button, Alert } from '@mui/material';
 import "react-multi-carousel/lib/styles.css";
+import { Snackbar } from '@mui/material';
+import { SnackbarProvider } from 'notistack';
 
 let CATEGORY_CHOICES = [('M', 'Mobile'), ('L', 'Laptop'),
 ('TW', 'Top Wear'), ('BW', 'Bottom Wear'), ('W', 'Watch'),
@@ -40,14 +42,15 @@ export default class AddProductModal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            product_data: [], product_image_file: [null]
+            product_data: [], product_image_file: [null], open: false, message: ""
         }
-        this.changeHandler = this.changeHandler.bind(this)
-        this.handleFile = this.handleFile.bind(this)
+        this.uploadProduct = this.uploadProduct.bind(this)
+        this.handleOpen = this.handleOpen.bind(this)
     }
 
-    product_image = 'product-image'
-    imagesrc = 'http://127.0.0.1:8000/media/' + this.product_image
+    handleOpen = (result) => {
+        this.setState({ open: true, message: result })
+    }
 
     componentDidMount() {
         fetch('http://127.0.0.1:8000/api/product')
@@ -55,7 +58,7 @@ export default class AddProductModal extends Component {
             .then(data => { this.setState({ product_data: data }) })
     }
 
-    changeHandler(event) {
+    uploadProduct(event) {
         event.preventDefault()
         fetch('http://127.0.0.1:8000/api/product', {
             method: 'POST',
@@ -72,30 +75,12 @@ export default class AddProductModal extends Component {
                 product_brand: event.target.product_brand.value,
                 product_category: event.target.product_category.value,
             })
-        }).then(res => res.json()).then((result) => { alert(result) }, (error) => { console.log(error) })
-        console.log(event.target.product_title.value, event.target.product_selling_price.value, event.target.product_discounted_price.value, event.target.product_description.value, event.target.product_details.value, event.target.product_brand.value, event.target.product_category.value);
-    }
-
-    handleFile(event) {
-        this.fileObj.push(event.target.files)
-        for (let i = 0; i < this.fileObj[0].length; i++) {
-            this.fileArray.push(URL.createObjectURL(this.fileObj[0][i]))
-        }
-        this.setState({
-            product_image_file: this.fileArray
-        })
-        this.product_image = event.target.files[0].name
-        const formData = new FormData()
-        formData.append('product_image', event.target.files[0], event.target.files[0].name)
-        fetch('http://127.0.0.1:8000/api/product-images/savefile', {
-            method: 'POST',
-            body: JSON.stringify({
-                product_img_file: this.image
-            }) + formData
-        }).then(res => res.json()).then((result) => { this.imagesrc = 'http://127.0.0.1:8000/media/' + result }, (err) => console.log(err))
+        }).then(res => res.json()).then((result) => { this.handleOpen(result) }, (error) => { console.log(error) })
     }
 
     render() {
+
+        const { open } = this.state
 
         return (
             <div>
@@ -103,7 +88,7 @@ export default class AddProductModal extends Component {
                     <Box sx={style}>
                         <Typography id="modal-modal-title" variant="h6" component="h2" className='flex justify-center items-center'>Add Product</Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            <form onSubmit={this.changeHandler} >
+                            <form onSubmit={this.uploadProduct}>
                                 <div className='flex justify-center'>
                                     <div className='w-4/5 max-w-lg'>
                                         <div className='flex flex-col mt-2'>
@@ -146,6 +131,9 @@ export default class AddProductModal extends Component {
                         </Typography>
                     </Box>
                 </Modal>
+                <SnackbarProvider>
+                    <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} autoHideDuration={3000} open={open} ><Alert severity='success' variant='filled'>{this.state.message}</Alert></Snackbar>
+                </SnackbarProvider>
             </div >
         );
     }

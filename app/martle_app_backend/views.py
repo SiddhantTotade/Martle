@@ -1,19 +1,10 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
-from rest_framework import viewsets
 from django.core import serializers as customer_data_serializer
-from django.core.files.storage import default_storage
 from .models import *
 from .serializers import *
-from rest_framework import permissions
 from rest_framework.decorators import api_view
-from rest_framework.parsers import MultiPartParser,FormParser
-from rest_framework.response import Response
-from rest_framework import status
 
 # Create your views here.
 
@@ -32,7 +23,6 @@ def SetImageView(request):
         product_new_id = Product.objects.get(id = product_id)
 
         for file in product_file:
-            print(product_id)
             Product.id = ProductImage.objects.create(product_image=product_new_id,product_image_url=product_url,product_img_file=file)
         return JsonResponse("Images Uploaded Successfully",safe = False)
 

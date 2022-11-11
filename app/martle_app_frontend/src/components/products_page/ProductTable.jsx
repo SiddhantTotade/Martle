@@ -59,21 +59,18 @@ const deleteButton = {
     }
 }
 
-const tableHead = {
-    background: ""
-}
-
 export default class ProductTables extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            data: [], addModalShow: false, editModalShow: false, deleteModalShow: false, title: ''
+            data: [], addModalShow: false, editModalShow: false, deleteModalShow: false, images: []
         }
     }
 
     componentDidMount() {
-        fetch("http://127.0.0.1:8000/api/product").then(res => res.json()).then((data) => data === 'NULL' ? this.state.data = null : this.setState({ data: data }))
+        fetch("http://127.0.0.1:8000/api/product")
+            .then(res => res.json()).then((data) => data === 'NULL' ? this.setState({ data: null }) : this.setState({ data: data }))
     }
 
     render() {
@@ -87,6 +84,11 @@ export default class ProductTables extends React.Component {
         let tempTable =
             <StyledTableRow>
                 <StyledTableCell>No Product Data Available</StyledTableCell>
+                <StyledTableCell></StyledTableCell>
+                <StyledTableCell></StyledTableCell>
+                <StyledTableCell></StyledTableCell>
+                <StyledTableCell></StyledTableCell>
+                <StyledTableCell></StyledTableCell>
             </StyledTableRow>
 
         let rows = prodData == null ? "" :
@@ -98,7 +100,7 @@ export default class ProductTables extends React.Component {
                     <StyledTableCell align="right">{item.product_discounted_price}</StyledTableCell>
                     <StyledTableCell align="right">{item.product_brand}</StyledTableCell>
                     <StyledTableCell align="right">
-                        <div className="flex justify-end items-center gap-5">
+                        <div className="flex justify-end items-center gap-2">
                             <Button onClick={() => this.setState({ editModalShow: true, id: item.id, title: item.product_title, selling_price: item.product_selling_price, discounted_price: item.product_discounted_price, description: item.product_description, details: item.product_details, brand: item.product_brand, category: item.product_category })} sx={editButton}>Edit</Button>
                             <Button onClick={() => this.setState({ deleteModalShow: true, id: item.id })} sx={deleteButton}>Delete</Button>
                         </div>
@@ -125,7 +127,7 @@ export default class ProductTables extends React.Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.length == '0' ? tempTable : rows}
+                                {rows.length === '0' ? tempTable : rows}
                             </TableBody>
                         </Table>
                     </TableContainer>

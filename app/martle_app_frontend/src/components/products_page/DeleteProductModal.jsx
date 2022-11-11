@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Component } from 'react';
-import { Button } from '@mui/material';
+import { Alert, Button } from '@mui/material';
 import "react-multi-carousel/lib/styles.css";
 import { Snackbar } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
@@ -34,15 +34,14 @@ export default class DeleteProductModal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            open: false
+            open: false, message: ""
         }
         this.deleteProduct = this.deleteProduct.bind(this)
         this.handleOpen = this.handleOpen.bind(this)
     }
 
-    handleOpen = () => {
-        console.log("Clicked");
-        this.setState({ open: true })
+    handleOpen = (result) => {
+        this.setState({ open: true, message: result })
     }
 
     componentDidMount() {
@@ -55,7 +54,7 @@ export default class DeleteProductModal extends Component {
         event.preventDefault()
         fetch(`http://127.0.0.1:8000/api/product/${this.props.id}`, {
             method: 'DELETE',
-        }).then(res => res.json()).then(() => { this.handleOpen() }, (error) => { console.log(error) })
+        }).then(res => res.json()).then((result) => { this.handleOpen(result) }, (error) => { console.log(error) })
     }
 
 
@@ -82,8 +81,8 @@ export default class DeleteProductModal extends Component {
                         </Typography>
                     </Box>
                 </Modal >
-                <SnackbarProvider maxSnack={2}>
-                    <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} severity='success' autoHideDuration={3000} variant='filled' open={open} message="Deleted Successfully" />
+                <SnackbarProvider>
+                    <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} autoHideDuration={3000} open={open} ><Alert severity='success' variant='filled'>{this.state.message}</Alert></Snackbar>
                 </SnackbarProvider>
             </div >
         );

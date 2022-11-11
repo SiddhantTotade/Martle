@@ -3,9 +3,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Component } from 'react';
-import { Button } from '@mui/material';
+import { Button, Alert } from '@mui/material';
 import Carousel from 'react-multi-carousel'
 import "react-multi-carousel/lib/styles.css";
+import { Snackbar } from '@mui/material';
+import { SnackbarProvider } from 'notistack';
 
 let CATEGORY_CHOICES = [('M', 'Mobile'), ('L', 'Laptop'),
 ('TW', 'Top Wear'), ('BW', 'Bottom Wear'), ('W', 'Watch'),
@@ -61,7 +63,7 @@ export default class AddProductModal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            product_data: [], product_img_file: []
+            product_data: [], product_img_file: [], uploadedImages: [], productImages: [], previewStatus: false
         }
         this.updateProduct = this.updateProduct.bind(this)
         this.uploadImage = this.uploadImage.bind(this)
@@ -75,6 +77,8 @@ export default class AddProductModal extends Component {
         fetch(`http://127.0.0.1:8000/api/product/${this.props.id}`)
             .then((res) => res.json())
             .then(data => { this.setState({ product_data: data }) })
+        fetch('http://127.0.0.1:8000/api/product-images/get-images', {
+        }).then(res => res.json()).then((result) => this.setState({ productImages: result }), (err) => console.log(err))
     }
 
     updateProduct(event) {
@@ -100,13 +104,11 @@ export default class AddProductModal extends Component {
     uploadImage = (event) => {
         let fileData = new FormData()
         this.product_image = event.target.files
-        console.log(this.product_image);
         fileData.append('product_image', this.props.id)
         fileData.append('product_image_url', event.target.product_image_url)
         if (event.target.files.length > 1) {
             for (let i = 0; i < event.target.files.length; i++) {
                 fileData.append('product_img_file', event.target.files[i], event.target.files[i].name)
-                console.log(event.target.files[i].name);
             }
         }
         fetch('http://127.0.0.1:8000/api/product-images/savefile/', {
@@ -115,17 +117,33 @@ export default class AddProductModal extends Component {
         }).then(res => res.json()).then((result) => { console.log(result) }, (err) => console.log(err))
     }
 
+    // getImages() {
+    //     fetch('http://127.0.0.1:8000/api/product-images/get-images', {
+    //     }).then(res => res.json()).then((result) => this.setState({ productImage: result }), (err) => console.log(err))
+    // }
+
     imagePreview(event) {
         this.fileObj.push(event.target.files)
         for (let i = 0; i < this.fileObj[0].length; i++) {
             this.fileArray.push(URL.createObjectURL(this.fileObj[0][i]))
         }
         this.setState({
-            product_image_file: this.fileArray
+            product_image_file: this.fileArray, previewStatus: true
         })
     }
 
     render() {
+
+        let { open } = this.state
+        let prodImage = this.state.productImages
+        let preUploadedImages = prodImage.map((item) => {
+            if (item.product_image === this.props.id && this.state.previewStatus === false) {
+                return <img src={'http://127.0.0.1:8000' + item.product_img_file} alt="" className='w-96 h-96 object-contain' />
+            }
+            else {
+                return null
+            }
+        })
 
         return (
             <div>
@@ -192,14 +210,19 @@ export default class AddProductModal extends Component {
                                             </span>
                                             <input type='file' multiple className='border-2 rounded-md pl-2 p-1' name='product_img_file' onChange={this.imagePreview} />
                                         </div>
-                                        <div className='flex flex-col mt-2'>
-                                            <span><small>Preview</small></span>
+                                        <div className='flex flex-col mt-2.5'>
+                                            <span><small>Image Preview</small></span>
                                             <div className='object-contain'>
                                                 <Carousel responsive={responsive} className='w-full object-contain'>
+                                                    {preUploadedImages === null ?
+                                                        (this.fileArray || []).map(url => (<img src={url} alt="product" className='w-96 h-96 object-contain' />)) : preUploadedImages
+                                                    }
+                                                </Carousel>
+                                                {/* <Carousel responsive={responsive} className='w-full object-contain'>
                                                     {(this.fileArray || []).map(url => (
                                                         <img src={url} alt="product" className='w-96 h-96 object-contain' />
                                                     ))}
-                                                </Carousel>
+                                                </Carousel> */}
                                             </div>
                                         </div>
                                     </div>
@@ -211,6 +234,9 @@ export default class AddProductModal extends Component {
                         </Typography>
                     </Box>
                 </Modal >
+                <SnackbarProvider>
+                    <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} autoHideDuration={3000} open={open} ><Alert severity='success' variant='filled'>{this.state.message}</Alert></Snackbar>
+                </SnackbarProvider>
             </div >
         );
     }

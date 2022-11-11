@@ -14,6 +14,7 @@ urlpatterns = [
 
     # Media Route
     re_path(r"^product-images/savefile/$",SetImageView),
+    re_path(r"^product-images/get-images$",SetImageView),
 
     # Application Route
     re_path(r"^product$",ProductView.as_view()),
