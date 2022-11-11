@@ -14,7 +14,7 @@ import DeleteProductModal from './DeleteProductModal';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor: "#191970",
         color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
@@ -59,6 +59,10 @@ const deleteButton = {
     }
 }
 
+const tableHead = {
+    background: ""
+}
+
 export default class ProductTables extends React.Component {
 
     constructor(props) {
@@ -69,9 +73,7 @@ export default class ProductTables extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://127.0.0.1:8000/api/product", {
-            method: "GET"
-        }).then(res => console.log(res)).then((data) => { this.setState({ data: data }) })
+        fetch("http://127.0.0.1:8000/api/product").then(res => res.json()).then((data) => data === 'NULL' ? this.state.data = null : this.setState({ data: data }))
     }
 
     render() {
@@ -83,30 +85,26 @@ export default class ProductTables extends React.Component {
         let deleteModalClose = () => this.setState({ deleteModalShow: false })
 
         let tempTable =
-            < StyledTableRow >
-                <StyledTableCell component="th" scope="row">No Product Data</StyledTableCell>
-                <StyledTableCell>No Product Data</StyledTableCell>
-                <StyledTableCell>No Product Data</StyledTableCell>
-                <StyledTableCell>No Product Data</StyledTableCell>
-                <StyledTableCell>No Product Data</StyledTableCell>
-                <StyledTableCell>No Product Data</StyledTableCell>
-            </StyledTableRow >
-
-        let rows = prodData.map((item) =>
-            <StyledTableRow key={item.id}>
-                <StyledTableCell component="th" scope="row">{item.product_title}</StyledTableCell>
-                <StyledTableCell align="right">{item.product_selling_price}</StyledTableCell>
-                <StyledTableCell align="right">{item.product_discounted_price}</StyledTableCell>
-                <StyledTableCell align="right">{item.product_description}</StyledTableCell>
-                <StyledTableCell align="right">{item.product_brand}</StyledTableCell>
-                <StyledTableCell align="right">
-                    <div className="flex justify-end items-center gap-5">
-                        <Button onClick={() => this.setState({ editModalShow: true, id: item.id, title: item.product_title, selling_price: item.product_selling_price, discounted_price: item.product_discounted_price, description: item.product_description, details: item.product_details, brand: item.product_brand, category: item.product_category })} sx={editButton}>Edit</Button>
-                        <Button onClick={() => this.setState({ deleteModalShow: true, id: item.id })} sx={deleteButton}>Delete</Button>
-                    </div>
-                </StyledTableCell>
+            <StyledTableRow>
+                <StyledTableCell>No Product Data Available</StyledTableCell>
             </StyledTableRow>
-        );
+
+        let rows = prodData == null ? "" :
+            prodData.map((item) =>
+                <StyledTableRow key={item.id}>
+                    <StyledTableCell>{item.id}</StyledTableCell>
+                    <StyledTableCell align="right">{item.product_title}</StyledTableCell>
+                    <StyledTableCell align="right">{item.product_selling_price}</StyledTableCell>
+                    <StyledTableCell align="right">{item.product_discounted_price}</StyledTableCell>
+                    <StyledTableCell align="right">{item.product_brand}</StyledTableCell>
+                    <StyledTableCell align="right">
+                        <div className="flex justify-end items-center gap-5">
+                            <Button onClick={() => this.setState({ editModalShow: true, id: item.id, title: item.product_title, selling_price: item.product_selling_price, discounted_price: item.product_discounted_price, description: item.product_description, details: item.product_details, brand: item.product_brand, category: item.product_category })} sx={editButton}>Edit</Button>
+                            <Button onClick={() => this.setState({ deleteModalShow: true, id: item.id })} sx={deleteButton}>Delete</Button>
+                        </div>
+                    </StyledTableCell>
+                </StyledTableRow>
+            );
 
         return (
             <div>
@@ -118,16 +116,16 @@ export default class ProductTables extends React.Component {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <StyledTableCell>Product Name</StyledTableCell>
-                                    <StyledTableCell align="right">Product selling price</StyledTableCell>
-                                    <StyledTableCell align="right">Product discounted price</StyledTableCell>
-                                    <StyledTableCell align="right">Product Description</StyledTableCell>
-                                    <StyledTableCell align="right">Product brand</StyledTableCell>
-                                    <StyledTableCell align="right">Product action</StyledTableCell>
+                                    <StyledTableCell>Product ID</StyledTableCell>
+                                    <StyledTableCell align="right">Product Name</StyledTableCell>
+                                    <StyledTableCell align="right">Product Selling Price</StyledTableCell>
+                                    <StyledTableCell align="right">Product Discounted Price</StyledTableCell>
+                                    <StyledTableCell align="right">Product Brand</StyledTableCell>
+                                    <StyledTableCell align="right">Product Action</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.length === 0 ? tempTable : rows}
+                                {rows.length == '0' ? tempTable : rows}
                             </TableBody>
                         </Table>
                     </TableContainer>

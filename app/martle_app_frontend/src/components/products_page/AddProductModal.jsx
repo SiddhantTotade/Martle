@@ -16,7 +16,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 900,
+    width: 700,
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
@@ -104,7 +104,7 @@ export default class AddProductModal extends Component {
                         <Typography id="modal-modal-title" variant="h6" component="h2" className='flex justify-center items-center'>Add Product</Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                             <form onSubmit={this.changeHandler} >
-                                <div className='flex justify-between gap-10'>
+                                <div className='flex justify-center'>
                                     <div className='w-4/5 max-w-lg'>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Product Title</small></span>
@@ -139,8 +139,8 @@ export default class AddProductModal extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='grid'>
-                                    <Button type='submit' sx={buttonStyle}>Save Product</Button>
+                                <div className='flex justify-center w-4/5 m-auto'>
+                                    <Button type='submit' className='flex w-full justify-center' sx={buttonStyle}>Save Product</Button>
                                 </div>
                             </form>
                         </Typography>
