@@ -58,7 +58,7 @@ class ProductView(APIView):
         # saving customer data
         if product_serialized_data.is_valid():
             product_serialized_data.save()
-            return JsonResponse("Product updated successfull", safe = False)
+            return JsonResponse("Product updated successfully", safe = False)
         return JsonResponse("Failed to update product", safe = False)
 
     # deleting product by pk

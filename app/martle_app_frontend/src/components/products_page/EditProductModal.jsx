@@ -3,11 +3,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Component } from 'react';
-import { Button, Alert } from '@mui/material';
+import { Button } from '@mui/material';
 import Carousel from 'react-multi-carousel'
 import "react-multi-carousel/lib/styles.css";
 import { Snackbar } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
+import MuiAlert from '@mui/material/Alert';
 
 let CATEGORY_CHOICES = [('M', 'Mobile'), ('L', 'Laptop'),
 ('TW', 'Top Wear'), ('BW', 'Bottom Wear'), ('W', 'Watch'),
@@ -63,7 +64,7 @@ export default class AddProductModal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            product_data: [], product_img_file: [], uploadedImages: [], productImages: [], previewStatus: false
+            product_data: [], product_img_file: [], uploadedImages: [], productImages: [], previewStatus: false, open: false, message: ""
         }
         this.updateProduct = this.updateProduct.bind(this)
         this.uploadImage = this.uploadImage.bind(this)
@@ -80,6 +81,17 @@ export default class AddProductModal extends Component {
         fetch('http://127.0.0.1:8000/api/product-images/get-images', {
         }).then(res => res.json()).then((result) => this.setState({ productImages: result }), (err) => console.log(err))
     }
+
+    handleOpen = (result) => {
+        this.setState({ open: true, message: result })
+    }
+
+    // handleClose = (event, reason) => {
+    //     if (reason === 'clickaway') {
+    //         return;
+    //     }
+    //     this.setState({ open: false })
+    // }
 
     updateProduct(event) {
         event.preventDefault()
@@ -98,7 +110,7 @@ export default class AddProductModal extends Component {
                 product_brand: event.target.product_brand.value,
                 product_category: event.target.product_category.value,
             })
-        }).then(res => res.json()).then((result) => { console.log(result) }, (error) => { console.log(error) })
+        }).then(res => res.json()).then((result) => { this.handleOpen(result) }, (error) => { console.log(error) })
     }
 
     uploadImage = (event) => {
@@ -114,7 +126,7 @@ export default class AddProductModal extends Component {
         fetch('http://127.0.0.1:8000/api/product-images/savefile/', {
             method: 'POST',
             body: fileData,
-        }).then(res => res.json()).then((result) => { console.log(result) }, (err) => console.log(err))
+        }).then(res => res.json()).then((result) => { this.handleOpen(result) }, (err) => console.log(err))
     }
 
     imagePreview(event) {
@@ -131,8 +143,6 @@ export default class AddProductModal extends Component {
 
         let { open } = this.state
         let prodImage = this.state.productImages
-
-        console.log(prodImage);
 
         return (
             <div>
@@ -180,7 +190,7 @@ export default class AddProductModal extends Component {
                                         </div>
                                     </div>
                                     <div className='grid'>
-                                        <Button type='submit' sx={buttonStyle}>Update Product</Button>
+                                        <Button type='submit' sx={buttonStyle} >Update Product</Button>
                                     </div>
                                 </form>
                                 <form onSubmit={this.uploadImage} className='w-full'>
@@ -197,7 +207,7 @@ export default class AddProductModal extends Component {
                                                 <small>Product Images Files</small>
                                                 <small className='text-red-500'>*Optional</small>
                                             </span>
-                                            <input type='file' multiple className='border-2 rounded-md pl-2 p-1' name='product_img_file' onChange={this.imagePreview} />
+                                            <input type='file' multiple className='border-2 rounded-md pl-2 p-1' name='product_img_file' onChange={this.uploadImage} />
                                         </div>
                                         <div className='flex flex-col mt-2.5'>
                                             <span><small>Image Preview</small></span>
@@ -235,7 +245,7 @@ export default class AddProductModal extends Component {
                     </Box>
                 </Modal >
                 <SnackbarProvider>
-                    <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} autoHideDuration={3000} open={open} ><Alert severity='success' variant='filled'>{this.state.message}</Alert></Snackbar>
+                    <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} autoHideDuration={3000} open={open}><MuiAlert elevation={6} severity='success' variant='filled'>{this.state.message}</MuiAlert></Snackbar>
                 </SnackbarProvider>
             </div >
         );

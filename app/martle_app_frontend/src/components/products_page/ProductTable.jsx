@@ -11,6 +11,8 @@ import { Button } from '@mui/material';
 import AddProductModal from './AddProductModal'
 import EditProductModal from './EditProductModal'
 import DeleteProductModal from './DeleteProductModal';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -59,6 +61,10 @@ const deleteButton = {
     }
 }
 
+const editDel = {
+    width: '40px'
+}
+
 export default class ProductTables extends React.Component {
 
     constructor(props) {
@@ -101,8 +107,8 @@ export default class ProductTables extends React.Component {
                     <StyledTableCell align="right">{item.product_brand}</StyledTableCell>
                     <StyledTableCell align="right">
                         <div className="flex justify-end items-center gap-2">
-                            <Button onClick={() => this.setState({ editModalShow: true, id: item.id, title: item.product_title, selling_price: item.product_selling_price, discounted_price: item.product_discounted_price, description: item.product_description, details: item.product_details, brand: item.product_brand, category: item.product_category })} sx={editButton}>Edit</Button>
-                            <Button onClick={() => this.setState({ deleteModalShow: true, id: item.id })} sx={deleteButton}>Delete</Button>
+                            <Button onClick={() => this.setState({ editModalShow: true, id: item.id, title: item.product_title, selling_price: item.product_selling_price, discounted_price: item.product_discounted_price, description: item.product_description, details: item.product_details, brand: item.product_brand, category: item.product_category })} sx={editButton}><EditIcon sx={editDel} /></Button>
+                            <Button onClick={() => this.setState({ deleteModalShow: true, id: item.id })} sx={deleteButton}><DeleteIcon sx={editDel} /></Button>
                         </div>
                     </StyledTableCell>
                 </StyledTableRow>
