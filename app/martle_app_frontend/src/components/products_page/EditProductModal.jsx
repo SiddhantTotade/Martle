@@ -117,11 +117,6 @@ export default class AddProductModal extends Component {
         }).then(res => res.json()).then((result) => { console.log(result) }, (err) => console.log(err))
     }
 
-    // getImages() {
-    //     fetch('http://127.0.0.1:8000/api/product-images/get-images', {
-    //     }).then(res => res.json()).then((result) => this.setState({ productImage: result }), (err) => console.log(err))
-    // }
-
     imagePreview(event) {
         this.fileObj.push(event.target.files)
         for (let i = 0; i < this.fileObj[0].length; i++) {
@@ -136,14 +131,8 @@ export default class AddProductModal extends Component {
 
         let { open } = this.state
         let prodImage = this.state.productImages
-        let preUploadedImages = prodImage.map((item) => {
-            if (item.product_image === this.props.id && this.state.previewStatus === false) {
-                return <img src={'http://127.0.0.1:8000' + item.product_img_file} alt="" className='w-96 h-96 object-contain' />
-            }
-            else {
-                return null
-            }
-        })
+
+        console.log(prodImage);
 
         return (
             <div>
@@ -213,21 +202,32 @@ export default class AddProductModal extends Component {
                                         <div className='flex flex-col mt-2.5'>
                                             <span><small>Image Preview</small></span>
                                             <div className='object-contain'>
-                                                <Carousel responsive={responsive} className='w-full object-contain'>
-                                                    {preUploadedImages === null ?
-                                                        (this.fileArray || []).map(url => (<img src={url} alt="product" className='w-96 h-96 object-contain' />)) : preUploadedImages
-                                                    }
-                                                </Carousel>
-                                                {/* <Carousel responsive={responsive} className='w-full object-contain'>
-                                                    {(this.fileArray || []).map(url => (
-                                                        <img src={url} alt="product" className='w-96 h-96 object-contain' />
-                                                    ))}
-                                                </Carousel> */}
+                                                {this.state.previewStatus === false ?
+                                                    <Carousel responsive={responsive} className='w-full object-contain'>
+                                                        {prodImage.map((item) => {
+                                                            if (item.product_image === this.props.id) {
+                                                                return <><img src={'http://127.0.0.1:8000' + item.product_img_file} alt="" className='w-96 h-96 object-contain' /> <div className='grid mt-8'>
+                                                                    <Button type='submit' sx={buttonStyle}>Update Images</Button>
+                                                                </div></>
+                                                            }
+                                                            else {
+                                                                return (this.fileArray || []).map(url => (
+                                                                    <><img src={url} alt="product" className='w-96 h-96 object-contain' /></>
+                                                                ))
+                                                            }
+                                                        })}
+                                                    </Carousel> :
+                                                    <Carousel responsive={responsive} className='w-full object-contain'>
+                                                        {(this.fileArray || []).map(url => (
+                                                            <><img src={url} alt="product" className='w-96 h-96 object-contain' />
+                                                                <div className='grid mt-8'>
+                                                                    <Button type='submit' sx={buttonStyle}>Upload Images</Button>
+                                                                </div></>
+                                                        ))}
+                                                    </Carousel>
+                                                }
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className='grid mt-8'>
-                                        <Button type='submit' sx={buttonStyle}>Upload Images</Button>
                                     </div>
                                 </form>
                             </div>
