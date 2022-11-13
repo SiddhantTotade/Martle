@@ -1,9 +1,9 @@
 
 import React from "react";
-import HeaderSwiper from "./components/home_page/HeaderSwiper"
-import ProductNavigator from "./components/home_page/ProductNavigator";
-import ProductCarousel from "./components/home_page/ProductCarousel";
-import RandomCardsPick from "./components/home_page/RandomPickCards";
+import HeaderSwiper from "./components/home_page_components/HeaderSwiper"
+import ProductNavigator from "./components/home_page_components/ProductNavigator";
+import ProductCarousel from "./components/home_page_components/ProductCarousel";
+import RandomCardsPick from "./components/home_page_components/RandomPickCards";
 import Footer from "./components/base_components/Footer";
 import { NavBar } from "./components/base_components/NavBar";
 
