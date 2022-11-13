@@ -5,42 +5,45 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { Link } from 'react-router-dom';
 import React from 'react'
 
-export const NavBar = () => {
-    return (
-        <div className='border-white border-b'>
-            <div className="flex items-center justify-around text-white gap-28 h-20">
-                <Link to='/' className='font-title text-sky-400 text-xl'>MARTLE</Link>
-                <div>
-                    <Link to='/address' className='flex gap-1'>
-                        <p>Address</p>
-                        <PlaceIcon />
-                    </Link>
-                </div>
-                <div>
-                    <Link to='/product-upload' className='flex gap-1'>
-                        <p>Product Upload</p>
-                        <PlaceIcon />
-                    </Link>
-                </div>
-                <form action='#' method='post' className='flex justify-center items-center w-2/5 gap-2'>
-                    <input type="search" name="" id="" className='w-full flex items-center text-black border-none outline-none h-8 p-2.5 pr-2 rounded-md' />
-                    <button type='submit' className='h-8 w-16 bg-white rounded-md'>
-                        <SearchIcon className='bg-white text-blue-700' />
-                    </button>
-                </form>
-                <div>
-                    <Link to='/orders' className='flex gap-1'>
-                        <p>Orders</p>
-                        <ShoppingBasketIcon />
-                    </Link>
-                </div>
-                <div>
-                    <Link to='/cart' className='flex gap-1'>
-                        <p>Cart</p>
-                        <ShoppingCartIcon />
-                    </Link>
+export default class NavBar extends React.Component {
+
+    render() {
+        return (
+            <div className='border-white border-b'>
+                <div className="flex items-center justify-around text-white gap-28 h-20">
+                    <Link to='/' className='font-title text-sky-400 text-xl'>MARTLE</Link>
+                    <div>
+                        <Link to='/address' className='flex gap-1'>
+                            <p>Address</p>
+                            <PlaceIcon />
+                        </Link>
+                    </div>
+                    <div>
+                        <Link to='/product-upload' className='flex gap-1'>
+                            <p>Product Upload</p>
+                            <PlaceIcon />
+                        </Link>
+                    </div>
+                    <form action='#' method='post' className='flex justify-center items-center w-2/5 gap-2'>
+                        <input type="search" name="" id="" className='w-full flex items-center text-black border-none outline-none h-8 p-2.5 pr-2 rounded-md' />
+                        <button type='submit' className='h-8 w-16 bg-white rounded-md'>
+                            <SearchIcon className='bg-white text-blue-700' />
+                        </button>
+                    </form>
+                    <div>
+                        <Link to='/orders' className='flex gap-1'>
+                            <p>Orders</p>
+                            <ShoppingBasketIcon />
+                        </Link>
+                    </div>
+                    <div>
+                        <Link to='/cart' className='flex gap-1'>
+                            <p>Cart</p>
+                            <ShoppingCartIcon />
+                        </Link>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
