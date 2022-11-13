@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -7,12 +7,54 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import AddProductModal from './AddProductModal'
 import EditProductModal from './EditProductModal'
 import DeleteProductModal from './DeleteProductModal';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
+
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(1),
+        width: 'auto',
+    },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+            width: '20ch',
+        },
+    },
+}));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -43,26 +85,24 @@ const buttonStyle = {
     }
 }
 
-const editButton = {
-    background: '#41a345',
-    color: 'white',
-    '&:hover': {
-        background: '#50c955',
-        color: 'white'
-    }
+const editBtn = {
+    width: '40px',
+    color: 'green'
 }
 
-const deleteButton = {
-    background: '#cf0d0d',
-    color: 'white',
-    '&:hover': {
-        background: '#ed0909',
-        color: 'white'
-    }
+const delBtn = {
+    width: '40px',
+    color: 'red',
 }
 
-const editDel = {
-    width: '40px'
+const prodTitle = {
+    fontSize: 40,
+    color: 'rgb(56 189 248 / var(--tw-text-opacity))',
+    textDecoration: 'underline',
+    letterSpacing: '3px',
+    lineHeight:'10px',
+    textDecorationColor:'gray',
+    textUnderlineOffset: '8px'
 }
 
 export default class ProductTables extends React.Component {
@@ -70,7 +110,19 @@ export default class ProductTables extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: [], addModalShow: false, editModalShow: false, deleteModalShow: false, images: []
+            data: [], addModalShow: false, editModalShow: false, deleteModalShow: false, images: [], value: "", dataSource: "", tableFilter: ""
+        }
+    }
+
+    searchTable = (e) => {
+        if (e.target.value !== "") {
+            this.setState({ value: e.target.value })
+            const filterTable = this.state.data.filter(o => Object.keys(o).some(k => String(o[k]).toLowerCase().includes(e.target.value.toLowerCase())))
+            this.setState({ tableFilter: filterTable })
+        }
+        else {
+            this.setState({ value: e.target.value })
+            this.setState({ dataSource: this.state.dataSource })
         }
     }
 
@@ -81,15 +133,18 @@ export default class ProductTables extends React.Component {
 
     render() {
 
+        let value = this.state.value
+        let tableFilter = this.state.tableFilter
         let prodData = this.state.data
         let { id, title, selling_price, discounted_price, description, details, brand, category } = this.state
+
         let addModalClose = () => this.setState({ addModalShow: false })
         let editModalClose = () => this.setState({ editModalShow: false })
         let deleteModalClose = () => this.setState({ deleteModalShow: false })
 
         let tempTable =
             <StyledTableRow>
-                <StyledTableCell>No Product Data Available</StyledTableCell>
+                <StyledTableCell align='center' >No Product Data Available</StyledTableCell>
                 <StyledTableCell></StyledTableCell>
                 <StyledTableCell></StyledTableCell>
                 <StyledTableCell></StyledTableCell>
@@ -97,19 +152,17 @@ export default class ProductTables extends React.Component {
                 <StyledTableCell></StyledTableCell>
             </StyledTableRow>
 
-        let rows = prodData == null ? "" :
+        let rows = prodData == null ? tempTable :
             prodData.map((item) =>
                 <StyledTableRow key={item.id}>
-                    <StyledTableCell>{item.id}</StyledTableCell>
-                    <StyledTableCell align="right">{item.product_title}</StyledTableCell>
-                    <StyledTableCell align="right">{item.product_selling_price}</StyledTableCell>
-                    <StyledTableCell align="right">{item.product_discounted_price}</StyledTableCell>
-                    <StyledTableCell align="right">{item.product_brand}</StyledTableCell>
-                    <StyledTableCell align="right">
-                        <div className="flex justify-end items-center gap-2">
-                            <Button onClick={() => this.setState({ editModalShow: true, id: item.id, title: item.product_title, selling_price: item.product_selling_price, discounted_price: item.product_discounted_price, description: item.product_description, details: item.product_details, brand: item.product_brand, category: item.product_category })} sx={editButton}><EditIcon sx={editDel} /></Button>
-                            <Button onClick={() => this.setState({ deleteModalShow: true, id: item.id })} sx={deleteButton}><DeleteIcon sx={editDel} /></Button>
-                        </div>
+                    <StyledTableCell align="center">{item.id}</StyledTableCell>
+                    <StyledTableCell align="center">{item.product_title}</StyledTableCell>
+                    <StyledTableCell align="center">{item.product_selling_price}</StyledTableCell>
+                    <StyledTableCell align="center">{item.product_discounted_price}</StyledTableCell>
+                    <StyledTableCell align="center">{item.product_brand}</StyledTableCell>
+                    <StyledTableCell align="center">
+                        <Button onClick={() => this.setState({ editModalShow: true, id: item.id, title: item.product_title, selling_price: item.product_selling_price, discounted_price: item.product_discounted_price, description: item.product_description, details: item.product_details, brand: item.product_brand, category: item.product_category })}><EditIcon sx={editBtn} /></Button>
+                        <Button onClick={() => this.setState({ deleteModalShow: true, id: item.id })}><DeleteIcon sx={delBtn} /></Button>
                     </StyledTableCell>
                 </StyledTableRow>
             );
@@ -117,23 +170,49 @@ export default class ProductTables extends React.Component {
         return (
             <div>
                 <div className='w-4/5 m-auto mt-20'>
-                    <div className='flex justify-start'>
+                    <div className='text-white flex justify-center'>
+                        <Typography sx={prodTitle} >All Products</Typography>
+                    </div>
+                    <div className='flex justify-start mt-10'>
                         <Button sx={buttonStyle} onClick={() => this.setState({ addModalShow: true })}>Add Product</Button>
+                        <Search className='text-white'>
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Search…"
+                                onChange={this.searchTable}
+                                value={value}
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </Search>
                     </div>
                     <TableContainer component={Paper} className="mt-2">
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <StyledTableCell>Product ID</StyledTableCell>
-                                    <StyledTableCell align="right">Product Name</StyledTableCell>
-                                    <StyledTableCell align="right">Product Selling Price</StyledTableCell>
-                                    <StyledTableCell align="right">Product Discounted Price</StyledTableCell>
-                                    <StyledTableCell align="right">Product Brand</StyledTableCell>
-                                    <StyledTableCell align="right">Product Action</StyledTableCell>
+                                    <StyledTableCell align="center">Product ID</StyledTableCell>
+                                    <StyledTableCell align="center">Product Name</StyledTableCell>
+                                    <StyledTableCell align="center">Product Selling Price</StyledTableCell>
+                                    <StyledTableCell align="center">Product Discounted Price</StyledTableCell>
+                                    <StyledTableCell align="center">Product Brand</StyledTableCell>
+                                    <StyledTableCell align="center">Product Action</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.length === '0' ? tempTable : rows}
+                                {value.length > 0 ? tableFilter.map((item) => {
+                                    return <StyledTableRow key={item.id}>
+                                        <StyledTableCell align="center">{item.id}</StyledTableCell>
+                                        <StyledTableCell align="center">{item.product_title}</StyledTableCell>
+                                        <StyledTableCell align="center">{item.product_selling_price}</StyledTableCell>
+                                        <StyledTableCell align="center">{item.product_discounted_price}</StyledTableCell>
+                                        <StyledTableCell align="center">{item.product_brand}</StyledTableCell>
+                                        <StyledTableCell align="center">
+                                            <Button onClick={() => this.setState({ editModalShow: true, id: item.id, title: item.product_title, selling_price: item.product_selling_price, discounted_price: item.product_discounted_price, description: item.product_description, details: item.product_details, brand: item.product_brand, category: item.product_category })}><EditIcon sx={editBtn} /></Button>
+                                            <Button onClick={() => this.setState({ deleteModalShow: true, id: item.id })}><DeleteIcon sx={delBtn} /></Button>
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                }) : rows}
                             </TableBody>
                         </Table>
                     </TableContainer>
