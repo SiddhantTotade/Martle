@@ -26,18 +26,18 @@ export default class Product extends React.Component {
                             smallImage: {
                                 alt: 'Wristwatch by Ted Baker London',
                                 // isFluidWidth: true,
-                                width: 300,
-                                height: 300,
+                                width: 400,
+                                height: 400,
                                 src: watch300,
                             },
                             largeImage: {
                                 src: watch1200,
-                                width: 2000,
-                                height: 1200
+                                width: 1800,
+                                height: 1900
                             },
                             enlargedImageContainerDimensions: {
-                                width: '400%',
-                                height: '200%'
+                                width: '320%',
+                                height: '180%'
                             },
                             shouldUsePositiveSpaceLens: true,
                             isHintEnabled: true,
