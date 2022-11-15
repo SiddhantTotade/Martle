@@ -5,7 +5,8 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { Link } from 'react-router-dom';
 import React from 'react'
 import { Button } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import Sidebar from './Sidebar';
+import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 
 export default class NavBar extends React.Component {
 
@@ -16,26 +17,20 @@ export default class NavBar extends React.Component {
         }
     }
 
-    handleSidebar() {
-        this.setState({ sidebar: true })
-        console.log(this.state.sidebar);
-    }
-
     render() {
+
+        let sidebar = () => this.setState({ sidebar: false })
+
         return (
             <div className='border-white border-b'>
                 <div className="flex items-center justify-around text-white gap-28 h-20">
-                    <Button onClick={this.handleSidebar} ><MenuIcon /></Button>
+                    <div className='absolute -left-10 hover:cursor top-28 p-3 z-50 bg-white border-2 border-white rounded-full hover:translate-x-2 duration-300'>
+                        <Button onClick={() => this.setState({ sidebar: true })} className='left-4 top-15 item-center' ><KeyboardArrowRightOutlinedIcon/></Button>
+                    </div>
                     <Link to='/' className='font-title text-sky-400 text-xl'>MARTLE</Link>
                     <div>
                         <Link to='/address' className='flex gap-1'>
                             <p>Address</p>
-                            <PlaceIcon />
-                        </Link>
-                    </div>
-                    <div>
-                        <Link to='/product-upload' className='flex gap-1'>
-                            <p>Product Upload</p>
                             <PlaceIcon />
                         </Link>
                     </div>
@@ -58,6 +53,7 @@ export default class NavBar extends React.Component {
                         </Link>
                     </div>
                 </div>
+                <Sidebar open={this.state.sidebar} onClose={sidebar} />
             </div>
         )
     }
