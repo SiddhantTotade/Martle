@@ -24,10 +24,10 @@ export default class NavBar extends React.Component {
         return (
             <div className='border-white border-b'>
                 <div className="flex items-center justify-around text-white gap-28 h-20">
-                    <div className='absolute -left-10 hover:cursor top-28 p-3 z-50 bg-white border-2 border-white rounded-full hover:translate-x-2 duration-300'>
-                        <Button onClick={() => this.setState({ sidebar: true })} className='left-4 top-15 item-center' ><KeyboardArrowRightOutlinedIcon/></Button>
+                    <div className='absolute -left-10 hover:cursor top-28 p-3 z-50 bg-white border-2 border-white rounded-full hover:translate-x-4 duration-300'>
+                        <Button onClick={() => this.setState({ sidebar: true })} className='left-3.5 p-0 m-0' ><KeyboardArrowRightOutlinedIcon/></Button>
                     </div>
-                    <Link to='/' className='font-title text-sky-400 text-xl'>MARTLE</Link>
+                    <Link to='/' className='font-title text-sky-400 tracking-widest underline decoration-slate-500 underline-offset-4 text-xl'>MARTLE</Link>
                     <div>
                         <Link to='/address' className='flex gap-1'>
                             <p>Address</p>
