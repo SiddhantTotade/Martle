@@ -33,11 +33,11 @@ export default class Product extends React.Component {
                             largeImage: {
                                 src: watch1200,
                                 width: 1800,
-                                height: 1900
+                                height: 1500
                             },
                             enlargedImageContainerDimensions: {
-                                width: '320%',
-                                height: '180%'
+                                width: '325%',
+                                height: '150%'
                             },
                             shouldUsePositiveSpaceLens: true,
                             isHintEnabled: true,
