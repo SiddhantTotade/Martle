@@ -4,13 +4,28 @@ import PlaceIcon from '@mui/icons-material/Place';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { Link } from 'react-router-dom';
 import React from 'react'
+import { Button } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 export default class NavBar extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            sidebar: false
+        }
+    }
+
+    handleSidebar() {
+        this.setState({ sidebar: true })
+        console.log(this.state.sidebar);
+    }
 
     render() {
         return (
             <div className='border-white border-b'>
                 <div className="flex items-center justify-around text-white gap-28 h-20">
+                    <Button onClick={this.handleSidebar} ><MenuIcon /></Button>
                     <Link to='/' className='font-title text-sky-400 text-xl'>MARTLE</Link>
                     <div>
                         <Link to='/address' className='flex gap-1'>
