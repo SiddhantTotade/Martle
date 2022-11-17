@@ -4,7 +4,6 @@ import PlaceIcon from '@mui/icons-material/Place';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { Link } from 'react-router-dom';
 import React from 'react'
-import { Button } from '@mui/material';
 import Sidebar from './Sidebar';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 
@@ -24,8 +23,8 @@ export default class NavBar extends React.Component {
         return (
             <div className='border-white border-b'>
                 <div className="flex items-center justify-around text-white gap-28 h-20">
-                    <div className='absolute -left-10 hover:cursor top-28 p-3 z-50 bg-white border-2 border-white rounded-full hover:translate-x-4 duration-300'>
-                        <Button onClick={() => this.setState({ sidebar: true })} className='left-3.5 p-0 m-0' ><KeyboardArrowRightOutlinedIcon/></Button>
+                    <div className='fixed -left-3 hover:cursor-pointer top-28 p-2 z-50 bg-white border-2 border-white rounded-3xl hover:translate-x-4 duration-300'>
+                        <div onClick={() => this.setState({ sidebar: true })} className='left-3.5 p-2 m-0' ><KeyboardArrowRightOutlinedIcon className='text-blue-700' /></div>
                     </div>
                     <Link to='/' className='font-title text-sky-400 tracking-widest underline decoration-slate-500 underline-offset-4 text-xl'>MARTLE</Link>
                     <div>
