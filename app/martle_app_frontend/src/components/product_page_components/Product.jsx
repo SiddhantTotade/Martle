@@ -45,7 +45,7 @@ export default class Product extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://127.0.0.1:8000/api/product')
+        fetch('http://127.0.0.1:8000/api/product/:id')
             .then((res) => res.json())
             .then(data => { this.setState({ product_data: data }) });
     }
@@ -62,14 +62,7 @@ export default class Product extends React.Component {
 
         const rows = this.state.product_data
 
-        rows.map((item, images) => {
-            console.log(item.product_images);
-            return item.product_images.map(({
-                product_image, ...rest
-            }) => {
-                return console.log(rest.product_img_file);
-            })
-        })
+        console.log(this.state.product_data);
 
         return (
             <>
