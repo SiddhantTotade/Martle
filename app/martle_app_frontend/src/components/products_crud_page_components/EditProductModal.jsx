@@ -65,7 +65,7 @@ export default class AddProductModal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            product_data: [], desc_data: [], product_img_file: [], uploadedImages: [], productImages: [], previewStatus: false, open: false, message: ""
+            product_data: [], desc_data: [], desc: false, product_img_file: [], uploadedImages: [], productImages: [], previewStatus: false, open: false, message: ""
         }
         this.updateProduct = this.updateProduct.bind(this)
         this.uploadImage = this.uploadImage.bind(this)
@@ -145,6 +145,9 @@ export default class AddProductModal extends Component {
         fetch('http://127.0.0.1:8000/api/get-description')
             .then((res) => res.json())
             .then(data => { this.setState({ desc_data: data }) })
+
+        let area = document.getElementById('textarea')
+        area.value = this.state.desc_data
     }
 
     render() {
@@ -178,12 +181,14 @@ export default class AddProductModal extends Component {
                                             <input type='number' defaultValue={this.props.discounted_price} className='border-2 rounded-md pl-2 p-1' placeholder='Enter Product Discounted Price' name='product_discounted_price' />
                                         </div>
                                         <div className='flex flex-col mt-2'>
-                                            <span><small>Product Description</small></span>
                                             <div className='flex justify-between'>
-                                                <textarea defaultValue={this.props.description} value={this.state.desc_data} required type='text' className='border-2 border-black rounded-md pl-2 p-1 w-96' placeholder='Enter Product Description' name='product_description' />
+                                                <span><small>Product Description</small></span>
+                                                <span><small className='text-red-500' >*Double Click to get the Description</small></span>
+                                            </div>
+                                            <div className='flex justify-between'>
+                                                <textarea defaultValue={this.props.description} required id='textarea' type='text' className='border-2 border-black rounded-md pl-2 p-1 w-96' placeholder='Enter Product Description' name='product_description' />
                                                 <Button onClick={this.getDescription} sx={buttonStyle}>Get Description</Button>
                                             </div>
-                                            {/* <textarea type='text' defaultValue={this.props.description} className='border-2 rounded-md pl-2 p-1' placeholder='Enter Product Description' name='product_description' /> */}
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Product Details</small></span>

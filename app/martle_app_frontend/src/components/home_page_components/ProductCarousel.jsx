@@ -63,7 +63,7 @@ export default class ProductCarousel extends Component {
                                 product_image, ...rest
                             }) => {
                                 return <div>
-                                    <Link to={`/product`} className={style} >
+                                    <Link to={`/product/${item.id}`} className={style} >
                                         <div>
                                             <img src={'http://127.0.0.1:8000' + rest.product_img_file} alt="" className="h-60 w-full mt-2 rounded-lg" />
                                         </div>
