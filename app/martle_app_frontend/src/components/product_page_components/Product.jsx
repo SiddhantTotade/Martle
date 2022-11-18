@@ -36,6 +36,20 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default class Product extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            product_data: []
+        }
+    }
+
+    componentDidMount() {
+        fetch('http://127.0.0.1:8000/api/product')
+            .then((res) => res.json())
+            .then(data => { this.setState({ product_data: data }) });
+    }
+
     render() {
 
         let settings = {
@@ -45,6 +59,17 @@ export default class Product extends React.Component {
             slidesToShow: 1,
             slidesToScroll: 1
         };
+
+        const rows = this.state.product_data
+
+        rows.map((item, images) => {
+            console.log(item.product_images);
+            return item.product_images.map(({
+                product_image, ...rest
+            }) => {
+                return console.log(rest.product_img_file);
+            })
+        })
 
         return (
             <>
@@ -76,25 +101,29 @@ export default class Product extends React.Component {
                         </ReactSlick>
                     </div>
                     <div className="flex flex-col justify-around items-center w-3/5 border-2 border-gray-600" >
-                        <div>
-                            <p>Product Name</p>
-                        </div>
-                        <div>
-                            <p>Product Price</p>
-                        </div>
-                        <div>
-                            <p>Product Stars</p>
-                        </div>
-                        <div>
-                            <p>Buy Now</p>
-                            <p>Add to Cart</p>
-                        </div>
-                        <div>
-                            <p>Discount Table</p>
-                        </div>
-                        <div>
-                            <p>Product Desc</p>
-                        </div>
+                        {rows.map((item) => {
+                            return (<div>
+                                <div>
+                                    <p>Product Name</p>
+                                </div>
+                                <div>
+                                    <p>Product Price</p>
+                                </div>
+                                <div>
+                                    <p>Product Stars</p>
+                                </div>
+                                <div>
+                                    <p>Buy Now</p>
+                                    <p>Add to Cart</p>
+                                </div>
+                                <div>
+                                    <p>Discount Table</p>
+                                </div>
+                                <div>
+                                    <p>Product Desc</p>
+                                </div>
+                            </div>)
+                        })}
                     </div>
                 </div>
                 <Carousel />

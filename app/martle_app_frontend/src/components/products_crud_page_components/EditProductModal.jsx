@@ -20,7 +20,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 900,
+    width: 1200,
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
@@ -49,6 +49,7 @@ const responsive = {
 const buttonStyle = {
     background: '#0062e1',
     color: 'white',
+    height: '4vh',
     mt: '10px',
     '&:hover': {
         background: '#1976d2',
@@ -64,11 +65,12 @@ export default class AddProductModal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            product_data: [], product_img_file: [], uploadedImages: [], productImages: [], previewStatus: false, open: false, message: ""
+            product_data: [], desc_data: [], product_img_file: [], uploadedImages: [], productImages: [], previewStatus: false, open: false, message: ""
         }
         this.updateProduct = this.updateProduct.bind(this)
         this.uploadImage = this.uploadImage.bind(this)
         this.imagePreview = this.imagePreview.bind(this)
+        this.getDescription = this.getDescription.bind(this)
     }
 
     product_image = 'productimg.jpg'
@@ -139,6 +141,12 @@ export default class AddProductModal extends Component {
         })
     }
 
+    getDescription() {
+        fetch('http://127.0.0.1:8000/api/get-description')
+            .then((res) => res.json())
+            .then(data => { this.setState({ desc_data: data }) })
+    }
+
     render() {
 
         let { open } = this.state
@@ -150,9 +158,9 @@ export default class AddProductModal extends Component {
                     <Box sx={style}>
                         <Typography id="modal-modal-title" variant="h6" component="h2" className='flex justify-center items-center'>Edit Product</Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            <div className='flex gap-5 justify-between'>
+                            <div className='flex justify-between gap-5'>
                                 <form onSubmit={this.updateProduct} className='w-full' >
-                                    <div className='w-full max-w-lg'>
+                                    <div className='w-full'>
                                         <div className='flex flex-col mt-2'>
                                             <span className='flex'><small>Product id</small></span>
                                             <input type='text' defaultValue={this.props.id} disabled className='border-2 rounded-md pl-2 p-1' name='product_id' />
@@ -171,7 +179,11 @@ export default class AddProductModal extends Component {
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Product Description</small></span>
-                                            <textarea type='text' defaultValue={this.props.description} className='border-2 rounded-md pl-2 p-1' placeholder='Enter Product Description' name='product_description' />
+                                            <div className='flex justify-between'>
+                                                <textarea defaultValue={this.props.description} value={this.state.desc_data} required type='text' className='border-2 border-black rounded-md pl-2 p-1 w-96' placeholder='Enter Product Description' name='product_description' />
+                                                <Button onClick={this.getDescription} sx={buttonStyle}>Get Description</Button>
+                                            </div>
+                                            {/* <textarea type='text' defaultValue={this.props.description} className='border-2 rounded-md pl-2 p-1' placeholder='Enter Product Description' name='product_description' /> */}
                                         </div>
                                         <div className='flex flex-col mt-2'>
                                             <span><small>Product Details</small></span>
@@ -194,7 +206,7 @@ export default class AddProductModal extends Component {
                                     </div>
                                 </form>
                                 <form onSubmit={this.uploadImage} className='w-full'>
-                                    <div className='w-full max-w-sm'>
+                                    <div className='w-full'>
                                         <div className='flex flex-col mt-2'>
                                             <span className='flex justify-between'>
                                                 <small>Product Images URL</small>

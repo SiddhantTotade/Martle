@@ -5,8 +5,17 @@ from django.core import serializers as customer_data_serializer
 from .models import *
 from .serializers import *
 from rest_framework.decorators import api_view
+import pandas as pd
 
 # Create your views here.
+
+# Function for description
+def upload_description(request):
+    df = pd.read_excel('/home/siddhanttotade/Documents/Docs/Programming/GIT/martle/app/martle_app_backend/data_to_dict.xlsx', index_col=None)
+    key = df['Key'].tolist()
+    val = df['Value'].replace("\\u200e", "", regex=True).tolist()
+    combine = dict(list(zip(key, val)))
+    return JsonResponse(str(combine),safe=False)
 
 #  Function for image upload
 @api_view(['GET','POST'])

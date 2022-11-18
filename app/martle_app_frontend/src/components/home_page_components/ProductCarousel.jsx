@@ -23,7 +23,7 @@ const responsive = {
     }
 };
 
-const style = 'h-62 grid justify-items-center w-56 border-2 border-white rounded-xl text-white bg-sky-400'
+const style = 'h-62 grid justify-items-center w-56 border-2 border-white rounded-xl text-white bg-gray-700'
 
 export default class ProductCarousel extends Component {
 

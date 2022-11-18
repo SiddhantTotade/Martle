@@ -24,7 +24,7 @@ export default class NavBar extends React.Component {
             <div className='border-white border-b'>
                 <div className="flex items-center justify-around text-white gap-28 h-20">
                     <div className='fixed -left-3 hover:cursor-pointer top-28 p-2 z-50 bg-white border-2 border-white rounded-3xl hover:translate-x-4 duration-300'>
-                        <div onClick={() => this.setState({ sidebar: true })} className='left-3.5 p-2 m-0' ><KeyboardArrowRightOutlinedIcon className='text-blue-700' /></div>
+                        <div onClick={() => this.setState({ sidebar: true })} className='left-3.5 p-2 m-0' ><KeyboardArrowRightOutlinedIcon className='text-blue-700 hover:cursor-pointer' /></div>
                     </div>
                     <Link to='/' className='font-title text-sky-400 tracking-widest underline decoration-slate-500 underline-offset-4 text-xl'>MARTLE</Link>
                     <div>
