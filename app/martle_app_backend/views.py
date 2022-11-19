@@ -13,6 +13,7 @@ class GetProductById(APIView):
     def get(self, request, pk):
         product_by_id = Product.objects.filter(pk=pk)
         product_serializer = ProductSerializer(product_by_id, many = True)
+        print(pk)
         return JsonResponse(product_serializer.data,safe=False)
 
 # Function for description

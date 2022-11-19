@@ -43,7 +43,7 @@ export default class Sidebar extends Component {
                                 </ListItem>
                             </List>
                             <List>
-                                <Link to='/product-upload' >
+                                <Link to='/api/product-upload' >
                                     <ListItem disablePadding>
                                         <ListItemButton>
                                             <ListItemIcon><CloudUploadOutlinedIcon /></ListItemIcon>

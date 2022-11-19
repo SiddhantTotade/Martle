@@ -45,7 +45,7 @@ export default class Product extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://127.0.0.1:8000/api/product/:id')
+        fetch(`http://127.0.0.1:8000/api/product/id/${this.props.id}`)
             .then((res) => res.json())
             .then(data => { this.setState({ product_data: data }) });
     }
@@ -61,8 +61,7 @@ export default class Product extends React.Component {
         };
 
         const rows = this.state.product_data
-
-        console.log(this.state.product_data);
+        console.log(rows);
 
         return (
             <>
@@ -97,7 +96,7 @@ export default class Product extends React.Component {
                         {rows.map((item) => {
                             return (<div>
                                 <div>
-                                    <p>Product Name</p>
+                                    <p>{item.product_title}</p>
                                 </div>
                                 <div>
                                     <p>Product Price</p>
