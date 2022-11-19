@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Carousel from 'react-multi-carousel'
 import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
-import Product from "../product_page_components/Product";
 
 const responsive = {
     superLargeDesktop: {
@@ -45,7 +44,6 @@ export default class ProductCarousel extends Component {
     render() {
 
         const rows = this.state.product_data
-        let { id } = this.state
 
         return (
             <div className="w-4/5 m-auto mt-32 justify-center">
@@ -56,7 +54,7 @@ export default class ProductCarousel extends Component {
                                 product_image, ...rest
                             }) => {
                                 return <div>
-                                    <Link to='/api/product/id/43' onClick={() => this.setState({ id: item.id })} className={style} >
+                                    <Link to={`/api/product/id/${item.id}`} onClick={() => this.setState({ id: item.id })} className={style} >
                                         <div>
                                             <img src={'http://127.0.0.1:8000' + rest.product_img_file} alt="" className="h-60 w-full mt-2 rounded-lg" />
                                         </div>

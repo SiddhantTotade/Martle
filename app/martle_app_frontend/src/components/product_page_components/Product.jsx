@@ -45,7 +45,10 @@ export default class Product extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`http://127.0.0.1:8000/api/product/id/${this.props.id}`)
+        let id = window.location.href
+        id = id.charAt(id.length - 2) + id.charAt(id.length - 1)
+
+        fetch(`http://127.0.0.1:8000/api/product/id/${id}`)
             .then((res) => res.json())
             .then(data => { this.setState({ product_data: data }) });
     }
@@ -61,7 +64,6 @@ export default class Product extends React.Component {
         };
 
         const rows = this.state.product_data
-        console.log(rows);
 
         return (
             <>
@@ -92,14 +94,14 @@ export default class Product extends React.Component {
                             }} />
                         </ReactSlick>
                     </div>
-                    <div className="flex flex-col justify-around items-center w-3/5 border-2 border-gray-600" >
+                    <div className="flex flex-col justify-around items-center w-3/5 border-2 border-gray-600 text-white" >
                         {rows.map((item) => {
                             return (<div>
                                 <div>
                                     <p>{item.product_title}</p>
                                 </div>
                                 <div>
-                                    <p>Product Price</p>
+                                    <p>{item.product_selling_price}</p>
                                 </div>
                                 <div>
                                     <p>Product Stars</p>
