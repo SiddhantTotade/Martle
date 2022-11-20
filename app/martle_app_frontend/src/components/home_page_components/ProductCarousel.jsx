@@ -46,32 +46,60 @@ export default class ProductCarousel extends Component {
         const rows = this.state.product_data
 
         return (
-            <div className="w-4/5 m-auto mt-32 justify-center">
-                <Carousel responsive={responsive}>
-                    {rows.map((item, images) => {
-                        if (item.product_category === 'M') {
-                            return item.product_images.map(({
-                                product_image, ...rest
-                            }) => {
-                                return <div>
-                                    <Link to={`/api/product/id/${item.id}`} onClick={() => this.setState({ id: item.id })} className={style} >
-                                        <div>
-                                            <img src={'http://127.0.0.1:8000' + rest.product_img_file} alt="" className="h-60 w-full mt-2 rounded-lg" />
-                                        </div>
-                                        <div className="mt-3">
-                                            <p>{item.product_title}</p>
-                                            <p><small className="mt-0">₹</small><span> {item.product_discounted_price}</span></p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            })
-                        }
-                        else {
-                            return null
-                        }
-                    })}
-                </Carousel >
-            </div >
+            <div>
+                <div className="w-4/5 m-auto mt-32 justify-center">
+                    <Carousel responsive={responsive}>
+                        {rows.map((item, images) => {
+                            if (item.product_category === 'M') {
+                                return item.product_images.map(({
+                                    product_image, ...rest
+                                }) => {
+                                    return <div>
+                                        <Link to={`/api/product/id/${item.id}`} onClick={() => this.setState({ id: item.id })} className={style} >
+                                            <div>
+                                                <img src={'http://127.0.0.1:8000' + rest.product_img_file} alt="" className="h-60 w-full mt-2 rounded-lg" />
+                                            </div>
+                                            <div className="mt-3">
+                                                <p>{item.product_title}</p>
+                                                <p><small className="mt-0">₹</small><span> {item.product_discounted_price}</span></p>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                })
+                            }
+                            else {
+                                return null
+                            }
+                        })}
+                    </Carousel >
+                </div >
+                <div className="w-4/5 m-auto mt-32 justify-center">
+                    <Carousel responsive={responsive}>
+                        {rows.map((item, images) => {
+                            if (item.product_category === 'L') {
+                                return item.product_images.map(({
+                                    product_image, ...rest
+                                }) => {
+                                    return <div>
+                                        <Link to={`/api/product/id/${item.id}`} onClick={() => this.setState({ id: item.id })} className={style} >
+                                            <div>
+                                                <img src={'http://127.0.0.1:8000' + rest.product_img_file} alt="" className="h-60 w-full mt-2 rounded-lg" />
+                                            </div>
+                                            <div className="mt-3">
+                                                <p>{item.product_title}</p>
+                                                <p><small className="mt-0">₹</small><span> {item.product_discounted_price}</span></p>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                })
+                            }
+                            else {
+                                return null
+                            }
+                        })}
+                    </Carousel >
+                </div >
+            </div>
         )
     }
 }

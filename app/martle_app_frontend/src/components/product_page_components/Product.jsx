@@ -5,7 +5,6 @@ import ReactImageMagnify from 'react-image-magnify';
 import ReactSlick from "react-slick";
 import watch300 from '../product_page_components/asus_vivobook_2k3hnhx.png'
 import watch1200 from '../product_page_components/asus_vivobook_2k3hnhx.png'
-import Carousel from '../home_page_components/ProductCarousel'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -40,7 +39,7 @@ export default class Product extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            product_data: []
+            product_data: [], desc_data: {}
         }
     }
 
@@ -51,6 +50,10 @@ export default class Product extends React.Component {
         fetch(`http://127.0.0.1:8000/api/product/id/${id}`)
             .then((res) => res.json())
             .then(data => { this.setState({ product_data: data }) });
+
+        fetch(`http://127.0.0.1:8000/api/product/desc/${id}`)
+            .then((res) => res.json())
+            .then(data => { this.setState({ desc_data: data }) });
     }
 
     render() {
@@ -64,6 +67,7 @@ export default class Product extends React.Component {
         };
 
         const rows = this.state.product_data
+        const desc = this.state.desc_data
 
         return (
             <>
@@ -120,7 +124,6 @@ export default class Product extends React.Component {
                         })}
                     </div>
                 </div>
-                <Carousel />
                 <div className="w-4/5 flex m-auto mt-32">
                     <TableContainer component={Paper}>
                         <Table>
@@ -131,10 +134,12 @@ export default class Product extends React.Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <StyledTableRow>
-                                    <StyledTableCell align="center">Key</StyledTableCell>
-                                    <StyledTableCell align="center">Value</StyledTableCell>
-                                </StyledTableRow>
+                                {Object.entries(desc).map((key) => (
+                                    <StyledTableRow>
+                                        <StyledTableCell align="center">{key[0]}</StyledTableCell>
+                                        <StyledTableCell align="center">{key[1]}</StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
