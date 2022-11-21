@@ -20,7 +20,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
+        fontSize: 12,
     },
 }));
 
@@ -129,15 +129,14 @@ export default class Product extends React.Component {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <StyledTableCell align="center">KEY</StyledTableCell>
-                                    <StyledTableCell align="center">VALUE</StyledTableCell>
+                                    <StyledTableCell ></StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {Object.entries(desc).map((key) => (
-                                    <StyledTableRow>
-                                        <StyledTableCell align="center">{key[0]}</StyledTableCell>
-                                        <StyledTableCell align="center">{key[1]}</StyledTableCell>
+                                    <StyledTableRow className="w-full">
+                                        <StyledTableCell className="w-2/4" align="center">{key[0]}</StyledTableCell>
+                                        <StyledTableCell className="w-2/4" align="center">{key[1]}</StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>
