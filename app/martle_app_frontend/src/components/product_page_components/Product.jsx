@@ -129,7 +129,7 @@ export default class Product extends React.Component {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <StyledTableCell ></StyledTableCell>
+                                    <StyledTableCell align="center" >Product Description</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
