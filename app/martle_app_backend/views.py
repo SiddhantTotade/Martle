@@ -4,8 +4,11 @@ from rest_framework.views import APIView
 from django.core import serializers as customer_data_serializer
 from .models import *
 from .serializers import *
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.authentication import *
 from .renderers import *
 import pandas as pd
@@ -14,7 +17,7 @@ import pandas as pd
 
 
 # Generate access and refresh tokens for users
-def get_tokens_for_users(user):
+def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
     return {
         'refresh': str(refresh),
@@ -26,8 +29,81 @@ def get_tokens_for_users(user):
 class UserRegistrationView(APIView):
     renderer_classes = [UserRenderer]
 
-    def post(self,request,format=None):
+    def post(self, request, format=None):
         serializer = UserRegistrationSerializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+
+        user = serializer.save()
+        token = get_tokens_for_user(user)
+        return Response({'token': token, 'msg': 'Admin registered successfully'}, status=status.HTTP_201_CREATED)
+
+    # User login view
+
+
+class UserLoginView(APIView):
+    renderer_classes = [UserRenderer]
+
+    def post(self, request, format=None):
+        serializer = UserLoginSerializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+        email = serializer.data.get('email')
+        password = serializer.data.get('password')
+
+        user = authenticate(email=email, password=password)
+
+        if user is not None:
+            token = get_tokens_for_user(user)
+            return Response({'token': token, 'msg': 'Login success'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'errors': {'non_fields_errors': ['Email or Password is not valid']}}, status=status.HTTP_404_NOT_FOUND)
+
+
+# User profile view
+class UserProfileView(APIView):
+    renderer_classes = [UserRenderer]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        serializer = UserProfileSerializer(request.user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# User change password view
+class UserChangePasswordView(APIView):
+    renderer_classes = [UserRenderer]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        serializer = UserChangePasswordSerializer(
+            data=request.data, context={'user': request.user})
+
+        serializer.is_valid(raise_exception=True)
+        return Response({'data': 'Password changed successfully'}, status=status.HTTP_200_OK)
+
+
+# User send password-reset link view
+class SendPasswordResetEmailView(APIView):
+    renderer_classes = [UserRenderer]
+
+    def post(self, request, format=None):
+        serializer = UserSendPasswordResetEmailSerializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+        return Response({'msg': 'Password reset link has been sent on your e-mail'}, status=status.HTTP_200_OK)
+
+
+# User password-reset view
+class UserPasswordResetView(APIView):
+    renderer_classes = [UserRenderer]
+
+    def post(self, request, uid, token, format=None):
+        serializer = UserPasswordResetSerializer(
+            data=request.data, context={'uid': uid, 'token': token})
+
+        serializer.is_valid(raise_exception=True)
+        return Response({'msg': 'Password reset successfully'}, status=status.HTTP_200_OK)
 
 
 def get_description(request, pk):
@@ -42,9 +118,8 @@ class GetProductById(APIView):
         product_serializer = ProductSerializer(product_by_id, many=True)
         return JsonResponse(product_serializer.data, safe=False)
 
+
 # Function for description
-
-
 def upload_description(request):
     df = pd.read_excel(
         '/home/siddhanttotade/Documents/Docs/Programming/GIT/martle/app/martle_app_backend/data_to_dict.xlsx', index_col=None)
