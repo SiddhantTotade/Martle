@@ -27,9 +27,8 @@ CATEGORY_CHOICES = (('M', 'Mobile'), ('L', 'Laptop'),
 STATUS_CHOICES = (('Accepted', 'Accepted'), ('Packed', 'Packed'),
                   ('On the way', 'On the way'), ('Delivered', 'Delivered'), ('Cancel', 'Cancel'), ('Applied for return', 'Applied for return'), ('Returned', 'Returned'))
 
+
 # User authentication model
-
-
 class UserManager(BaseUserManager):
     def create_user(self, email, name, tc, password=None, password2=None):
         if not email:
