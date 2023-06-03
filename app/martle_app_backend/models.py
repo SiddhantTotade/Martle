@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
@@ -25,55 +25,94 @@ CATEGORY_CHOICES = (('M', 'Mobile'), ('L', 'Laptop'),
 
 # Product status
 STATUS_CHOICES = (('Accepted', 'Accepted'), ('Packed', 'Packed'),
-                  ('On the way', 'On the way'), ('Delivered', 'Delivered'), ('Cancel', 'Cancel'),('Applied for return', 'Applied for return'),('Returned', 'Returned'))
+                  ('On the way', 'On the way'), ('Delivered', 'Delivered'), ('Cancel', 'Cancel'), ('Applied for return', 'Applied for return'), ('Returned', 'Returned'))
+
+# User authentication model
+
+
+class UserManager(BaseUserManager):
+    def create_user(self, email, name, tc, password=None, password2=None):
+        if not email:
+            raise ValueError("Admin must have an email address")
+
+        user = self.model(
+            email=self.normalize_email(email),
+            name=name,
+            tc=tc
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+
+        return user
+
+    def create_super_user(self, email, name, tc, password=None, password2=None):
+        user = self.create_user(
+            email,
+            password=password,
+            name=name,
+            tc=tc
+        )
+
+        user.is_admin = True
+        user.save(using=self._db)
+
+        return user
+
 
 # User Authentication Models
 class User(AbstractUser):
-    username = None
-    email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=12)
-    is_email_verified = models.BooleanField(default=False)
-    is_phone_verified = models.BooleanField(default=False)
-    otp = models.CharField(max_length=6,null=True,blank=True)
-    email_verification_token = models.CharField(max_length=200,null=True,blank=True)
-    forgot_password_token = models.CharField(max_length=200,null=True,blank=True)
+    email = models.EmailField(
+        verbose_name='Email Address', max_length=255, unique=True)
+    name = models.CharField(max_length=255)
+    tc = models.BooleanField()
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['name', 'tc']
 
-    def name(self):
-        return self.first_name + " " + self.last_name
+    def __str__(self):
+        return str(self.id)
 
-    def str(self):
-        return self.email
+    def has_perm(self, perm, obj=None):
+        return self.is_admin
 
-@receiver(post_save,sender=User)
-def send_email_token(sender,instance,created,**kwargs):
+    def has_module_perms(self, app_label):
+        return True
+
+    @property
+    def is_staff(self):
+        return self.is_admin
+
+
+@receiver(post_save, sender=User)
+def send_email_token(sender, instance, created, **kwargs):
     if created:
         try:
             subject = "Your email needs to be verified"
             message = f"Hi, Please click on the link to verify email. Link - http://127.0.0.1:8000/{uuid.uuid4()}"
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [instance.email]
-            send_mail(subject,message,email_from,recipient_list)
+            send_mail(subject, message, email_from, recipient_list)
         except Exception as e:
             print(e)
-
-
 
 
 # Project Models
 
 # --------- Customer Model
 class Customer(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    name = models.CharField(max_length = 30)
-    address = models.CharField(default = None, max_length = 50)
-    locality = models.CharField(max_length = 30)
-    city = models.CharField(max_length = 30)
-    state = models.CharField(choices = STATE_CHOICES, max_length = 50)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    address = models.CharField(default=None, max_length=50)
+    locality = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    state = models.CharField(choices=STATE_CHOICES, max_length=50)
     zipcode = models.IntegerField()
     country = CountryField()
 
@@ -86,14 +125,14 @@ class Customer(models.Model):
 
 # --------- Product Model
 class Product(models.Model):
-    id = models.AutoField(primary_key = True)
-    product_title = models.CharField(max_length = 200)
+    id = models.AutoField(primary_key=True)
+    product_title = models.CharField(max_length=200)
     product_selling_price = models.FloatField()
     product_discounted_price = models.FloatField()
     product_description = models.TextField()
     product_details = models.TextField()
-    product_brand = models.CharField(max_length = 50)
-    product_category = models.CharField(choices = CATEGORY_CHOICES, max_length=5)
+    product_brand = models.CharField(max_length=50)
+    product_category = models.CharField(choices=CATEGORY_CHOICES, max_length=5)
 
     def __str__(self):
         return str(self.id)
@@ -101,19 +140,21 @@ class Product(models.Model):
 
 # --------- Product Image Model
 class ProductImage(models.Model):
-    product_image = models.ForeignKey(Product, default = None, on_delete = models.CASCADE, related_name = 'product_images')
-    product_image_url = models.CharField(max_length = 500, default = None, null = True, blank = True)
-    product_img_file = models.ImageField(upload_to = 'product_images')
+    product_image = models.ForeignKey(
+        Product, default=None, on_delete=models.CASCADE, related_name='product_images')
+    product_image_url = models.CharField(
+        max_length=500, default=None, null=True, blank=True)
+    product_img_file = models.ImageField(upload_to='product_images')
 
     def __str__(self):
-        return str(self.product_image.id) + " - "+ str(self.product_image.product_title)
+        return str(self.product_image.id) + " - " + str(self.product_image.product_title)
 
 
 # --------- Cart Model
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    product = models.ForeignKey(Product, on_delete = models.CASCADE)
-    quantity = models.PositiveBigIntegerField(default = 1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveBigIntegerField(default=1)
 
     def __str__(self):
         return str(self.id)
@@ -125,12 +166,13 @@ class Cart(models.Model):
 
 # --------- Placed Order Model
 class OrderPlaced(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete = models.CASCADE)
-    product = models.ForeignKey(Product, on_delete = models.CASCADE)
-    quantity = models.PositiveIntegerField(default = 1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
     ordered_date = models.DateField()
-    status = models.CharField(max_length = 50, choices = STATUS_CHOICES, default = 'Pending')
+    status = models.CharField(
+        max_length=50, choices=STATUS_CHOICES, default='Pending')
 
     @property
     def total_cost(self):
@@ -139,9 +181,9 @@ class OrderPlaced(models.Model):
 
 # --------- Comment Model
 class Comment(models.Model):
-    user = models.ForeignKey(User,on_delete = models.CASCADE)
-    product = models.ForeignKey(Product, on_delete = models.CASCADE)
-    date = models.DateField(auto_now_add = True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
     content = models.TextField()
 
     def __str__(self):
