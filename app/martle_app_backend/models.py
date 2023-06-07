@@ -8,8 +8,16 @@ from .manager import *
 from django.conf import settings
 from django_countries.fields import CountryField
 from django.urls import reverse
+from django.utils.text import slugify
+import random
+import string
+
 
 # Create your models here.
+def generate_random_string():
+    str = "".join(random.choices(string.ascii_lowercase, k=20))
+    return str
+
 
 # States of countrycity = validated_data['city'],
 STATE_CHOICES = (("Andhra Pradesh", "Andhra Pradesh"), ("Arunachal Pradesh ", "Arunachal Pradesh "), ("Assam", "Assam"), ("Bihar", "Bihar"), ("Chhattisgarh", "Chhattisgarh"), ("Goa", "Goa"), ("Gujarat", "Gujarat"), ("Haryana", "Haryana"), ("Himachal Pradesh", "Himachal Pradesh"), ("Jammu and Kashmir ", "Jammu and Kashmir "), ("Jharkhand", "Jharkhand"), ("Karnataka", "Karnataka"), ("Kerala", "Kerala"), ("Madhya Pradesh", "Madhya Pradesh"), ("Maharashtra", "Maharashtra"), ("Manipur", "Manipur"), ("Meghalaya", "Meghalaya"), ("Mizoram", "Mizoram"), ("Nagaland", "Nagaland"), ("Odisha", "Odisha"),
@@ -132,6 +140,11 @@ class Product(models.Model):
     product_details = models.TextField()
     product_brand = models.CharField(max_length=50)
     product_category = models.CharField(choices=CATEGORY_CHOICES, max_length=5)
+    product_slug = models.SlugField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.product_slug = slugify(self.product_title) + generate_random_string()
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.id)
