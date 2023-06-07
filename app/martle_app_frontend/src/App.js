@@ -9,8 +9,8 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/api/product-upload" element={<ProductTable />} />
-        <Route path="/api/product/id/:id" element={<Product />} />
+        {/* <Route path="/api/product-upload" element={<ProductTable />} /> */}
+        {/* <Route path="/api/product/id/:id" element={<Product />} /> */}
       </Routes>
     </Router>
   )
