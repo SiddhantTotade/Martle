@@ -27,7 +27,7 @@ export default class NavBar extends React.Component {
                     <div className='fixed -left-3 hover:cursor-pointer top-28 p-2 z-50 bg-white border-2 border-white rounded-3xl hover:translate-x-4 duration-300'>
                         <div onClick={() => this.setState({ sidebar: true })} className='left-3.5 p-2 m-0' ><KeyboardArrowRightOutlinedIcon className='text-blue-700 hover:cursor-pointer' /></div>
                     </div>
-                    <Link to='/' className='font-title text-rose-600 tracking-wide text-xl'>MARTLE</Link>
+                    <Link to='/' className='font-title text-rose-600 tracking-wide text-xl hover:text-rose-700'>MARTLE</Link>
                     <div className='hover:text-rose-500'>
                         <Link to='/address' className='flex gap-1'>
                             <p>Address</p>
@@ -45,7 +45,7 @@ export default class NavBar extends React.Component {
                         >
                             <TextField size='small' InputLabelProps={{ style: { color: '#c9c9c9' } }} inputProps={{ style: { alignItems: 'center', justifyContent: "center", color: 'white', fontSize: 'medium' } }} sx={{
                                 "& .MuiInputLabel-root": { color: 'white' },
-                                "&:hover .MuiOutlinedInput-root": { "& > fieldset": { borderColor: 'blue' } },//styles the label
+                                "&:hover .MuiOutlinedInput-root": { "& > fieldset": { borderColor: 'blue' } },
                                 "& .MuiOutlinedInput-root": {
                                     "& > fieldset": { borderColor: "white" },
                                 }
