@@ -28,34 +28,40 @@ export default class NavBar extends React.Component {
                         <div onClick={() => this.setState({ sidebar: true })} className='left-3.5 p-2 m-0' ><KeyboardArrowRightOutlinedIcon className='text-blue-700 hover:cursor-pointer' /></div>
                     </div>
                     <Link to='/' className='font-title text-rose-600 tracking-wide text-xl'>MARTLE</Link>
-                    <div>
+                    <div className='hover:text-rose-500'>
                         <Link to='/address' className='flex gap-1'>
                             <p>Address</p>
                             <PlaceIcon />
                         </Link>
                     </div>
-                    <form action='#' method='post' className='flex justify-center items-center w-full'>
+                    <form action='#' method='post' className='flex justify-center items-center'>
                         <Box
                             component="form"
                             sx={{
-                                '& > :not(style)': { m: 2, width: '75ch' },
+                                '& > :not(style)': { m: 2, width: '75ch' }, color: 'white'
                             }}
                             noValidate
                             autoComplete="off"
                         >
-                            <TextField sx={{ color: 'white', border: 'white' }} id="outlined-search" label="Search Products" type="search" />
+                            <TextField size='small' InputLabelProps={{ style: { color: '#c9c9c9' } }} inputProps={{ style: { alignItems: 'center', justifyContent: "center", color: 'white', fontSize: 'medium' } }} sx={{
+                                "& .MuiInputLabel-root": { color: 'white' },
+                                "&:hover .MuiOutlinedInput-root": { "& > fieldset": { borderColor: 'blue' } },//styles the label
+                                "& .MuiOutlinedInput-root": {
+                                    "& > fieldset": { borderColor: "white" },
+                                }
+                            }} id="outlined-search" label="Search Products" type="search" />
                         </Box>
                         <Button variant="contained">
-                            <SearchIcon sx={{ fontSize: 'large' }} />
+                            <SearchIcon sx={{ fontSize: 'x-large' }} />
                         </Button>
                     </form>
-                    <div>
+                    <div className='hover:text-rose-500'>
                         <Link to='/orders' className='flex gap-1'>
                             <p>Orders</p>
                             <ShoppingBasketIcon />
                         </Link>
                     </div>
-                    <div>
+                    <div className='hover:text-rose-500'>
                         <Link to='/cart' className='flex gap-1'>
                             <p>Cart</p>
                             <ShoppingCartIcon />

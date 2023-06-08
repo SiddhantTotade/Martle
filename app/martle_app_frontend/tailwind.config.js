@@ -23,7 +23,7 @@ module.exports = {
       8: "8px",
     },
     width: {
-      // HeaderSwiper: "90%",
+      HeaderSwiper: "90%",
     },
   },
   plugins: [],
