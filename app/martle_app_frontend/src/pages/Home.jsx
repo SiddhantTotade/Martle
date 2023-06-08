@@ -16,9 +16,9 @@ export default function Home() {
             <HeaderSwiper />
             <ProductNavigator />
             <ProductCarousel />
-            <ProductCarousel />
+            {/* <ProductCarousel /> */}
             {/* <RandomCardsPick /> */}
-            <ProductCarousel />
+            {/* <ProductCarousel /> */}
             <Footer />
         </>
     )

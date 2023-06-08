@@ -1,3 +1,5 @@
+import { Paper, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
 import Carousel from 'react-multi-carousel'
 import "react-multi-carousel/lib/styles.css";
@@ -30,9 +32,39 @@ const ProductCarousel = () => {
     const rows = []
 
     return (
-        <div className="w-4/5 m-auto mt-32 justify-center">
-            <Carousel responsive={responsive}>
-                {rows.map((item, images) => {
+        <div className="w-HeaderSwiper m-auto mt-32 justify-center">
+            <Carousel className="flex" responsive={responsive}>
+                <Paper sx={{ height: 300, padding: '7px' }}>
+                    <Box>
+                        <img className="flex rounded-md justify-center" src="https://plus.unsplash.com/premium_photo-1686050878751-89499d28d153?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="img" width={270} height={270} />
+                    </Box>
+                    <Typography>Hello</Typography>
+                </Paper>
+                <Paper sx={{ height: 300, padding: '7px' }}>
+                    <Box>
+                        <img className="rounded-md" src="https://plus.unsplash.com/premium_photo-1683140589868-4f9b38110050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60" alt="img2" />
+                    </Box>
+                    <Typography>Hello</Typography>
+                </Paper>
+                <Paper>
+                    <Typography>Hello</Typography>
+                </Paper>
+                <Paper>
+                    <Typography>Hello</Typography>
+                </Paper>
+                <Paper>
+                    <Typography>Hello</Typography>
+                </Paper>
+                <Paper>
+                    <Typography>Hello</Typography>
+                </Paper>
+                <Paper>
+                    <Typography>Hello</Typography>
+                </Paper>
+                <Paper>
+                    <Typography>Hello</Typography>
+                </Paper>
+                {/* {rows.map((item, images) => {
                     if (item.product_category === 'M') {
                         return item.product_images.map(({
                             product_image, ...rest
@@ -53,7 +85,7 @@ const ProductCarousel = () => {
                     else {
                         return null
                     }
-                })}
+                })} */}
             </Carousel >
         </div >
     )
