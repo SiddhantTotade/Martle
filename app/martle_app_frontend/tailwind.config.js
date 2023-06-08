@@ -11,7 +11,7 @@ module.exports = {
     fontSize: {
       sm: "0.8rem",
       base: "1rem",
-      xl: "1.5rem",
+      xl: "40px",
     },
     borderWidth: {
       DEFAULT: "1px",
