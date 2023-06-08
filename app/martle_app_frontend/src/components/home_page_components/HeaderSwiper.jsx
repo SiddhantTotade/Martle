@@ -41,7 +41,7 @@ export default class HeaderSwiper extends React.Component {
         const { index } = this.state;
 
         return (
-            <div style={styles.root} className="mt-5 h-100 border-2 border-white">
+            <div style={styles.root} className="mt-14 m-auto h-100 border-2 border-white">
                 <Link to="/product">
                     <AutoPlaySwipeableViews
                         index={index}

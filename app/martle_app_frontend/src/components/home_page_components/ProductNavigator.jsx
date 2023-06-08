@@ -5,7 +5,7 @@ import ImportantDevicesIcon from '@mui/icons-material/ImportantDevices';
 import CheckroomIcon from '@mui/icons-material/Checkroom';
 import { Link } from 'react-router-dom';
 
-const style = 'flex flex-col justify-center items-center bg-blue-400 mt-3 rounded-lg p-2 hover:scale-125 hover:duration-200 duration-200 hover:bg-sky-600 translate-x-0 translate-y-0'
+const style = 'flex flex-col justify-center items-center bg-blue-400 mt-8 rounded-lg p-2 hover:scale-125 hover:duration-200 duration-200 hover:bg-sky-600 translate-x-0 translate-y-0'
 
 export default function ProductNavigator() {
     return (
