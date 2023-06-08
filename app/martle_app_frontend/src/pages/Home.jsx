@@ -15,10 +15,10 @@ export default function Home() {
             <Sidebar />
             <HeaderSwiper />
             <ProductNavigator />
-            {/* <ProductCarousel /> */}
-            {/* <ProductCarousel /> */}
+            <ProductCarousel />
+            <ProductCarousel />
             {/* <RandomCardsPick /> */}
-            {/* <ProductCarousel /> */}
+            <ProductCarousel />
             <Footer />
         </>
     )
