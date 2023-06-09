@@ -44,7 +44,7 @@ const ProductCarousel = () => {
                     <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
                         <Typography fontWeight='bold' fontSize={12} sx={{ padding: '4px' }}>$17</Typography>
                         <Box sx={{ display: 'flex', gap: '4px' }}>
-                            <Typography fontWeight='bold' fontSize={12} sx={{ padding: '4px', borderRadius: '5px', background: 'gray', color: '#ffff' }}>3.4<StarIcon fontSize="12" /></Typography>
+                            <Typography fontWeight='bold' fontSize={12} sx={{ display: 'flex', alignItems: 'center', padding: '4px', borderRadius: '5px', background: 'gray', color: '#ffff', gap: '2px' }}>3.4<StarIcon fontSize="12" /></Typography>
                             <Typography fontWeight='bold' fontSize={12} sx={{ padding: '4px', borderRadius: '5px', background: 'crimson', color: '#ffff' }}>15% off</Typography>
                         </Box>
                     </Box>
