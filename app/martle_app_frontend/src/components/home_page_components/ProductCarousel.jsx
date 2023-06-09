@@ -5,7 +5,7 @@ import Carousel from 'react-multi-carousel'
 import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
 import StarIcon from '@mui/icons-material/Star';
-import AddIcon from '@mui/icons-material/Add';
+import Heart from "../base_components/Heart";
 
 const responsive = {
     superLargeDesktop: {
@@ -37,6 +37,7 @@ const ProductCarousel = () => {
         <div className="w-HeaderSwiper m-auto mt-12 justify-center">
             <Carousel itemClass="carousel" partialVisbile={false} className="flex" responsive={responsive}>
                 <Paper sx={{ height: 300, width: 270, gap: '10px', display: 'flex', flexDirection: 'column', ":hover": { cursor: 'pointer' } }}>
+                    <Heart />
                     <Box sx={{ display: 'flex', justifyContent: 'center', height: '100vh', maxHeight: '34vh' }}>
                         <img className="object-scale-down" src="https://m.media-amazon.com/images/I/71Ftzmh3XWL._AC_SY200_.jpg" alt="img" width="100px" />
                     </Box>
