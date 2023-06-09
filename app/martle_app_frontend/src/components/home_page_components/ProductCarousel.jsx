@@ -48,7 +48,7 @@ const ProductCarousel = () => {
                             <Typography fontWeight='bold' fontSize={12} sx={{ padding: '4px', borderRadius: '5px', background: 'crimson', color: '#ffff' }}>15% off</Typography>
                         </Box>
                     </Box>
-                    <Button variant="contained" sx={{ borderRadius: 0, width: '100%', height: '6vh' }} ><AddIcon /></Button>
+                    <Button variant="contained" sx={{ borderRadius: 0, marginTop: 'auto' }} >Add to cart</Button>
                 </Paper>
                 <Paper sx={{ height: 300, gap: '10px', display: 'flex', flexDirection: 'column', ":hover": { cursor: 'pointer' } }}>
                     <Box sx={{ display: 'flex', justifyContent: 'center', height: '100vh', maxHeight: '34vh' }} >
