@@ -25,6 +25,7 @@ module.exports = {
     width: {
       HeaderSwiper: "90%",
       NavBar: "100%",
+      Image: "100%",
     },
   },
   plugins: [],

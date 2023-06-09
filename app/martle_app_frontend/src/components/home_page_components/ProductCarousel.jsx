@@ -1,4 +1,4 @@
-import { Paper, Typography } from "@mui/material";
+import { Button, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import Carousel from 'react-multi-carousel'
@@ -34,17 +34,38 @@ const ProductCarousel = () => {
     return (
         <div className="w-HeaderSwiper m-auto mt-32 justify-center">
             <Carousel itemClass="carousel" partialVisbile={false} className="flex" responsive={responsive}>
-                <Paper sx={{ height: 300, padding: '7px', gap: '10px', display: 'flex', flexDirection: 'column', ":hover": { color: 'blue', cursor: 'pointer' } }}>
-                    <Box>
-                        <img className="flex rounded-md justify-center" src="https://plus.unsplash.com/premium_photo-1686050878751-89499d28d153?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="img" width={270} height={270} />
+                <Paper sx={{ height: 400, gap: '10px', display: 'flex', flexDirection: 'column', ":hover": { cursor: 'pointer' } }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '100vh', maxHeight: '34vh' }}>
+                        <img className="object-scale-down p-2" src="https://m.media-amazon.com/images/I/71Ftzmh3XWL._AC_SY200_.jpg" alt="img" width="170px" />
                     </Box>
-                    <Typography>Hello</Typography>
+                    <Typography sx={{ paddingLeft: '10px', paddingRight: '10px', ":hover": { color: '#078dfa' } }}>ASUS ROG Zephyrus M16 (2022), 16-inch (40.64 cms) 2K QHD 165Hz/3ms,  17"(43.18 cm) Backpack (Black)...</Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                        <Typography sx={{ padding: '4px' }}>$17</Typography>
+                        <Typography sx={{ padding: '4px', borderRadius: '5px', background: 'crimson', color: '#ffff' }}>15% off</Typography>
+                    </Box>
+                    <Button variant="contained" sx={{ borderRadius: 0, marginTop: 'auto' }} >Add to cart</Button>
                 </Paper>
-                <Paper sx={{ height: 300, padding: '7px' }}>
-                    <Box>
-                        <img className="rounded-md" src="https://plus.unsplash.com/premium_photo-1683140589868-4f9b38110050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60" alt="img2" />
+                <Paper sx={{ height: 400, gap: '10px', display: 'flex', flexDirection: 'column', ":hover": { cursor: 'pointer' } }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '100vh', maxHeight: '34vh' }} >
+                        <img className="object-scale-down p-2" src="https://m.media-amazon.com/images/I/51ogrgGK+9L._AC_SY200_.jpg" alt="img" width="170px" />
                     </Box>
-                    <Typography>Hello</Typography>
+                    <Typography sx={{ paddingLeft: '10px', paddingRight: '10px', ":hover": { color: '#078dfa' } }}>ASUS ROG Zephyrus M16 (2022), 16-inch (40.64 cms) 2K QHD 165Hz/3ms,  17"(43.18 cm) Backpack (Black)...</Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                        <Typography sx={{ padding: '4px' }}>$17</Typography>
+                        <Typography sx={{ padding: '4px', borderRadius: '5px', background: 'crimson', color: '#ffff' }}>15% off</Typography>
+                    </Box>
+                    <Button variant="contained" sx={{ borderRadius: 0, marginTop: 'auto' }} >Add to cart</Button>
+                </Paper>
+                <Paper sx={{ height: 400, gap: '10px', display: 'flex', flexDirection: 'column', ":hover": { cursor: 'pointer' } }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '100vh', maxHeight: '34vh' }} >
+                        <img className="object-scale-down p-2" src="https://m.media-amazon.com/images/I/81ahHX9wU1L._AC_SY200_.jpg" alt="img" width="170px" />
+                    </Box>
+                    <Typography sx={{ paddingLeft: '10px', paddingRight: '10px', ":hover": { color: '#078dfa' } }}>ASUS ROG Zephyrus M16 (2022), 16-inch (40.64 cms) 2K QHD 165Hz/3ms,  17"(43.18 cm) Backpack (Black)...</Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                        <Typography sx={{ padding: '4px' }}>$17</Typography>
+                        <Typography sx={{ padding: '4px', borderRadius: '5px', background: 'crimson', color: '#ffff' }}>15% off</Typography>
+                    </Box>
+                    <Button variant="contained" sx={{ borderRadius: 0, marginTop: 'auto' }} >Add to cart</Button>
                 </Paper>
                 <Paper>
                     <Typography>Hello</Typography>
