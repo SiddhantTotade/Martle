@@ -7,6 +7,7 @@ module.exports = {
     fontFamily: {
       title: ["Playfair Display", "serif"],
       para: ["Poppins", "sans - serif"],
+      carouselTitle: ["Alegreya, serif"],
     },
     fontSize: {
       sm: "0.8rem",

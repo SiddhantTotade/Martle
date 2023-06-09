@@ -32,7 +32,7 @@ export default class Sidebar extends Component {
                                 </List>
                             </div>
                             <div className='flex justify-center mt-16'>
-                                <Link to='/' className='font-title text-rose-600 text-xl tracking-widest hover:text-rose-700'>MARTLE</Link>
+                                <Link to='/' className='font-title text-rose-600 text-xl tracking-widest hover:text-rose-700'>martle</Link>
                             </div>
                             <List>
                                 <ListItem className='mt-16' disablePadding>
