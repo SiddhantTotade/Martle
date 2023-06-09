@@ -33,8 +33,8 @@ const ProductCarousel = () => {
 
     return (
         <div className="w-HeaderSwiper m-auto mt-32 justify-center">
-            <Carousel className="flex" responsive={responsive}>
-                <Paper sx={{ height: 300, padding: '7px' }}>
+            <Carousel itemClass="carousel" partialVisbile={false} className="flex" responsive={responsive}>
+                <Paper sx={{ height: 300, padding: '7px', gap: '10px', display: 'flex', flexDirection: 'column', ":hover": { color: 'blue', cursor: 'pointer' } }}>
                     <Box>
                         <img className="flex rounded-md justify-center" src="https://plus.unsplash.com/premium_photo-1686050878751-89499d28d153?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="img" width={270} height={270} />
                     </Box>
