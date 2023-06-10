@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../../pages/style/style.css'
+import '../../pages/style/heart.css'
 
 const Heart = () => {
 

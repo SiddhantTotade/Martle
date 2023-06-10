@@ -30,7 +30,7 @@ const responsive = {
 
 const style = 'h-62 grid justify-items-center w-56 border-2 border-white rounded-xl text-white bg-gray-700'
 
-const ProductCarousel = () => {
+const ProductCarousel1 = () => {
 
     const rows = []
 
@@ -38,10 +38,10 @@ const ProductCarousel = () => {
         <div className="w-HeaderSwiper m-auto mt-12 justify-center">
             <Typography fontSize={30} sx={{ color: '#fff', marginLeft: '10px', marginBottom: '5px', letterSpacing: '2px', fontFamily: 'fantasy' }}>Top Deals</Typography>
             <Carousel itemClass="carousel" partialVisbile={false} className="flex" responsive={responsive}>
-                <Paper sx={{ height: 300, width: 270, gap: '10px', display: 'flex', flexDirection: 'column', borderRadius: "10px", ":hover": { cursor: 'pointer' } }}>
+                <Paper sx={{ height: 320, width: 270, gap: '10px', display: 'flex', flexDirection: 'column', borderRadius: "5px", ":hover": { cursor: 'pointer' } }}>
                     <Heart />
-                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '100vh', maxHeight: '34vh' }}>
-                        <img className="object-scale-down" src="https://m.media-amazon.com/images/I/71Ftzmh3XWL._AC_SY200_.jpg" alt="img" width="100px" />
+                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '100vh', maxHeight: '34vh', width: '170px', translate: '30% 0%', position: 'relative', overflow: 'hidden' }}>
+                        <img className="object-contain absolute h-full" src="https://m.media-amazon.com/images/I/71Ftzmh3XWL._AC_SY200_.jpg" alt="img" width="100%" />
                     </Box>
                     <Typography fontSize={12} sx={{ paddingLeft: '10px', paddingRight: '10px', ":hover": { color: '#078dfa' } }}>ASUS ROG Zephyrus M16 (2022), 16-inch (40.64 cms) 2K QHD 165Hz/3ms,  17"(43.18 cm) Backpack (Black)...</Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
@@ -51,12 +51,12 @@ const ProductCarousel = () => {
                             <Typography fontWeight='bold' fontSize={14} sx={{ padding: '5px', display: 'flex', alignItems: 'center', borderRadius: '5px', background: 'crimson', color: '#ffff', height: '25px' }}>15% off</Typography>
                         </Box>
                     </Box>
-                    <Button variant="contained" sx={{ borderRadius: "0 0 10px 10px", marginTop: 'auto', width: '100%' }} >Add to cart</Button>
+                    <Button variant="contained" sx={{ borderRadius: "0 0 5px 5px", marginTop: 'auto', width: '100%' }} >Add to cart</Button>
                 </Paper>
-                <Paper sx={{ height: 300, width: 270, gap: '10px', display: 'flex', flexDirection: 'column', borderRadius: "10px", ":hover": { cursor: 'pointer' } }}>
+                <Paper sx={{ height: 320, width: 270, gap: '10px', display: 'flex', flexDirection: 'column', borderRadius: "5px", ":hover": { cursor: 'pointer' } }}>
                     <Heart />
-                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '100vh', maxHeight: '34vh' }}>
-                        <img className="object-scale-down" src="https://m.media-amazon.com/images/I/51ogrgGK+9L._AC_SY200_.jpg" alt="img" width="100px" />
+                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '100vh', maxHeight: '34vh', width: '170px', translate: '30% 0%', position: 'relative', overflow: 'hidden' }}>
+                        <img className="object-contain absolute h-full" src="https://m.media-amazon.com/images/I/51ogrgGK+9L._AC_SY200_.jpg" alt="img" width="100%" />
                     </Box>
                     <Typography fontSize={12} sx={{ paddingLeft: '10px', paddingRight: '10px', ":hover": { color: '#078dfa' } }}>ASUS ROG Zephyrus M16 (2022), 16-inch (40.64 cms) 2K QHD 165Hz/3ms,  17"(43.18 cm) Backpack (Black)...</Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
@@ -66,12 +66,12 @@ const ProductCarousel = () => {
                             <Typography fontWeight='bold' fontSize={14} sx={{ padding: '5px', display: 'flex', alignItems: 'center', borderRadius: '5px', background: 'crimson', color: '#ffff', height: '25px' }}>15% off</Typography>
                         </Box>
                     </Box>
-                    <Button variant="contained" sx={{ borderRadius: "0 0 10px 10px", marginTop: 'auto', width: '100%' }} >Add to cart</Button>
+                    <Button variant="contained" sx={{ borderRadius: "0 0 5px 5px", marginTop: 'auto', width: '100%' }} >Add to cart</Button>
                 </Paper>
-                <Paper sx={{ height: 300, width: 270, gap: '10px', display: 'flex', flexDirection: 'column', borderRadius: "10px", ":hover": { cursor: 'pointer' } }}>
+                <Paper sx={{ height: 320, width: 270, gap: '10px', display: 'flex', flexDirection: 'column', borderRadius: "5px", ":hover": { cursor: 'pointer' } }}>
                     <Heart />
-                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '100vh', maxHeight: '34vh' }}>
-                        <img className="object-scale-down" src="https://m.media-amazon.com/images/I/81ahHX9wU1L._AC_SY200_.jpg" alt="img" width="100px" />
+                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '100vh', maxHeight: '34vh', width: '170px', translate: '30% 0%', position: 'relative', overflow: 'hidden' }}>
+                        <img className="object-contain absolute h-full" src="https://m.media-amazon.com/images/I/81ahHX9wU1L._AC_SY200_.jpg" alt="img" width="100%" />
                     </Box>
                     <Typography fontSize={12} sx={{ paddingLeft: '10px', paddingRight: '10px', ":hover": { color: '#078dfa' } }}>ASUS ROG Zephyrus M16 (2022), 16-inch (40.64 cms) 2K QHD 165Hz/3ms,  17"(43.18 cm) Backpack (Black)...</Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
@@ -81,7 +81,7 @@ const ProductCarousel = () => {
                             <Typography fontWeight='bold' fontSize={14} sx={{ padding: '5px', display: 'flex', alignItems: 'center', borderRadius: '5px', background: 'crimson', color: '#ffff', height: '25px' }}>15% off</Typography>
                         </Box>
                     </Box>
-                    <Button variant="contained" sx={{ borderRadius: "0 0 10px 10px", marginTop: 'auto', width: '100%' }} >Add to cart</Button>
+                    <Button variant="contained" sx={{ borderRadius: "0 0 5px 5px", marginTop: 'auto', width: '100%' }} >Add to cart</Button>
                 </Paper>
                 <Paper>
                     <Typography>Hello</Typography>
@@ -128,4 +128,4 @@ const ProductCarousel = () => {
     )
 }
 
-export default ProductCarousel
+export default ProductCarousel1
