@@ -7,6 +7,7 @@ import React from 'react'
 import Sidebar from './Sidebar';
 import { TextField, Box, Button } from '@mui/material';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default class NavBar extends React.Component {
 
@@ -27,7 +28,7 @@ export default class NavBar extends React.Component {
                     <div className='fixed -left-3 hover:cursor-pointer top-28 p-2 z-50 bg-white border-2 border-white rounded-3xl hover:translate-x-4 duration-300'>
                         <div onClick={() => this.setState({ sidebar: true })} className='left-3.5 p-2 m-0' ><KeyboardArrowRightOutlinedIcon className='text-blue-700 hover:cursor-pointer' /></div>
                     </div>
-                    <Link to='/' className='font-title text-rose-600 tracking-wide text-xl hover:text-rose-700'>martle</Link>
+                    <Link to='/' className='font-title text-rose-600 tracking-widest text-xl hover:text-rose-700'>martle</Link>
                     <div className='hover:text-rose-500'>
                         <Link to='/address' className='flex gap-1'>
                             <p>Address</p>
@@ -59,6 +60,12 @@ export default class NavBar extends React.Component {
                         <Link to='/orders' className='flex gap-1'>
                             <p>Orders</p>
                             <ShoppingBasketIcon />
+                        </Link>
+                    </div>
+                    <div className='hover:text-rose-500'>
+                        <Link to='/orders' className='flex gap-1'>
+                            <p>Favourites</p>
+                            <FavoriteIcon />
                         </Link>
                     </div>
                     <div className='hover:text-rose-500'>
