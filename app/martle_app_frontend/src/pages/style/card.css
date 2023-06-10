@@ -35,7 +35,7 @@ section::after {
     height: 370px;
     background: rgba(255, 255, 255, 0.05);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
+    border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;

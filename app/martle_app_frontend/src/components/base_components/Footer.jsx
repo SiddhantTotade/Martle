@@ -7,7 +7,7 @@ export default function Footer() {
         <footer className="h-28 bg-slate-900 flex items-center justify-center flex-col mt-32 gap-2">
             <div className="h-15 flex justify-center items-center gap-5">
             <Link to='/' className='font-title text-rose-600 text-xl tracking-widest hover:text-rose-700'>martle</Link>
-                <ReactCountryFlag countryCode="IN" className="emojiFlag" style={{ fontSize: '1.5rem', lineHeight: '1rem' }} title="INDIA" />
+                <ReactCountryFlag countryCode="IN" className="emojiFlag" style={{ fontSize: '2.3rem', lineHeight: '1rem' }} title="INDIA" />
             </div>
             <div className="h-15 flex justify-center items-center text-white">
                 <small className=" tracking-wider">Copyright @ 2022 | All rights reserved by SIDDHANT TOTADE</small>
