@@ -140,16 +140,6 @@ EMAIL_PORT = 587
 # EMAIL_HOST_USER = 'siddhanttotade.1994@gmail.com'
 # EMAIL_HOST_PASSWORD = 'YOUR_PASSWORD'
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient"
-        },
-    }
-}
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
