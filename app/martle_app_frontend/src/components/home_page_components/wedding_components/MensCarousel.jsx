@@ -19,8 +19,8 @@ const MensCarousel = () => {
   const items = (
     <Paper
       sx={{
-        height: 200,
-        width: 200,
+        height: 220,
+        width: 220,
         gap: "10px",
         display: "flex",
         flexDirection: "column",
@@ -35,7 +35,7 @@ const MensCarousel = () => {
           height: "100vh",
           maxHeight: "34vh",
           width: "170px",
-          translate: "25% 0%",
+          translate: "15% 0%",
           position: "relative",
           overflow: "hidden",
         }}
@@ -58,7 +58,7 @@ const MensCarousel = () => {
 
   return (
     <div className="w-Wedding m-auto border-2 border-green-500 ">
-      <Carousel cols={2} rows={2}>
+      <Carousel cols={3} rows={2}>
         {rows.map((row) => {
           return <Carousel.Item>{row}</Carousel.Item>;
         })}
