@@ -25,6 +25,7 @@ module.exports = {
     },
     width: {
       HeaderSwiper: "90%",
+      RandomCards: "90%",
       Wedding: "40%",
       NavBar: "100%",
       Image: "100%",
