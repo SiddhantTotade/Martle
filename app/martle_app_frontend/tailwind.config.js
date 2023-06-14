@@ -27,6 +27,7 @@ module.exports = {
       HeaderSwiper: "90%",
       NavBar: "100%",
       Image: "100%",
+      SpecialFrom: "80%",
     },
   },
   plugins: [],

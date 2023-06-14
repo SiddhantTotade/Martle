@@ -3,7 +3,7 @@ import HeaderSwiper from "../components/home_page_components/HeaderSwiper";
 import ProductNavigator from "../components/home_page_components/ProductNavigator";
 import ProductCarousel1 from "../components/home_page_components/ProductCarousel_1";
 import ProductCarousel2 from "../components/home_page_components/ProductCarousel_2";
-import SpeciallyForYouCarousel from "../components/home_page_components/SpeciallyForYouCarousel";
+import SpeciallyFromCarousel from "../components/home_page_components/SpeciallyFromCarousel";
 import RandomCardsPick from "../components/home_page_components/RandomPickCards";
 import Wedding from "../components/home_page_components/Wedding";
 import Footer from "../components/base_components/Footer";
@@ -19,7 +19,7 @@ export default function Home() {
       <ProductNavigator />
       <ProductCarousel1 />
       <ProductCarousel2 />
-      <SpeciallyForYouCarousel />
+      <SpeciallyFromCarousel />
       <Wedding />
       {/* <ProductCarousel /> */}
       {/* <RandomCardsPick /> */}

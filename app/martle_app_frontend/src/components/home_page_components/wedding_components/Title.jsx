@@ -4,7 +4,7 @@ import "../../../index.css";
 
 const Title = () => {
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center mt-12">
       <Typography
         sx={{ fontFamily: '"Parisienne", cursive', fontSize: 65, color: "#f5b002" }}
       >
