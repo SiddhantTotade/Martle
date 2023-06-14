@@ -2,13 +2,22 @@ import React from "react";
 import Title from "./wedding_components/Title";
 import { Box } from "@mui/material";
 import MensCarousel from "./wedding_components/MensCarousel";
+import WomensCarousel from "./wedding_components/WomensCarousel";
 
 const Wedding = () => {
   return (
-    <div className="border-2 border-red-600 mt-12">
+    <div className="p-2 bg-black mt-12">
       <Title />
-      <Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "10px",
+          marginBottom: "20px",
+        }}
+      >
         <MensCarousel />
+        <WomensCarousel />
       </Box>
     </div>
   );

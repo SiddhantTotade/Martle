@@ -15,9 +15,10 @@ const settings = {
   slidesPerRow: 2,
 };
 
-const MensCarousel = () => {
+const WomensCarousel = () => {
   const items = (
     <Paper
+      elevation={5}
       sx={{
         height: 220,
         width: 220,
@@ -58,7 +59,7 @@ const MensCarousel = () => {
 
   return (
     <div className="w-Wedding m-auto">
-      <Carousel cols={3} rows={2}>
+      <Carousel cols={3} rows={2} >
         {rows.map((row) => {
           return <Carousel.Item>{row}</Carousel.Item>;
         })}
@@ -67,4 +68,4 @@ const MensCarousel = () => {
   );
 };
 
-export default MensCarousel;
+export default WomensCarousel;
