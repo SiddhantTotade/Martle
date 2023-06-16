@@ -55,6 +55,7 @@ const TopDealsCarousel = () => {
         responsive={responsive}
         arrows={true}
         renderButtonGroupOutside={true}
+        className="z-0"
       >
         <Paper
           sx={{
