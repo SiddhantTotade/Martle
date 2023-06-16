@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import Heart from "../base_components/Heart";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-// import "./style/style.css";
 
 const responsive = {
   superLargeDesktop: {
@@ -32,7 +31,7 @@ const responsive = {
 const style =
   "h-62 grid justify-items-center w-56 border-2 border-white rounded-xl text-white bg-gray-700";
 
-const ProductCarousel1 = () => {
+const TopDealsCarousel = () => {
   const rows = [];
 
   return (
@@ -514,4 +513,4 @@ const ProductCarousel1 = () => {
   );
 };
 
-export default ProductCarousel1;
+export default TopDealsCarousel;

@@ -28,7 +28,7 @@ const responsive = {
 
 const style = 'h-62 grid justify-items-center w-56 border-2 border-white rounded-xl text-white bg-gray-700'
 
-const ProductCarousel2 = () => {
+const ShopByBrandsCarousel = () => {
 
     const rows = []
 
@@ -79,4 +79,4 @@ const ProductCarousel2 = () => {
     )
 }
 
-export default ProductCarousel2
+export default ShopByBrandsCarousel
