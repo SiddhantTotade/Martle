@@ -22,13 +22,16 @@ export default class NavBar extends React.Component {
 
     return (
       <div className="border-white bg-slate-900 fixed w-NavBar top-0 z-50 md:text-sm">
-        <div className="flex items-center justify-evenly text-white gap-18 h-20">
-          <div className="fixed -left-3 hover:cursor-pointer top-28 p-2 z-50 bg-white border-2 border-white rounded-3xl hover:translate-x-4 duration-300">
+        <div className="flex items-center justify-evenly text-white gap-18 h-20 sm:h-12">
+          <div className="fixed -left-3 sm:hidden hover:cursor-pointer top-28 p-2 z-50 bg-white border-2 border-white rounded-3xl hover:translate-x-4 duration-300">
             <div
               onClick={() => this.setState({ sidebar: true })}
               className="left-3.5 p-2 m-0"
             >
-              <KeyboardArrowRightOutlinedIcon onClick={() => this.setState({ sidebar: true })} className="text-blue-700 hover:cursor-pointer" />
+              <KeyboardArrowRightOutlinedIcon
+                onClick={() => this.setState({ sidebar: true })}
+                className="text-blue-700 hover:cursor-pointer"
+              />
             </div>
           </div>
           <Link
@@ -37,7 +40,7 @@ export default class NavBar extends React.Component {
           >
             martle
           </Link>
-          <div className="hover:text-rose-500">
+          <div className="hover:text-rose-500 sm:hidden">
             <Link to="/address" className="flex gap-1">
               <p>Address</p>
               <PlaceIcon
@@ -48,7 +51,7 @@ export default class NavBar extends React.Component {
           <form
             action="#"
             method="post"
-            className="flex justify-center items-center"
+            className="flex justify-center items-center sm:hidden"
           >
             <Box
               component="form"
@@ -88,24 +91,75 @@ export default class NavBar extends React.Component {
               <SearchIcon sx={{ fontSize: "x-large" }} />
             </Button>
           </form>
-          <div className="hover:text-rose-500">
+          <div className="hover:text-rose-500 sm:hidden">
             <Link to="/orders" className="flex gap-1">
               <p>Orders</p>
-              <ShoppingBasketIcon sx={{ "@media (max-width: 1368px)": { fontSize: "20px" } }} />
+              <ShoppingBasketIcon
+                sx={{ "@media (max-width: 1368px)": { fontSize: "20px" } }}
+              />
             </Link>
           </div>
-          <div className="hover:text-rose-500">
+          <div className="hover:text-rose-500 sm:hidden">
             <Link to="/orders" className="flex gap-1">
               <p>Favourites</p>
-              <FavoriteIcon sx={{ "@media (max-width: 1368px)": { fontSize: "20px" } }} />
+              <FavoriteIcon
+                sx={{ "@media (max-width: 1368px)": { fontSize: "20px" } }}
+              />
             </Link>
           </div>
-          <div className="hover:text-rose-500">
+          <div className="hover:text-rose-500 sm:hidden">
             <Link to="/cart" className="flex gap-1">
               <p>Cart</p>
-              <ShoppingCartIcon sx={{ "@media (max-width: 1368px)": { fontSize: "20px" } }} />
+              <ShoppingCartIcon
+                sx={{ "@media (max-width: 1368px)": { fontSize: "20px" } }}
+              />
             </Link>
           </div>
+        </div>
+        <div className="h-16 w-NavBar text-white">
+          <form
+            action="#"
+            method="post"
+            className="flex justify-center items-center"
+          >
+            <Box
+              component="form"
+              sx={{
+                "& > :not(style)": { m: 1, width: "45ch" },
+                color: "white",
+              }}
+              noValidate
+              autoComplete="off"
+            >
+              <TextField
+                size="small"
+                InputLabelProps={{ style: { color: "#c9c9c9" } }}
+                inputProps={{
+                  style: {
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "white",
+                    fontSize: "medium",
+                  },
+                }}
+                sx={{
+                  "& .MuiInputLabel-root": { color: "white" },
+                  "&:hover .MuiOutlinedInput-root": {
+                    "& > fieldset": { borderColor: "blue" },
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& > fieldset": { borderColor: "white" },
+                  },
+                }}
+                id="outlined-search"
+                label="Search Products"
+                type="search"
+              />
+            </Box>
+            <Button variant="contained">
+              <SearchIcon sx={{ fontSize: "x-large" }} />
+            </Button>
+          </form>
         </div>
         <Sidebar open={this.state.sidebar} onClose={sidebar} />
       </div>

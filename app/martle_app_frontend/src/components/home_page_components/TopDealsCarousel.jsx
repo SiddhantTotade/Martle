@@ -23,8 +23,9 @@ const responsive = {
     items: 4,
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
+    breakpoint: { max: 500, min: 0 },
+    items: 2,
+    slidesToSlide: 1,
   },
 };
 

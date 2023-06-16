@@ -34,6 +34,7 @@ module.exports = {
     },
     screens: {
       md: { max: "1368px" },
+      sm: { max: "500px" },
     },
   },
   plugins: [

@@ -94,7 +94,7 @@ const SpeciallyFromCarousel = () => {
                 height: "100vh",
                 maxHeight: "23.5vh",
                 width: "150px",
-                translate: "25% 0%",
+                translate: "40% 10%",
                 position: "relative",
                 overflow: "hidden",
               }}
@@ -103,7 +103,7 @@ const SpeciallyFromCarousel = () => {
                 className="object-contain absolute h-full"
                 src="https://m.media-amazon.com/images/I/71Ftzmh3XWL._AC_SY200_.jpg"
                 alt="img"
-                width="100%"
+                // width="100%"
               />
             </Box>
             <Button
@@ -135,7 +135,7 @@ const SpeciallyFromCarousel = () => {
                 height: "100vh",
                 maxHeight: "23.5vh",
                 width: "150px",
-                translate: "25% 0%",
+                translate: "40% 10%",
                 position: "relative",
                 overflow: "hidden",
               }}
@@ -177,7 +177,7 @@ const SpeciallyFromCarousel = () => {
                 height: "100vh",
                 maxHeight: "23.5vh",
                 width: "150px",
-                translate: "25% 0%",
+                translate: "40% 10%",
                 position: "relative",
                 overflow: "hidden",
               }}

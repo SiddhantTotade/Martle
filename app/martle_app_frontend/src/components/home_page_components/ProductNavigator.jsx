@@ -9,8 +9,8 @@ const style = 'flex flex-col justify-center items-center bg-blue-400 mt-8 rounde
 
 export default function ProductNavigator() {
     return (
-        <div>
-            <div className='flex justify-center items-center gap-5'>
+        <div className='sm:min-w-min text-sm'>
+            <div className='flex justify-center items-center gap-5 sm:gap-3'>
                 <Link to="/mobiles" className={style}>
                     <PhoneAndroidIcon />
                     <p>Mobiles</p>
