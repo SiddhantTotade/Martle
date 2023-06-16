@@ -17,8 +17,8 @@ const responsive = {
     items: 6,
   },
   tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
+    breakpoint: { max: 1368, min: 464 },
+    items: 4,
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
@@ -71,8 +71,11 @@ const SpeciallyFromCarousel = () => {
         <Carousel
           itemClass="carousel"
           partialVisbile={false}
-          className="w-NavBar"
+          slidesToSlide={2}
           responsive={responsive}
+          arrows={true}
+          renderButtonGroupOutside={true}
+          className="z-0"
         >
           <Paper
             sx={{
@@ -103,13 +106,6 @@ const SpeciallyFromCarousel = () => {
                 width="100%"
               />
             </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-              }}
-            ></Box>
             <Button
               variant="contained"
               sx={{
@@ -149,13 +145,6 @@ const SpeciallyFromCarousel = () => {
                 width="100%"
               />
             </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-              }}
-            ></Box>
             <Button
               variant="contained"
               sx={{
