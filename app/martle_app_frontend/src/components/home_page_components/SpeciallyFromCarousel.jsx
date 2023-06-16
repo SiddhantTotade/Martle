@@ -3,8 +3,6 @@ import { Box } from "@mui/system";
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import Heart from "../base_components/Heart";
-import { Link } from "react-router-dom";
 
 const responsive = {
   superLargeDesktop: {
@@ -14,11 +12,11 @@ const responsive = {
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 6,
+    items: 5,
   },
   tablet: {
     breakpoint: { max: 1368, min: 464 },
-    items: 4,
+    items: 3,
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
@@ -48,7 +46,7 @@ const SpeciallyFromCarousel = () => {
       </Typography>
       <Box sx={{ display: "flex", gap: "15px" }}>
         <Paper
-          elevation={16}
+          elevation={8}
           sx={{
             width: 270,
             height: "275px",
@@ -70,15 +68,17 @@ const SpeciallyFromCarousel = () => {
         </Paper>
         <Carousel
           itemClass="carousel"
-          partialVisbile={false}
+          partialVisbile={true}
           slidesToSlide={2}
           responsive={responsive}
           arrows={true}
           renderButtonGroupOutside={true}
-          className="z-0"
+          className="z-0 w-SpecialFrom"
         >
           <Paper
             sx={{
+              width: 270,
+              height: "275px",
               gap: "5px",
               display: "flex",
               justifyContent: "center",
@@ -94,7 +94,7 @@ const SpeciallyFromCarousel = () => {
                 height: "100vh",
                 maxHeight: "23.5vh",
                 width: "150px",
-                translate: "30% 0%",
+                translate: "25% 0%",
                 position: "relative",
                 overflow: "hidden",
               }}
@@ -119,6 +119,8 @@ const SpeciallyFromCarousel = () => {
           </Paper>
           <Paper
             sx={{
+              width: 270,
+              height: "275px",
               gap: "5px",
               display: "flex",
               flexDirection: "column",
@@ -133,7 +135,49 @@ const SpeciallyFromCarousel = () => {
                 height: "100vh",
                 maxHeight: "23.5vh",
                 width: "150px",
-                translate: "30% 0%",
+                translate: "25% 0%",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              <img
+                className="object-contain absolute h-full"
+                src="https://m.media-amazon.com/images/I/71Ftzmh3XWL._AC_SY200_.jpg"
+                alt="img"
+                width="100%"
+              />
+            </Box>
+            <Button
+              variant="contained"
+              sx={{
+                borderRadius: "0 0 5px 5px",
+                marginTop: "auto",
+                width: "100%",
+              }}
+            >
+              View
+            </Button>
+          </Paper>
+          <Paper
+            sx={{
+              width: 270,
+              height: "275px",
+              gap: "5px",
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              borderRadius: "5px",
+              marginRight: "10px",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                height: "100vh",
+                maxHeight: "23.5vh",
+                width: "150px",
+                translate: "25% 0%",
                 position: "relative",
                 overflow: "hidden",
               }}
