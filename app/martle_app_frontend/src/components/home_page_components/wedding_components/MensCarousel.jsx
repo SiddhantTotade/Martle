@@ -4,12 +4,23 @@ import { Paper } from "@mui/material";
 import { Box } from "@mui/system";
 import Carousel from "react-grid-carousel";
 
+const responsive = [
+  {
+    breakpoint: 1368,
+    cols: 2,
+    rows: 2,
+    gap: 10,
+    loop: true,
+    autoplay: 3000,
+  },
+];
+
 const settings = {
   className: "center",
   centerMode: true,
   infinite: true,
   centerPadding: "60px",
-  slidesToShow: 3,
+  slidesToShow: 1,
   speed: 500,
   rows: 2,
   slidesPerRow: 2,
@@ -58,7 +69,7 @@ const MensCarousel = () => {
 
   return (
     <div className="w-Wedding m-auto">
-      <Carousel cols={3} rows={2}>
+      <Carousel cols={3} rows={2} responsiveLayout={responsive}>
         {rows.map((row) => {
           return <Carousel.Item>{row}</Carousel.Item>;
         })}
