@@ -30,10 +30,16 @@ module.exports = {
       NavBar: "100%",
       Image: "100%",
       SpecialFrom: "80%",
+      Card: "280px",
     },
     screens: {
       md: { max: "1368px" },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addVariant }) {
+      addVariant("child", "& > *");
+      addVariant("child-hover", "& > *:hover");
+    },
+  ],
 };

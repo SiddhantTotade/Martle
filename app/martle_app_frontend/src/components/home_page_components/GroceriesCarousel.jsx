@@ -9,22 +9,20 @@ import Heart from "../base_components/Heart";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 const responsive = {
-  superLargeDesktop: {
-    // the naming can be any, depends on you.
-    breakpoint: { max: 4000, min: 3000 },
-    items: 5,
-  },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 6,
+    items: 3,
+    slidesToSlide: 3, // optional, default to 1.
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
     items: 2,
+    slidesToSlide: 2, // optional, default to 1.
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
     items: 1,
+    slidesToSlide: 1, // optional, default to 1.
   },
 };
 
@@ -50,8 +48,7 @@ const GroceriesCarousel = () => {
       </Typography>
       <Carousel
         itemClass="carousel"
-        partialVisbile={false}
-        className="flex"
+        partialVisbile={true}
         responsive={responsive}
       >
         <Paper
@@ -63,6 +60,7 @@ const GroceriesCarousel = () => {
             flexDirection: "column",
             borderRadius: "5px",
             ":hover": { cursor: "pointer" },
+            "@media (max-width: 1368px)": { width: "200px" },
           }}
         >
           <Heart />
@@ -166,6 +164,7 @@ const GroceriesCarousel = () => {
             flexDirection: "column",
             borderRadius: "5px",
             ":hover": { cursor: "pointer" },
+            "@media (max-width: 1368px)": { width: "200px" },
           }}
         >
           <Heart />
@@ -269,6 +268,7 @@ const GroceriesCarousel = () => {
             flexDirection: "column",
             borderRadius: "5px",
             ":hover": { cursor: "pointer" },
+            "@media (max-width: 1368px)": { width: "200px" },
           }}
         >
           <Heart />
