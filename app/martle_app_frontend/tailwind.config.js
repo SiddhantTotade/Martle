@@ -31,6 +31,9 @@ module.exports = {
       Image: "100%",
       SpecialFrom: "80%",
     },
+    screens: {
+      md: { max: "1368px" },
+    },
   },
   plugins: [],
 };
