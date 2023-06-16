@@ -51,7 +51,7 @@ const TopDealsCarousel = () => {
       <Carousel
         itemClass="carousel"
         partialVisbile={false}
-        slidesToSlide={2}
+        slidesToSlide={3}
         responsive={responsive}
         arrows={true}
         renderButtonGroupOutside={true}

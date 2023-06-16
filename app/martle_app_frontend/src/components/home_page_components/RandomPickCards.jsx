@@ -39,6 +39,7 @@ export default function RandomCardsPick() {
               background: "rgba(0,0,0,0.6)",
               transition: "0.6s",
               ":hover": { opacity: 1 },
+              "@media (max-width: 1368px)": { width: 0 },
             }}
           >
             <Typography
