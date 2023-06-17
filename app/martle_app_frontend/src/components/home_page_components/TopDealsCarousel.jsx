@@ -3,7 +3,6 @@ import { Box } from "@mui/system";
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Link } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import Heart from "../base_components/Heart";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
@@ -29,11 +28,7 @@ const responsive = {
   },
 };
 
-const style =
-  "h-62 grid justify-items-center w-56 border-2 border-white rounded-xl text-white bg-gray-700";
-
 const TopDealsCarousel = () => {
-  const rows = [];
 
   return (
     <div className="w-HeaderSwiper m-auto mt-12 justify-center">
@@ -84,8 +79,7 @@ const TopDealsCarousel = () => {
               "@media (max-width: 500px)": {
                 display: "flex",
                 justifyContent: "center",
-                width: "100%",
-                border: "2px solid red",
+                width: "60%",
               },
             }}
           >

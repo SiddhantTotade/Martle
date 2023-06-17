@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:600&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Montserrat:600&display=swap");
 
 .heart-btn {
   position: absolute;
@@ -19,7 +19,7 @@
 }
 
 .heart.heart-active {
-  animation: animate .8s steps(28) 1;
+  animation: animate 0.8s steps(28) 1;
   background-position: right;
 }
 
@@ -30,5 +30,12 @@
 
   100% {
     background-position: right;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .heart {
+    top: 50%;
+    left: 15%;
   }
 }

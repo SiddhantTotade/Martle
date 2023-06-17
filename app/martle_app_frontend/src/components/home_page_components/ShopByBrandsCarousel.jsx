@@ -21,16 +21,12 @@ const responsive = {
     items: 4,
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 500, min: 0 },
     items: 1,
   },
 };
 
-const style =
-  "h-62 grid justify-items-center w-56 border-2 border-white rounded-xl text-white bg-gray-700";
-
 const ShopByBrandsCarousel = () => {
-  const rows = [];
 
   return (
     <div className="w-HeaderSwiper m-auto mt-12 justify-center">
