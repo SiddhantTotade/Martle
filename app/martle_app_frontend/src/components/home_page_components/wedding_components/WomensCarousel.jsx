@@ -13,6 +13,14 @@ const responsive = [
     loop: true,
     autoplay: 3000,
   },
+  {
+    breakpoint: 500,
+    cols: 1,
+    rows: 1,
+    gap: 10,
+    loop: true,
+    autoplay: 3000,
+  },
 ];
 
 const settings = {
@@ -20,7 +28,7 @@ const settings = {
   centerMode: true,
   infinite: true,
   centerPadding: "60px",
-  slidesToShow: 3,
+  slidesToShow: 1,
   speed: 500,
   rows: 2,
   slidesPerRow: 2,
@@ -29,7 +37,6 @@ const settings = {
 const WomensCarousel = () => {
   const items = (
     <Paper
-      elevation={5}
       sx={{
         height: 220,
         width: 220,
@@ -38,6 +45,10 @@ const WomensCarousel = () => {
         flexDirection: "column",
         borderRadius: "5px",
         ":hover": { cursor: "pointer" },
+        "@media screen and (max-width:500px)": {
+          width: "100%",
+          height: "20vh",
+        },
       }}
     >
       <Box
@@ -50,6 +61,9 @@ const WomensCarousel = () => {
           translate: "15% 0%",
           position: "relative",
           overflow: "hidden",
+          "@media screen and (max-width:500px)": {
+            width: "80%",
+          },
         }}
       >
         <img

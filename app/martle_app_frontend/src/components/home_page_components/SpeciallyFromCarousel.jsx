@@ -19,17 +19,12 @@ const responsive = {
     items: 3,
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 500, min: 0 },
     items: 1,
   },
 };
 
-const style =
-  "h-62 grid justify-items-center w-56 border-2 border-white rounded-xl text-white bg-gray-700";
-
 const SpeciallyFromCarousel = () => {
-  const rows = [];
-
   return (
     <div className="w-HeaderSwiper m-auto mt-12 justify-center">
       <Typography
@@ -69,11 +64,11 @@ const SpeciallyFromCarousel = () => {
         <Carousel
           itemClass="carousel"
           partialVisbile={true}
-          slidesToSlide={2}
+          slidesToSlide={1}
           responsive={responsive}
           arrows={true}
           renderButtonGroupOutside={true}
-          className="z-0 w-SpecialFrom"
+          className="z-0 w-SpecialFrom  sm:rounded-md"
         >
           <Paper
             sx={{
@@ -94,16 +89,22 @@ const SpeciallyFromCarousel = () => {
                 height: "100vh",
                 maxHeight: "23.5vh",
                 width: "150px",
-                translate: "40% 10%",
+                translate: "40% 0%",
                 position: "relative",
                 overflow: "hidden",
+                "@media screen and (max-width: 500px)": {
+                  translate: "35% 10%",
+                },
+                "@media screen and (max-width: 1368px)": {
+                  translate: "40% 10%",
+                },
               }}
             >
               <img
                 className="object-contain absolute h-full"
                 src="https://m.media-amazon.com/images/I/71Ftzmh3XWL._AC_SY200_.jpg"
                 alt="img"
-                // width="100%"
+                width="100%"
               />
             </Box>
             <Button

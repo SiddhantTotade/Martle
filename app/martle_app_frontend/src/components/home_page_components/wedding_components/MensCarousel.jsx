@@ -13,6 +13,14 @@ const responsive = [
     loop: true,
     autoplay: 3000,
   },
+  {
+    breakpoint: 500,
+    cols: 1,
+    rows: 1,
+    gap: 10,
+    loop: true,
+    autoplay: 3000,
+  },
 ];
 
 const settings = {
@@ -37,6 +45,10 @@ const MensCarousel = () => {
         flexDirection: "column",
         borderRadius: "5px",
         ":hover": { cursor: "pointer" },
+        "@media screen and (max-width:500px)": {
+          width: "100%",
+          height: "20vh",
+        },
       }}
     >
       <Box
@@ -49,6 +61,9 @@ const MensCarousel = () => {
           translate: "15% 0%",
           position: "relative",
           overflow: "hidden",
+          "@media screen and (max-width:500px)": {
+            width: "80%",
+          },
         }}
       >
         <img
