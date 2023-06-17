@@ -14,14 +14,28 @@ export default class NavBar extends React.Component {
     super(props);
     this.state = {
       sidebar: false,
+      scroll: true,
     };
+    this.checkScroll = this.checkScroll.bind(this);
+  }
+
+  checkScroll() {
+    this.setState({ scroll: window.pageYOffset === 0 });
+  }
+
+  componentDidMount() {
+    window.addEventListener("scroll", this.checkScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.checkScroll);
   }
 
   render() {
     let sidebar = () => this.setState({ sidebar: false });
 
     return (
-      <div className="border-white bg-slate-900 fixed w-NavBar top-0 z-50 md:text-sm">
+      <div className="border-white bg-slate-900 fixed sm:relative w-NavBar top-0 z-50 md:text-sm">
         <div className="flex items-center justify-evenly text-white gap-18 h-20 sm:h-12">
           <div className="fixed -left-3 sm:hidden hover:cursor-pointer top-28 p-2 z-50 bg-white border-2 border-white rounded-3xl hover:translate-x-4 duration-300">
             <div
@@ -116,7 +130,11 @@ export default class NavBar extends React.Component {
             </Link>
           </div>
         </div>
-        <div className="h-16 w-NavBar text-white">
+        <div
+          className={`sm:block sm:h-18 sm:p-1 hidden sm:bg-slate-900 sm:w-NavBar sm:text-white ${
+            this.state.scroll ? "sticky" : "fixed"
+          } top-0`}
+        >
           <form
             action="#"
             method="post"

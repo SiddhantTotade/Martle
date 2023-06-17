@@ -3,7 +3,6 @@ import { Box } from "@mui/system";
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Link } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import Heart from "../base_components/Heart";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
@@ -23,16 +22,13 @@ const responsive = {
     items: 4,
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 500, min: 0 },
     items: 1,
+    slidesToSlide: 1,
   },
 };
 
-const style =
-  "h-62 grid justify-items-center w-56 border-2 border-white rounded-xl text-white bg-gray-700";
-
 const GroceriesCarousel = () => {
-  const rows = [];
 
   return (
     <div className="w-HeaderSwiper m-auto mt-12 justify-center">
@@ -51,7 +47,7 @@ const GroceriesCarousel = () => {
       <Carousel
         itemClass="carousel"
         partialVisbile={false}
-        slidesToSlide={2}
+        slidesToSlide={3}
         responsive={responsive}
         arrows={true}
         renderButtonGroupOutside={true}
@@ -66,6 +62,7 @@ const GroceriesCarousel = () => {
             flexDirection: "column",
             borderRadius: "5px",
             ":hover": { cursor: "pointer" },
+            "@media (max-width: 500px)": { width: "100%" },
           }}
         >
           <Heart />
@@ -79,6 +76,11 @@ const GroceriesCarousel = () => {
               translate: "30% 0%",
               position: "relative",
               overflow: "hidden",
+              "@media (max-width: 500px)": {
+                display: "flex",
+                justifyContent: "center",
+                width: "60%",
+              },
             }}
           >
             <img

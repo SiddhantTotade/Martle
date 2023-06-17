@@ -80,6 +80,9 @@ const SpeciallyFromCarousel = () => {
               flexDirection: "column",
               borderRadius: "5px",
               marginRight: "10px",
+              "@media screen and (max-width: 500px)": {
+                width: "100%",
+              },
             }}
           >
             <Box
@@ -94,6 +97,7 @@ const SpeciallyFromCarousel = () => {
                 overflow: "hidden",
                 "@media screen and (max-width: 500px)": {
                   translate: "35% 10%",
+                  left: "-10px",
                 },
                 "@media screen and (max-width: 1368px)": {
                   translate: "40% 10%",

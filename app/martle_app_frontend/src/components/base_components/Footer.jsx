@@ -10,7 +10,7 @@ export default function Footer() {
                 <ReactCountryFlag countryCode="IN" className="emojiFlag" style={{ fontSize: '2.3rem', lineHeight: '1rem' }} title="INDIA" />
             </div>
             <div className="h-15 flex justify-center items-center text-white">
-                <small className=" tracking-wider">Copyright @ 2022 | All rights reserved by SIDDHANT TOTADE</small>
+                <small className="tracking-wider sm:tracking-normal">Copyright @ 2022 | All rights reserved by SIDDHANT TOTADE</small>
             </div>
         </footer>
     )

@@ -16,10 +16,17 @@ export default function RandomCardsPick() {
       >
         Tools you might Need
       </Typography>
-      <Box sx={{ width: "90%", display: "flex", gap: "10px" }}>
-        <Box sx={{ position: "relative", width: "100%", borderRadius: "5px" }}>
+      <Box sx={{ width: "100%", display: "flex", gap: "10px" }}>
+        <Box
+          sx={{
+            position: "relative",
+            width: "90%",
+            borderRadius: "5px",
+            "@media screen and (max-width: 500px)": { width: "30%" },
+          }}
+        >
           <img
-            className="block rounded-md"
+            className="block rounded-md sm:w-RandomCards"
             src="https://cdn.shopify.com/s/files/1/1459/5894/files/Black_20Orange_large.gif?v=1685102407"
             alt="img"
             width="18%"
