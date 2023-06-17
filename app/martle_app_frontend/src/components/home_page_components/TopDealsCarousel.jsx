@@ -24,7 +24,7 @@ const responsive = {
   },
   mobile: {
     breakpoint: { max: 500, min: 0 },
-    items: 2,
+    items: 1,
     slidesToSlide: 1,
   },
 };
@@ -67,6 +67,7 @@ const TopDealsCarousel = () => {
             flexDirection: "column",
             borderRadius: "5px",
             ":hover": { cursor: "pointer" },
+            "@media (max-width: 500px)": { width: "100%" },
           }}
         >
           <Heart />
@@ -80,6 +81,12 @@ const TopDealsCarousel = () => {
               translate: "30% 0%",
               position: "relative",
               overflow: "hidden",
+              "@media (max-width: 500px)": {
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+                border: "2px solid red",
+              },
             }}
           >
             <img
