@@ -1,12 +1,12 @@
 import SearchIcon from "@mui/icons-material/Search";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import PlaceIcon from "@mui/icons-material/Place";
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Link } from "react-router-dom";
 import React from "react";
 import Sidebar from "./Sidebar";
 import { TextField, Box, Button } from "@mui/material";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import PlaceIcon from "@mui/icons-material/Place";
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MenuIcon from "@mui/icons-material/Menu";
 
