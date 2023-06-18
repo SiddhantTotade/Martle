@@ -1,5 +1,5 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import React from "react";
 import Sidebar from "./Sidebar";
 import { TextField, Box, Button } from "@mui/material";
@@ -16,12 +16,25 @@ export default class NavBar extends React.Component {
     this.state = {
       sidebar: false,
       scroll: true,
+      location: [
+        "/api/login",
+        "/api/register",
+        "/api/user/reset-password",
+        "/reset-password-email",
+      ],
     };
     this.checkScroll = this.checkScroll.bind(this);
+    this.checkLocation = this.checkLocation.bind(this);
   }
 
   checkScroll() {
     this.setState({ scroll: window.pageYOffset === 0 });
+  }
+
+  checkLocation() {
+    if (this.state.location.includes(() => useLocation().pathname)) {
+      return true;
+    }
   }
 
   componentDidMount() {
@@ -38,7 +51,11 @@ export default class NavBar extends React.Component {
     return (
       <div className="border-white bg-slate-900 fixed sm:relative w-NavBar top-0 z-50 md:text-sm">
         <div className="flex items-center justify-evenly text-white gap-18 h-20 sm:h-12">
-          <div className="fixed -left-3 sm:hidden hover:cursor-pointer top-28 p-2 z-50 bg-white border-2 border-white rounded-3xl hover:translate-x-4 duration-300">
+          <div
+            className={`fixed -left-3 sm:hidden hover:cursor-pointer top-28 p-2 z-50 bg-white border-2 border-white rounded-3xl hover:translate-x-4 duration-300 ${
+              this.checkLocation ? "hidden" : "block"
+            }`}
+          >
             <div
               onClick={() => this.setState({ sidebar: true })}
               className="left-3.5 p-2 m-0"
@@ -79,7 +96,11 @@ export default class NavBar extends React.Component {
           >
             <ShoppingCartIcon sx={{ fontSize: "30px" }} />
           </Box>
-          <div className="hover:text-rose-500 sm:hidden">
+          <div
+            className={`hover:text-rose-500 sm:hidden ${
+              this.checkLocation ? "hidden" : "block"
+            }`}
+          >
             <Link to="/address" className="flex gap-1">
               <p>Address</p>
               <PlaceIcon
@@ -90,7 +111,9 @@ export default class NavBar extends React.Component {
           <form
             action="#"
             method="post"
-            className="flex justify-center items-center sm:hidden"
+            className={`flex justify-center items-center sm:hidden ${
+              this.checkLocation ? "hidden" : "block"
+            }`}
           >
             <Box
               component="form"
@@ -130,7 +153,11 @@ export default class NavBar extends React.Component {
               <SearchIcon sx={{ fontSize: "x-large" }} />
             </Button>
           </form>
-          <div className="hover:text-rose-500 sm:hidden">
+          <div
+            className={`hover:text-rose-500 sm:hidden ${
+              this.checkLocation ? "hidden" : "block"
+            }`}
+          >
             <Link to="/orders" className="flex gap-1">
               <p>Orders</p>
               <ShoppingBasketIcon
@@ -138,7 +165,11 @@ export default class NavBar extends React.Component {
               />
             </Link>
           </div>
-          <div className="hover:text-rose-500 sm:hidden">
+          <div
+            className={`hover:text-rose-500 sm:hidden ${
+              this.checkLocation ? "hidden" : "block"
+            }`}
+          >
             <Link to="/orders" className="flex gap-1">
               <p>Favourites</p>
               <FavoriteIcon
@@ -146,7 +177,11 @@ export default class NavBar extends React.Component {
               />
             </Link>
           </div>
-          <div className="hover:text-rose-500 sm:hidden">
+          <div
+            className={`hover:text-rose-500 sm:hidden ${
+              this.checkLocation ? "hidden" : "block"
+            }`}
+          >
             <Link to="/cart" className="flex gap-1">
               <p>Cart</p>
               <ShoppingCartIcon

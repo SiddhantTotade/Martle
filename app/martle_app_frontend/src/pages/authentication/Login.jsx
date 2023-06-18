@@ -60,10 +60,11 @@ const LoginPage = () => {
         <Container
           maxWidth="sm"
           sx={{
-            transform: "translate(0%,50%)",
-            boxShadow: "1px 1px 10px gray",
+            transform: "translate(0%,70%)",
+            boxShadow: "1px 1px 8px gray",
             borderRadius: "5px",
             padding: 2,
+            background: "rgb(15 23 42)",
           }}
         >
           <Typography color="white" variant="h4" align="center" gutterBottom>
@@ -75,8 +76,26 @@ const LoginPage = () => {
             required
             margin="normal"
             variant="outlined"
+            autoComplete="off"
             type="email"
             name="email"
+            InputLabelProps={{ style: { color: "#c9c9c9" } }}
+            inputProps={{
+              style: {
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+              },
+            }}
+            sx={{
+              "& .MuiInputLabel-root": { color: "white" },
+              "&:hover .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "blue" },
+              },
+              "& .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "white" },
+              },
+            }}
           />
           {error.email ? <Typography>{error.email[0]}</Typography> : ""}
           <TextField
@@ -87,6 +106,23 @@ const LoginPage = () => {
             variant="outlined"
             type="password"
             name="password"
+            InputLabelProps={{ style: { color: "#c9c9c9" } }}
+            inputProps={{
+              style: {
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+              },
+            }}
+            sx={{
+              "& .MuiInputLabel-root": { color: "white" },
+              "&:hover .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "blue" },
+              },
+              "& .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "white" },
+              },
+            }}
           />
           {error.password ? <Typography>{error.password[0]}</Typography> : ""}
           <Grid

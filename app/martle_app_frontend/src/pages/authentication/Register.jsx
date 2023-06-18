@@ -4,6 +4,7 @@ import {
   TextField,
   Typography,
   Checkbox,
+  checkboxClasses,
   Button,
   Grid,
   FormControlLabel,
@@ -57,13 +58,14 @@ const RegisterPage = () => {
         <Container
           maxWidth="sm"
           sx={{
-            transform: "translate(0%,35%)",
-            boxShadow: "10px 12px 20px gray",
+            transform: "translate(0%,40%)",
+            boxShadow: "1px 1px 8px gray",
             borderRadius: "5px",
             padding: 2,
+            background: "rgb(15 23 42)",
           }}
         >
-          <Typography variant="h4" align="center" gutterBottom>
+          <Typography color="white" variant="h4" align="center" gutterBottom>
             Register
           </Typography>
           <TextField
@@ -74,6 +76,23 @@ const RegisterPage = () => {
             type="name"
             name="name"
             id="name"
+            InputLabelProps={{ style: { color: "#c9c9c9" } }}
+            inputProps={{
+              style: {
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+              },
+            }}
+            sx={{
+              "& .MuiInputLabel-root": { color: "white" },
+              "&:hover .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "blue" },
+              },
+              "& .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "white" },
+              },
+            }}
           />
           {error.name ? <Typography>{error.name[0]}</Typography> : ""}
           <TextField
@@ -84,6 +103,23 @@ const RegisterPage = () => {
             type="email"
             name="email"
             id="email"
+            InputLabelProps={{ style: { color: "#c9c9c9" } }}
+            inputProps={{
+              style: {
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+              },
+            }}
+            sx={{
+              "& .MuiInputLabel-root": { color: "white" },
+              "&:hover .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "blue" },
+              },
+              "& .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "white" },
+              },
+            }}
           />
           {error.email ? <Typography>{error.email[0]}</Typography> : ""}
           <TextField
@@ -94,6 +130,23 @@ const RegisterPage = () => {
             type="password"
             name="password"
             id="password"
+            InputLabelProps={{ style: { color: "#c9c9c9" } }}
+            inputProps={{
+              style: {
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+              },
+            }}
+            sx={{
+              "& .MuiInputLabel-root": { color: "white" },
+              "&:hover .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "blue" },
+              },
+              "& .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "white" },
+              },
+            }}
           />
           {error.password ? <Typography>{error.password[0]}</Typography> : ""}
           <TextField
@@ -104,13 +157,40 @@ const RegisterPage = () => {
             type="password"
             name="password2"
             id="password2"
+            InputLabelProps={{ style: { color: "#c9c9c9" } }}
+            inputProps={{
+              style: {
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+              },
+            }}
+            sx={{
+              "& .MuiInputLabel-root": { color: "white" },
+              "&:hover .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "blue" },
+              },
+              "& .MuiOutlinedInput-root": {
+                "& > fieldset": { borderColor: "white" },
+              },
+            }}
           />
           {error.password ? <Typography>{error.password[0]}</Typography> : ""}
           <FormControlLabel
-            sx={{ marginTop: "13px" }}
+            sx={{ marginTop: "13px", color: "white" }}
             label="I agree to terms and conditions"
             control={
-              <Checkbox value={true} color="primary" name="tc" id="tc" />
+              <Checkbox
+                value={true}
+                sx={{
+                  [`&, &.${checkboxClasses.disabled}`]: {
+                    color: "white",
+                  },
+                }}
+                color="primary"
+                name="tc"
+                id="tc"
+              />
             }
           ></FormControlLabel>
           <Grid container justify="space-between" marginTop={5}>
