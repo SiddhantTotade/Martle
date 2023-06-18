@@ -86,7 +86,7 @@ const TopDealsCarousel = () => {
               <Box
                 sx={{
                   display: "flex",
-                  // justifyContent: "center",
+                  justifyContent: "center",
                   alignItems: "baseline",
                 }}
               >
