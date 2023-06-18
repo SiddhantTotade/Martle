@@ -10,6 +10,7 @@ import {
   FormControlLabel,
   CircularProgress,
   Alert,
+  Link,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { storeToken } from "../../services/LocalStorageService";
@@ -103,6 +104,7 @@ const RegisterPage = () => {
             type="email"
             name="email"
             id="email"
+            autoComplete="off"
             InputLabelProps={{ style: { color: "#c9c9c9" } }}
             inputProps={{
               style: {
@@ -213,6 +215,10 @@ const RegisterPage = () => {
             ) : (
               ""
             )}
+          </Box>
+          <Box sx={{ display: "flex", gap: "10px" }}>
+            <Typography color="white">Have an account ?</Typography>
+            <Link href="/api/login">Login</Link>
           </Box>
         </Container>
       </Box>
