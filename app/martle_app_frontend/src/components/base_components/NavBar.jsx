@@ -8,6 +8,7 @@ import Sidebar from "./Sidebar";
 import { TextField, Box, Button } from "@mui/material";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import MenuIcon from "@mui/icons-material/Menu";
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -54,6 +55,30 @@ export default class NavBar extends React.Component {
           >
             martle
           </Link>
+          <Box
+            onClick={() => this.setState({ sidebar: true })}
+            sx={{
+              position: "absolute",
+              left: 20,
+              top: 15,
+              "@media screen and (min-width: 510px)": { display: "none" },
+            }}
+          >
+            <MenuIcon
+              onClick={() => this.setState({ sidebar: true })}
+              sx={{ fontSize: "30px" }}
+            />
+          </Box>
+          <Box
+            sx={{
+              position: "absolute",
+              right: 20,
+              top: 15,
+              "@media screen and (min-width: 510px)": { display: "none" },
+            }}
+          >
+            <ShoppingCartIcon sx={{ fontSize: "30px" }} />
+          </Box>
           <div className="hover:text-rose-500 sm:hidden">
             <Link to="/address" className="flex gap-1">
               <p>Address</p>

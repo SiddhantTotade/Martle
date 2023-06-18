@@ -52,7 +52,17 @@ const TopDealsCarousel = () => {
         renderButtonGroupOutside={true}
         className="z-0"
       >
-        <Paper sx={{ height: 220, width: "100%", display: "flex" }}>
+        <Paper
+          sx={{
+            height: 220,
+            width: "100%",
+            display: "flex",
+            "@media screen and (min-width: 1368px)": {
+              display: "none",
+              visibility: "hidden",
+            },
+          }}
+        >
           <Box
             sx={{
               width: "50%",
@@ -135,13 +145,16 @@ const TopDealsCarousel = () => {
               </Box>
             </Box>
             <Box sx={{ width: "100%" }}>
-              <Button sx={{ width: "100%" }} variant="contained">
-                Add to Cart
-              </Button>
+              <Box>
+                <Button variant="contained">Add to Cart</Button>
+              </Box>
+              <Box>
+                <Heart />
+              </Box>
             </Box>
           </Box>
         </Paper>
-        {/* <Paper
+        <Paper
           sx={{
             height: 320,
             width: 270,
@@ -249,7 +262,7 @@ const TopDealsCarousel = () => {
           >
             Add to cart
           </Button>
-        </Paper> */}
+        </Paper>
         <Paper
           sx={{
             height: 320,
