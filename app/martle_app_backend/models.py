@@ -103,11 +103,11 @@ class User(AbstractBaseUser):
 # --------- Customer Model
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=30)
-    address = models.CharField(default=None, max_length=50)
-    locality = models.CharField(max_length=30)
-    city = models.CharField(max_length=30)
-    state = models.CharField(choices=STATE_CHOICES, max_length=50)
+    name = models.CharField(max_length=255)
+    address = models.CharField(default=None, max_length=255)
+    locality = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=50,blank=True,null=True)
     zipcode = models.IntegerField()
     country = CountryField()
 
@@ -117,6 +117,7 @@ class Customer(models.Model):
     def get_absolute_url(self):
         return reverse('address')
 
+
 # Product Category Choices Model
 class ProductCategoryChoices(models.Model):
     product_category = models.CharField(max_length=255,blank=True,null=True)
@@ -125,6 +126,7 @@ class ProductCategoryChoices(models.Model):
         self.product_category = self.product_category.replace(" ","").lower()
         return super().save(*args, **kwargs)
 
+
 # Product Status Choices Model
 class ProductStatusChoices(models.Model):
     product_status = models.CharField(max_length=255,blank=True,null=True)
@@ -132,6 +134,7 @@ class ProductStatusChoices(models.Model):
     def save(self, *args, **kwargs):
         self.product_status = self.product_status.replace(" ","").lower()
         return super().save(*args, **kwargs)
+    
     
 # --------- Product Model
 class Product(models.Model):

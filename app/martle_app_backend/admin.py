@@ -6,19 +6,24 @@ from django.utils.html import format_html
 
 # Registering Models
 admin.site.register(User)
+admin.site.register(ProductCategoryChoices)
+admin.site.register(ProductStatusChoices)
 admin.site.register(Comment)
 
 
 # Classes for registering models
+
 
 # -------- Customer Admin
 @admin.register(Customer)
 class CustomerModelAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'name', 'address', 'locality', 'city', 'state', 'zipcode', 'country']
 
+
 # -------- Product Images Admin
 class ProductImageAdmin(admin.StackedInline):
     model = ProductImage
+
 
 # -------- Product Admin
 @admin.register(Product)
@@ -30,9 +35,11 @@ class ProductModelAdmin(admin.ModelAdmin):
     class Meta:
         model = Product
 
+
 @admin.register(ProductImage)
 class ProductImgAdmin(admin.ModelAdmin):
     pass
+
 
 # -------- Cart Admin
 @admin.register(Cart)
