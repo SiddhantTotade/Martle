@@ -12,7 +12,14 @@ import GroceriesCarousel from "../components/home_page_components/GroceriesCarou
 import VisitedItemsCarousel from "../components/home_page_components/VisitedItemsCarousel";
 import Footer from "../components/base_components/Footer";
 
+import { useAllProductAPIQuery } from "../services/allProducts";
+import { getToken } from "../services/LocalStorageService";
+
 const Home = () => {
+  const { access_token } = getToken();
+
+  const { data = [], isLoading } = useAllProductAPIQuery(access_token);
+  
   return (
     <>
       <NavBar />

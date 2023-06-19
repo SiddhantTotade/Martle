@@ -128,9 +128,8 @@ def upload_description(request):
     combine = dict(list(zip(key, val)))
     return JsonResponse(str(combine), safe=False)
 
+
 #  Function for image upload
-
-
 @api_view(['GET', 'POST'])
 def SetImageView(request):
     if request.method == 'GET':
@@ -207,8 +206,8 @@ class CustomerView(APIView):
             return JsonResponse(customer_serializer, safe=False)
         return JsonResponse("No customer found", safe=False)
 
-    # saving customer data
 
+    # saving customer data
     def post(self, request):
         # getting customer data which is going to be save
         customer_json_data = JSONParser().parse(request)

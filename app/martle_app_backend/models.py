@@ -117,7 +117,22 @@ class Customer(models.Model):
     def get_absolute_url(self):
         return reverse('address')
 
+# Product Category Choices Model
+class ProductCategoryChoices(models.Model):
+    product_category = models.CharField(max_length=255,blank=True,null=True)
 
+    def save(self, *args, **kwargs):
+        self.product_category = self.product_category.replace(" ","").lower()
+        return super().save(*args, **kwargs)
+
+# Product Status Choices Model
+class ProductStatusChoices(models.Model):
+    product_status = models.CharField(max_length=255,blank=True,null=True)
+
+    def save(self, *args, **kwargs):
+        self.product_status = self.product_status.replace(" ","").lower()
+        return super().save(*args, **kwargs)
+    
 # --------- Product Model
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
@@ -127,7 +142,7 @@ class Product(models.Model):
     product_description = models.TextField()
     product_details = models.TextField()
     product_brand = models.CharField(max_length=50)
-    product_category = models.CharField(choices=CATEGORY_CHOICES, max_length=5)
+    product_category = models.ForeignKey(ProductCategoryChoices,on_delete=models.PROTECT)
     product_slug = models.SlugField(null=True, blank=True)
 
     def save(self, *args, **kwargs):

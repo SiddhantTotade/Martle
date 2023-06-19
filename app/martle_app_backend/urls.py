@@ -20,7 +20,6 @@ urlpatterns = [
     re_path(r"^product-images/get-images$",SetImageView),
 
     # Application Route
-    re_path(r"^product/$",ProductView.as_view()),
     re_path(r"^all-product/$",ProductView.as_view()),
     re_path(r"^product/([0-9]+)$",ProductView.as_view()),
     re_path(r"^customer/([0-9]+)$",CustomerView.as_view()),
