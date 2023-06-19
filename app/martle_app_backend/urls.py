@@ -9,8 +9,11 @@ router = routers.DefaultRouter()
 urlpatterns = [
 
     # User Authentication Route
-    re_path(r"^register$",RegisterView.as_view()),
-    re_path(r"^verify-otp$",VerifyOTP.as_view()),
+    re_path(r"^login/$",UserLoginView.as_view(),name='login'),
+    re_path(r"^register/$",UserRegistrationView.as_view(),name='register'),
+    re_path(r"^change-password/$",UserChangePasswordView.as_view(),name='change-password'),
+    re_path(r"^reset-password/$",SendPasswordResetEmailView.as_view(),name='send_reset_password_email'),
+    re_path(r"^reset-password/<uid>/<token>/$",UserPasswordResetView.as_view(),name='reset_password'),
 
     # Media Route
     re_path(r"^product-images/savefile/$",SetImageView),

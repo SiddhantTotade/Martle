@@ -38,9 +38,12 @@ const LoginPage = () => {
 
     const res = await loginUser(actualData);
 
+    console.log(res);
+
     if (res.error) {
       setError(res.error.data.errors);
     }
+
     if (res.data) {
       storeToken(res.data.token);
       let { access_token } = getToken();

@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-!!#=rg78&3+yhm^idgnh17qmgo-bo)1bdp&$@r=33o694i+pm=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = 'martle_app_backend.User'
 

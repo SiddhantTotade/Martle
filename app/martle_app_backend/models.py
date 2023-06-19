@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
@@ -68,7 +68,7 @@ class UserManager(BaseUserManager):
 
 
 # User Authentication Models
-class User(AbstractUser):
+class User(AbstractBaseUser):
     email = models.EmailField(
         verbose_name='Email Address', max_length=255, unique=True)
     name = models.CharField(max_length=255)
@@ -96,18 +96,6 @@ class User(AbstractUser):
     def is_staff(self):
         return self.is_admin
 
-
-@receiver(post_save, sender=User)
-def send_email_token(sender, instance, created, **kwargs):
-    if created:
-        try:
-            subject = "Your email needs to be verified"
-            message = f"Hi, Please click on the link to verify email. Link - http://127.0.0.1:8000/{uuid.uuid4()}"
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [instance.email]
-            send_mail(subject, message, email_from, recipient_list)
-        except Exception as e:
-            print(e)
 
 
 # Project Models

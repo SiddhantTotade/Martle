@@ -12,7 +12,7 @@ import GroceriesCarousel from "../components/home_page_components/GroceriesCarou
 import VisitedItemsCarousel from "../components/home_page_components/VisitedItemsCarousel";
 import Footer from "../components/base_components/Footer";
 
-export default function Home() {
+const Home = () => {
   return (
     <>
       <NavBar />
@@ -29,4 +29,6 @@ export default function Home() {
       <Footer />
     </>
   );
-}
+};
+
+export default Home;

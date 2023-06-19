@@ -15,12 +15,14 @@ const NavBar = (props) => {
 
   const [scroll, setScroll] = useState(true);
 
-  const location = [
+  const locations = [
     "/api/login",
     "/api/register",
     "/api/user/reset-password",
     "/reset-password-email",
   ];
+
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScroll(window.pageYOffset === 0);
@@ -31,8 +33,7 @@ const NavBar = (props) => {
   }, []);
 
   function checkLocation() {
-    if (location.includes(location)) {
-      console.log(useLocation.pathname);
+    if (locations.includes(location.pathname)) {
       return true;
     }
   }
