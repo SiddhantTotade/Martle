@@ -38,9 +38,8 @@ class UserRegistrationView(APIView):
         token = get_tokens_for_user(user)
         return Response({'token': token, 'msg': 'Admin registered successfully'}, status=status.HTTP_201_CREATED)
 
-    # User login view
 
-
+# User login view
 class UserLoginView(APIView):
     renderer_classes = [UserRenderer]
 
@@ -197,7 +196,7 @@ class CustomerView(APIView):
     def get(self, request):
 
         # getting customers by id
-        all_customers = Customer.objects.all()
+        all_customers = CustomerAddress.objects.all()
 
         # checking customer exist or not
         if all_customers:
@@ -205,7 +204,6 @@ class CustomerView(APIView):
                 'json', all_customers)
             return JsonResponse(customer_serializer, safe=False)
         return JsonResponse("No customer found", safe=False)
-
 
     # saving customer data
     def post(self, request):
@@ -223,7 +221,7 @@ class CustomerView(APIView):
     def put(self, request, pk):
         # getting customer modified data which is going to be update
         customer_json_data = JSONParser().parse(request)
-        customer_by_id = Customer.objects.get(pk=pk)
+        customer_by_id = CustomerAddress.objects.get(pk=pk)
         customer_serialized_data = CustomerSerializer(
             customer_by_id, data=customer_json_data)
 
@@ -235,6 +233,6 @@ class CustomerView(APIView):
 
     # deleting customer by pk
     def delete(self, request, pk):
-        customer_by_id = Customer.objects.get(pk=pk)
+        customer_by_id = CustomerAddress.objects.get(pk=pk)
         customer_by_id.delete()
         return JsonResponse("Customer deleted successfull", safe=False)
