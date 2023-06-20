@@ -160,6 +160,13 @@ class ProductImage(models.Model):
         return str(self.product_image.id) + " - " + str(self.product_image.product_title)
 
 
+# --------- Product Image Model
+class Brands(models.Model):
+    brand_image = models.ImageField(upload_to="brand_images")
+    brand_slug = models.SlugField(
+        max_length=300, null=True, blank=True, unique=True)
+
+
 # --------- Cart Model
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
