@@ -1,5 +1,0 @@
-/media
-/martle_app_backend/__pycache__
-/martle_app_backend/migrations
-/martle_project/__pycache__
-db.sqlite3
