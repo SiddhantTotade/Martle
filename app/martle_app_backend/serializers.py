@@ -166,7 +166,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         customer = CustomerAddress.objects.create(user=validated_data['user'], name=validated_data['name'], address=validated_data['address'], locality=validated_data['locality'],
-                                           city=validated_data['city'], state=validated_data['state'], country=validated_data['country'], zipcode=validated_data['zipcode'])
+                                                  city=validated_data['city'], state=validated_data['state'], country=validated_data['country'], zipcode=validated_data['zipcode'])
         customer.save()
         return customer
 
@@ -199,6 +199,13 @@ class ProductSerializer(serializers.ModelSerializer):
                                          product_description=validated_data['product_description'], product_details=validated_data['product_details'], product_brand=validated_data['product_brand'], product_category=validated_data['product_category'])
         product.save()
         return product
+
+
+class ProductLightSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['product_title', 'product_selling_price', 'product_discounted_price',
+                  'product_brand', 'product_category', 'product_slug', 'product_cover_image']
 
 
 # --------- Cart Serializer

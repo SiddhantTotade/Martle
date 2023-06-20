@@ -20,15 +20,13 @@ const Home = () => {
 
   const { data = [], isLoading } = useAllProductAPIQuery(access_token);
 
-  console.log(data);
-  
   return (
     <>
       <NavBar />
       <Sidebar />
       <HeaderSwiper />
       <ProductNavigator />
-      <TopDealsCarousel />
+      <TopDealsCarousel data={data} isLoading={isLoading} />
       <ShopByBrandsCarousel />
       <SpeciallyFromCarousel />
       <WeddingCarousels />

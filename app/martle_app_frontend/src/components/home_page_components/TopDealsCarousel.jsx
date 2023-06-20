@@ -28,7 +28,243 @@ const responsive = {
   },
 };
 
-const TopDealsCarousel = () => {
+const TopDealsCarousel = (props) => {
+  const mobileCard = props.data.map((row) => {
+    return (
+      <Paper
+        sx={{
+          height: 220,
+          width: "100%",
+          display: "flex",
+          "@media screen and (min-width: 1368px)": {
+            display: "none",
+            visibility: "hidden",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            width: "50%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img
+            className=""
+            src={`http://127.0.0.1:8000` + row.product_cover_image}
+            alt="img"
+            width="50%"
+          />
+        </Box>
+        <Box
+          sx={{
+            width: "50%",
+            display: "flex",
+            justifyContent: "space-around",
+            flexDirection: "column",
+            padding: "15px",
+          }}
+        >
+          <Box>
+            <Typography fontSize={14}>{row.product_title}</Typography>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "baseline",
+              }}
+            >
+              <Box>
+                <CurrencyRupeeIcon fontWeight="bold" fontSize="15px" />
+              </Box>
+              <Box>
+                <Typography fontWeight="bold" fontSize={15}>
+                  {row.product_discounted_price.toLocaleString("en-IN", {
+                    currency: "INR",
+                  })}
+                </Typography>
+                <Typography fontWeight="bold" fontSize={15}>
+                  {row.product_selling_price.toLocaleString("en-IN", {
+                    currency: "INR",
+                  })}
+                </Typography>
+              </Box>
+            </Box>
+            <Box sx={{ display: "flex", gap: "5px" }}>
+              <Typography
+                fontWeight="bold"
+                fontSize={14}
+                sx={{
+                  padding: "5px",
+                  display: "flex",
+                  alignItems: "center",
+                  borderRadius: "5px",
+                  background: "gray",
+                  color: "#ffff",
+                  gap: "2px",
+                  height: "25px",
+                }}
+              >
+                3.4
+                <StarIcon fontSize="12" />
+              </Typography>
+              <Typography
+                fontWeight="bold"
+                fontSize={14}
+                sx={{
+                  padding: "5px",
+                  display: "flex",
+                  alignItems: "center",
+                  borderRadius: "5px",
+                  background: "crimson",
+                  color: "#ffff",
+                  height: "25px",
+                }}
+              >
+                15% off
+              </Typography>
+            </Box>
+          </Box>
+          <Box sx={{ width: "100%" }}>
+            <Box>
+              <Button variant="contained">Add to Cart</Button>
+            </Box>
+            <Box>
+              <Heart />
+            </Box>
+          </Box>
+        </Box>
+      </Paper>
+    );
+  });
+
+  const desktopCard = props.data.map((row) => {
+    return (
+      <Paper
+        sx={{
+          height: 320,
+          width: 270,
+          gap: "10px",
+          display: "flex",
+          flexDirection: "column",
+          borderRadius: "5px",
+          ":hover": { cursor: "pointer" },
+          "@media (max-width: 500px)": { width: "100%" },
+        }}
+      >
+        <Heart />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            height: "100vh",
+            maxHeight: "34vh",
+            width: "170px",
+            translate: "30% 0%",
+            position: "relative",
+            overflow: "hidden",
+            "@media (max-width: 500px)": {
+              display: "flex",
+              justifyContent: "center",
+              width: "60%",
+            },
+          }}
+        >
+          <img
+            className="object-contain absolute h-full"
+            src={`http://127.0.0.1:8000` + row.product_cover_image}
+            alt="img"
+            width="100%"
+          />
+        </Box>
+        <Typography
+          fontSize={12}
+          sx={{
+            paddingLeft: "10px",
+            paddingRight: "10px",
+            ":hover": { color: "#078dfa" },
+          }}
+        >
+          {row.product_title}
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "end",
+              gap: "0",
+            }}
+          >
+            <Typography
+              fontWeight="bold"
+              fontSize={17}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              <CurrencyRupeeIcon fontSize="10px" />
+              {row.product_discounted_price.toLocaleString("en-IN", {
+                currency: "INR",
+              })}
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", gap: "4px" }}>
+            <Typography
+              fontWeight="bold"
+              fontSize={14}
+              sx={{
+                padding: "5px",
+                display: "flex",
+                alignItems: "center",
+                borderRadius: "5px",
+                background: "gray",
+                color: "#ffff",
+                gap: "2px",
+                height: "25px",
+              }}
+            >
+              3.4
+              <StarIcon fontSize="12" />
+            </Typography>
+            <Typography
+              fontWeight="bold"
+              fontSize={14}
+              sx={{
+                padding: "5px",
+                display: "flex",
+                alignItems: "center",
+                borderRadius: "5px",
+                background: "crimson",
+                color: "#ffff",
+                height: "25px",
+              }}
+            >
+              15% off
+            </Typography>
+          </Box>
+        </Box>
+        <Button
+          variant="contained"
+          sx={{
+            borderRadius: "0 0 5px 5px",
+            marginTop: "auto",
+            width: "100%",
+          }}
+        >
+          Add to cart
+        </Button>
+      </Paper>
+    );
+  });
+
   return (
     <div className="w-HeaderSwiper m-auto mt-12 justify-center">
       <Typography
@@ -52,544 +288,7 @@ const TopDealsCarousel = () => {
         renderButtonGroupOutside={true}
         className="z-0"
       >
-        <Paper
-          sx={{
-            height: 220,
-            width: "100%",
-            display: "flex",
-            "@media screen and (min-width: 1368px)": {
-              display: "none",
-              visibility: "hidden",
-            },
-          }}
-        >
-          <Box
-            sx={{
-              width: "50%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <img
-              className=""
-              src="https://m.media-amazon.com/images/I/71Ftzmh3XWL._AC_SY200_.jpg"
-              alt="img"
-            />
-          </Box>
-          <Box
-            sx={{
-              width: "50%",
-              display: "flex",
-              justifyContent: "space-around",
-              flexDirection: "column",
-              padding: "15px",
-            }}
-          >
-            <Box>
-              <Typography fontSize={14}>
-                ASUS ROG Zephyrus M16 (2022), 16-inch (40.64 cms) 2K QHD
-                165Hz/3ms, 17"(43.18 cm) Backpack (Black)...
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "baseline",
-                }}
-              >
-                <Box>
-                  <CurrencyRupeeIcon fontWeight="bold" fontSize="15px" />
-                </Box>
-                <Box>
-                  <Typography fontWeight="bold" fontSize={15}>
-                    17000
-                  </Typography>
-                </Box>
-              </Box>
-              <Box sx={{ display: "flex", gap: "5px" }}>
-                <Typography
-                  fontWeight="bold"
-                  fontSize={14}
-                  sx={{
-                    padding: "5px",
-                    display: "flex",
-                    alignItems: "center",
-                    borderRadius: "5px",
-                    background: "gray",
-                    color: "#ffff",
-                    gap: "2px",
-                    height: "25px",
-                  }}
-                >
-                  3.4
-                  <StarIcon fontSize="12" />
-                </Typography>
-                <Typography
-                  fontWeight="bold"
-                  fontSize={14}
-                  sx={{
-                    padding: "5px",
-                    display: "flex",
-                    alignItems: "center",
-                    borderRadius: "5px",
-                    background: "crimson",
-                    color: "#ffff",
-                    height: "25px",
-                  }}
-                >
-                  15% off
-                </Typography>
-              </Box>
-            </Box>
-            <Box sx={{ width: "100%" }}>
-              <Box>
-                <Button variant="contained">Add to Cart</Button>
-              </Box>
-              <Box>
-                <Heart />
-              </Box>
-            </Box>
-          </Box>
-        </Paper>
-        <Paper
-          sx={{
-            height: 320,
-            width: 270,
-            gap: "10px",
-            display: "flex",
-            flexDirection: "column",
-            borderRadius: "5px",
-            ":hover": { cursor: "pointer" },
-            "@media (max-width: 500px)": { width: "100%" },
-          }}
-        >
-          <Heart />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              height: "100vh",
-              maxHeight: "34vh",
-              width: "170px",
-              translate: "30% 0%",
-              position: "relative",
-              overflow: "hidden",
-              "@media (max-width: 500px)": {
-                display: "flex",
-                justifyContent: "center",
-                width: "60%",
-              },
-            }}
-          >
-            <img
-              className="object-contain absolute h-full"
-              src="https://m.media-amazon.com/images/I/71Ftzmh3XWL._AC_SY200_.jpg"
-              alt="img"
-              width="100%"
-            />
-          </Box>
-          <Typography
-            fontSize={12}
-            sx={{
-              paddingLeft: "10px",
-              paddingRight: "10px",
-              ":hover": { color: "#078dfa" },
-            }}
-          >
-            ASUS ROG Zephyrus M16 (2022), 16-inch (40.64 cms) 2K QHD 165Hz/3ms,
-            17"(43.18 cm) Backpack (Black)...
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-around",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              fontWeight="bold"
-              fontSize={17}
-              sx={{ display: "flex", padding: "4px", alignItems: "center" }}
-            >
-              <CurrencyRupeeIcon fontSize="20px" />
-              17000
-            </Typography>
-            <Box sx={{ display: "flex", gap: "4px" }}>
-              <Typography
-                fontWeight="bold"
-                fontSize={14}
-                sx={{
-                  padding: "5px",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "5px",
-                  background: "gray",
-                  color: "#ffff",
-                  gap: "2px",
-                  height: "25px",
-                }}
-              >
-                3.4
-                <StarIcon fontSize="12" />
-              </Typography>
-              <Typography
-                fontWeight="bold"
-                fontSize={14}
-                sx={{
-                  padding: "5px",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "5px",
-                  background: "crimson",
-                  color: "#ffff",
-                  height: "25px",
-                }}
-              >
-                15% off
-              </Typography>
-            </Box>
-          </Box>
-          <Button
-            variant="contained"
-            sx={{
-              borderRadius: "0 0 5px 5px",
-              marginTop: "auto",
-              width: "100%",
-            }}
-          >
-            Add to cart
-          </Button>
-        </Paper>
-        <Paper
-          sx={{
-            height: 320,
-            width: 270,
-            gap: "10px",
-            display: "flex",
-            flexDirection: "column",
-            borderRadius: "5px",
-            ":hover": { cursor: "pointer" },
-          }}
-        >
-          <Heart />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              height: "100vh",
-              maxHeight: "34vh",
-              width: "170px",
-              translate: "30% 0%",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              className="object-contain absolute h-full"
-              src="https://m.media-amazon.com/images/I/51ogrgGK+9L._AC_SY200_.jpg"
-              alt="img"
-              width="100%"
-            />
-          </Box>
-          <Typography
-            fontSize={12}
-            sx={{
-              paddingLeft: "10px",
-              paddingRight: "10px",
-              ":hover": { color: "#078dfa" },
-            }}
-          >
-            ASUS ROG Zephyrus M16 (2022), 16-inch (40.64 cms) 2K QHD 165Hz/3ms,
-            17"(43.18 cm) Backpack (Black)...
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-around",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              fontWeight="bold"
-              fontSize={17}
-              sx={{ display: "flex", padding: "4px", alignItems: "center" }}
-            >
-              <CurrencyRupeeIcon fontSize="20px" />
-              17000
-            </Typography>
-            <Box sx={{ display: "flex", gap: "4px" }}>
-              <Typography
-                fontWeight="bold"
-                fontSize={14}
-                sx={{
-                  padding: "5px",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "5px",
-                  background: "gray",
-                  color: "#ffff",
-                  gap: "2px",
-                  height: "25px",
-                }}
-              >
-                3.4
-                <StarIcon fontSize="12" />
-              </Typography>
-              <Typography
-                fontWeight="bold"
-                fontSize={14}
-                sx={{
-                  padding: "5px",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "5px",
-                  background: "crimson",
-                  color: "#ffff",
-                  height: "25px",
-                }}
-              >
-                15% off
-              </Typography>
-            </Box>
-          </Box>
-          <Button
-            variant="contained"
-            sx={{
-              borderRadius: "0 0 5px 5px",
-              marginTop: "auto",
-              width: "100%",
-            }}
-          >
-            Add to cart
-          </Button>
-        </Paper>
-        <Paper
-          sx={{
-            height: 320,
-            width: 270,
-            gap: "10px",
-            display: "flex",
-            flexDirection: "column",
-            borderRadius: "5px",
-            ":hover": { cursor: "pointer" },
-          }}
-        >
-          <Heart />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              height: "100vh",
-              maxHeight: "34vh",
-              width: "170px",
-              translate: "30% 0%",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              className="object-contain absolute h-full"
-              src="https://m.media-amazon.com/images/I/81ahHX9wU1L._AC_SY200_.jpg"
-              alt="img"
-              width="100%"
-            />
-          </Box>
-          <Typography
-            fontSize={12}
-            sx={{
-              paddingLeft: "10px",
-              paddingRight: "10px",
-              ":hover": { color: "#078dfa" },
-            }}
-          >
-            ASUS ROG Zephyrus M16 (2022), 16-inch (40.64 cms) 2K QHD 165Hz/3ms,
-            17"(43.18 cm) Backpack (Black)...
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-around",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              fontWeight="bold"
-              fontSize={17}
-              sx={{ display: "flex", padding: "4px", alignItems: "center" }}
-            >
-              <CurrencyRupeeIcon fontSize="20px" />
-              17000
-            </Typography>
-            <Box sx={{ display: "flex", gap: "4px" }}>
-              <Typography
-                fontWeight="bold"
-                fontSize={14}
-                sx={{
-                  padding: "5px",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "5px",
-                  background: "gray",
-                  color: "#ffff",
-                  gap: "2px",
-                  height: "25px",
-                }}
-              >
-                3.4
-                <StarIcon fontSize="12" />
-              </Typography>
-              <Typography
-                fontWeight="bold"
-                fontSize={14}
-                sx={{
-                  padding: "5px",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "5px",
-                  background: "crimson",
-                  color: "#ffff",
-                  height: "25px",
-                }}
-              >
-                15% off
-              </Typography>
-            </Box>
-          </Box>
-          <Button
-            variant="contained"
-            sx={{
-              borderRadius: "0 0 5px 5px",
-              marginTop: "auto",
-              width: "100%",
-            }}
-          >
-            Add to cart
-          </Button>
-        </Paper>
-        <Paper
-          sx={{
-            height: 320,
-            width: 270,
-            gap: "10px",
-            display: "flex",
-            flexDirection: "column",
-            borderRadius: "5px",
-            ":hover": { cursor: "pointer" },
-          }}
-        >
-          <Heart />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              height: "100vh",
-              maxHeight: "34vh",
-              width: "170px",
-              translate: "30% 0%",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              className="object-contain absolute h-full"
-              src="https://m.media-amazon.com/images/I/81ahHX9wU1L._AC_SY200_.jpg"
-              alt="img"
-              width="100%"
-            />
-          </Box>
-          <Typography
-            fontSize={12}
-            sx={{
-              paddingLeft: "10px",
-              paddingRight: "10px",
-              ":hover": { color: "#078dfa" },
-            }}
-          >
-            ASUS ROG Zephyrus M16 (2022), 16-inch (40.64 cms) 2K QHD 165Hz/3ms,
-            17"(43.18 cm) Backpack (Black)...
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-around",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              fontWeight="bold"
-              fontSize={17}
-              sx={{ display: "flex", padding: "4px", alignItems: "center" }}
-            >
-              <CurrencyRupeeIcon fontSize="20px" />
-              17000
-            </Typography>
-            <Box sx={{ display: "flex", gap: "4px" }}>
-              <Typography
-                fontWeight="bold"
-                fontSize={14}
-                sx={{
-                  padding: "5px",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "5px",
-                  background: "gray",
-                  color: "#ffff",
-                  gap: "2px",
-                  height: "25px",
-                }}
-              >
-                3.4
-                <StarIcon fontSize="12" />
-              </Typography>
-              <Typography
-                fontWeight="bold"
-                fontSize={14}
-                sx={{
-                  padding: "5px",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "5px",
-                  background: "crimson",
-                  color: "#ffff",
-                  height: "25px",
-                }}
-              >
-                15% off
-              </Typography>
-            </Box>
-          </Box>
-          <Button
-            variant="contained"
-            sx={{
-              borderRadius: "0 0 5px 5px",
-              marginTop: "auto",
-              width: "100%",
-            }}
-          >
-            Add to cart
-          </Button>
-        </Paper>
-        <Paper>
-          <Typography>Hello</Typography>
-        </Paper>
-        <Paper>
-          <Typography>Hello</Typography>
-        </Paper>
-        <Paper>
-          <Typography>Hello</Typography>
-        </Paper>
-        <Paper>
-          <Typography>Hello</Typography>
-        </Paper>
-        <Paper>
-          <Typography>Hello</Typography>
-        </Paper>
-        <Paper>
-          <Typography>Hello</Typography>
-        </Paper>
+        {window.screen.width <= 500 ? mobileCard : desktopCard}
         {/* {rows.map((item, images) => {
                     if (item.product_category === 'M') {
                         return item.product_images.map(({

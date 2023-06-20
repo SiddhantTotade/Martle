@@ -78,7 +78,6 @@ class User(AbstractBaseUser):
         return self.is_admin
 
 
-
 # Project Models
 
 # --------- Customer Model
@@ -87,9 +86,9 @@ class CustomerAddress(models.Model):
     address = models.CharField(default=None, max_length=255)
     locality = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
-    state = models.CharField(max_length=50,blank=True,null=True)
+    state = models.CharField(max_length=50, blank=True, null=True)
     zipcode = models.IntegerField()
-    country = models.CharField(max_length=255,blank=True,null=True)
+    country = models.CharField(max_length=255, blank=True, null=True)
     is_active = models.BooleanField(default=False)
 
     def __str__(self):
@@ -101,27 +100,29 @@ class CustomerAddress(models.Model):
 
 # Product Category Choices Model
 class ProductCategoryChoices(models.Model):
-    product_category = models.CharField(max_length=255,blank=True,null=True,unique=True)
+    product_category = models.CharField(
+        max_length=255, blank=True, null=True, unique=True)
 
     def __str__(self):
         return str(self.product_category)
 
     def save(self, *args, **kwargs):
-        self.product_category = self.product_category.replace(" ","").lower()
+        self.product_category = self.product_category.replace(" ", "").lower()
         return super().save(*args, **kwargs)
 
 
 # Product Status Choices Model
 class ProductStatusChoices(models.Model):
-    product_status = models.CharField(max_length=255,blank=True,null=True,unique=True)
+    product_status = models.CharField(
+        max_length=255, blank=True, null=True, unique=True)
 
     def __str__(self):
         return str(self.product_status)
-    
+
     def save(self, *args, **kwargs):
         self.product_status = self.product_status.lower()
         return super().save(*args, **kwargs)
-    
+
 
 # --------- Product Model
 class Product(models.Model):
@@ -132,12 +133,15 @@ class Product(models.Model):
     product_description = models.TextField()
     product_details = models.TextField()
     product_brand = models.CharField(max_length=50)
-    product_category = models.ForeignKey(ProductCategoryChoices,on_delete=models.PROTECT)
-    product_slug = models.SlugField(max_length=300,null=True, blank=True)
-    product_cover_image = models.ImageField(upload_to="product_cover_images",default=None,null=True)
+    product_category = models.ForeignKey(
+        ProductCategoryChoices, on_delete=models.PROTECT)
+    product_slug = models.SlugField(max_length=300, null=True, blank=True)
+    product_cover_image = models.ImageField(
+        upload_to="product_cover_images", default=None, null=True)
 
     def save(self, *args, **kwargs):
-        self.product_slug = slugify(self.product_title) + generate_random_string()
+        self.product_slug = slugify(
+            self.product_title) + generate_random_string()
         return super().save(*args, **kwargs)
 
     def __str__(self):
@@ -177,7 +181,7 @@ class OrderPlaced(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.PositiveIntegerField(default=1)
     ordered_datetime = models.DateTimeField(default=None)
-    status = models.ForeignKey(ProductStatusChoices,on_delete=models.PROTECT)
+    status = models.ForeignKey(ProductStatusChoices, on_delete=models.PROTECT)
 
     @property
     def total_cost(self):

@@ -15,7 +15,8 @@ admin.site.register(Comment)
 # -------- Customer Admin
 @admin.register(CustomerAddress)
 class CustomerModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'address', 'locality', 'city', 'state', 'zipcode', 'country']
+    list_display = ['id', 'user', 'address', 'locality',
+                    'city', 'state', 'zipcode', 'country']
 
 
 # -------- Product Images Admin
@@ -26,7 +27,8 @@ class ProductImageAdmin(admin.StackedInline):
 # -------- Product Admin
 @admin.register(Product)
 class ProductModelAdmin(admin.ModelAdmin):
-    list_display = ['id','product_title', 'product_selling_price', 'product_discounted_price', 'product_brand', 'product_category']
+    list_display = ['id', 'product_title', 'product_selling_price',
+                    'product_discounted_price', 'product_brand', 'product_category']
 
     inlines = [ProductImageAdmin]
 
@@ -39,16 +41,14 @@ class ProductImgAdmin(admin.ModelAdmin):
     pass
 
 
-
 @admin.register(ProductStatusChoices)
 class ProductStatusChoicesAdmin(admin.ModelAdmin):
-    list_display = ['id','product_status']
-
+    list_display = ['id', 'product_status']
 
 
 @admin.register(ProductCategoryChoices)
 class ProductCategoryChoicesAdmin(admin.ModelAdmin):
-    list_display = ['id','product_category']
+    list_display = ['id', 'product_category']
 
 
 # -------- Cart Admin
@@ -60,12 +60,13 @@ class CartModelAdmin(admin.ModelAdmin):
 # -------- Order Placed Admin
 @admin.register(OrderPlaced)
 class OrderPlacedAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'customer', 'customer_info', 'product', 'product_info', 'quantity', 'ordered_datetime', 'status']
+    list_display = ['id', 'user', 'customer', 'customer_info', 'product',
+                    'product_info', 'quantity', 'ordered_datetime', 'status']
 
-    def customer_info(self,obj):
-        link = reverse("admin:app_customer_change",args = [obj.customer.pk])
+    def customer_info(self, obj):
+        link = reverse("admin:app_customer_change", args=[obj.customer.pk])
         return format_html('<a href="{}">{}</a>', link, obj.customer.name)
-    
-    def product_info(self,obj):
-        link = reverse("admin:app_product_change",args = [obj.product.pk])
+
+    def product_info(self, obj):
+        link = reverse("admin:app_product_change", args=[obj.product.pk])
         return format_html('<a href="{}">{}</a>', link, obj.product.name)

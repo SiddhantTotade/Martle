@@ -155,7 +155,7 @@ class ProductView(APIView):
 
         # checking products exist or not
         if all_products:
-            product_serialized_data = ProductSerializer(
+            product_serialized_data = ProductLightSerializer(
                 all_products, many=True)
             return JsonResponse(product_serialized_data.data, safe=False)
         return JsonResponse("NULL", safe=False)
