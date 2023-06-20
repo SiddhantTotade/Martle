@@ -9,24 +9,28 @@ router = routers.DefaultRouter()
 urlpatterns = [
 
     # User Authentication Route
-    re_path(r"^login/$",UserLoginView.as_view(),name='login'),
-    re_path(r"^register/$",UserRegistrationView.as_view(),name='register'),
-    re_path(r"^change-password/$",UserChangePasswordView.as_view(),name='change-password'),
-    re_path(r"^reset-password/$",SendPasswordResetEmailView.as_view(),name='send_reset_password_email'),
-    re_path(r"^reset-password/<uid>/<token>/$",UserPasswordResetView.as_view(),name='reset_password'),
+    re_path(r"^login/$", UserLoginView.as_view(), name='login'),
+    re_path(r"^register/$", UserRegistrationView.as_view(), name='register'),
+    re_path(r"^change-password/$", UserChangePasswordView.as_view(),
+            name='change-password'),
+    re_path(r"^reset-password/$", SendPasswordResetEmailView.as_view(),
+            name='send_reset_password_email'),
+    re_path(r"^reset-password/<uid>/<token>/$",
+            UserPasswordResetView.as_view(), name='reset_password'),
 
     # Media Route
-    re_path(r"^product-images/savefile/$",SetImageView),
-    re_path(r"^product-images/get-images$",SetImageView),
+    re_path(r"^product-images/savefile/$", SetImageView),
+    re_path(r"^product-images/get-images$", SetImageView),
 
     # Application Route
-    re_path(r"^all-products/$",ProductView.as_view()),
-    re_path(r"^product/([0-9]+)$",ProductView.as_view()),
-    re_path(r"^customer/([0-9]+)$",CustomerView.as_view()),
-    re_path(r"^customer-save$",CustomerView.as_view()),
+    re_path(r"^all-products/$", ProductView.as_view(), name="all_products"),
+    re_path(r"^all-brands/$", BrandView.as_view(), name="all_brands"),
+    re_path(r"^product/([0-9]+)$", ProductView.as_view()),
+    re_path(r"^customer/([0-9]+)$", CustomerView.as_view()),
+    re_path(r"^customer-save$", CustomerView.as_view()),
 
-    re_path(r"^get-description$",upload_description),
+    re_path(r"^get-description$", upload_description),
 
-    re_path(r"^product/id/([0-9]+)$",GetProductById.as_view()),
-    re_path(r"^product/desc/([0-9]+)$",get_description),
+    re_path(r"^product/id/([0-9]+)$", GetProductById.as_view()),
+    re_path(r"^product/desc/([0-9]+)$", get_description),
 ]

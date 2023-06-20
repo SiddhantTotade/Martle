@@ -12,7 +12,7 @@ import GroceriesCarousel from "../components/home_page_components/GroceriesCarou
 import VisitedItemsCarousel from "../components/home_page_components/VisitedItemsCarousel";
 import Footer from "../components/base_components/Footer";
 
-import { useAllProductAPIQuery } from "../services/allProducts";
+import { useAllProductAPIQuery } from "../services/homeAPIs";
 import { getToken } from "../services/LocalStorageService";
 
 const Home = () => {

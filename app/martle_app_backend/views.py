@@ -192,6 +192,16 @@ class ProductView(APIView):
         return JsonResponse("Deleted successfull", safe=False)
 
 
+class BrandView(APIView):
+    def get(self, request):
+        brand = Brands.objects.all()
+
+        if brand:
+            brand_serialized_data = BrandSerializer(brand, many=True)
+            return JsonResponse(brand_serialized_data.data, safe=False)
+        return JsonResponse("NULL", safe=False)
+
+
 class CustomerView(APIView):
     def get(self, request):
 
