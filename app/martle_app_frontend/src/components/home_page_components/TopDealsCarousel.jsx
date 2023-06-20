@@ -86,11 +86,6 @@ const TopDealsCarousel = (props) => {
                     currency: "INR",
                   })}
                 </Typography>
-                <Typography fontWeight="bold" fontSize={15}>
-                  {row.product_selling_price.toLocaleString("en-IN", {
-                    currency: "INR",
-                  })}
-                </Typography>
               </Box>
             </Box>
             <Box sx={{ display: "flex", gap: "5px" }}>
@@ -289,28 +284,6 @@ const TopDealsCarousel = (props) => {
         className="z-0"
       >
         {window.screen.width <= 500 ? mobileCard : desktopCard}
-        {/* {rows.map((item, images) => {
-                    if (item.product_category === 'M') {
-                        return item.product_images.map(({
-                            product_image, ...rest
-                        }) => {
-                            return <div>
-                                <Link to={`/api/product/id/${item.id}`} onClick={() => this.setState({ id: item.id })} className={style} >
-                                    <div>
-                                        <img src={'http://127.0.0.1:8000' + rest.product_img_file} alt="" className="h-60 w-full mt-2 rounded-lg" />
-                                    </div>
-                                    <div className="mt-3">
-                                        <p>{item.product_title}</p>
-                                        <p><small className="mt-0">₹</small><span> {item.product_discounted_price}</span></p>
-                                    </div>
-                                </Link>
-                            </div>
-                        })
-                    }
-                    else {
-                        return null
-                    }
-                })} */}
       </Carousel>
     </div>
   );
