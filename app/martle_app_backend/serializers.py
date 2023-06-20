@@ -208,6 +208,12 @@ class ProductLightSerializer(serializers.ModelSerializer):
                   'product_brand', 'product_category', 'product_slug', 'product_cover_image']
 
 
+class BrandSerializer(serializers.ModelSerializer):
+    class Meta:
+        models = Brands
+        fields = '__all__'
+
+
 # --------- Cart Serializer
 class CartSerializer(serializers.ModelSerializer):
     class Meta:

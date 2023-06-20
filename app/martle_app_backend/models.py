@@ -166,6 +166,10 @@ class Brands(models.Model):
     brand_slug = models.SlugField(
         max_length=300, null=True, blank=True, unique=True)
 
+    def save(self, *args, **kwargs):
+        self.brand_slug = self.brand_slug.replace(" ", "").lower()
+        return super().save(*args, **kwargs)
+
 
 # --------- Cart Model
 class Cart(models.Model):

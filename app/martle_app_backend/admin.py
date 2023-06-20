@@ -7,7 +7,6 @@ from django.utils.html import format_html
 # Registering Models
 admin.site.register(User)
 admin.site.register(Comment)
-admin.site.register(Brands)
 
 
 # Classes for registering models
@@ -50,6 +49,11 @@ class ProductStatusChoicesAdmin(admin.ModelAdmin):
 @admin.register(ProductCategoryChoices)
 class ProductCategoryChoicesAdmin(admin.ModelAdmin):
     list_display = ['id', 'product_category']
+
+
+@admin.register(Brands)
+class BrandsAdmin(admin.ModelAdmin):
+    list_display = ['id', 'brand_slug']
 
 
 # -------- Cart Admin
