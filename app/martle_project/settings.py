@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'martle_app_backend',
     'rest_framework',
     'rest_framework.authtoken',
-    'django_countries',
     'corsheaders',
     'rest_framework_simplejwt'
 ]

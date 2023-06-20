@@ -3,10 +3,8 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
-import uuid
 from .manager import *
 from django.conf import settings
-from django_countries.fields import CountryField
 from django.urls import reverse
 from django.utils.text import slugify
 import random
