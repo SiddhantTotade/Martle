@@ -18,7 +18,9 @@ import { getToken } from "../services/LocalStorageService";
 const Home = () => {
   const { access_token } = getToken();
 
-  // const { data = [], isLoading } = useAllProductAPIQuery(access_token);
+  const { data = [], isLoading } = useAllProductAPIQuery(access_token);
+
+  console.log(data);
   
   return (
     <>
