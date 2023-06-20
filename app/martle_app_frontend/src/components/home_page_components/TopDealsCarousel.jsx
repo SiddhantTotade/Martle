@@ -6,6 +6,7 @@ import "react-multi-carousel/lib/styles.css";
 import StarIcon from "@mui/icons-material/Star";
 import Heart from "../base_components/Heart";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import LoaderSkeleton from "../base_components/LoaderSkeleton";
 
 const responsive = {
   superLargeDesktop: {
@@ -29,6 +30,34 @@ const responsive = {
 };
 
 const TopDealsCarousel = (props) => {
+  const cardSkeleton = [...Array(window.screen.width <= 500 ? 1 : 6)].map(
+    (row, i) => (
+      <Paper
+        sx={{
+          height: 320,
+          width: 270,
+          gap: "10px",
+          display: "flex",
+          flexDirection: "column",
+          padding: "10px",
+          borderRadius: "5px",
+          ":hover": { cursor: "pointer" },
+          "@media (max-width: 500px)": { width: "100%", height: 220 },
+        }}
+      >
+        {window.screen.width <= 500 ? (
+          <LoaderSkeleton barPadding={10} />
+        ) : (
+          <>
+            <LoaderSkeleton barPadding={10} />
+            <LoaderSkeleton barPadding={5} />
+            <LoaderSkeleton barPadding={1} />
+          </>
+        )}
+      </Paper>
+    )
+  );
+
   const mobileCard = props.data.map((row) => {
     return (
       <Paper
@@ -283,7 +312,12 @@ const TopDealsCarousel = (props) => {
         renderButtonGroupOutside={true}
         className="z-0"
       >
-        {window.screen.width <= 500 ? mobileCard : desktopCard}
+        {}
+        {props.isLoading
+          ? cardSkeleton
+          : window.screen.width <= 500
+          ? mobileCard
+          : desktopCard}
       </Carousel>
     </div>
   );
