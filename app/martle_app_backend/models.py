@@ -24,17 +24,6 @@ STATE_CHOICES = (("Andhra Pradesh", "Andhra Pradesh"), ("Arunachal Pradesh ", "A
                  ("Punjab", "Punjab"), ("Rajasthan", "Rajasthan"), ("Sikkim", "Sikkim"), ("Tamil Nadu", "Tamil Nadu"), ("Telangana", "Telangana"), ("Tripura", "Tripura"), ("Uttar Pradesh", "Uttar Pradesh"), ("Uttarakhand", "Uttarakhand"), ("West Bengal", "West Bengal"), ("Andaman and Nicobar Islands", "Andaman and Nicobar Islands"), ("Chandigarh", "Chandigarh"), ("Dadra and Nagar Haveli", "Dadra and Nagar Haveli"), ("Daman and Diu", "Daman and Diu"), ("Lakshadweep", "Lakshadweep"), ("National Capital Territory of Delhi", "National Capital Territory of Delhi"), ("Puducherry", "Puducherry"))
 
 
-# Product choices
-CATEGORY_CHOICES = (('M', 'Mobile'), ('L', 'Laptop'),
-                    ('TW', 'Top Wear'), ('BW', 'Bottom Wear'), ('W', 'Watch'),
-                    ('P', 'Printer'), ('F', 'Fan'), ('EB', 'Earbuds'),
-                    ('C', 'Camera'), ('O', 'Oil'), ('SH', 'Shower'), ('MU', 'Museli'), ('CL', 'Cleaner'), ('CA', 'Computer and Accessories'))
-
-
-# Product status
-STATUS_CHOICES = (('Accepted', 'Accepted'), ('Packed', 'Packed'),
-                  ('On the way', 'On the way'), ('Delivered', 'Delivered'), ('Cancel', 'Cancel'), ('Applied for return', 'Applied for return'), ('Returned', 'Returned'))
-
 
 # User authentication model
 class UserManager(BaseUserManager):
@@ -101,15 +90,15 @@ class User(AbstractBaseUser):
 # Project Models
 
 # --------- Customer Model
-class Customer(models.Model):
+class CustomerAddress(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
     address = models.CharField(default=None, max_length=255)
     locality = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=50,blank=True,null=True)
     zipcode = models.IntegerField()
-    country = CountryField()
+    country = models.CharField(max_length=255,blank=True,null=True)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return (str(self.id) + " - " + str(self.name) + " - " + str(self.user))
@@ -120,7 +109,10 @@ class Customer(models.Model):
 
 # Product Category Choices Model
 class ProductCategoryChoices(models.Model):
-    product_category = models.CharField(max_length=255,blank=True,null=True)
+    product_category = models.CharField(max_length=255,blank=True,null=True,unique=True)
+
+    def __str__(self):
+        return str(self.product_category)
 
     def save(self, *args, **kwargs):
         self.product_category = self.product_category.replace(" ","").lower()
@@ -129,13 +121,16 @@ class ProductCategoryChoices(models.Model):
 
 # Product Status Choices Model
 class ProductStatusChoices(models.Model):
-    product_status = models.CharField(max_length=255,blank=True,null=True)
+    product_status = models.CharField(max_length=255,blank=True,null=True,unique=True)
 
+    def __str__(self):
+        return str(self.product_status)
+    
     def save(self, *args, **kwargs):
-        self.product_status = self.product_status.replace(" ","").lower()
+        self.product_status = self.product_status.lower()
         return super().save(*args, **kwargs)
     
-    
+
 # --------- Product Model
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
@@ -146,7 +141,8 @@ class Product(models.Model):
     product_details = models.TextField()
     product_brand = models.CharField(max_length=50)
     product_category = models.ForeignKey(ProductCategoryChoices,on_delete=models.PROTECT)
-    product_slug = models.SlugField(null=True, blank=True)
+    product_slug = models.SlugField(max_length=300,null=True, blank=True)
+    product_cover_image = models.ImageField(upload_to="product_cover_images",default=None,null=True)
 
     def save(self, *args, **kwargs):
         self.product_slug = slugify(self.product_title) + generate_random_string()
@@ -162,7 +158,7 @@ class ProductImage(models.Model):
         Product, default=None, on_delete=models.CASCADE, related_name='product_images')
     product_image_url = models.CharField(
         max_length=500, default=None, null=True, blank=True)
-    product_img_file = models.ImageField(upload_to='product_images')
+    product_img_file = models.ImageField(upload_to='product_inner_images')
 
     def __str__(self):
         return str(self.product_image.id) + " - " + str(self.product_image.product_title)
@@ -171,7 +167,7 @@ class ProductImage(models.Model):
 # --------- Cart Model
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.PositiveBigIntegerField(default=1)
 
     def __str__(self):
@@ -185,12 +181,11 @@ class Cart(models.Model):
 # --------- Placed Order Model
 class OrderPlaced(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    customer = models.ForeignKey(CustomerAddress, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.PositiveIntegerField(default=1)
-    ordered_date = models.DateField()
-    status = models.CharField(
-        max_length=50, choices=STATUS_CHOICES, default='Pending')
+    ordered_datetime = models.DateTimeField(default=None)
+    status = models.ForeignKey(ProductStatusChoices,on_delete=models.PROTECT)
 
     @property
     def total_cost(self):

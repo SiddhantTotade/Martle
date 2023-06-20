@@ -6,8 +6,6 @@ from django.utils.html import format_html
 
 # Registering Models
 admin.site.register(User)
-admin.site.register(ProductCategoryChoices)
-admin.site.register(ProductStatusChoices)
 admin.site.register(Comment)
 
 
@@ -15,9 +13,9 @@ admin.site.register(Comment)
 
 
 # -------- Customer Admin
-@admin.register(Customer)
+@admin.register(CustomerAddress)
 class CustomerModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'name', 'address', 'locality', 'city', 'state', 'zipcode', 'country']
+    list_display = ['id', 'user', 'address', 'locality', 'city', 'state', 'zipcode', 'country']
 
 
 # -------- Product Images Admin
@@ -28,7 +26,7 @@ class ProductImageAdmin(admin.StackedInline):
 # -------- Product Admin
 @admin.register(Product)
 class ProductModelAdmin(admin.ModelAdmin):
-    list_display = ['id','product_title', 'product_selling_price', 'product_discounted_price', 'product_description', 'product_details', 'product_brand', 'product_category']
+    list_display = ['id','product_title', 'product_selling_price', 'product_discounted_price', 'product_brand', 'product_category']
 
     inlines = [ProductImageAdmin]
 
@@ -41,6 +39,18 @@ class ProductImgAdmin(admin.ModelAdmin):
     pass
 
 
+
+@admin.register(ProductStatusChoices)
+class ProductStatusChoicesAdmin(admin.ModelAdmin):
+    list_display = ['id','product_status']
+
+
+
+@admin.register(ProductCategoryChoices)
+class ProductCategoryChoicesAdmin(admin.ModelAdmin):
+    list_display = ['id','product_category']
+
+
 # -------- Cart Admin
 @admin.register(Cart)
 class CartModelAdmin(admin.ModelAdmin):
@@ -50,7 +60,7 @@ class CartModelAdmin(admin.ModelAdmin):
 # -------- Order Placed Admin
 @admin.register(OrderPlaced)
 class OrderPlacedAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'customer', 'customer_info', 'product', 'product_info', 'quantity', 'ordered_date', 'status']
+    list_display = ['id', 'user', 'customer', 'customer_info', 'product', 'product_info', 'quantity', 'ordered_datetime', 'status']
 
     def customer_info(self,obj):
         link = reverse("admin:app_customer_change",args = [obj.customer.pk])

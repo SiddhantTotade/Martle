@@ -161,11 +161,11 @@ class UserSerializer(serializers.ModelSerializer):
 # --------- Customer Serializer
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Customer
+        model = CustomerAddress
         fields = '__all__'
 
     def create(self, validated_data):
-        customer = Customer.objects.create(user=validated_data['user'], name=validated_data['name'], address=validated_data['address'], locality=validated_data['locality'],
+        customer = CustomerAddress.objects.create(user=validated_data['user'], name=validated_data['name'], address=validated_data['address'], locality=validated_data['locality'],
                                            city=validated_data['city'], state=validated_data['state'], country=validated_data['country'], zipcode=validated_data['zipcode'])
         customer.save()
         return customer
