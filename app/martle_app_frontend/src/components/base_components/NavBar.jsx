@@ -109,7 +109,7 @@ const NavBar = (props) => {
           <Box
             component="form"
             sx={{
-              "& > :not(style)": { m: 2, width: "75ch" },
+              "& > :not(style)": { width: "50ch" },
               color: "white",
             }}
             noValidate
@@ -127,12 +127,20 @@ const NavBar = (props) => {
                 },
               }}
               sx={{
-                "& .MuiInputLabel-root": { color: "white" },
+                borderRadius: "0px 10px 10px 0px",
+                "& .MuiInputLabel-root": {
+                  color: "white",
+                },
                 "&:hover .MuiOutlinedInput-root": {
-                  "& > fieldset": { borderColor: "blue" },
+                  "& > fieldset": {
+                    borderColor: "blue",
+                  },
                 },
                 "& .MuiOutlinedInput-root": {
-                  "& > fieldset": { borderColor: "white" },
+                  "& > fieldset": {
+                    borderColor: "white",
+                    borderRadius: "5px 0px 0px 5px",
+                  },
                 },
               }}
               id="outlined-search"
@@ -140,8 +148,8 @@ const NavBar = (props) => {
               type="search"
             />
           </Box>
-          <Button variant="contained">
-            <SearchIcon sx={{ fontSize: "x-large" }} />
+          <Button variant="contained" sx={{ borderRadius: "0px 5px 5px 0px" }}>
+            <SearchIcon sx={{ fontSize: "x-large", height: "3.325vh" }} />
           </Button>
         </form>
         <div
