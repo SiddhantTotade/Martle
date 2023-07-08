@@ -76,7 +76,7 @@ const ShopByBrandsCarousel = (props) => {
             <div className="content">
               <div className="imgBx">
                 <img
-                  className="rounded-full border-2 p-2 border-rose-500 sm:border-0"
+                  className="rounded-full border-rose-500 sm:border-0"
                   src={`http://127.0.0.1:8000` + row.brand_image}
                   alt="img"
                 />
@@ -86,7 +86,7 @@ const ShopByBrandsCarousel = (props) => {
                   fontSize={20}
                   sx={{ marginTop: "20px", color: "black" }}
                 >
-                  {row.brand_slug}
+                  {row.brand_name}
                 </Typography>
               </div>
             </div>

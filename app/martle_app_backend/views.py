@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from rest_framework.authentication import *
 from .renderers import *
 import pandas as pd
+import random
 
 # Create your views here.
 
@@ -151,8 +152,14 @@ def SetImageView(request):
 class ProductView(APIView):
     def get(self, request):
         # getting all products
+        product_brand_list = []
         all_products = Product.objects.all()[:20]
         all_brands = Brands.objects.all()[:20]
+        for i in all_products:
+            product_brand_list.append(i.product_brand)
+        print(product_brand_list)
+        specially_from_brand_name = random.choice(product_brand_list)
+        specially_from = Product.objects.all()
 
         # checking products exist or not
         if all_products:

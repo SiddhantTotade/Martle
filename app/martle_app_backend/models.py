@@ -163,6 +163,7 @@ class ProductImage(models.Model):
 # --------- Product Image Model
 class Brands(models.Model):
     brand_image = models.ImageField(upload_to="brand_images")
+    brand_name = models.CharField(max_length=255, null=True, blank=True)
     brand_slug = models.SlugField(
         max_length=300, null=True, blank=True, unique=True)
 
