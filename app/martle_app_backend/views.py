@@ -151,13 +151,15 @@ def SetImageView(request):
 class ProductView(APIView):
     def get(self, request):
         # getting all products
-        all_products = Product.objects.all()
+        all_products = Product.objects.all()[:20]
+        all_brands = Brands.objects.all()[:20]
 
         # checking products exist or not
         if all_products:
             product_serialized_data = ProductLightSerializer(
                 all_products, many=True)
-            return JsonResponse(product_serialized_data.data, safe=False)
+            brand_serialized_data = BrandSerializer(all_brands, many=True)
+            return Response({"product_data": product_serialized_data.data, "brand_data": brand_serialized_data.data}, status=status.HTTP_200_OK)
         return JsonResponse("NULL", safe=False)
 
     def post(self, request):

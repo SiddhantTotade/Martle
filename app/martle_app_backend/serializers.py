@@ -210,7 +210,7 @@ class ProductLightSerializer(serializers.ModelSerializer):
 
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
-        models = Brands
+        model = Brands
         fields = '__all__'
 
 

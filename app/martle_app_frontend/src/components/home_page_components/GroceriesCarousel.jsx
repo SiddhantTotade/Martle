@@ -29,7 +29,6 @@ const responsive = {
 };
 
 const GroceriesCarousel = () => {
-
   return (
     <div className="w-HeaderSwiper m-auto mt-12 justify-center">
       <Typography
@@ -46,7 +45,6 @@ const GroceriesCarousel = () => {
       </Typography>
       <Carousel
         itemClass="carousel"
-        partialVisbile={false}
         slidesToSlide={3}
         responsive={responsive}
         arrows={true}

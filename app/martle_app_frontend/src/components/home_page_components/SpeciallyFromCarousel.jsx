@@ -63,7 +63,6 @@ const SpeciallyFromCarousel = () => {
         </Paper>
         <Carousel
           itemClass="carousel"
-          partialVisbile={true}
           slidesToSlide={1}
           responsive={responsive}
           arrows={true}

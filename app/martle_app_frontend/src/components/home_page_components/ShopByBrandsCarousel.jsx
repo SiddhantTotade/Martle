@@ -4,6 +4,7 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
+import LoaderSkeleton from "../base_components/LoaderSkeleton";
 import "../../pages/style/card.css";
 
 const responsive = {
@@ -26,7 +27,79 @@ const responsive = {
   },
 };
 
-const ShopByBrandsCarousel = () => {
+const ShopByBrandsCarousel = (props) => {
+  const cardSkeleton = [...Array(window.screen.width <= 500 ? 1 : 6)].map(
+    (row, i) => (
+      <Paper
+        key={i}
+        sx={{
+          height: 320,
+          width: 270,
+          gap: "10px",
+          display: "flex",
+          flexDirection: "column",
+          padding: "10px",
+          borderRadius: "5px",
+          ":hover": { cursor: "pointer" },
+          "@media (max-width: 500px)": { width: "100%", height: 220 },
+        }}
+      >
+        {window.screen.width <= 500 ? (
+          <LoaderSkeleton barPadding={10} />
+        ) : (
+          <>
+            <LoaderSkeleton barPadding={10} />
+            <LoaderSkeleton barPadding={5} />
+            <LoaderSkeleton barPadding={1} />
+          </>
+        )}
+      </Paper>
+    )
+  );
+  const desktop_card = props.data?.map((row, i) => {
+    return (
+      <Paper
+        key={i}
+        elevation={6}
+        sx={{
+          width: 270,
+          borderRadius: "5px",
+          "@media (max-width: 500px)": {
+            border: 0,
+            borderRadius: "100px",
+            height: 0,
+          },
+        }}
+      >
+        <div className="container">
+          <div className="card">
+            <div className="content">
+              <div className="imgBx">
+                <img
+                  className="rounded-full border-2 p-2 border-rose-500 sm:border-0"
+                  src={`http://127.0.0.1:8000` + row.brand_image}
+                  alt="img"
+                />
+              </div>
+              <div className="contentBx sm:hidden">
+                <Typography
+                  fontSize={20}
+                  sx={{ marginTop: "20px", color: "black" }}
+                >
+                  {row.brand_slug}
+                </Typography>
+              </div>
+            </div>
+            <ul className="sci sm:hidden">
+              <li>
+                <Button variant="contained">Shop</Button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </Paper>
+    );
+  });
   return (
     <div className="w-HeaderSwiper m-auto mt-12 justify-center">
       <Typography
@@ -43,127 +116,13 @@ const ShopByBrandsCarousel = () => {
       </Typography>
       <Carousel
         itemClass="carousel"
-        partialVisbile={false}
         slidesToSlide={2}
         responsive={responsive}
         arrows={true}
         renderButtonGroupOutside={true}
         className="z-0"
       >
-        <Paper
-          elevation={6}
-          sx={{
-            width: 270,
-            borderRadius: "5px",
-            "@media (max-width: 500px)": {
-              border: 0,
-              borderRadius: "100px",
-              height: 0,
-            },
-          }}
-        >
-          <div className="container">
-            <div className="card">
-              <div className="content">
-                <div className="imgBx">
-                  <img
-                    className="rounded-full border-2 p-2 border-rose-500 sm:border-0"
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg9NjzZjN0NV8LPiNPM7HCeYJj-KkkR2vdKg&usqp=CAU"
-                    alt="img"
-                  />
-                </div>
-                <div className="contentBx sm:hidden">
-                  <Typography
-                    fontSize={20}
-                    sx={{ marginTop: "20px", color: "black" }}
-                  >
-                    Xiaomi
-                  </Typography>
-                </div>
-              </div>
-              <ul className="sci sm:hidden">
-                <li>
-                  <Button variant="contained">Shop</Button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Paper>
-        <Paper
-          elevation={6}
-          sx={{
-            width: 270,
-            borderRadius: "5px",
-            "@media (max-width: 500px)": {
-              width: "70%",
-              border: 0,
-              borderRadius: "100px",
-              height: 0,
-            },
-          }}
-        >
-          <div className="container">
-            <div className="card">
-              <div className="content">
-                <div className="imgBx">
-                  <img
-                    className="rounded-full border-2 p-2 border-rose-500 sm:border-0"
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg9NjzZjN0NV8LPiNPM7HCeYJj-KkkR2vdKg&usqp=CAU"
-                    alt="img"
-                  />
-                </div>
-                <div className="contentBx sm:hidden">
-                  <Typography
-                    fontSize={20}
-                    sx={{ marginTop: "20px", color: "black" }}
-                  >
-                    Xiaomi
-                  </Typography>
-                </div>
-              </div>
-              <ul className="sci sm:hidden">
-                <li>
-                  <Button variant="contained">Shop</Button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Paper>
-        <Paper
-          elevation={6}
-          sx={{
-            width: 270,
-            borderRadius: "5px",
-            "@media (max-width: 500px)": { width: "150px", border: 0 },
-          }}
-        >
-          <div className="container">
-            <div className="card">
-              <div className="content">
-                <div className="imgBx">
-                  <img
-                    className="rounded-full border-2 p-2 border-rose-500 sm:border-0"
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg9NjzZjN0NV8LPiNPM7HCeYJj-KkkR2vdKg&usqp=CAU"
-                    alt="img"
-                  />
-                </div>
-                <div className="contentBx sm:hidden">
-                  <Typography
-                    fontSize={20}
-                    sx={{ marginTop: "20px", color: "black" }}
-                  >
-                    Xiaomi
-                  </Typography>
-                </div>
-              </div>
-              <ul className="sci sm:hidden">
-                <li>
-                  <Button variant="contained">Shop</Button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Paper>
+        {props.isLoading ? cardSkeleton : desktop_card}
       </Carousel>
     </div>
   );

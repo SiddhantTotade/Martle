@@ -33,6 +33,7 @@ const TopDealsCarousel = (props) => {
   const cardSkeleton = [...Array(window.screen.width <= 500 ? 1 : 6)].map(
     (row, i) => (
       <Paper
+        key={i}
         sx={{
           height: 320,
           width: 270,
@@ -58,9 +59,10 @@ const TopDealsCarousel = (props) => {
     )
   );
 
-  const mobileCard = props.data.map((row) => {
+  const mobileCard = props.data?.map((row, i) => {
     return (
       <Paper
+        key={i}
         sx={{
           height: 220,
           width: "100%",
@@ -165,9 +167,10 @@ const TopDealsCarousel = (props) => {
     );
   });
 
-  const desktopCard = props.data.map((row) => {
+  const desktopCard = props.data?.map((row, i) => {
     return (
       <Paper
+        key={i}
         sx={{
           height: 320,
           width: 270,
@@ -305,7 +308,6 @@ const TopDealsCarousel = (props) => {
       </Typography>
       <Carousel
         itemClass="carousel"
-        partialVisbile={false}
         slidesToSlide={3}
         responsive={responsive}
         arrows={true}

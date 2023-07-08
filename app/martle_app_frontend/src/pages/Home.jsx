@@ -20,14 +20,28 @@ const Home = () => {
 
   const { data = [], isLoading } = useAllProductAPIQuery(access_token);
 
+  const product_data = data
+    ? data.product_data?.map((row) => {
+        return row;
+      })
+    : [];
+
+  const brand_data = data
+    ? data.brand_data?.map((row) => {
+        return row;
+      })
+    : [];
+
+  console.log(brand_data);
+
   return (
     <>
       <NavBar />
       <Sidebar />
       <HeaderSwiper />
       <ProductNavigator />
-      <TopDealsCarousel data={data} isLoading={isLoading} />
-      <ShopByBrandsCarousel />
+      <TopDealsCarousel data={product_data} isLoading={isLoading} />
+      <ShopByBrandsCarousel data={brand_data} isLoading={isLoading} />
       <SpeciallyFromCarousel />
       <WeddingCarousels />
       <GroceriesCarousel />
