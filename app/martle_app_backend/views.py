@@ -1,9 +1,10 @@
+from .models import *
+from .serializers import *
+from django.db.models import QuerySet
+from django.core import serializers as customer_data_serializer
 from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
-from django.core import serializers as customer_data_serializer
-from .models import *
-from .serializers import *
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -150,16 +151,19 @@ def SetImageView(request):
 
 
 class ProductView(APIView):
+    def get_all_products_by_product_brand(self, brand_list: QuerySet) -> str:
+        random_brand_name = random.choice(brand_list)
+        return random_brand_name
+
     def get(self, request):
         # getting all products
-        product_brand_list = []
+
         all_products = Product.objects.all()[:20]
         all_brands = Brands.objects.all()[:20]
-        for i in all_products:
-            product_brand_list.append(i.product_brand)
-        print(product_brand_list)
-        specially_from_brand_name = random.choice(product_brand_list)
-        specially_from = Product.objects.all()
+        brand_name = Product.objects.values_list(
+            'product_brand', flat=True).distinct()
+        specially_from = self.get_all_products_by_product_brand(
+            brand_name)
 
         # checking products exist or not
         if all_products:

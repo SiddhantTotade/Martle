@@ -214,6 +214,12 @@ class BrandSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProductBrandSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ''
+
+
 # --------- Cart Serializer
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
