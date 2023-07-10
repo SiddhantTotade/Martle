@@ -169,9 +169,9 @@ class ProductView(APIView):
         all_brands_products = self.get_all_brands()
         brand_name = Product.objects.values_list(
             'product_brand', flat=True).distinct()
-        specially_from = self.get_all_products_by_product_brand(
+        special_products = self.get_all_products_by_product_brand(
             brand_name)
-        special_product_name = specially_from.values()[0]['product_brand']
+        print()
 
         # checking products exist or not
         if all_products:
@@ -180,9 +180,9 @@ class ProductView(APIView):
             brand_serialized_data = BrandSerializer(
                 all_brands_products, many=True)
             special_products_serialized_data = SpeciallyFromSerializer(
-                specially_from, many=True)
-            print(special_products_serialized_data)
-            return Response({"product_data": product_serialized_data.data, "brand_data": brand_serialized_data.data, "special_product_data": special_products_serialized_data.data, "special_product_name": special_product_name}, status=status.HTTP_200_OK)
+                special_products, many=True)
+            # print(special_products_serialized_data)
+            return Response({"product_data": product_serialized_data.data, "brand_data": brand_serialized_data.data, "special_product_data": special_products_serialized_data.data}, status=status.HTTP_200_OK)
         return JsonResponse("NULL", safe=False)
 
     def post(self, request):

@@ -211,7 +211,7 @@ class ProductLightSerializer(serializers.ModelSerializer):
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brands
-        fields = '__all__'
+        fields = ['brand_name', 'brand_slug', 'brand_image']
 
 
 class ProductBrandSerializer(serializers.ModelSerializer):
@@ -249,14 +249,8 @@ class OrderPlacedSerializer(serializers.ModelSerializer):
 
 # --------- Specially from Serializer (Specific Categorized Product)
 class SpeciallyFromSerializer(serializers.ModelSerializer):
-    class SpeciallyFromBrandSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = Brands
-            fields = ['brand_image']
-
-    # brand_image = SpeciallyFromBrandSerializer()
+    brand = serializers.ReadOnlyField(source='brands.brand_name')
 
     class Meta:
         model = Product
-        fields = ['product_brand', 'product_cover_image',
-                  'product_slug']
+        fields = ['product_cover_image', 'product_slug', 'brand']

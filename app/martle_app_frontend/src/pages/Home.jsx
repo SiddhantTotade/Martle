@@ -40,6 +40,8 @@ const Home = () => {
 
   const special_product_name = data ? data.special_product_name : "";
 
+  console.log(data);
+
   return (
     <>
       <NavBar />

@@ -131,8 +131,11 @@ class Brands(models.Model):
     brand_slug = models.SlugField(
         max_length=300, null=True, blank=True, unique=True)
 
+    def __str__(self):
+        return str(self.brand_name)
+
     def save(self, *args, **kwargs):
-        self.brand_slug = self.brand_slug.replace(" ", "").lower()
+        self.brand_slug = self.brand_name.replace(" ", "").lower()
         return super().save(*args, **kwargs)
 
 
