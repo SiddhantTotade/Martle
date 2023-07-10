@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import LoaderSkeleton from "../base_components/LoaderSkeleton";
 
 const responsive = {
   superLargeDesktop: {
@@ -24,7 +25,93 @@ const responsive = {
   },
 };
 
-const SpeciallyFromCarousel = () => {
+const SpeciallyFromCarousel = (props) => {
+  const cardSkeleton = [...Array(window.screen.width <= 500 ? 1 : 6)].map(
+    (row, i) => (
+      <Paper
+        key={i}
+        sx={{
+          height: 320,
+          width: 270,
+          gap: "10px",
+          display: "flex",
+          flexDirection: "column",
+          padding: "10px",
+          borderRadius: "5px",
+          ":hover": { cursor: "pointer" },
+          "@media (max-width: 500px)": { width: "100%", height: 220 },
+        }}
+      >
+        {window.screen.width <= 500 ? (
+          <LoaderSkeleton barPadding={10} />
+        ) : (
+          <>
+            <LoaderSkeleton barPadding={10} />
+            <LoaderSkeleton barPadding={5} />
+            <LoaderSkeleton barPadding={1} />
+          </>
+        )}
+      </Paper>
+    )
+  );
+
+  const desktopCard = props.data?.map((row, i) => {
+    return (
+      <Paper
+        key={i}
+        sx={{
+          width: 270,
+          height: "275px",
+          gap: "5px",
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          borderRadius: "5px",
+          marginRight: "10px",
+          "@media screen and (max-width: 500px)": {
+            width: "100%",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            height: "100vh",
+            maxHeight: "23.5vh",
+            width: "150px",
+            translate: "40% 0%",
+            position: "relative",
+            overflow: "hidden",
+            "@media screen and (max-width: 500px)": {
+              translate: "35% 10%",
+              left: "-10px",
+            },
+            "@media screen and (max-width: 1368px)": {
+              translate: "40% 10%",
+            },
+          }}
+        >
+          <img
+            className="object-contain absolute h-full"
+            src={`http://127.0.0.1:8000` + row.product_cover_image}
+            alt="img"
+            width="100%"
+          />
+        </Box>
+        <Button
+          variant="contained"
+          sx={{
+            borderRadius: "0 0 5px 5px",
+            marginTop: "auto",
+            width: "100%",
+          }}
+        >
+          View
+        </Button>
+      </Paper>
+    );
+  });
   return (
     <div className="w-HeaderSwiper m-auto mt-12 justify-center">
       <Typography
@@ -37,7 +124,7 @@ const SpeciallyFromCarousel = () => {
           fontFamily: "fantasy",
         }}
       >
-        Specially from APPLE
+        Specially from {props.special_product_name}
       </Typography>
       <Box sx={{ display: "flex", gap: "15px" }}>
         <Paper
@@ -69,147 +156,7 @@ const SpeciallyFromCarousel = () => {
           renderButtonGroupOutside={true}
           className="z-0 w-SpecialFrom  sm:rounded-md"
         >
-          <Paper
-            sx={{
-              width: 270,
-              height: "275px",
-              gap: "5px",
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              borderRadius: "5px",
-              marginRight: "10px",
-              "@media screen and (max-width: 500px)": {
-                width: "100%",
-              },
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                height: "100vh",
-                maxHeight: "23.5vh",
-                width: "150px",
-                translate: "40% 0%",
-                position: "relative",
-                overflow: "hidden",
-                "@media screen and (max-width: 500px)": {
-                  translate: "35% 10%",
-                  left: "-10px",
-                },
-                "@media screen and (max-width: 1368px)": {
-                  translate: "40% 10%",
-                },
-              }}
-            >
-              <img
-                className="object-contain absolute h-full"
-                src="https://m.media-amazon.com/images/I/71Ftzmh3XWL._AC_SY200_.jpg"
-                alt="img"
-                width="100%"
-              />
-            </Box>
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: "0 0 5px 5px",
-                marginTop: "auto",
-                width: "100%",
-              }}
-            >
-              View
-            </Button>
-          </Paper>
-          <Paper
-            sx={{
-              width: 270,
-              height: "275px",
-              gap: "5px",
-              display: "flex",
-              flexDirection: "column",
-              borderRadius: "5px",
-              marginRight: "10px",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                height: "100vh",
-                maxHeight: "23.5vh",
-                width: "150px",
-                translate: "40% 10%",
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              <img
-                className="object-contain absolute h-full"
-                src="https://m.media-amazon.com/images/I/71Ftzmh3XWL._AC_SY200_.jpg"
-                alt="img"
-                width="100%"
-              />
-            </Box>
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: "0 0 5px 5px",
-                marginTop: "auto",
-                width: "100%",
-              }}
-            >
-              View
-            </Button>
-          </Paper>
-          <Paper
-            sx={{
-              width: 270,
-              height: "275px",
-              gap: "5px",
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              borderRadius: "5px",
-              marginRight: "10px",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                height: "100vh",
-                maxHeight: "23.5vh",
-                width: "150px",
-                translate: "40% 10%",
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              <img
-                className="object-contain absolute h-full"
-                src="https://m.media-amazon.com/images/I/71Ftzmh3XWL._AC_SY200_.jpg"
-                alt="img"
-                width="100%"
-              />
-            </Box>
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: "0 0 5px 5px",
-                marginTop: "auto",
-                width: "100%",
-              }}
-            >
-              View
-            </Button>
-          </Paper>
-          <Paper>Hello</Paper>
-          <Paper>Hello</Paper>
-          <Paper>Hello</Paper>
-          <Paper>Hello</Paper>
-          <Paper>Hello</Paper>
-          <Paper>Hello</Paper>
+          {props.isLoading ? cardSkeleton : desktopCard}
         </Carousel>
       </Box>
     </div>

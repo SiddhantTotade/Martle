@@ -245,3 +245,10 @@ class OrderPlacedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = '__all__'
+
+
+# --------- Specially from Serializer (Specific Categorized Product)
+class SpeciallyFromSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['product_brand', 'product_cover_image', 'product_slug']

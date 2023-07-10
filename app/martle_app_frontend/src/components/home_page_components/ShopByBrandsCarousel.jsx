@@ -56,7 +56,7 @@ const ShopByBrandsCarousel = (props) => {
       </Paper>
     )
   );
-  const desktop_card = props.data?.map((row, i) => {
+  const desktopCard = props.data?.map((row, i) => {
     return (
       <Paper
         key={i}
@@ -122,7 +122,7 @@ const ShopByBrandsCarousel = (props) => {
         renderButtonGroupOutside={true}
         className="z-0"
       >
-        {props.isLoading ? cardSkeleton : desktop_card}
+        {props.isLoading ? cardSkeleton : desktopCard}
       </Carousel>
     </div>
   );

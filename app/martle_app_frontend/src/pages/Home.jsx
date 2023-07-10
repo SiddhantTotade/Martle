@@ -32,7 +32,15 @@ const Home = () => {
       })
     : [];
 
-  console.log(brand_data);
+  const special_product_data = data
+    ? data.special_product_data?.map((row) => {
+        return row;
+      })
+    : [];
+
+  const special_product_name = data
+    ? String(data.special_product_name).toUpperCase()
+    : "";
 
   return (
     <>
@@ -42,7 +50,11 @@ const Home = () => {
       <ProductNavigator />
       <TopDealsCarousel data={product_data} isLoading={isLoading} />
       <ShopByBrandsCarousel data={brand_data} isLoading={isLoading} />
-      <SpeciallyFromCarousel />
+      <SpeciallyFromCarousel
+        data={special_product_data}
+        special_product_name={special_product_name}
+        isLoading={isLoading}
+      />
       <WeddingCarousels />
       <GroceriesCarousel />
       <RandomCardsPick />

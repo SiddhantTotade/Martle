@@ -314,7 +314,6 @@ const TopDealsCarousel = (props) => {
         renderButtonGroupOutside={true}
         className="z-0"
       >
-        {}
         {props.isLoading
           ? cardSkeleton
           : window.screen.width <= 500

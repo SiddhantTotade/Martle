@@ -151,26 +151,37 @@ def SetImageView(request):
 
 
 class ProductView(APIView):
-    def get_all_products_by_product_brand(self, brand_list: QuerySet) -> str:
+
+    def get_all_products(self) -> QuerySet:
+        return Product.objects.select_related(
+            'product_category').all()[:20]
+
+    def get_all_brands(self) -> QuerySet:
+        return Brands.objects.all()[:20]
+
+    def get_all_products_by_product_brand(self, brand_list: QuerySet) -> list:
         random_brand_name = random.choice(brand_list)
-        return random_brand_name
+        return Product.objects.filter(product_brand=random_brand_name)
 
     def get(self, request):
         # getting all products
-
-        all_products = Product.objects.all()[:20]
-        all_brands = Brands.objects.all()[:20]
+        all_products = self.get_all_products()
+        all_brands_products = self.get_all_brands()
         brand_name = Product.objects.values_list(
             'product_brand', flat=True).distinct()
         specially_from = self.get_all_products_by_product_brand(
             brand_name)
+        special_product_name = specially_from.values()[0]['product_brand']
 
         # checking products exist or not
         if all_products:
             product_serialized_data = ProductLightSerializer(
                 all_products, many=True)
-            brand_serialized_data = BrandSerializer(all_brands, many=True)
-            return Response({"product_data": product_serialized_data.data, "brand_data": brand_serialized_data.data}, status=status.HTTP_200_OK)
+            brand_serialized_data = BrandSerializer(
+                all_brands_products, many=True)
+            special_products_serialized_data = SpeciallyFromSerializer(
+                specially_from, many=True)
+            return Response({"product_data": product_serialized_data.data, "brand_data": brand_serialized_data.data, "special_product_data": special_products_serialized_data.data, "special_product_name": special_product_name}, status=status.HTTP_200_OK)
         return JsonResponse("NULL", safe=False)
 
     def post(self, request):
