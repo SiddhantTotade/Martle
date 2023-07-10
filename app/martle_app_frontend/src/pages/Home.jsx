@@ -38,9 +38,7 @@ const Home = () => {
       })
     : [];
 
-  const special_product_name = data
-    ? String(data.special_product_name).toUpperCase()
-    : "";
+  const special_product_name = data ? data.special_product_name : "";
 
   return (
     <>

@@ -249,6 +249,14 @@ class OrderPlacedSerializer(serializers.ModelSerializer):
 
 # --------- Specially from Serializer (Specific Categorized Product)
 class SpeciallyFromSerializer(serializers.ModelSerializer):
+    class SpeciallyFromBrandSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Brands
+            fields = ['brand_image']
+
+    # brand_image = SpeciallyFromBrandSerializer()
+
     class Meta:
         model = Product
-        fields = ['product_brand', 'product_cover_image', 'product_slug']
+        fields = ['product_brand', 'product_cover_image',
+                  'product_slug']

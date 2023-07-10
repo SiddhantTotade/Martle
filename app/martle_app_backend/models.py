@@ -124,6 +124,18 @@ class ProductStatusChoices(models.Model):
         return super().save(*args, **kwargs)
 
 
+# --------- Product Brand Model
+class Brands(models.Model):
+    brand_image = models.ImageField(upload_to="brand_images")
+    brand_name = models.CharField(max_length=255, null=True, blank=True)
+    brand_slug = models.SlugField(
+        max_length=300, null=True, blank=True, unique=True)
+
+    def save(self, *args, **kwargs):
+        self.brand_slug = self.brand_slug.replace(" ", "").lower()
+        return super().save(*args, **kwargs)
+
+
 # --------- Product Model
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
@@ -132,7 +144,7 @@ class Product(models.Model):
     product_discounted_price = models.FloatField()
     product_description = models.TextField()
     product_details = models.TextField()
-    product_brand = models.CharField(max_length=50)
+    product_brand = models.ForeignKey(Brands, on_delete=models.PROTECT)
     product_category = models.ForeignKey(
         ProductCategoryChoices, on_delete=models.PROTECT)
     product_slug = models.SlugField(max_length=300, null=True, blank=True)
@@ -158,18 +170,6 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return str(self.product_image.id) + " - " + str(self.product_image.product_title)
-
-
-# --------- Product Image Model
-class Brands(models.Model):
-    brand_image = models.ImageField(upload_to="brand_images")
-    brand_name = models.CharField(max_length=255, null=True, blank=True)
-    brand_slug = models.SlugField(
-        max_length=300, null=True, blank=True, unique=True)
-
-    def save(self, *args, **kwargs):
-        self.brand_slug = self.brand_slug.replace(" ", "").lower()
-        return super().save(*args, **kwargs)
 
 
 # --------- Cart Model

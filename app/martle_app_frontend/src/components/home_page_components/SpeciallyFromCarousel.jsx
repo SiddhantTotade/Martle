@@ -124,7 +124,7 @@ const SpeciallyFromCarousel = (props) => {
           fontFamily: "fantasy",
         }}
       >
-        Specially from {props.special_product_name}
+        Specially from {String(props.special_product_name).toUpperCase()}
       </Typography>
       <Box sx={{ display: "flex", gap: "15px" }}>
         <Paper
@@ -145,7 +145,7 @@ const SpeciallyFromCarousel = (props) => {
             width="40%"
           />
           <Typography fontFamily="serif" fontStyle="oblique" fontSize={23}>
-            Apple for You
+            {props.special_product_name} for You
           </Typography>
         </Paper>
         <Carousel
