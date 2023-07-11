@@ -38,9 +38,11 @@ const Home = () => {
       })
     : [];
 
-  const special_product_name = data ? data.special_product_name : "";
+  const special_product_image_and_name = data
+    ? data.special_product_image_and_name
+    : "";
 
-  console.log(data);
+  console.log(special_product_image_and_name);
 
   return (
     <>
@@ -52,7 +54,7 @@ const Home = () => {
       <ShopByBrandsCarousel data={brand_data} isLoading={isLoading} />
       <SpeciallyFromCarousel
         data={special_product_data}
-        special_product_name={special_product_name}
+        special_product_image_and_name={special_product_image_and_name}
         isLoading={isLoading}
       />
       <WeddingCarousels />
