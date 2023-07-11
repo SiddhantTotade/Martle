@@ -154,23 +154,21 @@ class ProductView(APIView):
 
     def get_all_products(self) -> QuerySet:
         return Product.objects.select_related(
-            'product_category').all()[:20]
+            'product_category').all().order_by('?')
 
     def get_all_brands(self) -> QuerySet:
         return Brands.objects.all()[:20]
 
-    def get_all_products_by_product_brand(self, brand_list: QuerySet) -> list:
-        random_brand_name = random.choice(brand_list)
-        return Product.objects.filter(product_brand=random_brand_name)
+    def get_all_products_by_product_brand(self, brand_id: QuerySet) -> list:
+        return Product.objects.filter(product_brand=brand_id).order_by("?")
 
     def get(self, request):
         # getting all products
         all_products = self.get_all_products()
         all_brands_products = self.get_all_brands()
-        brand_name_list = Product.objects.values_list(
-            'product_brand', flat=True).distinct()
-        special_products = self.get_all_products_by_product_brand(
-            brand_name_list)
+        brand_id = Brands.objects.values_list(
+            'id', flat=True).order_by('?').first()
+        special_products = self.get_all_products_by_product_brand(brand_id)
         special_product_brand_name_and_image = Brands.objects.filter(
             id=special_products.values().first()['product_brand_id'])
 
@@ -182,9 +180,9 @@ class ProductView(APIView):
                 all_brands_products, many=True)
             special_products_serialized_data = SpecialProductSerializer(
                 special_products, many=True)
-            special_product_brand_name_and_image_serializer = BrandSerializer(
+            special_product_image_and_name_serializer = BrandSerializer(
                 special_product_brand_name_and_image, many=True)
-            return Response({"product_data": product_serialized_data.data, "brand_data": brand_serialized_data.data, "special_product_data": special_products_serialized_data.data, "special_product_image_and_name": special_product_brand_name_and_image_serializer.data}, status=status.HTTP_200_OK)
+            return Response({"product_data": product_serialized_data.data, "brand_data": brand_serialized_data.data, "special_product_data": special_products_serialized_data.data, "special_product_image_and_name": special_product_image_and_name_serializer.data}, status=status.HTTP_200_OK)
         return JsonResponse("NULL", safe=False)
 
     def post(self, request):

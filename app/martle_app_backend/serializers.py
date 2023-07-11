@@ -211,7 +211,7 @@ class ProductLightSerializer(serializers.ModelSerializer):
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brands
-        fields = ['brand_name', 'brand_slug', 'brand_image']
+        fields = '__all__'
 
 
 class ProductBrandSerializer(serializers.ModelSerializer):

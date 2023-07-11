@@ -42,8 +42,6 @@ const Home = () => {
     ? data.special_product_image_and_name
     : "";
 
-  console.log(special_product_image_and_name);
-
   return (
     <>
       <NavBar />
@@ -54,8 +52,8 @@ const Home = () => {
       <ShopByBrandsCarousel data={brand_data} isLoading={isLoading} />
       <SpeciallyFromCarousel
         data={special_product_data}
-        special_product_image_and_name={special_product_image_and_name}
         isLoading={isLoading}
+        special_product_image_and_name={special_product_image_and_name}
       />
       <WeddingCarousels />
       <GroceriesCarousel />
