@@ -76,7 +76,7 @@ const ShopByBrandsCarousel = (props) => {
             <div className="content">
               <div className="imgBx">
                 <img
-                  className="rounded-full border-rose-500 sm:border-0"
+                  className="w-Image object-contain border-rose-500 sm:border-0"
                   src={`http://127.0.0.1:8000` + row.brand_image}
                   alt="img"
                 />

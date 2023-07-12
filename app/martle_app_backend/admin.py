@@ -75,3 +75,8 @@ class OrderPlacedAdmin(admin.ModelAdmin):
     def product_info(self, obj):
         link = reverse("admin:app_product_change", args=[obj.product.pk])
         return format_html('<a href="{}">{}</a>', link, obj.product.name)
+
+
+@admin.register(Genders)
+class GendersAdmin(admin.ModelAdmin):
+    list_display = ['id', 'gender']

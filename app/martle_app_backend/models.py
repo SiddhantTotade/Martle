@@ -139,6 +139,17 @@ class Brands(models.Model):
         return super().save(*args, **kwargs)
 
 
+class Genders(models.Model):
+    gender = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self) -> str:
+        return self.gender
+
+    def save(self, *args, **kwargs):
+        self.gender = self.gender.lower()
+        return super().save(*args, **kwargs)
+
+
 # --------- Product Model
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
@@ -153,6 +164,7 @@ class Product(models.Model):
     product_slug = models.SlugField(max_length=300, null=True, blank=True)
     product_cover_image = models.ImageField(
         upload_to="product_cover_images", default=None, null=True)
+    product_gender = models.ForeignKey(Genders, on_delete=models.PROTECT)
 
     def save(self, *args, **kwargs):
         self.product_slug = slugify(

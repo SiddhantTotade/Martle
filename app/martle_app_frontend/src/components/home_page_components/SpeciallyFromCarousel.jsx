@@ -145,7 +145,11 @@ const SpeciallyFromCarousel = (props) => {
           }}
         >
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5roqWOJQHnAfSDUCWK6SbnGrABtwSjw3lPA"
+            src={`http://127.0.0.1:8000${
+              props.special_product_image_and_name
+                ? (props.special_product_image_and_name || "")[0].brand_image
+                : ""
+            }`}
             alt="img"
             width="40%"
           />

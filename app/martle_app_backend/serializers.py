@@ -253,3 +253,9 @@ class SpecialProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['product_cover_image', 'product_slug']
+
+
+class WeddingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['product_cover_image', 'product_slug']
