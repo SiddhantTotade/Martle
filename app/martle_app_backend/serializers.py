@@ -258,4 +258,5 @@ class SpecialProductSerializer(serializers.ModelSerializer):
 class WeddingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['product_cover_image', 'product_slug']
+        depth = 1
+        fields = ['product_gender', 'product_cover_image', 'product_slug']

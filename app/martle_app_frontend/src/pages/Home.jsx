@@ -42,6 +42,20 @@ const Home = () => {
     ? data.special_product_image_and_name
     : "";
 
+  const him_products = data
+    ? data.wedding_products?.map((row) => {
+        return row.product_gender.gender === "male" ? row : null;
+      })
+    : "";
+
+  const her_products = data
+    ? data.wedding_products?.map((row) => {
+        return row.product_gender.gender === "female" ? row : null;
+      })
+    : "";
+
+  console.log(him_products);
+
   return (
     <>
       <NavBar />
@@ -55,7 +69,11 @@ const Home = () => {
         isLoading={isLoading}
         special_product_image_and_name={special_product_image_and_name}
       />
-      <WeddingCarousels />
+      <WeddingCarousels
+        him_products={him_products}
+        her_products={her_products}
+        isLoading={isLoading}
+      />
       <GroceriesCarousel />
       <RandomCardsPick />
       <VisitedItemsCarousel />

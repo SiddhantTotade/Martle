@@ -4,7 +4,8 @@ import { Box } from "@mui/material";
 import MensCarousel from "./wedding_components/MensCarousel";
 import WomensCarousel from "./wedding_components/WomensCarousel";
 
-const Wedding = () => {
+const Wedding = (props) => {
+  console.log(props);
   return (
     <div className="p-2 bg-black mt-12">
       <Title />
@@ -16,8 +17,8 @@ const Wedding = () => {
           marginBottom: "20px",
         }}
       >
-        <MensCarousel />
-        <WomensCarousel />
+        <MensCarousel him_product={props.him_product} />
+        <WomensCarousel her_product={props.her_product} />
       </Box>
     </div>
   );
