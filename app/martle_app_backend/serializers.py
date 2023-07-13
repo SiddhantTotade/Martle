@@ -224,7 +224,9 @@ class ProductBrandSerializer(serializers.ModelSerializer):
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = '__all__'
+        depth = 1
+        exclude = ['user']
+        # fields = ['product', 'quantity']
 
 
 # --------- Comment Serializer
@@ -267,5 +269,6 @@ class WeddingSerializer(serializers.ModelSerializer):
 class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
-        fields = ['user', 'product']
+        depth = 1
+        fields = ['product']
 #

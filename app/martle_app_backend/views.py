@@ -277,12 +277,13 @@ class CustomerView(APIView):
         return JsonResponse("Customer deleted successfull", safe=False)
 
 
-class AddToFavoriteView(APIView):
+class FavoriteView(APIView):
     def get(self, request):
         all_favorite_products = Favorite.objects.select_related(
             'user').filter(user=request.user.id)
-        fav_ser = FavoriteSerializer(all_favorite_products, many=True)
-        return JsonResponse(fav_ser.data, safe=False)
+        favorite_serialized_data = FavoriteSerializer(
+            all_favorite_products, many=True)
+        return JsonResponse(favorite_serialized_data.data, safe=False)
 
     def post(self, request):
         try:
@@ -304,27 +305,26 @@ class AddToFavoriteView(APIView):
 
 
 # -----------> Items add to cart
-class AddToCartView(APIView):
+class CartView(APIView):
     def get(self, request):
-        all_favorite_products = Favorite.objects.select_related(
-            'user').filter(user=request.user.id)
-        fav_ser = FavoriteSerializer(all_favorite_products, many=True)
-        return JsonResponse(fav_ser.data, safe=False)
+        all_cart_products = Cart.objects.filter(user=request.user.id)
+        cart_serialized_data = CartSerializer(all_cart_products, many=True)
+        return JsonResponse(cart_serialized_data.data, safe=False)
 
     def post(self, request):
         try:
-            favorite_json_data = JSONParser().parse(request)
-            favorite_serilized_data = FavoriteSerializer(
-                data=favorite_json_data)
-            if favorite_serilized_data.is_valid():
-                favorite_serilized_data.save()
-            return Response({"msg": "Added to Favorites"}, status=status.HTTP_200_OK)
+            cart_json_data = JSONParser().parse(request)
+            cart_serilized_data = CartSerializer(
+                data=cart_json_data)
+            if cart_serilized_data.is_valid():
+                cart_serilized_data.save()
+            return Response({"msg": "Added to Cart"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, pk):
         try:
-            Favorite.objects.get(id=pk).delete()
+            Cart.objects.get(id=pk).delete()
             return Response({"msg": "Item Removed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
             return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -36,13 +36,13 @@ urlpatterns = [
 
     # ---------> Add and Delete Favorites Items
     path("product/favorite/",
-         AddToFavoriteView.as_view(), name="get_and_create_favorite"),
+         FavoriteView.as_view(), name="get_and_create_favorite"),
     path("product/favorite/<int:pk>",
-         AddToFavoriteView.as_view(), name="delete_favorite"),
+         FavoriteView.as_view(), name="delete_favorite"),
 
     # ---------> Add and Delete Cart Items
     path("product/cart/",
-         AddToFavoriteView.as_view(), name="get_and_create_favorite"),
+         CartView.as_view(), name="get_and_create_favorite"),
     path("product/cart/<int:pk>",
-         AddToFavoriteView.as_view(), name="delete_favorite"),
+         CartView.as_view(), name="delete_favorite"),
 ]
