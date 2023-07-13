@@ -255,8 +255,17 @@ class SpecialProductSerializer(serializers.ModelSerializer):
         fields = ['product_cover_image', 'product_slug']
 
 
+# --------- Wedding Serializer
 class WeddingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         depth = 1
         fields = ['product_gender', 'product_cover_image', 'product_slug']
+
+
+# --------- Favorite Serializer
+class FavoriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Favorite
+        fields = ['user', 'product']
+#

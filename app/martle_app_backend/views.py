@@ -13,7 +13,6 @@ from rest_framework.response import Response
 from rest_framework.authentication import *
 from .renderers import *
 import pandas as pd
-import random
 
 # Create your views here.
 
@@ -154,7 +153,7 @@ class ProductView(APIView):
 
     def get_all_products(self) -> QuerySet:
         return Product.objects.select_related(
-            'product_category').all().order_by('?')
+            'product_category').all().order_by("?")
 
     def get_all_brands(self) -> QuerySet:
         return Brands.objects.all()[:20]
@@ -235,7 +234,6 @@ class BrandView(APIView):
 
 class CustomerView(APIView):
     def get(self, request):
-
         # getting customers by id
         all_customers = CustomerAddress.objects.all()
 
@@ -277,3 +275,56 @@ class CustomerView(APIView):
         customer_by_id = CustomerAddress.objects.get(pk=pk)
         customer_by_id.delete()
         return JsonResponse("Customer deleted successfull", safe=False)
+
+
+class AddToFavoriteView(APIView):
+    def get(self, request):
+        all_favorite_products = Favorite.objects.select_related(
+            'user').filter(user=request.user.id)
+        fav_ser = FavoriteSerializer(all_favorite_products, many=True)
+        return JsonResponse(fav_ser.data, safe=False)
+
+    def post(self, request):
+        try:
+            favorite_json_data = JSONParser().parse(request)
+            favorite_serilized_data = FavoriteSerializer(
+                data=favorite_json_data)
+            if favorite_serilized_data.is_valid():
+                favorite_serilized_data.save()
+            return Response({"msg": "Added to Favorites"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, pk):
+        try:
+            Favorite.objects.get(id=pk).delete()
+            return Response({"msg": "Item Removed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as e:
+            return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+# -----------> Items add to cart
+class AddToCartView(APIView):
+    def get(self, request):
+        all_favorite_products = Favorite.objects.select_related(
+            'user').filter(user=request.user.id)
+        fav_ser = FavoriteSerializer(all_favorite_products, many=True)
+        return JsonResponse(fav_ser.data, safe=False)
+
+    def post(self, request):
+        try:
+            favorite_json_data = JSONParser().parse(request)
+            favorite_serilized_data = FavoriteSerializer(
+                data=favorite_json_data)
+            if favorite_serilized_data.is_valid():
+                favorite_serilized_data.save()
+            return Response({"msg": "Added to Favorites"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, pk):
+        try:
+            Favorite.objects.get(id=pk).delete()
+            return Response({"msg": "Item Removed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as e:
+            return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

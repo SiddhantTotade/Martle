@@ -1,4 +1,4 @@
-from django.urls import re_path
+from django.urls import re_path, path
 from .views import *
 from .auth_views import *
 from rest_framework import routers
@@ -33,4 +33,16 @@ urlpatterns = [
 
     re_path(r"^product/id/([0-9]+)$", GetProductById.as_view()),
     re_path(r"^product/desc/([0-9]+)$", get_description),
+
+    # ---------> Add and Delete Favorites Items
+    path("product/favorite/",
+         AddToFavoriteView.as_view(), name="get_and_create_favorite"),
+    path("product/favorite/<int:pk>",
+         AddToFavoriteView.as_view(), name="delete_favorite"),
+
+    # ---------> Add and Delete Cart Items
+    path("product/cart/",
+         AddToFavoriteView.as_view(), name="get_and_create_favorite"),
+    path("product/cart/<int:pk>",
+         AddToFavoriteView.as_view(), name="delete_favorite"),
 ]
