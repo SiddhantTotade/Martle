@@ -34,60 +34,57 @@ const settings = {
   slidesPerRow: 2,
 };
 
-const WomensCarousel = () => {
-  const items = (
-    <Paper
-      sx={{
-        height: 220,
-        width: 220,
-        gap: "10px",
-        display: "flex",
-        flexDirection: "column",
-        borderRadius: "5px",
-        ":hover": { cursor: "pointer" },
-        "@media screen and (max-width:500px)": {
-          width: "100%",
-          height: "20vh",
-        },
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          height: "100vh",
-          maxHeight: "34vh",
-          width: "170px",
-          translate: "15% 0%",
-          position: "relative",
-          overflow: "hidden",
-          "@media screen and (max-width:500px)": {
-            width: "80%",
-          },
-        }}
-      >
-        <img
-          className="object-contain absolute h-full p-2"
-          src="https://m.media-amazon.com/images/I/71Ftzmh3XWL._AC_SY200_.jpg"
-          alt="img"
-          width="100%"
-        />
-      </Box>
-    </Paper>
-  );
-
-  const rows = [];
-
-  for (let index = 0; index < 10; index++) {
-    rows.push(items);
-  }
+const WomensCarousel = (props) => {
+  const womens_items = props.her_product?.map((row, i) => {
+    return (
+      <Carousel.Item>
+        <Paper
+          key={i}
+          sx={{
+            height: 220,
+            width: 220,
+            gap: "10px",
+            display: "flex",
+            flexDirection: "column",
+            borderRadius: "5px",
+            ":hover": { cursor: "pointer" },
+            "@media screen and (max-width:500px)": {
+              width: "100%",
+              height: "20vh",
+            },
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              height: "100vh",
+              maxHeight: "34vh",
+              width: "170px",
+              translate: "15% 0%",
+              position: "relative",
+              overflow: "hidden",
+              "@media screen and (max-width:500px)": {
+                width: "80%",
+              },
+            }}
+          >
+            <img
+              className="object-contain absolute h-full p-2"
+              src={`http://127.0.0.1:8000` + row.product_cover_image}
+              alt="img"
+              width="100%"
+            />
+          </Box>
+        </Paper>
+      </Carousel.Item>
+    );
+  });
 
   return (
     <div className="w-Wedding m-auto">
       <Carousel cols={3} rows={2} responsiveLayout={responsive}>
-        {rows.map((row) => {
-          return <Carousel.Item>{row}</Carousel.Item>;
-        })}
+        {womens_items}
       </Carousel>
     </div>
   );

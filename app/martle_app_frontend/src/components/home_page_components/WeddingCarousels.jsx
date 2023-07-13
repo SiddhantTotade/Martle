@@ -5,7 +5,6 @@ import MensCarousel from "./wedding_components/MensCarousel";
 import WomensCarousel from "./wedding_components/WomensCarousel";
 
 const Wedding = (props) => {
-  console.log(props);
   return (
     <div className="p-2 bg-black mt-12">
       <Title />
@@ -17,8 +16,8 @@ const Wedding = (props) => {
           marginBottom: "20px",
         }}
       >
-        <MensCarousel him_product={props.him_product} />
-        <WomensCarousel her_product={props.her_product} />
+        <MensCarousel him_product={props.him_products} />
+        <WomensCarousel her_product={props.her_products} />
       </Box>
     </div>
   );

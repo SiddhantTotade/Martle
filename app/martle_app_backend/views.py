@@ -163,7 +163,7 @@ class ProductView(APIView):
         return Product.objects.filter(product_brand=brand_id).order_by("?")
 
     def get_him_products(self) -> QuerySet:
-        return Product.objects.select_related('product_gender').filter(product_gender__in=[1, 2])
+        return Product.objects.select_related('product_gender').filter(product_gender__in=[1, 2]).order_by("?")
 
     def get(self, request):
         # getting all products
@@ -175,7 +175,6 @@ class ProductView(APIView):
         special_product_brand_name_and_image = Brands.objects.filter(
             id=special_products.values().first()['product_brand_id'])
         wedding_products = self.get_him_products()
-        print(wedding_products)
 
         # checking products exist or not
         if all_products:

@@ -43,18 +43,16 @@ const Home = () => {
     : "";
 
   const him_products = data
-    ? data.wedding_products?.map((row) => {
+    ? data.wedding_products?.filter((row) => {
         return row.product_gender.gender === "male" ? row : null;
       })
     : "";
 
   const her_products = data
-    ? data.wedding_products?.map((row) => {
+    ? data.wedding_products?.filter((row) => {
         return row.product_gender.gender === "female" ? row : null;
       })
     : "";
-
-  console.log(him_products);
 
   return (
     <>
