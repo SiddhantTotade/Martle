@@ -60,7 +60,11 @@ const Home = () => {
       <Sidebar />
       <HeaderSwiper />
       <ProductNavigator />
-      <TopDealsCarousel data={product_data} isLoading={isLoading} />
+      <TopDealsCarousel
+        data={product_data}
+        isLoading={isLoading}
+        access_token={access_token}
+      />
       <ShopByBrandsCarousel data={brand_data} isLoading={isLoading} />
       <SpeciallyFromCarousel
         data={special_product_data}
