@@ -312,7 +312,6 @@ const TopDealsCarousel = (props) => {
         responsive={responsive}
         arrows={true}
         renderButtonGroupOutside={true}
-        className="z-0"
       >
         {props.isLoading
           ? cardSkeleton
