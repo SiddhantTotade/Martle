@@ -201,10 +201,10 @@ class Cart(models.Model):
         return self.quantity * self.product.product_discounted_price
 
 
-# --------- Placed Order Model
+# --------- Order Placed Model
 class OrderPlaced(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    customer = models.ForeignKey(CustomerAddress, on_delete=models.CASCADE)
+    customer = models.ForeignKey(CustomerAddress, on_delete=models.PROTECT)
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.PositiveIntegerField(default=1)
     ordered_datetime = models.DateTimeField(default=None)
@@ -213,6 +213,15 @@ class OrderPlaced(models.Model):
     @property
     def total_cost(self):
         return self.quantity * self.product.product_discounted_price
+
+
+# --------- Favorite Model
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.product.name
 
 
 # --------- Comment Model

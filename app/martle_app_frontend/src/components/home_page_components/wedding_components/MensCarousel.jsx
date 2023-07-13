@@ -37,7 +37,7 @@ const settings = {
 const MensCarousel = (props) => {
   const items = props.him_product?.map((row, i) => {
     return (
-      <Carousel.Item>
+      <Carousel.Item key={i}>
         <Paper
           key={i}
           sx={{

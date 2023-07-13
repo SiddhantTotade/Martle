@@ -1,4 +1,4 @@
-import { Button, Paper, Typography } from "@mui/material";
+import { Button, Link, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import Carousel from "react-multi-carousel";
@@ -29,36 +29,38 @@ const responsive = {
   },
 };
 
-const TopDealsCarousel = (props) => {
-  const cardSkeleton = [...Array(window.screen.width <= 500 ? 1 : 6)].map(
-    (row, i) => (
-      <Paper
-        key={i}
-        sx={{
-          height: 320,
-          width: 270,
-          gap: "10px",
-          display: "flex",
-          flexDirection: "column",
-          padding: "10px",
-          borderRadius: "5px",
-          ":hover": { cursor: "pointer" },
-          "@media (max-width: 500px)": { width: "100%", height: 220 },
-        }}
-      >
-        {window.screen.width <= 500 ? (
+const cardSkeleton = [...Array(window.screen.width <= 500 ? 1 : 6)].map(
+  (row, i) => (
+    <Paper
+      key={i}
+      sx={{
+        height: 320,
+        width: 270,
+        gap: "10px",
+        display: "flex",
+        flexDirection: "column",
+        padding: "10px",
+        borderRadius: "5px",
+        ":hover": { cursor: "pointer" },
+        "@media (max-width: 500px)": { width: "100%", height: 220 },
+      }}
+    >
+      {window.screen.width <= 500 ? (
+        <LoaderSkeleton barPadding={10} />
+      ) : (
+        <>
           <LoaderSkeleton barPadding={10} />
-        ) : (
-          <>
-            <LoaderSkeleton barPadding={10} />
-            <LoaderSkeleton barPadding={5} />
-            <LoaderSkeleton barPadding={1} />
-          </>
-        )}
-      </Paper>
-    )
-  );
+          <LoaderSkeleton barPadding={5} />
+          <LoaderSkeleton barPadding={1} />
+        </>
+      )}
+    </Paper>
+  )
+);
 
+const TopDealsCarousel = (props) => {
+  const addToFavorite = () => {};
+  const addToCart = () => {};
   const mobileCard = props.data?.map((row, i) => {
     return (
       <Paper
@@ -207,16 +209,21 @@ const TopDealsCarousel = (props) => {
             width="100%"
           />
         </Box>
-        <Typography
-          fontSize={12}
-          sx={{
-            paddingLeft: "10px",
-            paddingRight: "10px",
-            ":hover": { color: "#078dfa" },
-          }}
+        <Link
+          href={`/api/product/` + row.product_slug}
+          sx={{ textDecoration: "None", color: "black" }}
         >
-          {row.product_title}
-        </Typography>
+          <Typography
+            fontSize={12}
+            sx={{
+              paddingLeft: "10px",
+              paddingRight: "10px",
+              ":hover": { color: "#078dfa" },
+            }}
+          >
+            {row.product_title}
+          </Typography>
+        </Link>
         <Box
           sx={{
             display: "flex",
