@@ -80,3 +80,8 @@ class OrderPlacedAdmin(admin.ModelAdmin):
 @admin.register(Genders)
 class GendersAdmin(admin.ModelAdmin):
     list_display = ['id', 'gender']
+
+
+@admin.register(Favorite)
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'product']
