@@ -11,12 +11,15 @@ import RandomCardsPick from "../components/home_page_components/RandomPickCards"
 import GroceriesCarousel from "../components/home_page_components/GroceriesCarousel";
 import VisitedItemsCarousel from "../components/home_page_components/VisitedItemsCarousel";
 import Footer from "../components/base_components/Footer";
-
+import { useGetLoggedInUserQuery } from "../services/userAuthAPI";
 import { useAllProductAPIQuery } from "../services/homeAPIs";
 import { getToken } from "../services/LocalStorageService";
+import { setUserInfo, unsetUserInfo } from "../features/userSlice";
 
 const Home = () => {
   const { access_token } = getToken();
+
+  const user = useGetLoggedInUserQuery(access_token).data;
 
   const { data = [], isLoading } = useAllProductAPIQuery(access_token);
 
@@ -64,6 +67,7 @@ const Home = () => {
         data={product_data}
         isLoading={isLoading}
         access_token={access_token}
+        user_data={user}
       />
       <ShopByBrandsCarousel data={brand_data} isLoading={isLoading} />
       <SpeciallyFromCarousel

@@ -7,6 +7,8 @@ import StarIcon from "@mui/icons-material/Star";
 import Heart from "../base_components/Heart";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import LoaderSkeleton from "../base_components/LoaderSkeleton";
+import { favoriteAPI } from "../../services/favoriteService";
+import { cartAPI } from "../../services/cartService";
 
 const responsive = {
   superLargeDesktop: {

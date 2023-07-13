@@ -1,13 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const cartService = createApi({
-  reducerPath: "cartService",
+export const cartAPI = createApi({
+  reducerPath: "cartAPI",
   baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api/" }),
   endpoints: (builder) => ({
-    addToCart: builder.query({
+    addToCartAPI: builder.query({
       query: (access_token) => {
         return {
-          url: "cart/",
+          url: "all-products/",
           method: "GET",
           headers: {
             authorization: `Bearer ${access_token}`,
@@ -18,7 +18,7 @@ export const cartService = createApi({
     removeFromCart: builder.mutation({
       query: ({ access_token, id }) => {
         return {
-          url: `cart/${id}`,
+          url: `favorite/${id}`,
           method: "DELETE",
           headers: {
             authorization: `Bearer ${access_token}`,
@@ -28,3 +28,5 @@ export const cartService = createApi({
     }),
   }),
 });
+
+export const { useAddToCartAPIQuery, useRemoveFromCartMutation } = cartAPI;

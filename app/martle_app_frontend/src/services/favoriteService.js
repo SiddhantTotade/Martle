@@ -1,13 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const favoriteService = createApi({
-  reducerPath: "favoriteService",
-  baseQuery: fetchBaseQuery("http://127.0.0.1:8000/api/"),
+export const favoriteAPI = createApi({
+  reducerPath: "favoriteAPI",
+  baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api/" }),
   endpoints: (builder) => ({
-    addToFavorites: builder.query({
+    addToFavoriteAPI: builder.query({
       query: (access_token) => {
         return {
-          url: "favorite",
+          url: "all-products/",
           method: "GET",
           headers: {
             authorization: `Bearer ${access_token}`,
@@ -15,7 +15,7 @@ export const favoriteService = createApi({
         };
       },
     }),
-    removeFromFavorites: builder.query({
+    removeFromFavorites: builder.mutation({
       query: ({ access_token, id }) => {
         return {
           url: `favorite/${id}`,
@@ -28,3 +28,6 @@ export const favoriteService = createApi({
     }),
   }),
 });
+
+export const { useAddToFavoriteAPIQuery, useRemoveFromFavoritesMutation } =
+  favoriteAPI;

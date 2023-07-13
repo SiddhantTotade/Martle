@@ -78,33 +78,6 @@ export const userAuthAPI = createApi({
         };
       },
     }),
-    senderCredential: builder.mutation({
-      query: (data) => {
-        const formData = new FormData();
-        formData.append("email", data.credential.email);
-        formData.append("password", data.credential.password);
-        formData.append("phone", data.phone);
-        return {
-          url: "sender-credential/",
-          method: "POST",
-          body: formData,
-          headers: {
-            authorization: `Bearer ${data.access_token}`,
-          },
-        };
-      },
-    }),
-    getCredential: builder.query({
-      query: (data) => {
-        return {
-          url: "sender-credential/",
-          method: "GET",
-          headers: {
-            authorization: `Bearer ${data}`,
-          },
-        };
-      },
-    }),
   }),
 });
 
@@ -115,6 +88,4 @@ export const {
   useChangeUserPasswordMutation,
   useSendPasswordResetEmailMutation,
   useResetPasswordMutation,
-  useGetCredentialQuery,
-  useSenderCredentialMutation,
 } = userAuthAPI;
