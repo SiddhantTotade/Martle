@@ -40,4 +40,8 @@ export const cartAPI = createApi({
   }),
 });
 
-export const { useAddToCartAPIQuery, useRemoveFromCartMutation } = cartAPI;
+export const {
+  useGetCartAPIQuery,
+  useAddToCartAPIMutation,
+  useRemoveFromCartMutation,
+} = cartAPI;

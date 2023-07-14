@@ -13,7 +13,8 @@ import {
   useRemoveFromFavoritesMutation,
 } from "../../services/favoriteService";
 import {
-  useAddToCartAPIQuery,
+  useGetCartAPIQuery,
+  useAddToCartAPIMutation,
   useRemoveFromCartMutation,
 } from "../../services/cartService";
 
@@ -70,7 +71,7 @@ const cardSkeleton = [...Array(window.screen.width <= 500 ? 1 : 6)].map(
 const TopDealsCarousel = (props) => {
   const [favorite, responseFavorite] = useAddToFavoriteAPIMutation();
 
-  const [cart, reponseCart] = useAddToCartAPIQuery();
+  const [cart, reponseCart] = useAddToCartAPIMutation();
 
   const addToFavorite = (access_token, id) => {
     favorite({ access_token, id });
