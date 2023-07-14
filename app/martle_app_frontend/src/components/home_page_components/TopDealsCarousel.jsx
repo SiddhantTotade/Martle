@@ -7,8 +7,15 @@ import StarIcon from "@mui/icons-material/Star";
 import Heart from "../base_components/Heart";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import LoaderSkeleton from "../base_components/LoaderSkeleton";
-import { favoriteAPI } from "../../services/favoriteService";
-import { cartAPI } from "../../services/cartService";
+import {
+  useGetFavoriteAPIQuery,
+  useAddToFavoriteAPIMutation,
+  useRemoveFromFavoritesMutation,
+} from "../../services/favoriteService";
+import {
+  useAddToCartAPIQuery,
+  useRemoveFromCartMutation,
+} from "../../services/cartService";
 
 const responsive = {
   superLargeDesktop: {
@@ -61,8 +68,16 @@ const cardSkeleton = [...Array(window.screen.width <= 500 ? 1 : 6)].map(
 );
 
 const TopDealsCarousel = (props) => {
-  const addToFavorite = () => {};
+  const [favorite, responseFavorite] = useAddToFavoriteAPIMutation();
+
+  const [cart, reponseCart] = useAddToCartAPIQuery();
+
+  const addToFavorite = (access_token, id) => {
+    favorite({ access_token, id });
+  };
+
   const addToCart = () => {};
+
   const mobileCard = props.data?.map((row, i) => {
     return (
       <Paper
@@ -186,7 +201,9 @@ const TopDealsCarousel = (props) => {
           "@media (max-width: 500px)": { width: "100%" },
         }}
       >
-        <Heart />
+        <div onClick={() => addToFavorite(props.access_token, row.id)}>
+          <Heart />
+        </div>
         <Box
           sx={{
             display: "flex",

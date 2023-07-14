@@ -2,16 +2,28 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const favoriteAPI = createApi({
   reducerPath: "favoriteAPI",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api/product/" }),
   endpoints: (builder) => ({
-    addToFavoriteAPI: builder.query({
+    getFavoriteAPI: builder.query({
       query: (access_token) => {
         return {
-          url: "all-products/",
+          url: "favorite/",
           method: "GET",
           headers: {
             authorization: `Bearer ${access_token}`,
           },
+        };
+      },
+    }),
+    addToFavoriteAPI: builder.mutation({
+      query: ({ access_token, id }) => {
+        console.log(access_token, id);
+        return {
+          // url: "favorite/",
+          // method: "POST",
+          // headers: {
+          //   authorization: `Bearer ${access_token}`,
+          // },
         };
       },
     }),
@@ -29,5 +41,8 @@ export const favoriteAPI = createApi({
   }),
 });
 
-export const { useAddToFavoriteAPIQuery, useRemoveFromFavoritesMutation } =
-  favoriteAPI;
+export const {
+  useGetFavoriteAPIQuery,
+  useAddToFavoriteAPIMutation,
+  useRemoveFromFavoritesMutation,
+} = favoriteAPI;
