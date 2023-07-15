@@ -165,6 +165,8 @@ class Product(models.Model):
     product_cover_image = models.ImageField(
         upload_to="product_cover_images", default=None, null=True)
     product_gender = models.ForeignKey(Genders, on_delete=models.PROTECT)
+    favourite = models.ManyToManyField(
+        User, blank=True, default=None, related_name="favourite_items")
 
     def save(self, *args, **kwargs):
         self.product_slug = slugify(

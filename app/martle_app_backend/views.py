@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from .models import *
 from .serializers import *
 from django.db.models import QuerySet
@@ -277,6 +278,20 @@ class CustomerView(APIView):
         return JsonResponse("Customer deleted successfull", safe=False)
 
 
+def favorite_add(request, id):
+    fav = get_object_or_404(Product, id=id)
+    if fav.favorite.filter(id=request.user.id).exists():
+        fav.favourite.remove(request.user)
+    else:
+        fav.favourite.remove(request.user)
+    return Response({"msg": "added"}, safe=False)
+
+
+def favorite_list(request, id):
+    fav = Product.objects.filter(favourite=request.user.id)
+    return JsonResponse({"fav": fav}, safe=False)
+
+
 class FavoriteView(APIView):
     def get(self, request):
         all_favorite_products = Favorite.objects.select_related(
@@ -296,9 +311,9 @@ class FavoriteView(APIView):
         except Exception as e:
             return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def delete(self, pk):
+    def delete(self, request, id, pk):
         try:
-            Favorite.objects.get(id=pk).delete()
+            Product.objects.get(favorite=id).delete()
             return Response({"msg": "Item Removed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
             return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
