@@ -69,15 +69,18 @@ const cardSkeleton = [...Array(window.screen.width <= 500 ? 1 : 6)].map(
 );
 
 const TopDealsCarousel = (props) => {
+  console.log(props.user_data.id);
   const [favorite, responseFavorite] = useAddToFavoriteAPIMutation();
 
   const [cart, reponseCart] = useAddToCartAPIMutation();
 
-  const addToFavorite = (access_token, id) => {
-    favorite({ access_token, id });
+  const addToFavorite = (access_token, product_id, user_id) => {
+    favorite({ access_token, product_id, user_id });
   };
 
-  const addToCart = () => {};
+  const addToCart = (access_token, id) => {
+    favorite({ access_token, id });
+  };
 
   const mobileCard = props.data?.map((row, i) => {
     return (
@@ -202,7 +205,11 @@ const TopDealsCarousel = (props) => {
           "@media (max-width: 500px)": { width: "100%" },
         }}
       >
-        <div onClick={() => addToFavorite(props.access_token, row.id)}>
+        <div
+          onClick={() =>
+            addToFavorite(props.access_token, row.id, props.user_data.id)
+          }
+        >
           <Heart />
         </div>
         <Box
