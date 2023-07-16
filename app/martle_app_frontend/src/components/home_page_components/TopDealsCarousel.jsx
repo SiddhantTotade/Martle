@@ -69,17 +69,26 @@ const cardSkeleton = [...Array(window.screen.width <= 500 ? 1 : 6)].map(
 );
 
 const TopDealsCarousel = (props) => {
-  // console.log(props.user_data.id);
-  const [favorite, responseFavorite] = useAddToFavoriteAPIMutation();
+  const [addFavorite, responseAddFavorite] = useAddToFavoriteAPIMutation();
+
+  const getFavorite = useGetFavoriteAPIQuery(props.access_token);
+
+  const favoriteArray = [
+    getFavorite.data
+      ? getFavorite.data?.map((row, i) => {
+          return row.id;
+        })
+      : null,
+  ];
 
   const [cart, reponseCart] = useAddToCartAPIMutation();
 
   const addToFavorite = (access_token, product_id, user_id) => {
-    favorite({ access_token, product_id, user_id });
+    addFavorite({ access_token, product_id, user_id });
   };
 
   const addToCart = (access_token, id) => {
-    favorite({ access_token, id });
+    // addFavorite({ access_token, id });
   };
 
   const mobileCard = props.data?.map((row, i) => {
@@ -105,7 +114,6 @@ const TopDealsCarousel = (props) => {
           }}
         >
           <img
-            className=""
             src={`http://127.0.0.1:8000` + row.product_cover_image}
             alt="img"
             width="50%"
@@ -205,13 +213,21 @@ const TopDealsCarousel = (props) => {
           "@media (max-width: 500px)": { width: "100%" },
         }}
       >
-        <div
-          onClick={() =>
-            addToFavorite(props.access_token, row.id, props.user_data.id)
-          }
-        >
-          <Heart />
-        </div>
+        {favoriteArray ? (
+          favoriteArray[0]?.includes(row.id) ? (
+            ""
+          ) : (
+            <div
+              onClick={() =>
+                addToFavorite(props.access_token, row.id, props.user_data.id)
+              }
+            >
+              <Heart />
+            </div>
+          )
+        ) : (
+          ""
+        )}
         <Box
           sx={{
             display: "flex",
@@ -230,7 +246,7 @@ const TopDealsCarousel = (props) => {
           }}
         >
           <img
-            className="object-contain absolute h-full"
+            className="object-contain absolute h-full p-1"
             src={`http://127.0.0.1:8000` + row.product_cover_image}
             alt="img"
             width="100%"
