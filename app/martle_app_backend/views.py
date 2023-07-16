@@ -301,21 +301,29 @@ def favorite_list(request):
 
 class FavoriteView(APIView):
     def get(self, request):
-        all_favorite_products = Product.objects.filter(
-            favourite=request.user.id)
-        print(all_favorite_products)
-        favorite_serialized_data = FavoriteProductSerializer(
-            all_favorite_products, many=True)
-        return JsonResponse(favorite_serialized_data.data, safe=False)
+        try:
+            all_favorite_products = Product.objects.filter(
+                favourite=request.user.id)
+            favorite_serialized_data = FavoriteProductSerializer(
+                all_favorite_products, many=True)
+            return JsonResponse(favorite_serialized_data.data, safe=False)
+        except Exception as e:
+            return JsonResponse({"error": e}, safe=False)
 
     def post(self, request):
         try:
-            favorite_json_data = JSONParser().parse(request)
-            favorite_serilized_data = FavoriteProductSerializer(
-                data=favorite_json_data)
-            if favorite_serilized_data.is_valid():
-                favorite_serilized_data.save()
-            return Response({"msg": "Added to Favorites"}, status=status.HTTP_200_OK)
+            fav = get_object_or_404(Product, id=id)
+            if fav.favourite.filter(id=request.user.id).exists():
+                fav.favourite.remove(request.user.id)
+            else:
+                fav.favourite.add(request.user.id)
+            return Response({"msg": "added"}, safe=False)
+            # favorite_json_data = JSONParser().parse(request)
+            # favorite_serilized_data = FavoriteProductSerializer(
+            #     data=favorite_json_data)
+            # if favorite_serilized_data.is_valid():
+            #     favorite_serilized_data.save()
+            # return Response({"msg": "Added to Favorites"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

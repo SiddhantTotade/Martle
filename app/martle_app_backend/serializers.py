@@ -202,10 +202,18 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class ProductLightSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Product
         fields = ['id', 'product_title', 'product_discounted_price',
-                  'product_brand', 'product_category', 'product_slug', 'product_cover_image']
+                  'product_brand', 'product_category', 'product_slug', 'product_cover_image', 'favourite']
+
+    def get_favourites(self, obj):
+        user = self.context['request'].user
+        favourite_product = obj.favourites.filter(user=user)
+        serializer = FavoriteProductSerializer(favourite_product, many=True)
+        print(serializer)
+        return serializer.data
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -269,5 +277,5 @@ class WeddingSerializer(serializers.ModelSerializer):
 class FavoriteProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id']
+        fields = ['favourite']
 #

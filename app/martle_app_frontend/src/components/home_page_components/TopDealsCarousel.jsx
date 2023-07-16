@@ -69,7 +69,7 @@ const cardSkeleton = [...Array(window.screen.width <= 500 ? 1 : 6)].map(
 );
 
 const TopDealsCarousel = (props) => {
-  console.log(props.user_data.id);
+  // console.log(props.user_data.id);
   const [favorite, responseFavorite] = useAddToFavoriteAPIMutation();
 
   const [cart, reponseCart] = useAddToCartAPIMutation();
