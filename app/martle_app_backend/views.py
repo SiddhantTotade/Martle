@@ -301,16 +301,17 @@ def favorite_list(request):
 
 class FavoriteView(APIView):
     def get(self, request):
-        all_favorite_products = Favorite.objects.select_related(
-            'user').filter(user=request.user.id)
-        favorite_serialized_data = FavoriteSerializer(
+        all_favorite_products = Product.objects.filter(
+            favourite=request.user.id)
+        print(all_favorite_products)
+        favorite_serialized_data = FavoriteProductSerializer(
             all_favorite_products, many=True)
         return JsonResponse(favorite_serialized_data.data, safe=False)
 
     def post(self, request):
         try:
             favorite_json_data = JSONParser().parse(request)
-            favorite_serilized_data = FavoriteSerializer(
+            favorite_serilized_data = FavoriteProductSerializer(
                 data=favorite_json_data)
             if favorite_serilized_data.is_valid():
                 favorite_serilized_data.save()

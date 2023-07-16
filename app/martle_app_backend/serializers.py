@@ -266,9 +266,8 @@ class WeddingSerializer(serializers.ModelSerializer):
 
 
 # --------- Favorite Serializer
-class FavoriteSerializer(serializers.ModelSerializer):
+class FavoriteProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Favorite
-        depth = 1
-        fields = ['product']
+        model = Product
+        fields = ['id']
 #
