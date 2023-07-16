@@ -1,15 +1,28 @@
-import React, { useState } from 'react'
-import '../../pages/style/heart.css'
+import React, { useState } from "react";
+import "../../pages/style/heart.css";
 
-const Heart = () => {
+const Heart = (props) => {
+  const [heart, setHeart] = useState(false);
 
-    const [heart, setHeart] = useState(false)
-
-    return (
+  return (
+    <>
+      {props.isFavourite ? (
         <div>
-            <span onClick={() => heart ? setHeart(false) : setHeart(true)} className={`heart ${heart ? 'heart-active' : ''}`}></span>
+          <span
+            onClick={() => (heart ? setHeart(false) : setHeart(true))}
+            className="heart heart-active"
+          ></span>
         </div>
-    )
-}
+      ) : (
+        <div>
+          <span
+            onClick={() => (heart ? setHeart(false) : setHeart(true))}
+            className="heart"
+          ></span>
+        </div>
+      )}
+    </>
+  );
+};
 
-export default Heart
+export default Heart;

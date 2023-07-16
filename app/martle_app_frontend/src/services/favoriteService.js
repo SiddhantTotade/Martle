@@ -16,8 +16,8 @@ export const favoriteAPI = createApi({
       },
     }),
     addToFavoriteAPI: builder.mutation({
-      query: ({ access_token, id }) => {
-        console.log(access_token, id);
+      query: (data) => {
+        console.log(data);
         return {
           // url: "favorite/",
           // method: "POST",

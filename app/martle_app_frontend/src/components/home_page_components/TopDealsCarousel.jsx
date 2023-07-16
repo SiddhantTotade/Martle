@@ -69,7 +69,7 @@ const cardSkeleton = [...Array(window.screen.width <= 500 ? 1 : 6)].map(
 );
 
 const TopDealsCarousel = (props) => {
-  const [addFavorite, responseAddFavorite] = useAddToFavoriteAPIMutation();
+  const [addFavourite, responseAddFavorite] = useAddToFavoriteAPIMutation();
 
   const getFavorite = useGetFavoriteAPIQuery(props.access_token);
 
@@ -84,7 +84,8 @@ const TopDealsCarousel = (props) => {
   const [cart, reponseCart] = useAddToCartAPIMutation();
 
   const addToFavorite = (access_token, product_id, user_id) => {
-    addFavorite({ access_token, product_id, user_id });
+    addFavourite({ access_token, product_id });
+    <Heart isFavourite={true} />;
   };
 
   const addToCart = (access_token, id) => {
@@ -215,14 +216,12 @@ const TopDealsCarousel = (props) => {
       >
         {favoriteArray ? (
           favoriteArray[0]?.includes(row.id) ? (
-            ""
+            <div onClick={() => addToFavorite(props.access_token, row.id)}>
+              <Heart isFavourite={false} />
+            </div>
           ) : (
-            <div
-              onClick={() =>
-                addToFavorite(props.access_token, row.id, props.user_data.id)
-              }
-            >
-              <Heart />
+            <div onClick={() => addToFavorite(props.access_token, row.id)}>
+              <Heart isFavourite={true} />
             </div>
           )
         ) : (
