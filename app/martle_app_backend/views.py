@@ -1,3 +1,5 @@
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from .models import *
 from .serializers import *
@@ -278,18 +280,23 @@ class CustomerView(APIView):
         return JsonResponse("Customer deleted successfull", safe=False)
 
 
+@csrf_exempt
 def favorite_add(request, id):
     fav = get_object_or_404(Product, id=id)
-    if fav.favorite.filter(id=request.user.id).exists():
-        fav.favourite.remove(request.user)
+    if fav.favourite.filter(id=request.user.id).exists():
+        print("Hello")
+        fav.favourite.remove(request.user.id)
     else:
-        fav.favourite.remove(request.user)
+        print("Bello")
+        fav.favourite.add(request.user.id)
     return Response({"msg": "added"}, safe=False)
 
 
-def favorite_list(request, id):
+@csrf_exempt
+def favorite_list(request):
     fav = Product.objects.filter(favourite=request.user.id)
-    return JsonResponse({"fav": fav}, safe=False)
+    print(fav)
+    return HttpResponse({"fav": fav}, status.HTTP_200_OK)
 
 
 class FavoriteView(APIView):

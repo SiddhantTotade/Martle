@@ -36,10 +36,8 @@ urlpatterns = [
     re_path(r"^product/desc/([0-9]+)$", get_description),
 
     # ---------> Add and Delete Favorites Items
-    path("product/favorite/",
-         FavoriteView.as_view(), name="get_and_create_favorite"),
-    path("product/favorite/<int:id>/<int:pk>",
-         FavoriteView.as_view(), name="delete_favorite"),
+    path("product/favorite/", favorite_list, name="get_and_create_favorite"),
+    path("product/favorite/<int:id>/", favorite_add, name="delete_favorite"),
 
     # ---------> Add and Delete Cart Items
     path("product/cart/",
