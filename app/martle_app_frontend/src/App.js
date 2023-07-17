@@ -55,7 +55,7 @@ export default function App() {
         {/* Application  Routes */}
         <Route index path="/api/home" element={<Home />} />
         {/* <Route path="/api/product-upload" element={<ProductTable />} /> */}
-        <Route path="/api/product/id/:id" element={<Product />} />
+        <Route path="/api/product/:slug" element={<Product />} />
       </Routes>
     </Router>
   );

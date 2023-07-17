@@ -1,8 +1,6 @@
 import React from "react";
 import NavBar from "../components/base_components/NavBar";
 import Footer from "../components/base_components/Footer";
-import ReactImageMagnify from "react-image-magnify";
-import ReactSlick from "react-slick";
 // import watch300 from "../product_page_components/asus_vivobook_2k3hnhx.png";
 // import watch1200 from "../product_page_components/asus_vivobook_2k3hnhx.png";
 import Table from "@mui/material/Table";
@@ -13,6 +11,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import ProductImageMagnifier from "../components/product_page_components/ProductImageMagnifier";
+import { Box } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -68,6 +68,14 @@ const Product = () => {
   return (
     <>
       <NavBar />
+      <Box
+        sx={{
+          border: "2px solid red",
+          marginTop: "5rem",
+        }}
+      >
+        <ProductImageMagnifier />
+      </Box>
       {/* <div className="w-4/5 flex m-auto gap-10">
         <div className="flex justify-center w-2/5 border-2 border-gray-600">
           <ReactSlick {...settings}>

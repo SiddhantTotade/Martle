@@ -32,7 +32,8 @@ urlpatterns = [
 
     re_path(r"^get-description$", upload_description),
 
-    re_path(r"^product/id/([0-9]+)$", GetProductById.as_view()),
+    path("product/<slug:slug>", GetProductBySlug.as_view(),
+         name="get_specific_product"),
     re_path(r"^product/desc/([0-9]+)$", get_description),
 
     # ---------> Add and Delete Favorites Items

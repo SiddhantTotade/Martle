@@ -115,11 +115,14 @@ def get_description(request, pk):
     return JsonResponse(product_desc, safe=False)
 
 
-class GetProductById(APIView):
-    def get(self, request, pk):
-        product_by_id = Product.objects.filter(pk=pk)
-        product_serializer = ProductSerializer(product_by_id, many=True)
-        return JsonResponse(product_serializer.data, safe=False)
+class GetProductBySlug(APIView):
+    def get(self, request, slug):
+        try:
+            product_by_id = Product.objects.filter(product_slug=slug)
+            product_serializer = ProductSerializer(product_by_id, many=True)
+            return JsonResponse(product_serializer.data, safe=False)
+        except Exception as e:
+            return JsonResponse({"msg": e}, safe=False)
 
 
 # Function for description
