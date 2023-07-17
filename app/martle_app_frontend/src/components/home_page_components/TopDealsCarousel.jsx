@@ -1,6 +1,6 @@
 import { Button, Link, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import StarIcon from "@mui/icons-material/Star";
@@ -71,6 +71,9 @@ const cardSkeleton = [...Array(window.screen.width <= 500 ? 1 : 6)].map(
 const TopDealsCarousel = (props) => {
   const [addFavourite, responseAddFavorite] = useAddToFavoriteAPIMutation();
 
+  const [removeFavorite, responseRemoveFavorite] =
+    useRemoveFromFavoritesMutation();
+
   const getFavorite = useGetFavoriteAPIQuery(props.access_token);
 
   const favoriteArray = [
@@ -81,16 +84,19 @@ const TopDealsCarousel = (props) => {
       : null,
   ];
 
-  const [cart, reponseCart] = useAddToCartAPIMutation();
+  // const [cart, reponseCart] = useAddToCartAPIMutation();
 
   const addToFavorite = (access_token, product_id, user_id) => {
     addFavourite({ access_token, product_id });
-    <Heart isFavourite={true} />;
   };
 
-  const addToCart = (access_token, id) => {
-    // addFavorite({ access_token, id });
-  };
+  // const removeFromFavorite = (access_token, product_id, user_id) => {
+  //   removeFavorite({ access_token, product_id });
+  // };
+
+  // const addToCart = (access_token, id) => {
+  //   // addFavorite({ access_token, id });
+  // };
 
   const mobileCard = props.data?.map((row, i) => {
     return (
@@ -216,12 +222,16 @@ const TopDealsCarousel = (props) => {
       >
         {favoriteArray ? (
           favoriteArray[0]?.includes(row.id) ? (
-            <div onClick={() => addToFavorite(props.access_token, row.id)}>
-              <Heart isFavourite={false} />
+            <div
+              onClick={() => {
+                removeFavorite(props.access_token, row.id);
+              }}
+            >
+              <Heart isFavourite={true} />
             </div>
           ) : (
             <div onClick={() => addToFavorite(props.access_token, row.id)}>
-              <Heart isFavourite={true} />
+              <Heart isFavourite={false} />
             </div>
           )
         ) : (

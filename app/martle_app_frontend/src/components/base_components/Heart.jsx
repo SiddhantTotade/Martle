@@ -5,23 +5,14 @@ const Heart = (props) => {
   const [heart, setHeart] = useState(false);
 
   return (
-    <>
-      {props.isFavourite ? (
-        <div>
-          <span
-            onClick={() => (heart ? setHeart(false) : setHeart(true))}
-            className="heart heart-active"
-          ></span>
-        </div>
-      ) : (
-        <div>
-          <span
-            onClick={() => (heart ? setHeart(false) : setHeart(true))}
-            className="heart"
-          ></span>
-        </div>
-      )}
-    </>
+    <div>
+      <span
+        onClick={() =>
+          heart || props.isFavourite ? setHeart(false) : setHeart(true)
+        }
+        className={`heart ${props.isFavourite || heart ? "heart-active" : ""}`}
+      ></span>
+    </div>
   );
 };
 
