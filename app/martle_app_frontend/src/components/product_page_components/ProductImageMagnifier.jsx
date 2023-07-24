@@ -5,7 +5,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
-import watch300 from "../product_page_components/wristwatch.jpg";
+import watch300 from "../product_page_components/asus_vivobook_2k3hnhx.png";
 import watch1200 from "../product_page_components/wristwatch.jpg";
 import {
   MagnifierContainer,
@@ -58,8 +58,8 @@ const ProductImageMagnifier = () => {
         height: "70vh",
       }}
     >
-      {/* <ImageMagnifier /> */}
-      {/* <SideBySideMagnifier
+      {/* <ImageMagnifier src={watch300} /> */}
+      <SideBySideMagnifier
         style={{ width: "500px" }}
         imageSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv4UK-VacVrppny4aGjzhWStSrcsP_6A1UdFvRLCMg&s"
         imageAlt="Image"
@@ -69,7 +69,7 @@ const ProductImageMagnifier = () => {
         transitionSpeed={0.5}
         fillAvailableSpace={true}
         fillAlignTop={true}
-      /> */}
+      />
       {/* <MagnifierContainer>
         <div className="example-class">
           <MagnifierPreview

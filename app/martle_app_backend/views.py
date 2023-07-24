@@ -15,7 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.authentication import *
 from .renderers import *
-import pandas as pd
+# import pandas as pd
 
 # Create your views here.
 
@@ -127,12 +127,13 @@ class GetProductBySlug(APIView):
 
 # Function for description
 def upload_description(request):
-    df = pd.read_excel(
-        '/home/siddhanttotade/Documents/Docs/Programming/GIT/martle/app/martle_app_backend/data_to_dict.xlsx', index_col=None)
-    key = df['Key'].tolist()
-    val = df['Value'].replace("\\u200e", "", regex=True).tolist()
-    combine = dict(list(zip(key, val)))
-    return JsonResponse(str(combine), safe=False)
+    pass
+    # df = pd.read_excel(
+    #     '/home/siddhanttotade/Documents/Docs/Programming/GIT/martle/app/martle_app_backend/data_to_dict.xlsx', index_col=None)
+    # key = df['Key'].tolist()
+    # val = df['Value'].replace("\\u200e", "", regex=True).tolist()
+    # combine = dict(list(zip(key, val)))
+    # return JsonResponse(str(combine), safe=False)
 
 
 #  Function for image upload

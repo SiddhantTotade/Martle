@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
-const ImageMagnifier = () => {
+const ImageMagnifier = (props) => {
   function Magnifier({
     src,
     width,
@@ -82,11 +82,8 @@ const ImageMagnifier = () => {
   }
 
   return (
-    <div className="App">
-      <Magnifier
-        width={"300px"}
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv4UK-VacVrppny4aGjzhWStSrcsP_6A1UdFvRLCMg&s"
-      />
+    <div>
+      <Magnifier width={300} src={props.src} />
     </div>
   );
 };

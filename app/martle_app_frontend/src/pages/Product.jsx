@@ -70,11 +70,20 @@ const Product = () => {
       <NavBar />
       <Box
         sx={{
-          border: "2px solid red",
+          display: "flex",
+          width: "80%",
+          margin: "auto",
+          border: "2px solid green",
           marginTop: "5rem",
         }}
       >
-        <ProductImageMagnifier />
+        <Box
+          sx={{
+            border: "2px solid red",
+          }}
+        >
+          <ProductImageMagnifier />
+        </Box>
       </Box>
       {/* <div className="w-4/5 flex m-auto gap-10">
         <div className="flex justify-center w-2/5 border-2 border-gray-600">
