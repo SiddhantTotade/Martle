@@ -15,7 +15,7 @@ const responsive = {
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 6,
+    items: 5,
   },
   tablet: {
     breakpoint: { max: 1368, min: 464 },
@@ -60,7 +60,6 @@ const ShopByBrandsCarousel = (props) => {
     return (
       <Paper
         key={i}
-        elevation={6}
         sx={{
           width: 270,
           borderRadius: "5px",
@@ -76,7 +75,7 @@ const ShopByBrandsCarousel = (props) => {
             <div className="content">
               <div className="imgBx">
                 <img
-                  className="w-Image object-contain border-rose-500 sm:border-0"
+                  className="w-Image object-contain sm:border-0"
                   src={`http://127.0.0.1:8000` + row.brand_image}
                   alt="img"
                 />
@@ -109,7 +108,7 @@ const ShopByBrandsCarousel = (props) => {
           marginLeft: "10px",
           marginBottom: "5px",
           letterSpacing: "2px",
-          fontFamily: "fantasy",
+          fontFamily: "sans-serif",
         }}
       >
         Shop by Brands

@@ -26,7 +26,7 @@ const responsive = {
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 6,
+    items: 5,
   },
   tablet: {
     breakpoint: { max: 1368, min: 464 },
@@ -360,7 +360,7 @@ const TopDealsCarousel = (props) => {
           marginLeft: "10px",
           marginBottom: "5px",
           letterSpacing: "2px",
-          fontFamily: "fantasy",
+          fontFamily:"sans-serif",
         }}
       >
         Top Deals
