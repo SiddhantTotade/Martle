@@ -13,9 +13,10 @@ export default function Footer() {
           martle
         </Link>
         <ReactCountryFlag
+          svg={true}
           countryCode="IN"
           className="emojiFlag"
-          style={{ fontSize: "2.3rem", lineHeight: "1rem" }}
+          style={{ fontSize: "2.3rem" }}
           title="INDIA"
         />
       </div>
