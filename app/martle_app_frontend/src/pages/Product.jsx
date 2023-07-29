@@ -6,6 +6,7 @@ import ProductImageMagnifier from "../components/product_page_components/Product
 import ProductDetails from "../components/product_page_components/ProductDetails";
 
 const Product = () => {
+  const currUrl = window.location.pathname.replace("/api/product/", "");
   return (
     <>
       <NavBar />
