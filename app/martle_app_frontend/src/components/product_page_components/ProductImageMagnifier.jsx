@@ -54,7 +54,6 @@ const ProductImageMagnifier = () => {
                 alt: "img",
                 width: 500,
                 height: 500,
-                // isFluidWidth: true,
                 src: img,
               },
               largeImage: {
