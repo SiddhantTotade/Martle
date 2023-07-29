@@ -31,7 +31,7 @@ const ProductImageMagnifier = () => {
     }
   };
   return (
-    <div className="container">
+    <div className="container border-2 border-red-700">
       <div className="left">
         <div className="left_1">
           {images.map((image, i) => {
@@ -39,10 +39,10 @@ const ProductImageMagnifier = () => {
               <div
                 ref={addRef}
                 onMouseOver={() => handleHover(image, i)}
-                className="img_wrap hover:border-2 hover:border-orange-600"
+                className="img_wrap hover:border-1 hover:border-orange-600"
                 key={i}
               >
-                <img src={image} alt="img" />
+                <img src={image} alt="img" className="p-1" />
               </div>
             );
           })}
@@ -52,18 +52,20 @@ const ProductImageMagnifier = () => {
             {...{
               smallImage: {
                 alt: "img",
-                isFluidWidth: true,
+                width: 500,
+                height: 500,
+                // isFluidWidth: true,
                 src: img,
               },
               largeImage: {
                 alt: "img",
                 src: img,
-                width: 850,
-                height: 850,
+                width: 980,
+                height: 980,
               },
               enlargedImageContainerDimensions: {
-                width: "150%",
-                height: "150%",
+                width: "155%",
+                height: "120%",
               },
             }}
           />

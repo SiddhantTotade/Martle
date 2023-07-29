@@ -7,7 +7,7 @@
 
 .left {
   display: flex;
-  height: 50vh;
+  gap: 10px;
 }
 
 .left_1 {
@@ -31,13 +31,12 @@
 
 .left_2 {
   width: 50%;
-  height: 10vh;
-  border: 2px solid red;
+  height: 50%;
 }
 
 .left_2 img {
-  /* width: 500px; */
-  /* height: 100%; */
+  width: 500px;
+  height: 100%;
   object-fit: contain;
 }
 
