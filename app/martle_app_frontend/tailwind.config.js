@@ -33,6 +33,7 @@ module.exports = {
       Card: "280px",
       RandomCard: "30%",
       CutLine: "45px",
+      ProductDetail: "50%",
     },
     screens: {
       md: { max: "1368px" },

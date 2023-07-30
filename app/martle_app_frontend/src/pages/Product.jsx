@@ -34,6 +34,7 @@ const Product = () => {
           margin: "80px auto",
           gap: "10px",
           height: "80vh",
+          position: "relative",
         }}
       >
         <ProductImageMagnifier product_images={product_images} />

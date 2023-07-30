@@ -38,47 +38,49 @@ const ProductImageMagnifier = (props) => {
   };
 
   return (
-    <div className="container fixed border-2 border-rose-500">
-      <div className="left">
-        <div className="left_1">
-          {props.product_images?.map((image, i) => {
-            return (
-              <div
-                ref={addRef}
-                onMouseOver={() => handleHover(image.product_img_file, i)}
-                className="img_wrap"
-                key={i}
-              >
-                <img
-                  src={`http://127.0.0.1:8000` + image.product_img_file}
-                  alt="img"
-                  className="p-1"
-                />
-              </div>
-            );
-          })}
-        </div>
-        <div className="left_2">
-          <ReactImageMagnify
-            {...{
-              smallImage: {
-                alt: "img",
-                src: `http://127.0.0.1:8000/${img}`,
-                width: 500,
-                height: 500,
-              },
-              largeImage: {
-                alt: "img",
-                src: `http://127.0.0.1:8000/${img}`,
-                width: 980,
-                height: 980,
-              },
-              enlargedImageContainerDimensions: {
-                width: "150%",
-                height: "100%",
-              },
-            }}
-          />
+    <div className="relative">
+      <div className="container fixed border-2 border-rose-500">
+        <div className="left">
+          <div className="left_1">
+            {props.product_images?.map((image, i) => {
+              return (
+                <div
+                  ref={addRef}
+                  onMouseOver={() => handleHover(image.product_img_file, i)}
+                  className="img_wrap"
+                  key={i}
+                >
+                  <img
+                    src={`http://127.0.0.1:8000` + image.product_img_file}
+                    alt="img"
+                    className="p-1"
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <div className="left_2">
+            <ReactImageMagnify
+              {...{
+                smallImage: {
+                  alt: "img",
+                  src: `http://127.0.0.1:8000/${img}`,
+                  width: 500,
+                  height: 500,
+                },
+                largeImage: {
+                  alt: "img",
+                  src: `http://127.0.0.1:8000/${img}`,
+                  width: 750,
+                  height: 750,
+                },
+                enlargedImageContainerDimensions: {
+                  width: "150%",
+                  height: "100%",
+                },
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>
