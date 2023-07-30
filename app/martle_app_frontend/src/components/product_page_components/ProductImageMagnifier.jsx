@@ -1,12 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactImageMagnify from "react-image-magnify";
-import { styled } from "@mui/material/styles";
-import { Box } from "@mui/material";
-import i1 from "../product_page_components/wristwatch.jpg";
-import i2 from "../product_page_components/asus.png";
 import "./styles/productImageMagnifier.css";
-
-const images = [i1, i2];
 
 const ProductImageMagnifier = (props) => {
   const [img, setImg] = useState("");
@@ -30,7 +24,7 @@ const ProductImageMagnifier = (props) => {
     setImg(image);
     // imgRef.current[i].classList.add("active");
 
-    for (var j = 0; j < images.length; j++) {
+    for (var j = 0; j < img.length; j++) {
       if (i !== j) {
         // imgRef.current[j].classList.remove("active");
       }

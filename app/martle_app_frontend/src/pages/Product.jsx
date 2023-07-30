@@ -19,11 +19,12 @@ const Product = () => {
 
   const product_images = data ? data[0]?.product_images : [];
 
+  const productDetails = data ? data : [];
+
   useEffect(() => {
     setCurrSlug(window.location.pathname.replace("/api/product/", ""));
   }, []);
 
-  // console.log(data[0].product_images);
   return (
     <>
       <NavBar />
@@ -37,8 +38,11 @@ const Product = () => {
           position: "relative",
         }}
       >
-        <ProductImageMagnifier product_images={product_images} />
-        <ProductDetails />
+        <ProductImageMagnifier
+          isLoading={isLoading}
+          product_images={product_images}
+        />
+        <ProductDetails isLoading={isLoading} productDetails={productDetails} />
       </Box>
       <Footer />
     </>
