@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../components/base_components/NavBar";
 import Footer from "../components/base_components/Footer";
 import { Box } from "@mui/material";
 import ProductImageMagnifier from "../components/product_page_components/ProductImageMagnifier";
 import ProductDetails from "../components/product_page_components/ProductDetails";
+import { useGetSpecificProductAPIQuery } from "../services/productAPIs";
+import { getToken } from "../services/LocalStorageService";
 
 const Product = () => {
-  const currUrl = window.location.pathname.replace("/api/product/", "");
+  const { access_token } = getToken();
+
+  const [currSlug, setCurrSlug] = useState("");
+
+  const { data = [], isLoading } = useGetSpecificProductAPIQuery({
+    currSlug,
+    access_token,
+  });
+
+  const product_images = data ? data[0]?.product_images : [];
+
+  useEffect(() => {
+    setCurrSlug(window.location.pathname.replace("/api/product/", ""));
+  }, []);
+
+  // console.log(data[0].product_images);
   return (
     <>
       <NavBar />
@@ -19,7 +36,7 @@ const Product = () => {
           height: "80vh",
         }}
       >
-        <ProductImageMagnifier />
+        <ProductImageMagnifier product_images={product_images} />
         <ProductDetails />
       </Box>
       <Footer />

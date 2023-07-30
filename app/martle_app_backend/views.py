@@ -157,7 +157,6 @@ def SetImageView(request):
 
 
 class ProductView(APIView):
-
     def get_all_products(self) -> QuerySet:
         return Product.objects.select_related(
             'product_category').all().order_by("?")

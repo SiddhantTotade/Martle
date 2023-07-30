@@ -7,7 +7,7 @@ export const productAPI = createApi({
     getSpecificProductAPI: builder.query({
       query: (data) => {
         return {
-          url: `${data.slug}/`,
+          url: `${data.currSlug}`,
           method: "GET",
           headers: {
             authorization: `Bearer ${data.access_token}`,

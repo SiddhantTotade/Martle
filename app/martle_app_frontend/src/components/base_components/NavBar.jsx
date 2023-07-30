@@ -26,7 +26,6 @@ const NavBar = (props) => {
 
   useEffect(() => {
     const onScroll = () => setScroll(window.pageYOffset === 0);
-    // clean up code
     window.removeEventListener("scroll", onScroll);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -46,7 +45,7 @@ const NavBar = (props) => {
     <div className="border-white bg-slate-900 fixed sm:relative w-NavBar top-0 z-50 md:text-sm">
       <div className="flex items-center justify-evenly text-white h-16 sm:h-12">
         <div
-          className={`fixed -left-3 sm:hidden hover:cursor-pointer top-28 p-2 z-50 bg-white border-2 border-white rounded-3xl hover:translate-x-4 duration-300 ${
+          className={`fixed -left-3 sm:hidden hover:cursor-pointer top-28 p-2 z-50 bg-white border-2 border-rose-600 rounded-3xl hover:translate-x-4 duration-300 ${
             checkLocation() ? "hidden" : "block"
           }`}
         >
