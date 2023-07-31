@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactImageMagnify from "react-image-magnify";
+import ProductAddPurchase from "./ProductAddPurchase";
 import "./styles/productImageMagnifier.css";
 
 const ProductImageMagnifier = (props) => {
@@ -76,6 +77,7 @@ const ProductImageMagnifier = (props) => {
             />
           </div>
         </div>
+        <ProductAddPurchase />
       </div>
     </div>
   );
