@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/base_components/NavBar";
 import Footer from "../components/base_components/Footer";
-import { Box, Paper } from "@mui/material";
 import ProductImageMagnifier from "../components/product_page_components/ProductImageMagnifier";
 import ProductDetails from "../components/product_page_components/ProductDetails";
 import { useGetSpecificProductAPIQuery } from "../services/productAPIs";
 import { getToken } from "../services/LocalStorageService";
-import Offers from "../components/product_page_components/Offers";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import TechnicalDetails from "../components/product_page_components/TechnicalDetails";
 
 const Product = () => {
   const { access_token } = getToken();
@@ -43,31 +42,19 @@ const Product = () => {
         spacing={0}
       >
         <Grid2 xs={5}>
-          {/* <Box
-            sx={{
-              background: "pink",
-              height: "20vh",
-              border: "2px solid black",
-            }}
-          ></Box> */}
           <ProductImageMagnifier
             isLoading={isLoading}
             product_images={product_images}
           />
         </Grid2>
         <Grid2 xs={7}>
-          {/* <Box
-            sx={{
-              background: "pink",
-              height: "20vh",
-              border: "2px solid black",
-            }}
-          ></Box> */}
           <ProductDetails
             isLoading={isLoading}
             productDetails={productDetails}
           />
-          <Offers />
+          <TechnicalDetails
+            product_description={data[0]?.product_description}
+          />
         </Grid2>
       </Grid2>
       <Footer />

@@ -1,6 +1,6 @@
 import { Button, Link, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import StarIcon from "@mui/icons-material/Star";
@@ -20,7 +20,6 @@ import {
 
 const responsive = {
   superLargeDesktop: {
-    // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 3000 },
     items: 5,
   },
@@ -360,7 +359,7 @@ const TopDealsCarousel = (props) => {
           marginLeft: "10px",
           marginBottom: "5px",
           letterSpacing: "2px",
-          fontFamily:"sans-serif",
+          fontFamily: "sans-serif",
         }}
       >
         Top Deals

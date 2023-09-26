@@ -1,8 +1,10 @@
+import React, { useState } from "react";
 import { Box, Collapse, Container, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import Offers from "./Offers";
-import React, { useState } from "react";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 const ProductDetails = (props) => {
   const productDetailsList = props
@@ -44,7 +46,7 @@ const ProductDetails = (props) => {
     >
       {props.productDetails.map((row, i) => {
         return (
-          <Container key={i} sx={{ gap: "5px", display: "grid" }}>
+          <Container key={i} sx={{ gap: "7px", display: "grid" }}>
             <Box sx={{ fontSize: "20px", fontWeight: "medium" }}>
               {row.product_title}
             </Box>
@@ -113,6 +115,16 @@ const ProductDetails = (props) => {
                 on this product
               </Typography>
             </Box>
+            <Box sx={{ gap: "7px", display: "grid" }}>
+              <Grid2 sx={{ display: "flex", gap: "10px" }}>
+                <LocalOfferIcon sx={{ color: "#fa8423" }} />
+                <Typography fontSize={15} fontWeight={"bold"}>
+                  Offers
+                </Typography>
+              </Grid2>
+              <Offers />
+            </Box>
+            <br />
             <Box>
               <Typography fontSize={15} fontWeight={"bold"}>
                 About this item
