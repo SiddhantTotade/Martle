@@ -16,7 +16,7 @@ const ProductAddPurchase = () => {
       <Button
         sx={{
           height: "7vh",
-          width: "100%",
+          width: "80%",
           background: "#fc3838",
           color: "white",
           gap: "10px",
@@ -29,7 +29,7 @@ const ProductAddPurchase = () => {
       <Button
         sx={{
           height: "7vh",
-          width: "100%",
+          width: "80%",
           background: "#348ee3",
           color: "white",
           gap: "10px",

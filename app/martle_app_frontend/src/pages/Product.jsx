@@ -35,12 +35,9 @@ const Product = () => {
         gridTemplateColumns={3}
         sx={{
           display: "flex",
-          border: "2px solid red",
-          justifyContent: "space-evenly",
+          justifyContent: "space-between",
           width: "90%",
           margin: "80px auto",
-          gap: "10px",
-          height: "80vh",
           position: "relative",
         }}
         spacing={0}
@@ -58,18 +55,18 @@ const Product = () => {
             product_images={product_images}
           />
         </Grid2>
-        <Grid2 xs={6}>
-          <Box
+        <Grid2 xs={7}>
+          {/* <Box
             sx={{
               background: "pink",
               height: "20vh",
               border: "2px solid black",
             }}
-          ></Box>
-          {/* <ProductDetails
+          ></Box> */}
+          <ProductDetails
             isLoading={isLoading}
             productDetails={productDetails}
-          /> */}
+          />
           <Offers />
         </Grid2>
       </Grid2>

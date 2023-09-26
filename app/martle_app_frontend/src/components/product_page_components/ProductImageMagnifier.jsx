@@ -34,7 +34,7 @@ const ProductImageMagnifier = (props) => {
 
   return (
     <div className="relative">
-      <div className="container fixed border-2 border-rose-500">
+      <div className="container">
         <div className="left">
           <div className="left_1">
             {props.product_images?.map((image, i) => {
@@ -75,9 +75,9 @@ const ProductImageMagnifier = (props) => {
                 },
               }}
             />
+            <ProductAddPurchase />
           </div>
         </div>
-        <ProductAddPurchase />
       </div>
     </div>
   );

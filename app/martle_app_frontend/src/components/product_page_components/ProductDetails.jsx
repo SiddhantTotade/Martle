@@ -39,10 +39,7 @@ const ProductDetails = (props) => {
   return (
     <Box
       sx={{
-        width: "55%",
-        border: "2px solid red",
-        right: 5,
-        position: "absolute",
+        width: "100%",
       }}
     >
       {props.productDetails.map((row, i) => {
