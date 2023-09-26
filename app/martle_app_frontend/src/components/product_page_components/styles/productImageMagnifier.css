@@ -1,9 +1,14 @@
+.relative {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+}
+
 .container {
   width: auto;
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat((2, 1fr));
+  grid-template-columns: repeat(1, 2fr);
 }
 
 .left {

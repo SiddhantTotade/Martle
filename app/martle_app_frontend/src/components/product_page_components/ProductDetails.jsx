@@ -1,6 +1,7 @@
 import { Box, Collapse, Container, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import Offers from "./Offers";
 import React, { useState } from "react";
 
 const ProductDetails = (props) => {
