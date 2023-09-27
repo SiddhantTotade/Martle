@@ -1,13 +1,14 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import React from "react";
 import RatingBar from "../base_components/RatingBar";
 import StarIcon from "@mui/icons-material/Star";
+import Reviews from "./Reviews";
 
 const RatingAndReviews = () => {
   return (
     <Container>
       <Typography fontWeight={"bold"} fontSize={15}>
-        Ratings and Reviews
+        Ratings & Reviews
       </Typography>
       <Box
         sx={{
@@ -128,6 +129,16 @@ const RatingAndReviews = () => {
           </Box>
         </Box>
       </Box>
+      <Container>
+        <Box>
+          <Button sx={{ textTransform: "none" }} variant="outlined">
+            Rate Product
+          </Button>
+        </Box>
+      </Container>
+      <Container>
+        <Reviews />
+      </Container>
     </Container>
   );
 };
