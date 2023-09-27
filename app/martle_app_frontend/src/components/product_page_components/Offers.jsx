@@ -13,6 +13,7 @@ const Offers = () => {
           display: "grid",
           padding: "10px",
           cursor: "pointer",
+          ":hover": { background: "#FCFFFF" },
         }}
         elevation={4}
       >
@@ -38,6 +39,7 @@ const Offers = () => {
           display: "grid",
           padding: "10px",
           cursor: "pointer",
+          ":hover": { background: "#FCFFFF" },
         }}
         elevation={4}
       >
@@ -63,6 +65,7 @@ const Offers = () => {
           display: "grid",
           padding: "10px",
           cursor: "pointer",
+          ":hover": { background: "#FCFFFF" },
         }}
         elevation={4}
       >

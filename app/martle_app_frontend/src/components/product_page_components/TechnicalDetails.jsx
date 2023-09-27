@@ -1,39 +1,34 @@
 import React, { useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import { Collapse, Container, Typography } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+
+import {
+  Container,
+  Typography,
+  TableCell,
+  TableBody,
+  TablePagination,
+  Table,
+  TableContainer,
+  TableRow,
+} from "@mui/material";
+
+const rowsPerPageOptions = [5, 10, 25];
 
 const TechnicalDetails = (props) => {
   const technicalDetails = props.product_description
     ? JSON.parse(props.product_description)
     : {};
 
-  const { technicalDetailsPreShow, technicalDetailsPostShow } = Object.entries(
-    technicalDetails
-  ).reduce(
-    (acc, [key, value], index) => {
-      const target =
-        index < 5 ? "technicalDetailsPreShow" : "technicalDetailsPostShow";
-      acc[target][key] = value;
-      return acc;
-    },
-    { technicalDetailsPreShow: {}, technicalDetailsPostShow: {} }
-  );
+  const [page, setPage] = useState(0);
 
-  const dataLength = Object.keys(technicalDetails).length;
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const [expanded, setExpanded] = React.useState(false);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-  const [showMore, setShowMore] = useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-    setShowMore(!showMore);
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   return (
@@ -41,85 +36,39 @@ const TechnicalDetails = (props) => {
       <Typography fontSize={15} fontWeight={"bold"}>
         Technical Details
       </Typography>
-      <TableContainer>
-        <Table aria-label="simple table">
-          <TableBody>
-            {Object.entries(technicalDetailsPreShow).map(([key, val]) => (
-              <TableRow>
-                <TableCell
-                  sx={{ width: "20%", padding: "5px" }}
-                  style={{ height: "10px" }}
-                  align="left"
-                  component="th"
-                  scope="row"
-                >
-                  {key}
-                </TableCell>
-                <TableCell
-                  sx={{ width: "20%", padding: "5px" }}
-                  style={{ height: "10px" }}
-                  align="left"
-                  component="th"
-                  scope="row"
-                >
-                  {val}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          {dataLength > 5 ? (
-            showMore ? (
-              ""
-            ) : (
-              <div
-                className="text-sm cursor-pointer text-blue-700 mt-2"
-                onClick={() => handleExpandClick()}
-              >
-                Show more
-                <ExpandMoreIcon />
-              </div>
-            )
-          ) : (
-            ""
-          )}
-          <TableBody>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-              {Object.entries(technicalDetailsPostShow).map(([key, val]) => (
+      <Container>
+        <TableContainer>
+          <Table>
+            <TableBody>
+              {Object.entries(technicalDetails).map(([key, val]) => (
                 <TableRow key={key}>
                   <TableCell
-                    sx={{ width: "20%", padding: "5px" }}
-                    style={{ height: "10px" }}
-                    align="left"
-                    component="th"
-                    scope="row"
+                    sx={{
+                      padding: "7px",
+                      fontWeight: "bold",
+                      fontSize: "13px",
+                    }}
                   >
                     {key}
                   </TableCell>
-                  <TableCell
-                    sx={{ width: "20%", padding: "5px" }}
-                    align="left"
-                    component="th"
-                    scope="row"
-                  >
+                  <TableCell sx={{ padding: "7px", fontSize: "13px" }}>
                     {val}
                   </TableCell>
                 </TableRow>
               ))}
-              {showMore ? (
-                <div
-                  className="text-sm cursor-pointer text-blue-700 mt-2"
-                  onClick={() => handleExpandClick()}
-                >
-                  Show less
-                  <ExpandLessIcon />
-                </div>
-              ) : (
-                ""
-              )}
-            </Collapse>
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={rowsPerPageOptions}
+          component="div"
+          count={Object.entries(technicalDetails).length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Container>
     </Container>
   );
 };

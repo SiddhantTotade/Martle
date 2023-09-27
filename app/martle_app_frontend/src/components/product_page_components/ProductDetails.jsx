@@ -143,7 +143,7 @@ const ProductDetails = (props) => {
                   ""
                 ) : (
                   <div
-                    className="text-sm cursor-pointer text-blue-700 mt-2"
+                    className="text-sm w-ShowMore cursor-pointer text-blue-700 mt-2"
                     onClick={() => handleExpandClick()}
                   >
                     Show more
