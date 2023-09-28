@@ -242,13 +242,13 @@ class CartSerializer(serializers.ModelSerializer):
 class RatingAndReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = RatingAndReview
-        fields = ['product', 'date', 'content', 'rating']
+        fields = ['user', 'product', 'date', 'content', 'rating']
 
     def create(self, validated_data):
-        comment = RatingAndReview.objects.create(
-            product=validated_data['product'], date=validated_data['date'], content=validated_data['content'])
-        comment.save()
-        return comment
+        rating_and_review = RatingAndReview.objects.create(user=validated_data['user'],
+            product=validated_data['product'], date=validated_data['date'], content=validated_data['content'], rating=validated_data['rating'])
+        rating_and_review.save()
+        return rating_and_review
 
 
 # --------- Order Placed Serializer

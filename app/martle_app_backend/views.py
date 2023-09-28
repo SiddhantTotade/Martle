@@ -348,10 +348,10 @@ class CartView(APIView):
     def post(self, request):
         try:
             cart_json_data = JSONParser().parse(request)
-            cart_serilized_data = CartSerializer(
+            cart_serialized_data = CartSerializer(
                 data=cart_json_data)
-            if cart_serilized_data.is_valid():
-                cart_serilized_data.save()
+            if cart_serialized_data.is_valid():
+                cart_serialized_data.save()
             return Response({"msg": "Added to Cart"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -365,12 +365,23 @@ class CartView(APIView):
 
 
 class RatingsAndReviewsView(APIView):
-    def get(self,request,pk):
+    def get(self, request, pk):
         try:
             rating_and_review = RatingAndReview.objects.filter(product=pk)
             rating_and_review_serialized_data = RatingAndReviewSerializer(rating_and_review, many=True)
-            print(rating_and_review_serialized_data.data)
             return Response({"data":rating_and_review_serialized_data.data}, status=status.HTTP_200_OK)
              
         except Exception as e:
             return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    def post(self, request, pk):
+        try:
+            rating_and_review_json_data = JSONParser().parse(request)
+            rating_and_review_serialized_data = RatingAndReviewSerializer(
+                data=rating_and_review_json_data)
+            # print(rating_and_review_serialized_data.is_valid())
+            if rating_and_review_serialized_data.is_valid():
+                rating_and_review_serialized_data.save()
+            return Response({"msg": "Rating submitted"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"msg": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

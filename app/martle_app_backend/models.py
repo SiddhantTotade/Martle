@@ -230,7 +230,7 @@ class Favorite(models.Model):
 class RatingAndReview(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(auto_now_add=False)
     content = models.TextField()
     rating = models.DecimalField(null=True,blank=True,max_digits=5,decimal_places=1)
 
