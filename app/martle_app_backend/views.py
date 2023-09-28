@@ -362,3 +362,15 @@ class CartView(APIView):
             return Response({"msg": "Item Removed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
             return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class RatingsAndReviewsView(APIView):
+    def get(self,request,pk):
+        try:
+            rating_and_review = RatingAndReview.objects.filter(product=pk)
+            rating_and_review_serialized_data = RatingAndReviewSerializer(rating_and_review, many=True)
+            print(rating_and_review_serialized_data.data)
+            return Response({"data":rating_and_review_serialized_data.data}, status=status.HTTP_200_OK)
+             
+        except Exception as e:
+            return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

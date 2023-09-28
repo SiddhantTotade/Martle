@@ -46,4 +46,8 @@ urlpatterns = [
          CartView.as_view(), name="get_and_create_favorite"),
     path("product/cart/<int:pk>",
          CartView.as_view(), name="delete_favorite"),
+
+    # ---------> Add and Delete Cart Items
+    path("product/ratingandreview/<int:pk>",
+         RatingsAndReviewsView.as_view(), name="get_and_create_rating&review"),
 ]

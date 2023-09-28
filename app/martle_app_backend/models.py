@@ -226,12 +226,16 @@ class Favorite(models.Model):
         return str(self.product)
 
 
-# --------- Comment Model
-class Comment(models.Model):
+# --------- Ratings and Reviews Model
+class RatingAndReview(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     content = models.TextField()
+    rating = models.DecimalField(null=True,blank=True,max_digits=5,decimal_places=1)
 
     def __str__(self):
-        return self.user.username
+        return self.user.email
+    
+
+
