@@ -242,7 +242,18 @@ class CartSerializer(serializers.ModelSerializer):
 class RatingAndReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = RatingAndReview
+        depth = 1
         fields = ['user', 'product', 'date', 'content', 'rating']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        
+        representation.pop("product")
+        representation.pop("user")
+        
+        representation["user_name"] = instance.user.name
+        
+        return representation
 
     def create(self, validated_data):
         rating_and_review = RatingAndReview.objects.create(user=validated_data['user'],
@@ -270,7 +281,8 @@ class SpecialProductSerializer(serializers.ModelSerializer):
 class WeddingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        depth = 1
+        depth = 2
+        exclude = ['product']
         fields = ['product_gender', 'product_cover_image', 'product_slug']
 
 
