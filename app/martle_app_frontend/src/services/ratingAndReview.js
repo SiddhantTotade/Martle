@@ -18,10 +18,11 @@ export const ratingAndReviewAPI = createApi({
     postReviewsAPI: builder.mutation({
       query: (data) => {
         return {
-          url: `ratingandreview/${data.product_id}`,
+          url: `ratingandreview/${data.reviewData.product}/`,
           method: "POST",
+          body: data.reviewData,
           headers: {
-            authorization: `Bearer ${data.access}`,
+            authorization: `Bearer ${data.access_token}`,
           },
         };
       },

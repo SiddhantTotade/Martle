@@ -21,10 +21,14 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? "s" : ""}, ${labels[value]}`;
 }
 
-const ProductRating = () => {
+const ProductRating = (props) => {
   const [value, setValue] = React.useState(0.5);
 
   const [hover, setHover] = React.useState(-1);
+
+  const handleRating = () => {
+    props.handleRating(value);
+  };
 
   return (
     <Box
@@ -35,6 +39,7 @@ const ProductRating = () => {
       }}
     >
       <Rating
+        onClick={handleRating(value)}
         name="hover-feedback"
         value={value}
         precision={0.5}

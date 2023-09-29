@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -11,6 +12,7 @@ import { styled } from "@mui/material";
 import ProductRating from "./Rating";
 import { getToken } from "../../services/LocalStorageService";
 import { usePostReviewsAPIMutation } from "../../services/ratingAndReview";
+import { useGetLoggedInUserQuery } from "../../services/userAuthAPI";
 
 const buttonStyle = {
   textTransform: "none",
@@ -76,9 +78,44 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const AddReviewRatingModal = (props) => {
   const { access_token } = getToken();
 
-//   const {data = [],isLoading} = usePostReviewsAPIMutation({"access_token":access_token,"product_id":props.product_id})
+  const user = useGetLoggedInUserQuery(access_token).data;
+
+  const [postReview, responsePostReview] = usePostReviewsAPIMutation();
+
+  const [review, setReview] = useState({
+    user: null,
+    product: null,
+    date: "",
+    content: "",
+    rating: "",
+  });
 
   const [open, setOpen] = React.useState(false);
+
+  const handleRating = (data) => {
+    review.rating = data;
+  };
+
+  const handleData = (event) => {
+    const newData = { ...review };
+    newData[event.target.id] = event.target.value;
+    setReview(newData);
+  };
+
+  const handleSubmit = () => {
+    const reviewData = {
+      user: user.id,
+      product: props.product_id,
+      date: new Date().toISOString().slice(0, 10),
+      content: review.content,
+      rating: review.rating,
+    };
+
+    postReview({
+      access_token: access_token,
+      reviewData: reviewData,
+    });
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -110,17 +147,21 @@ const AddReviewRatingModal = (props) => {
           }}
         >
           <StyledTextarea
+            id="content"
+            onChange={(e) => {
+              handleData(e);
+            }}
             aria-label="minimum height"
             minRows={2}
             placeholder="Write a review"
           />
-          <ProductRating />
+          <ProductRating handleRating={handleRating} />
         </DialogContent>
         <DialogActions>
           <Button sx={buttonStyle} variant="outlined" onClick={handleClose}>
             Cancel
           </Button>
-          <Button sx={buttonStyle} variant="outlined" onClick={handleClose}>
+          <Button sx={buttonStyle} variant="outlined" onClick={handleSubmit}>
             Post
           </Button>
         </DialogActions>

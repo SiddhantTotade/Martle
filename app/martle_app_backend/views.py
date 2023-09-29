@@ -376,12 +376,14 @@ class RatingsAndReviewsView(APIView):
     
     def post(self, request, pk):
         try:
-            rating_and_review_json_data = JSONParser().parse(request)
+            jsonData = JSONParser().parse(request)
             rating_and_review_serialized_data = RatingAndReviewSerializer(
-                data=rating_and_review_json_data)
-            # print(rating_and_review_serialized_data.is_valid())
+                data=jsonData)
+            print(rating_and_review_serialized_data)
+            
             if rating_and_review_serialized_data.is_valid():
                 rating_and_review_serialized_data.save()
+            
             return Response({"msg": "Rating submitted"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"msg": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
