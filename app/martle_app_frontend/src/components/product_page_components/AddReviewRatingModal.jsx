@@ -115,6 +115,8 @@ const AddReviewRatingModal = (props) => {
       access_token: access_token,
       reviewData: reviewData,
     });
+
+    handleClose();
   };
 
   const handleClickOpen = () => {

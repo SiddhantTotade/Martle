@@ -4,9 +4,12 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import StarIcon from "@mui/icons-material/Star";
 import { getToken } from "../../services/LocalStorageService";
 import { useGetReviewsAPIQuery } from "../../services/ratingAndReview";
+import { useGetLoggedInUserQuery } from "../../services/userAuthAPI";
 
 const Reviews = (props) => {
   const { access_token } = getToken();
+
+  const user = useGetLoggedInUserQuery(access_token).data;
 
   const { data = [], isLoading } = useGetReviewsAPIQuery({
     access_token: access_token,
@@ -44,7 +47,7 @@ const Reviews = (props) => {
                   <AccountCircleIcon
                     sx={{ color: "#B0B0B0", fontSize: "40px" }}
                   />
-                  <Typography fontSize={14}>{row.user_name}</Typography>
+                  <Typography fontSize={14}>{user.name}</Typography>
                 </Box>
                 <Box
                   sx={{
