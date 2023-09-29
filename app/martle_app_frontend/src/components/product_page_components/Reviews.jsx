@@ -8,6 +8,7 @@ import { useGetLoggedInUserQuery } from "../../services/userAuthAPI";
 import getRatingColor from "../../shared/Rating and Review/RatingColors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import RecipeReviewCard from "../Collapse";
 
 const Reviews = (props) => {
   const { access_token } = getToken();
@@ -118,7 +119,7 @@ const Reviews = (props) => {
                   fontSize={13}
                 >
                   {row.content.length < 350 ? (
-                    showMore ? (
+                    !showMore ? (
                       row.content
                     ) : (
                       ""
@@ -141,13 +142,17 @@ const Reviews = (props) => {
                   )}
                 </Typography>
                 {row.content.length >= 350 ? (
-                  <div
-                    className="text-sm w-ShowMore cursor-pointer text-blue-700 mt-2"
-                    onClick={() => handleExpandClick()}
-                  >
-                    Show more
-                    <ExpandMoreIcon />
-                  </div>
+                  showMore ? (
+                    ""
+                  ) : (
+                    <div
+                      className="text-sm w-ShowMore cursor-pointer text-blue-700 mt-2"
+                      onClick={() => handleExpandClick()}
+                    >
+                      Show more
+                      <ExpandMoreIcon />
+                    </div>
+                  )
                 ) : (
                   ""
                 )}
@@ -155,6 +160,7 @@ const Reviews = (props) => {
             </Box>
           ))
         : []}
+      <RecipeReviewCard />
     </Box>
   );
 };
