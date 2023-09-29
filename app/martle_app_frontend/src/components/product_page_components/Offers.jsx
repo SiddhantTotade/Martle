@@ -13,7 +13,7 @@ const Offers = () => {
           display: "grid",
           padding: "10px",
           cursor: "pointer",
-          ":hover": { background: "#FCFFFF" },
+          ":hover": { background: "#e1f5fe" },
         }}
         elevation={4}
       >
@@ -39,7 +39,7 @@ const Offers = () => {
           display: "grid",
           padding: "10px",
           cursor: "pointer",
-          ":hover": { background: "#FCFFFF" },
+          ":hover": { background: "#e1f5fe" },
         }}
         elevation={4}
       >
@@ -65,7 +65,7 @@ const Offers = () => {
           display: "grid",
           padding: "10px",
           cursor: "pointer",
-          ":hover": { background: "#FCFFFF" },
+          ":hover": { background: "#e1f5fe" },
         }}
         elevation={4}
       >

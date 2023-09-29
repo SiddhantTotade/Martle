@@ -26,7 +26,7 @@ const RatingAndReviews = (props) => {
               alignItems: "center",
             }}
           >
-            <RatingBar width={"100%"} value={90} color="#57e32c" />
+            <RatingBar width={"100%"} value={90} color="#0277bd" />
             <Box
               sx={{
                 width: "100%",
@@ -36,8 +36,10 @@ const RatingAndReviews = (props) => {
                 gap: "1px",
               }}
             >
-              <Typography fontSize={15}>5</Typography>
-              <StarIcon sx={{ fontSize: "12px" }} />
+              <Typography sx={{ color: "#0277bd" }} fontSize={15}>
+                5
+              </Typography>
+              <StarIcon sx={{ color: "#0277bd", fontSize: "12px" }} />
             </Box>
           </Box>
           <Box
@@ -48,7 +50,7 @@ const RatingAndReviews = (props) => {
               alignItems: "center",
             }}
           >
-            <RatingBar width={"100%"} value={90} color="#b7dd29" />
+            <RatingBar width={"100%"} value={90} color="#0288d1" />
             <Box
               sx={{
                 width: "100%",
@@ -58,8 +60,10 @@ const RatingAndReviews = (props) => {
                 gap: "1px",
               }}
             >
-              <Typography fontSize={15}>4</Typography>
-              <StarIcon sx={{ fontSize: "12px" }} />
+              <Typography sx={{ color: "#0288d1" }} fontSize={15}>
+                4
+              </Typography>
+              <StarIcon sx={{ color: "#0288d1", fontSize: "12px" }} />
             </Box>
           </Box>
           <Box
@@ -70,7 +74,7 @@ const RatingAndReviews = (props) => {
               alignItems: "center",
             }}
           >
-            <RatingBar width={"100%"} value={90} color="#ffe234" />
+            <RatingBar width={"100%"} value={90} color="#039be5" />
             <Box
               sx={{
                 width: "100%",
@@ -80,8 +84,10 @@ const RatingAndReviews = (props) => {
                 gap: "1px",
               }}
             >
-              <Typography fontSize={15}>3</Typography>
-              <StarIcon sx={{ fontSize: "12px" }} />
+              <Typography sx={{ color: "#039be5" }} fontSize={15}>
+                3
+              </Typography>
+              <StarIcon sx={{ color: "#039be5", fontSize: "12px" }} />
             </Box>
           </Box>
           <Box
@@ -92,7 +98,7 @@ const RatingAndReviews = (props) => {
               alignItems: "center",
             }}
           >
-            <RatingBar width={"100%"} value={90} color="#ffa534" />
+            <RatingBar width={"100%"} value={90} color="#03a9f4" />
             <Box
               sx={{
                 width: "100%",
@@ -102,8 +108,10 @@ const RatingAndReviews = (props) => {
                 gap: "1px",
               }}
             >
-              <Typography fontSize={15}>2</Typography>
-              <StarIcon sx={{ fontSize: "12px" }} />
+              <Typography sx={{ color: "#03a9f4" }} fontSize={15}>
+                2
+              </Typography>
+              <StarIcon sx={{ color: "#03a9f4", fontSize: "12px" }} />
             </Box>
           </Box>
           <Box
@@ -114,7 +122,7 @@ const RatingAndReviews = (props) => {
               alignItems: "center",
             }}
           >
-            <RatingBar width={"100%"} value={90} color="#ff4545" />
+            <RatingBar width={"100%"} value={90} color="#29b6f6" />
             <Box
               sx={{
                 width: "100%",
@@ -124,8 +132,10 @@ const RatingAndReviews = (props) => {
                 gap: "1px",
               }}
             >
-              <Typography fontSize={15}>1</Typography>
-              <StarIcon sx={{ fontSize: "12px" }} />
+              <Typography sx={{ color: "#29b6f6" }} fontSize={15}>
+                1
+              </Typography>
+              <StarIcon sx={{ color: "#29b6f6", fontSize: "12px" }} />
             </Box>
           </Box>
         </Box>
