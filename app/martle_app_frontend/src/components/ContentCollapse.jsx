@@ -20,13 +20,13 @@ const ContentCollapse = ({ data, handleRatingReview }) => {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-    handleRatingReview(!expanded);
+    // handleRatingReview(!expanded);
   };
 
   return (
     <Box>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <Typography fontSize={13}>{data}</Typography>
+        {data}
       </Collapse>
       <ExpandMore
         expand={expanded}

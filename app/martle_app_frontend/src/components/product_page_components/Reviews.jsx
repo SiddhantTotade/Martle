@@ -112,7 +112,11 @@ const Reviews = (props) => {
                 {row.content.length >= 350 ? (
                   <ContentCollapse
                     handleRatingReview={handleExpandClick}
-                    data={row.content.substring(350)}
+                    data={
+                      <Typography fontSize={13}>
+                        {row.content.substring(350)}
+                      </Typography>
+                    }
                   />
                 ) : (
                   ""
