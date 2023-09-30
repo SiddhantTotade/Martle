@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Collapse, Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import StarIcon from "@mui/icons-material/Star";
@@ -6,9 +6,8 @@ import { getToken } from "../../services/LocalStorageService";
 import { useGetReviewsAPIQuery } from "../../services/ratingAndReview";
 import { useGetLoggedInUserQuery } from "../../services/userAuthAPI";
 import getRatingColor from "../../shared/Rating and Review/RatingColors";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import RecipeReviewCard from "../Collapse";
+
+import ContentCollapse from "../ContentCollapse";
 
 const Reviews = (props) => {
   const { access_token } = getToken();
@@ -22,11 +21,8 @@ const Reviews = (props) => {
 
   const [expanded, setExpanded] = React.useState(false);
 
-  const [showMore, setShowMore] = useState(false);
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
-    setShowMore(!showMore);
   };
 
   return (
@@ -106,53 +102,28 @@ const Reviews = (props) => {
                 </Box>
               </Box>
               <Box sx={{ width: "100%" }}>
-                <Typography
-                  sx={{
-                    width: "100%",
-                    lineHeight: "1.2em",
-                    height: "3.6em",
-                    overflow: "hidden",
-                    display: "-webkit-vertical",
-                    WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: "3",
-                  }}
-                  fontSize={13}
-                >
-                  {row.content.length < 350 ? (
-                    !showMore ? (
-                      row.content
-                    ) : (
-                      ""
-                    )
-                  ) : (
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
-                      {showMore ? row.content : ""}
-                      {showMore ? (
-                        <div
-                          className="text-sm cursor-pointer text-blue-700 mt-2"
-                          onClick={() => handleExpandClick()}
-                        >
-                          Show less
-                          <ExpandLessIcon />
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                    </Collapse>
-                  )}
-                </Typography>
                 {row.content.length >= 350 ? (
-                  showMore ? (
-                    ""
-                  ) : (
-                    <div
-                      className="text-sm w-ShowMore cursor-pointer text-blue-700 mt-2"
-                      onClick={() => handleExpandClick()}
-                    >
-                      Show more
-                      <ExpandMoreIcon />
+                  <Typography
+                    sx={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      display: "-webkit-box",
+                      "-webkit-line-clamp": "3",
+                      "-webkit-box-orient": "vertical",
+                    }}
+                    fontSize={13}
+                  >
+                    {!expanded ? row.content : ""}
+                  </Typography>
+                ) : (
+                  <Typography fontSize={13}>{row.content}</Typography>
+                )}
+                {row.content.length >= 350 ? (
+                  <Typography fontSize={13}>
+                    <div onClick={handleExpandClick}>
+                      <ContentCollapse data={row.content} />
                     </div>
-                  )
+                  </Typography>
                 ) : (
                   ""
                 )}
@@ -160,7 +131,6 @@ const Reviews = (props) => {
             </Box>
           ))
         : []}
-      <RecipeReviewCard />
     </Box>
   );
 };
