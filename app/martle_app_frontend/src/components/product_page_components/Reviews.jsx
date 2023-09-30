@@ -1,12 +1,14 @@
 import React from "react";
-import { Box, Collapse, Typography } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import StarIcon from "@mui/icons-material/Star";
+
 import { getToken } from "../../services/LocalStorageService";
 import { useGetReviewsAPIQuery } from "../../services/ratingAndReview";
 import { useGetLoggedInUserQuery } from "../../services/userAuthAPI";
-import getRatingColor from "../../shared/Rating and Review/RatingColors";
 
+import { Box, Typography } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import StarIcon from "@mui/icons-material/Star";
+
+import getRatingColor from "../../shared/Rating and Review/RatingColors";
 import ContentCollapse from "../ContentCollapse";
 
 const Reviews = (props) => {
@@ -14,12 +16,12 @@ const Reviews = (props) => {
 
   const user = useGetLoggedInUserQuery(access_token).data;
 
+  const [expanded, setExpanded] = React.useState(false);
+
   const { data = [], isLoading } = useGetReviewsAPIQuery({
     access_token: access_token,
     product_id: props.product_id,
   });
-
-  const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = (expand) => {
     setExpanded(expand);
@@ -102,18 +104,22 @@ const Reviews = (props) => {
                 </Box>
               </Box>
               <Box sx={{ width: "100%" }}>
+                <Typography fontSize={13}>
+                  {row.content.length >= 350
+                    ? row.content.substring(0, 350)
+                    : row.content}
+                </Typography>
                 {row.content.length >= 350 ? (
-                  <Typography
-                    sx={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      display: "-webkit-box",
-                      "-webkit-line-clamp": "3",
-                      "-webkit-box-orient": "vertical",
-                    }}
-                    fontSize={13}
-                  >
-                    {!expanded ? row.content : ""}
+                  <ContentCollapse
+                    handleRatingReview={handleExpandClick}
+                    data={row.content.substring(350)}
+                  />
+                ) : (
+                  ""
+                )}
+                {/* {row.content.length >= 350 ? (
+                  <Typography fontSize={13}>
+                    {!expanded ? row.content.slice(0, 350) : ""}
                   </Typography>
                 ) : (
                   <Typography fontSize={13}>{row.content}</Typography>
@@ -122,12 +128,12 @@ const Reviews = (props) => {
                   <Typography fontSize={13}>
                     <ContentCollapse
                       handleRatingReview={handleExpandClick}
-                      data={row.content}
+                      data={row.content.slice(350, row.content.length)}
                     />
                   </Typography>
                 ) : (
                   ""
-                )}
+                )} */}
               </Box>
             </Box>
           ))

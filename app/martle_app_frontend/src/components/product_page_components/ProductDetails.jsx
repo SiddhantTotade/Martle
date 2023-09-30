@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Box, Collapse, Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import Offers from "./Offers";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import ContentCollapse from "../ContentCollapse";
 
 const ProductDetails = (props) => {
   const productDetailsList = props
@@ -139,19 +139,8 @@ const ProductDetails = (props) => {
                     </ul>
                   );
                 })}
-                {showMore ? (
-                  ""
-                ) : (
-                  <div
-                    className="text-sm w-ShowMore cursor-pointer text-blue-700 mt-2"
-                    onClick={() => handleExpandClick()}
-                  >
-                    Show more
-                    <ExpandMoreIcon />
-                  </div>
-                )}
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                  {Object.values(
+                <ContentCollapse
+                  data={Object.values(
                     productDetailsPostShow ? productDetailsPostShow : ""
                   ).map((row, i) => {
                     return (
@@ -163,18 +152,7 @@ const ProductDetails = (props) => {
                       </ul>
                     );
                   })}
-                  {showMore ? (
-                    <div
-                      className="text-sm cursor-pointer text-blue-700 mt-2"
-                      onClick={() => handleExpandClick()}
-                    >
-                      Show less
-                      <ExpandLessIcon />
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </Collapse>
+                />
               </Container>
             </Box>
           </Container>

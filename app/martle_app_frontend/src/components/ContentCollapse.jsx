@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { styled } from "@mui/material/styles";
-import { Collapse, IconButton, Box } from "@mui/material";
+import { Collapse, IconButton, Box, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const ExpandMore = styled((props) => {
@@ -26,7 +26,7 @@ const ContentCollapse = ({ data, handleRatingReview }) => {
   return (
     <Box>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        {data}
+        <Typography fontSize={13}>{data}</Typography>
       </Collapse>
       <ExpandMore
         expand={expanded}
