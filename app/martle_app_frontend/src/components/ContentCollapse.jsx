@@ -15,11 +15,12 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const ContentCollapse = ({ data }) => {
+const ContentCollapse = ({ data, handleRatingReview }) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    handleRatingReview(!expanded);
   };
 
   return (

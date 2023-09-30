@@ -21,8 +21,8 @@ const Reviews = (props) => {
 
   const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const handleExpandClick = (expand) => {
+    setExpanded(expand);
   };
 
   return (
@@ -67,7 +67,7 @@ const Reviews = (props) => {
                   }}
                 >
                   <Box>
-                    <Typography fontSize={12} fontWeight={"bold"}>
+                    <Typography fontSize={12}>
                       {new Date(`${row.date}`).toLocaleDateString(undefined, {
                         year: "numeric",
                         month: "short",
@@ -120,9 +120,10 @@ const Reviews = (props) => {
                 )}
                 {row.content.length >= 350 ? (
                   <Typography fontSize={13}>
-                    <div onClick={handleExpandClick}>
-                      <ContentCollapse data={row.content} />
-                    </div>
+                    <ContentCollapse
+                      handleRatingReview={handleExpandClick}
+                      data={row.content}
+                    />
                   </Typography>
                 ) : (
                   ""
