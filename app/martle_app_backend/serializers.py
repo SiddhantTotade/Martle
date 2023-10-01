@@ -259,7 +259,7 @@ class QuestionAndAnswerSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def create(self,validated_data):
-        question_and_answer = QuestionAndAnswer.objects.create(product=validated_data['product'],question=validated_data['question'], answer=validated_data['answer'])
+        question_and_answer = QuestionAndAnswer.objects.create(user=validated_data["user"], product=validated_data['product'], date = validated_data['date'], question=validated_data['question'], answer=validated_data['answer'])
         question_and_answer.save()
         return question_and_answer
 
