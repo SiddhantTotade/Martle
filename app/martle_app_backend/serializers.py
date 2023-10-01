@@ -252,6 +252,18 @@ class RatingAndReviewSerializer(serializers.ModelSerializer):
         return rating_and_review
 
 
+# --------- Rating and Review Serializer
+class QuestionAndAnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuestionAndAnswer
+        field = "__all__"
+
+    def create(self,validated_data):
+        question_and_answer = QuestionAndAnswer.objects.create(product=validated_data['product'],question=validated_data['question'], answer=validated_data['answer'])
+        question_and_answer.save()
+        return question_and_answer
+
+
 # --------- Order Placed Serializer
 class OrderPlacedSerializer(serializers.ModelSerializer):
     class Meta:
@@ -281,4 +293,3 @@ class FavoriteProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id']
-#

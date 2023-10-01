@@ -8,6 +8,7 @@ import { getToken } from "../services/LocalStorageService";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import TechnicalDetails from "../components/product_page_components/TechnicalDetails";
 import RatingAndReviews from "../components/product_page_components/RatingAndReviews";
+import QuestionAndAnswer from "../components/product_page_components/QuestionAndAnswer";
 
 const Product = () => {
   const { access_token } = getToken();
@@ -56,6 +57,7 @@ const Product = () => {
           <TechnicalDetails
             product_description={data[0]?.product_description}
           />
+          <QuestionAndAnswer />
           <RatingAndReviews product_id={data[0]?.id} />
         </Grid2>
       </Grid2>
