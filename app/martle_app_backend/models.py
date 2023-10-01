@@ -236,6 +236,16 @@ class RatingAndReview(models.Model):
 
     def __str__(self):
         return self.user.email
+
+
+# --------- Question and Answer Model
+class QuestionAndAnswer(models.Model):
+    product= models.ForeignKey(Product, on_delete=models.CASCADE)
+    question = models.TextField()
+    answer = models.TextField()
+
+    def __str__(self) -> str:
+        return self.product
     
 
 

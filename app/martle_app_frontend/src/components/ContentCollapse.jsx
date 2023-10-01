@@ -20,11 +20,11 @@ const ContentCollapse = ({ data, handleRatingReview }) => {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-    // handleRatingReview(!expanded);
+    handleRatingReview(!expanded);
   };
 
   return (
-    <Box>
+    <>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         {data}
       </Collapse>
@@ -36,7 +36,7 @@ const ContentCollapse = ({ data, handleRatingReview }) => {
       >
         <ExpandMoreIcon />
       </ExpandMore>
-    </Box>
+    </>
   );
 };
 
