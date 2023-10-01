@@ -2,7 +2,7 @@ import * as React from "react";
 import { Box, Container, TextField, Typography } from "@mui/material";
 import PostQuestionModal from "./PostQuestionModal";
 
-const QuestionAndAnswer = () => {
+const QuestionAndAnswer = (props) => {
   return (
     <Container>
       <Typography fontWeight={"bold"} fontSize={15}>
@@ -22,7 +22,7 @@ const QuestionAndAnswer = () => {
             display: "flex",
           }}
         >
-          <PostQuestionModal />
+          <PostQuestionModal product_id={props.product_id} />
         </Box>
       </Container>
     </Container>

@@ -8,6 +8,7 @@ import { favoriteAPI } from "../services/favoriteService";
 import { cartAPI } from "../services/cartService";
 import { productAPI } from "../services/productAPIs";
 import { ratingAndReviewAPI } from "../services/ratingAndReview";
+import { questionAndAnswerAPI } from "../services/questionAndAnswer";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     [favoriteAPI.reducerPath]: favoriteAPI.reducer,
     [cartAPI.reducerPath]: cartAPI.reducer,
     [ratingAndReviewAPI.reducerPath]: ratingAndReviewAPI.reducer,
+    [questionAndAnswerAPI.reducerPath]: questionAndAnswerAPI.reducer,
     [productAPI.reducerPath]: productAPI.reducer,
     auth: authSlice,
     user: userSlice,
@@ -28,6 +30,7 @@ export const store = configureStore({
       favoriteAPI.middleware,
       cartAPI.middleware,
       ratingAndReviewAPI.middleware,
+      questionAndAnswerAPI.middleware,
       productAPI.middleware
     ),
 });

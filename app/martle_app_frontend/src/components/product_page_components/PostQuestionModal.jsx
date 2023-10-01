@@ -8,8 +8,8 @@ import { Box, TextField } from "@mui/material";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { getToken } from "../../services/LocalStorageService";
-import { usePostReviewsAPIMutation } from "../../services/ratingAndReview";
 import { useGetLoggedInUserQuery } from "../../services/userAuthAPI";
+import { usePostQuestionAndAnswerAPIMutation } from "../../services/questionAndAnswer";
 
 const buttonStyle = {
   textTransform: "none",
@@ -25,40 +25,27 @@ const PostQuestionModal = (props) => {
 
   const user = useGetLoggedInUserQuery(access_token).data;
 
-  const [postReview, responsePostReview] = usePostReviewsAPIMutation();
+  const [postQuestion, responsePostQuestion] =
+    usePostQuestionAndAnswerAPIMutation();
 
-  const [review, setReview] = useState({
-    user: null,
-    product: null,
-    date: "",
-    content: "",
-    rating: "",
-  });
+  const [question, setQuestion] = useState(null);
 
   const [open, setOpen] = React.useState(false);
 
-  const handleRating = (data) => {
-    review.rating = data;
-  };
-
-  const handleData = (event) => {
-    const newData = { ...review };
-    newData[event.target.id] = event.target.value;
-    setReview(newData);
-  };
+  // console.log(question);
 
   const handleSubmit = () => {
-    const reviewData = {
+    const postQuestionData = {
       user: user.id,
       product: props.product_id,
       date: new Date().toISOString().slice(0, 10),
-      content: review.content,
-      rating: review.rating,
+      question: question,
+      answer: null,
     };
 
-    postReview({
+    postQuestion({
       access_token: access_token,
-      reviewData: reviewData,
+      postQuestionData: postQuestionData,
     });
 
     handleClose();
@@ -97,6 +84,7 @@ const PostQuestionModal = (props) => {
             sx={{ width: "500px", marginTop: "6px" }}
             variant="outlined"
             label="Ask a question"
+            onChange={(e) => setQuestion(e.target.value)}
           />
         </DialogContent>
         <DialogActions>

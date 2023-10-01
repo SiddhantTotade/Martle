@@ -57,7 +57,7 @@ const Product = () => {
           <TechnicalDetails
             product_description={data[0]?.product_description}
           />
-          <QuestionAndAnswer />
+          <QuestionAndAnswer product_id={data[0]?.id} />
           <RatingAndReviews product_id={data[0]?.id} />
         </Grid2>
       </Grid2>

@@ -7,7 +7,7 @@ export const questionAndAnswerAPI = createApi({
     getQuestionAndAnswerAPI: builder.query({
       query: (data) => {
         return {
-          url: `ratingandreview/${data.product_id}`,
+          url: `questionandanswer/${data.product_id}`,
           method: "GET",
           headers: {
             authorization: `Bearer ${data.access_token}`,
@@ -18,9 +18,9 @@ export const questionAndAnswerAPI = createApi({
     postQuestionAndAnswerAPI: builder.mutation({
       query: (data) => {
         return {
-          url: `ratingandreview/${data.reviewData.product}/`,
+          url: `questionandanswer/${data.postQuestionData.product}/`,
           method: "POST",
-          body: data.reviewData,
+          body: data.postQuestionData,
           headers: {
             authorization: `Bearer ${data.access_token}`,
           },
@@ -30,5 +30,7 @@ export const questionAndAnswerAPI = createApi({
   }),
 });
 
-export const { useGetReviewsAPIQuery, usePostReviewsAPIMutation } =
-  questionAndAnswerAPI;
+export const {
+  useGetQuestionAndAnswerAPIQuery,
+  usePostQuestionAndAnswerAPIMutation,
+} = questionAndAnswerAPI;
