@@ -7,6 +7,7 @@ from django.utils.html import format_html
 # Registering Models
 admin.site.register(User)
 admin.site.register(RatingAndReview)
+admin.site.register(QuestionAndAnswer)
 
 
 # Classes for registering models

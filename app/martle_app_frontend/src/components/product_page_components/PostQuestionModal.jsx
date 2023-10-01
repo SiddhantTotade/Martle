@@ -93,7 +93,11 @@ const PostQuestionModal = (props) => {
             gap: "15px",
           }}
         >
-          <TextField variant="outlined" label="Ask a question" />
+          <TextField
+            sx={{ width: "500px", marginTop: "6px" }}
+            variant="outlined"
+            label="Ask a question"
+          />
         </DialogContent>
         <DialogActions>
           <Button sx={buttonStyle} variant="outlined" onClick={handleClose}>

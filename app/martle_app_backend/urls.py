@@ -50,4 +50,8 @@ urlpatterns = [
     # ---------> Rating and Review of Products
     path("product/ratingandreview/<int:pk>/",
          RatingsAndReviewsView.as_view(), name="get_and_create_rating_and_review"),
+    
+    # ---------> Question and Answer of Products
+    path("product/questionandanswer/<int:pk>/",
+         QuestionAndAnswerView.as_view(), name="get_and_create_question_and_answer"),
 ]

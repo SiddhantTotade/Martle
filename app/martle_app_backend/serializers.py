@@ -256,7 +256,7 @@ class RatingAndReviewSerializer(serializers.ModelSerializer):
 class QuestionAndAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionAndAnswer
-        field = "__all__"
+        fields = "__all__"
 
     def create(self,validated_data):
         question_and_answer = QuestionAndAnswer.objects.create(product=validated_data['product'],question=validated_data['question'], answer=validated_data['answer'])
@@ -284,7 +284,6 @@ class WeddingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         depth = 2
-        exclude = ['product']
         fields = ['product_gender', 'product_cover_image', 'product_slug']
 
 

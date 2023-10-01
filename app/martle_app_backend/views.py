@@ -376,14 +376,34 @@ class RatingsAndReviewsView(APIView):
     
     def post(self, request, pk):
         try:
-            jsonData = JSONParser().parse(request)
+            rating_and_review_json_data = JSONParser().parse(request)
             rating_and_review_serialized_data = RatingAndReviewSerializer(
-                data=jsonData)
-            print(rating_and_review_serialized_data)
+                data=rating_and_review_json_data)
             
             if rating_and_review_serialized_data.is_valid():
                 rating_and_review_serialized_data.save()
             
             return Response({"msg": "Rating submitted"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"msg": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class QuestionAndAnswerView(APIView):
+    def get(self, request, pk):
+        try:
+            question_and_answer = QuestionAndAnswer.objects.filter(product = pk)
+            question_and_answer_serialized_data = QuestionAndAnswerSerializer(question_and_answer, many = True)
+            return Response({"msg": question_and_answer_serialized_data.data}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"msg": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+    def post(self, request, pk):
+        try:
+            question_and_answer_json_data = JSONParser().parse(request)
+            question_and_answer_serialized_data = QuestionAndAnswerSerializer(data = question_and_answer_json_data)
+
+            if question_and_answer_serialized_data.is_valid():
+                question_and_answer_serialized_data.save()
+            return Response({"msg": "Question submitted"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"msg": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
