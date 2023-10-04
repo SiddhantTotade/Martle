@@ -4,7 +4,7 @@ from rest_framework import serializers
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeError
-from .utils import *
+from .utils import Util
 
 
 # User registration serializer
@@ -257,6 +257,15 @@ class QuestionAndAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionAndAnswer
         fields = "__all__"
+        depth = 1
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+
+        representation.pop("product")
+        representation.pop("user")
+
+        return representation
 
     def create(self,validated_data):
         question_and_answer = QuestionAndAnswer.objects.create(user=validated_data["user"], product=validated_data['product'], date = validated_data['date'], question=validated_data['question'], answer=validated_data['answer'])
