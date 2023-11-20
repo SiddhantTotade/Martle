@@ -8,10 +8,11 @@ import { LoginSchema } from "@/schemas/auth";
 import InputField from "@/components/Input";
 import PrirmaryButton from "@/components/PrirmaryButton";
 import AppLinks from "@/components/Links";
+import ActionContainer from "@/components/ActionContainer";
 
 interface LoginForm {
   email: string;
-  password: any;
+  password: string;
 }
 
 type LoginSchemaType = InferType<typeof LoginSchema>;
@@ -28,7 +29,7 @@ export default function LoginPage() {
 
   return (
     <AuthLayout title="Login">
-      <Slide direction="right" in mountOnEnter unmountOnExit>
+      <Slide direction="left" in mountOnEnter unmountOnExit>
         <FormControl
           fullWidth
           component="form"
@@ -48,21 +49,14 @@ export default function LoginPage() {
             control={control}
           />
           <PrirmaryButton label="Login" type="submit" />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "baseline",
-            }}
-          >
-            <AppLinks href="/auth/forgot-password">Forgot Password ?</AppLinks>
-            <Typography>
-              New to Martle ?{" "}
-              <AppLinks href="/auth/register">Register</AppLinks>
-            </Typography>
-          </Box>
         </FormControl>
       </Slide>
+      <ActionContainer>
+        <AppLinks href="/auth/forgot-password">Forgot Password ?</AppLinks>
+        <Typography>
+          New to Martle ? <AppLinks href="/auth/register">Register</AppLinks>
+        </Typography>
+      </ActionContainer>
     </AuthLayout>
   );
 }

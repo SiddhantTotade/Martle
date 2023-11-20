@@ -16,7 +16,7 @@ const newPassword = Yup.string()
   .min(6, "New password must be atleast 6 characters")
   .max(40, "New password must not exceed 40 characters");
 
-const confirmNewPassworrd = Yup.string()
+const confirmNewPassword = Yup.string()
   .required("Confirm new password is required")
   .oneOf([Yup.ref("newPassword"), ""], "Confirm new password does not match");
 
@@ -29,5 +29,5 @@ export const RegistrationSchema = Yup.object().shape({
   username,
   email,
   newPassword,
-  confirmNewPassworrd,
+  confirmNewPassword,
 });

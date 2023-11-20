@@ -1,4 +1,4 @@
-import { Typography, Card, Box } from "@mui/material";
+import { Typography, Card } from "@mui/material";
 import Blob from "@/assets/svg/Blob";
 
 interface AuthLaytoutProps {
@@ -10,11 +10,15 @@ export default function AuthLayout({ title, children }: AuthLaytoutProps) {
   return (
     <Card
       sx={{
-        display: "grid",
-        justifyItems: "center",
-        width: "25%",
-        minWidth: "25%",
-        maxWidth: "30%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: {
+          xs: "95%",
+          sm: "65%",
+          md: "45%",
+          lg: "25%",
+        },
         top: "50%",
         left: "50%",
         position: "absolute",

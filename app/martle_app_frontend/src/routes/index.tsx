@@ -5,10 +5,14 @@ import {
 } from "react-router-dom";
 
 import LoginPage from "@/pages/auth/Login";
+import RegisterPage from "@/pages/auth/Register";
 
 type Route = RouteObject[] | RouteObject;
 
-const authRoutes: Route = [{ path: "/login", element: <LoginPage /> }];
+const authRoutes: Route = [
+  { path: "/auth/login", element: <LoginPage /> },
+  { path: "/auth/register", element: <RegisterPage /> },
+];
 
 const router = createBrowserRouter([
   { path: "*", element: <h1>404 - Not Found</h1> },
