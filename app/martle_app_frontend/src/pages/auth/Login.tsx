@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import type { InferType } from "yup";
-import { FormControl, Slide, Box, Typography } from "@mui/material";
+import { FormControl, Slide, Typography } from "@mui/material";
 
 import AuthLayout from "@/layouts/AuthLayout";
 import { LoginSchema } from "@/schemas/auth";

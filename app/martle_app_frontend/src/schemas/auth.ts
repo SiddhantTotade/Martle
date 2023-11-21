@@ -31,3 +31,12 @@ export const RegistrationSchema = Yup.object().shape({
   newPassword,
   confirmNewPassword,
 });
+
+export const ResetPasswordSchema = Yup.object().shape({
+  newPassword,
+  confirmNewPassword,
+});
+
+export const ForgotPassworrdSchema = Yup.object().shape({
+  email,
+});
