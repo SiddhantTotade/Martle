@@ -8,6 +8,7 @@ import LoginPage from "@/pages/auth/Login";
 import RegisterPage from "@/pages/auth/Register";
 import ResetPasswordPage from "@/pages/auth/ResetPassword";
 import ForgotPasswordPage from "@/pages/auth/ForgotPassword";
+import NotFoundPage from "@/pages/404NotFound";
 
 type Route = RouteObject[] | RouteObject;
 
@@ -19,7 +20,7 @@ const authRoutes: Route = [
 ];
 
 const router = createBrowserRouter([
-  { path: "*", element: <h1>404 - Not Found</h1> },
+  { path: "*", element: <NotFoundPage /> },
   ...authRoutes,
 ]);
 

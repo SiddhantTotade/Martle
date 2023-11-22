@@ -31,6 +31,7 @@ export default function InputField({ name, control, label, type }: InputProps) {
                         aria-label="toggle password visibility"
                         onClick={handleShowPassword}
                         edge="end"
+                        color="primary"
                       >
                         {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
