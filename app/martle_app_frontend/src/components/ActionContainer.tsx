@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
+import { PropsWithChildren } from "react";
 
-export default function ActionContainer({ children }: any) {
+export default function ActionContainer({ children }: PropsWithChildren) {
   return (
     <Box
       sx={{

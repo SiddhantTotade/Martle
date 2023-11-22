@@ -1,10 +1,16 @@
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import Router from "./routes";
-import { ThemeProvider } from "@mui/material";
-import { GlobalStyle } from "./styles/GlobalStyles";
+
+import { useThemeContext } from "./themes/ThemeContextProvider";
+import AppSpeedDial from "./components/SpeedDialer";
 
 function App() {
+  const { theme } = useThemeContext();
+
   return (
-    <ThemeProvider theme={GlobalStyle}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppSpeedDial />
       <Router />
     </ThemeProvider>
   );

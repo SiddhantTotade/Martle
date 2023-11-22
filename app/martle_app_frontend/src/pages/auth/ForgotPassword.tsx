@@ -7,6 +7,8 @@ import AuthLayout from "@/layouts/AuthLayout";
 import { ForgotPassworrdSchema } from "@/schemas/auth";
 import InputField from "@/components/Input";
 import PrirmaryButton from "@/components/PrirmaryButton";
+import React from "react";
+import AppAlerts from "@/components/Alerts";
 
 interface ForgotPasswordForm {
   email: string;
@@ -25,23 +27,26 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <AuthLayout title="Forgot Password">
-      <Slide direction="left" in mountOnEnter unmountOnExit>
-        <FormControl
-          fullWidth
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
-          sx={{ gap: "10px" }}
-        >
-          <InputField
-            type="email"
-            label="Email"
-            name="email"
-            control={control}
-          />
-          <PrirmaryButton label="Send" type="submit" />
-        </FormControl>
-      </Slide>
-    </AuthLayout>
+    <React.Fragment>
+      <AuthLayout title="Forgot Password">
+        <Slide direction="left" in mountOnEnter unmountOnExit>
+          <FormControl
+            fullWidth
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            sx={{ gap: "10px" }}
+          >
+            <InputField
+              type="email"
+              label="Email"
+              name="email"
+              control={control}
+            />
+            <PrirmaryButton label="Send" type="submit" />
+          </FormControl>
+        </Slide>
+      </AuthLayout>
+      <AppAlerts label="Lost internet connection" severity="warning" />
+    </React.Fragment>
   );
 }
