@@ -1,24 +1,12 @@
 from django.urls import re_path, path
 from .views import *
-from .auth_views import *
+from martle_app_authentication.auth_views import *
 from rest_framework import routers
 
 router = routers.DefaultRouter()
 # router.register(r"images",SetImageView, basename='product_images')
 
 urlpatterns = [
-
-    # User Authentication Route
-    re_path(r"^login/$", UserLoginView.as_view(), name='login'),
-    re_path(r"^register/$", UserRegistrationView.as_view(), name='register'),
-    re_path(r"^profile/$", UserProfileView.as_view(), name='profile'),
-    re_path(r"^change-password/$", UserChangePasswordView.as_view(),
-            name='change-password'),
-    re_path(r"^reset-password/$", SendPasswordResetEmailView.as_view(),
-            name='send_reset_password_email'),
-    re_path(r"^reset-password/<uid>/<token>/$",
-            UserPasswordResetView.as_view(), name='reset_password'),
-
     # Media Route
     re_path(r"^product-images/savefile/$", SetImageView),
     re_path(r"^product-images/get-images$", SetImageView),
@@ -50,7 +38,7 @@ urlpatterns = [
     # ---------> Rating and Review of Products
     path("product/ratingandreview/<int:pk>/",
          RatingsAndReviewsView.as_view(), name="get_and_create_rating_and_review"),
-    
+
     # ---------> Question and Answer of Products
     path("product/questionandanswer/<int:pk>/",
          QuestionAndAnswerView.as_view(), name="get_and_create_question_and_answer"),

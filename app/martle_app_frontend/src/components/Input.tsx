@@ -1,8 +1,14 @@
 import { useState, InputHTMLAttributes } from "react";
 import { Controller } from "react-hook-form";
-import { TextField, IconButton, InputAdornment } from "@mui/material";
+import {
+  TextField,
+  IconButton,
+  InputAdornment,
+  Typography,
+} from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { red } from "@mui/material/colors";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -47,7 +53,22 @@ export default function InputField({ name, control, label, type }: InputProps) {
           value={value}
           onChange={onChange}
           error={!!error}
-          helperText={error ? error.message : null}
+          helperText={
+            error ? (
+              <Typography
+                variant="caption"
+                component="span"
+                sx={{
+                  color:
+                    localStorage.getItem("themeMode") === "light"
+                      ? red[900]
+                      : "#fff",
+                }}
+              >
+                {error.message}
+              </Typography>
+            ) : null
+          }
         />
       )}
     />

@@ -44,6 +44,13 @@ export const getDesignTokens = (mode: PaletteMode) => {
           },
         },
       },
+      MuiHelperText: {
+        styleOverrides: {
+          root: {
+            color: "blue",
+          },
+        },
+      },
     },
     ...appThemes[mode],
     typography: typographyVariant,

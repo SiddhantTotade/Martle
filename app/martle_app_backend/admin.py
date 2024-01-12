@@ -5,19 +5,11 @@ from django.utils.html import format_html
 # Register your models here.
 
 # Registering Models
-admin.site.register(User)
 admin.site.register(RatingAndReview)
 admin.site.register(QuestionAndAnswer)
 
 
 # Classes for registering models
-
-
-# -------- Customer Admin
-@admin.register(CustomerAddress)
-class CustomerModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'address', 'locality',
-                    'city', 'state', 'zipcode', 'country']
 
 
 # -------- Product Images Admin

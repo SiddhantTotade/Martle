@@ -1,114 +1,21 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
-from .models import *
-from .serializers import *
 from django.db.models import QuerySet
 from django.core import serializers as customer_data_serializer
-from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.authentication import *
-from .renderers import *
+from .models import *
+from .serializers import *
+from martle_app_authentication.renderers import *
 # import pandas as pd
 
+
 # Create your views here.
-
-
-# Generate access and refresh tokens for users
-def get_tokens_for_user(user):
-    refresh = RefreshToken.for_user(user)
-    return {
-        'refresh': str(refresh),
-        'access': str(refresh.access_token)
-    }
-
-
-# User registration view
-class UserRegistrationView(APIView):
-    renderer_classes = [UserRenderer]
-
-    def post(self, request, format=None):
-        serializer = UserRegistrationSerializer(data=request.data)
-
-        serializer.is_valid(raise_exception=True)
-
-        user = serializer.save()
-        token = get_tokens_for_user(user)
-        return Response({'token': token, 'msg': 'Admin registered successfully'}, status=status.HTTP_201_CREATED)
-
-
-# User login view
-class UserLoginView(APIView):
-    renderer_classes = [UserRenderer]
-
-    def post(self, request, format=None):
-        serializer = UserLoginSerializer(data=request.data)
-
-        serializer.is_valid(raise_exception=True)
-        email = serializer.data.get('email')
-        password = serializer.data.get('password')
-
-        user = authenticate(email=email, password=password)
-
-        if user is not None:
-            token = get_tokens_for_user(user)
-            return Response({'token': token, 'msg': 'Login success'}, status=status.HTTP_200_OK)
-        else:
-            return Response({'errors': {'non_fields_errors': ['Email or Password is not valid']}}, status=status.HTTP_404_NOT_FOUND)
-
-
-# User profile view
-class UserProfileView(APIView):
-    renderer_classes = [UserRenderer]
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, format=None):
-        serializer = UserProfileSerializer(request.user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-# User change password view
-class UserChangePasswordView(APIView):
-    renderer_classes = [UserRenderer]
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, format=None):
-        serializer = UserChangePasswordSerializer(
-            data=request.data, context={'user': request.user})
-
-        serializer.is_valid(raise_exception=True)
-        return Response({'data': 'Password changed successfully'}, status=status.HTTP_200_OK)
-
-
-# User send password-reset link view
-class SendPasswordResetEmailView(APIView):
-    renderer_classes = [UserRenderer]
-
-    def post(self, request, format=None):
-        serializer = UserSendPasswordResetEmailSerializer(data=request.data)
-
-        serializer.is_valid(raise_exception=True)
-        return Response({'msg': 'Password reset link has been sent on your e-mail'}, status=status.HTTP_200_OK)
-
-
-# User password-reset view
-class UserPasswordResetView(APIView):
-    renderer_classes = [UserRenderer]
-
-    def post(self, request, uid, token, format=None):
-        serializer = UserPasswordResetSerializer(
-            data=request.data, context={'uid': uid, 'token': token})
-
-        serializer.is_valid(raise_exception=True)
-        return Response({'msg': 'Password reset successfully'}, status=status.HTTP_200_OK)
-
-
 def get_description(request, pk):
     product_id = Product.objects.get(id=pk)
     product_desc = eval(product_id.product_description)
@@ -368,21 +275,22 @@ class RatingsAndReviewsView(APIView):
     def get(self, request, pk):
         try:
             rating_and_review = RatingAndReview.objects.filter(product=pk)
-            rating_and_review_serialized_data = RatingAndReviewSerializer(rating_and_review, many=True)
-            return Response({"data":rating_and_review_serialized_data.data}, status=status.HTTP_200_OK)
-             
+            rating_and_review_serialized_data = RatingAndReviewSerializer(
+                rating_and_review, many=True)
+            return Response({"data": rating_and_review_serialized_data.data}, status=status.HTTP_200_OK)
+
         except Exception as e:
             return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
+
     def post(self, request, pk):
         try:
             rating_and_review_json_data = JSONParser().parse(request)
             rating_and_review_serialized_data = RatingAndReviewSerializer(
                 data=rating_and_review_json_data)
-            
+
             if rating_and_review_serialized_data.is_valid():
                 rating_and_review_serialized_data.save()
-            
+
             return Response({"msg": "Rating submitted"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"msg": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -391,16 +299,18 @@ class RatingsAndReviewsView(APIView):
 class QuestionAndAnswerView(APIView):
     def get(self, request, pk):
         try:
-            question_and_answer = QuestionAndAnswer.objects.filter(product = pk)
-            question_and_answer_serialized_data = QuestionAndAnswerSerializer(question_and_answer, many = True)
+            question_and_answer = QuestionAndAnswer.objects.filter(product=pk)
+            question_and_answer_serialized_data = QuestionAndAnswerSerializer(
+                question_and_answer, many=True)
             return Response({"msg": question_and_answer_serialized_data.data}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"msg": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
+
     def post(self, request, pk):
         try:
             question_and_answer_json_data = JSONParser().parse(request)
-            question_and_answer_serialized_data = QuestionAndAnswerSerializer(data = question_and_answer_json_data)
+            question_and_answer_serialized_data = QuestionAndAnswerSerializer(
+                data=question_and_answer_json_data)
 
             if question_and_answer_serialized_data.is_valid():
                 question_and_answer_serialized_data.save()

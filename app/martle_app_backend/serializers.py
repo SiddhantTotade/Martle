@@ -1,10 +1,10 @@
 from .models import *
-from .helpers import *
+from martle_app_authentication.helpers import *
 from rest_framework import serializers
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeError
-from .utils import Util
+from martle_app_authentication.utils import Util
 
 
 # User registration serializer
