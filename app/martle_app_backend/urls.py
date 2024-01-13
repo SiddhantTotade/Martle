@@ -1,6 +1,5 @@
 from django.urls import re_path, path
 from .views import *
-from martle_app_authentication.auth_views import *
 from rest_framework import routers
 
 router = routers.DefaultRouter()

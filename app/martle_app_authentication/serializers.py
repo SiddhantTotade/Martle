@@ -2,7 +2,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from rest_framework import serializers
-from .models import User
+from .models import User, CustomerAddress
 from .utils import Util
 from .helpers import send_otp_to_mobile
 
@@ -153,3 +153,16 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         send_otp_to_mobile(user.phone, user)
         return user
+
+
+# --------- Customer Serializer
+class CustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomerAddress
+        fields = '__all__'
+
+    def create(self, validated_data):
+        customer = CustomerAddress.objects.create(user=validated_data['user'], name=validated_data['name'], address=validated_data['address'], locality=validated_data['locality'],
+                                                  city=validated_data['city'], state=validated_data['state'], country=validated_data['country'], zipcode=validated_data['zipcode'])
+        customer.save()
+        return customer

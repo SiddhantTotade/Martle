@@ -11,4 +11,5 @@ urlpatterns = [
             name='send_reset_password_email'),
     re_path(r"^reset-password/<uid>/<token>/$",
             UserPasswordResetView.as_view(), name='reset_password'),
+    re_path(r"^verify/$", VerifyTokenView.as_view(), name="verify_token")
 ]

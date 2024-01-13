@@ -9,6 +9,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils.text import slugify
 from martle_app_authentication.models import User, CustomerAddress
+from taggit.managers import TaggableManager
 
 
 # Create your models here.
@@ -88,6 +89,7 @@ class Product(models.Model):
     product_gender = models.ForeignKey(Genders, on_delete=models.PROTECT)
     favourite = models.ManyToManyField(
         User, blank=True, default=None, related_name="favourite_items")
+    product_tags = TaggableManager()
 
     def save(self, *args, **kwargs):
         self.product_slug = slugify(

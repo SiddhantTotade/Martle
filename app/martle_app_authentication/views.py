@@ -7,8 +7,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import authenticate
 from django.core import serializers as customer_data_serializer
 from django.http.response import JsonResponse
-from martle_app_backend.serializers import *
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_str
+from urllib.parse import urlencode
 from martle_app_backend.models import *
+from .serializers import *
 from .renderers import UserRenderer
 from .helpers import *
 
@@ -32,8 +35,21 @@ class UserRegistrationView(APIView):
         serializer.is_valid(raise_exception=True)
 
         user = serializer.save()
+
+        uidb64 = urlsafe_base64_encode(force_bytes(user.id))
+        token = default_token_generator.make_token(user)
+
+        params = urlencode({'uidb64': uidb64, 'token': token})
+
+        absolute_url = f"{request.scheme}://127.0.0.1:8000/auth/verify/?{params}"
+
+        subject = 'Verify your account.'
+
+        send_mail(subject, absolute_url, user.email, [user.email])
+
         token = get_tokens_for_user(user)
-        return Response({'token': token, 'msg': 'Admin registered successfully'}, status=status.HTTP_201_CREATED)
+
+        return Response({'token': token, 'msg': 'User registered successfully'}, status=status.HTTP_201_CREATED)
 
 
 # User login view
@@ -100,6 +116,34 @@ class UserPasswordResetView(APIView):
 
         serializer.is_valid(raise_exception=True)
         return Response({'msg': 'Password reset successfully'}, status=status.HTTP_200_OK)
+
+
+class VerifyTokenView(APIView):
+    renderer_classes = [UserRenderer]
+
+    def get(self, request, format=None):
+        try:
+            uidb64 = request.GET.get('uidb64')
+            token = request.GET.get('token')
+
+            # Decode the UID and check the token
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+
+            if user.is_active == False:
+                if default_token_generator.check_token(user, token):
+                    # Mark the user as active
+                    user.is_active = True
+                    user.save()
+
+                    # Redirect to a success page or return a success message
+                    return Response({"msg": "Verified successfully"}, status=status.HTTP_200_OK)
+            else:
+                # Token is not valid, redirect to an error page or return an error message
+                return Response({'error_message': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            # Handle exceptions, redirect to an error page or return an error message
+            return Response({'error_message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RegisterView(APIView):

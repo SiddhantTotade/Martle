@@ -4,7 +4,9 @@ from .models import CustomerAddress, User
 
 
 # -------- User Admin
-admin.site.register(User)
+@admin.register(User)
+class UserModelAdmin(admin.ModelAdmin):
+    list_display = ["id", "name"]
 
 
 # -------- Customer Admin
