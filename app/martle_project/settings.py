@@ -105,7 +105,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 ROOT_URLCONF = 'martle_project.urls'
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
 
 TEMPLATES = [
     {
@@ -202,6 +202,13 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer',),
 }
+
+AUTH_COOKIE = "access"
+AUTH_COOKIE_MAX_AGE = 60 * 60 * 24
+AUTH_COOKIE_SECURE = False
+AUTH_COOKIE_HTTP_ONLY = True
+AUTH_COOKIE_PATH = "/"
+AUTH_COOKIE_SAMESITE = "None"
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),

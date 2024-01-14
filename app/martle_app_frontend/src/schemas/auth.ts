@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-const username = Yup.string()
+const name = Yup.string()
   .required("Username is required")
   .min(6, "Username must be atleast 6 characters")
   .max(18, "Username must not exceed 18 characters");
@@ -9,16 +9,16 @@ const email = Yup.string()
   .required("Email is required")
   .email("Email is invalid");
 
-const password = Yup.string().required("Password is required");
+const password = Yup.string()
+  .required("Password is required")
+  .min(6, "Password must be atleast 6 characters")
+  .max(40, "Password must not exceed 40 characters");
 
-const newPassword = Yup.string()
-  .required("New password is required")
-  .min(6, "New password must be atleast 6 characters")
-  .max(40, "New password must not exceed 40 characters");
+const password2 = Yup.string()
+  .required("Confirm Password is required")
+  .oneOf([Yup.ref("password"), ""], "Confirm password does not match");
 
-const confirmNewPassword = Yup.string()
-  .required("Confirm new password is required")
-  .oneOf([Yup.ref("newPassword"), ""], "Confirm new password does not match");
+const tc = Yup.boolean().required("Terms & Conditions is required");
 
 export const LoginSchema = Yup.object().shape({
   email,
@@ -26,15 +26,16 @@ export const LoginSchema = Yup.object().shape({
 });
 
 export const RegistrationSchema = Yup.object().shape({
-  username,
+  name,
   email,
-  newPassword,
-  confirmNewPassword,
+  password,
+  password2,
+  tc,
 });
 
 export const ResetPasswordSchema = Yup.object().shape({
-  newPassword,
-  confirmNewPassword,
+  password,
+  password2,
 });
 
 export const ForgotPassworrdSchema = Yup.object().shape({

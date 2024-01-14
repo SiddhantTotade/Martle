@@ -14,6 +14,7 @@ from martle_app_backend.models import *
 from .serializers import *
 from .renderers import UserRenderer
 from .helpers import *
+from .utils import Util
 
 
 # Generate access and refresh tokens for users
@@ -35,6 +36,7 @@ class UserRegistrationView(APIView):
         serializer.is_valid(raise_exception=True)
 
         user = serializer.save()
+        response = Response()
 
         uidb64 = urlsafe_base64_encode(force_bytes(user.id))
         token = default_token_generator.make_token(user)
@@ -43,13 +45,22 @@ class UserRegistrationView(APIView):
 
         absolute_url = f"{request.scheme}://127.0.0.1:8000/auth/verify/?{params}"
 
-        subject = 'Verify your account.'
+        data = {
+            'email_subject': 'Verify your account',
+            'email_body': f"Click on the url to verify email.\n{absolute_url}",
+            'to_email': user.email
+        }
 
-        send_mail(subject, absolute_url, user.email, [user.email])
+        Util.send_mail(data)
 
         token = get_tokens_for_user(user)
 
-        return Response({'token': token, 'msg': 'User registered successfully'}, status=status.HTTP_201_CREATED)
+        response.set_cookie("access", token["access"], max_age=settings.AUTH_COOKIE_MAX_AGE, path=settings.AUTH_COOKIE_PATH,
+                                secure=settings.AUTH_COOKIE_SECURE, httponly=settings.AUTH_COOKIE_HTTP_ONLY, samesite=settings.AUTH_COOKIE_SAMESITE)
+        response.set_cookie("refresh", token["refresh"], max_age=settings.AUTH_COOKIE_MAX_AGE, path=settings.AUTH_COOKIE_PATH,
+                                secure=settings.AUTH_COOKIE_SECURE, httponly=settings.AUTH_COOKIE_HTTP_ONLY, samesite=settings.AUTH_COOKIE_SAMESITE)
+
+        return response
 
 
 # User login view
@@ -58,6 +69,7 @@ class UserLoginView(APIView):
 
     def post(self, request, format=None):
         serializer = UserLoginSerializer(data=request.data)
+        response = Response()
 
         serializer.is_valid(raise_exception=True)
         email = serializer.data.get('email')
@@ -67,7 +79,13 @@ class UserLoginView(APIView):
 
         if user is not None:
             token = get_tokens_for_user(user)
-            return Response({'token': token, 'msg': 'Login success'}, status=status.HTTP_200_OK)
+
+            response.set_cookie("access", token["access"], max_age=settings.AUTH_COOKIE_MAX_AGE, path=settings.AUTH_COOKIE_PATH,
+                                secure=settings.AUTH_COOKIE_SECURE, httponly=settings.AUTH_COOKIE_HTTP_ONLY, samesite=settings.AUTH_COOKIE_SAMESITE)
+            response.set_cookie("refresh", token["refresh"], max_age=settings.AUTH_COOKIE_MAX_AGE, path=settings.AUTH_COOKIE_PATH,
+                                secure=settings.AUTH_COOKIE_SECURE, httponly=settings.AUTH_COOKIE_HTTP_ONLY, samesite=settings.AUTH_COOKIE_SAMESITE)
+
+            return response
         else:
             return Response({'errors': {'non_fields_errors': ['Email or Password is not valid']}}, status=status.HTTP_404_NOT_FOUND)
 

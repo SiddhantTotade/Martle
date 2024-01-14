@@ -1,4 +1,5 @@
 from django.urls import re_path
+from rest_framework_simplejwt import views as jwt_views
 from .views import *
 
 urlpatterns = [
@@ -9,7 +10,9 @@ urlpatterns = [
             name='change-password'),
     re_path(r"^reset-password/$", SendPasswordResetEmailView.as_view(),
             name='send_reset_password_email'),
-    re_path(r"^reset-password/<uid>/<token>/$",
+    re_path(r"^reset-password/(?P<uid>[\w-]+)/(?P<token>[\w-]+)/$",
             UserPasswordResetView.as_view(), name='reset_password'),
-    re_path(r"^verify/$", VerifyTokenView.as_view(), name="verify_token")
+    re_path(r"^verify/$", VerifyTokenView.as_view(), name="verify_token"),
+    re_path(r"^token/refresh/$", jwt_views.TokenRefreshView.as_view(),
+            name="token_refresh")
 ]

@@ -1,69 +1,50 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import type { InferType } from "yup";
-import { FormControl, Slide, Box, Typography, IconButton } from "@mui/material";
+import {
+  FormControl,
+  Slide,
+  Box,
+  Typography,
+  IconButton,
+  CircularProgress,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
+import { Controller } from "react-hook-form";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 import AuthLayout from "@/layouts/AuthLayout";
-import { RegistrationSchema } from "@/schemas/auth";
 import InputField from "@/components/Input";
 import PrirmaryButton from "@/components/PrirmaryButton";
 import AppLinks from "@/components/Links";
 import ActionContainer from "@/components/ActionContainer";
-
-interface RegistrationForm {
-  username: string;
-  email: string;
-  newPassword: string;
-  confirmNewPassword: string;
-}
-
-type RegisterSchemaType = InferType<typeof RegistrationSchema>;
+import { useRegister } from "@/hooks/auth/register";
 
 export default function RegisterPage() {
-  const [continueForm, setContinueForm] = useState(false);
-
-  const { handleSubmit, control, reset, watch, setError } =
-    useForm<RegisterSchemaType>({
-      resolver: yupResolver(RegistrationSchema),
-    });
-  const watchField = watch(["username", "email"]);
-
-  const handleContinue = () => {
-    if (watchField[0] && watchField[1]) {
-      setContinueForm(true);
-    } else {
-      if (!watchField[0]) {
-        setError("username", {
-          type: "required",
-          message: "Username is required",
-        });
-      }
-      if (!watchField[1]) {
-        setError("email", {
-          type: "required",
-          message: "Email is required",
-        });
-      }
-    }
-  };
-
-  const onSubmit = (data: RegistrationForm) => {
-    console.log(data);
-    reset();
-  };
+  const {
+    handleContinue,
+    handleSubmit,
+    onSubmit,
+    control,
+    isLoading,
+    continueForm,
+    setContinueForm,
+    error,
+  } = useRegister();
 
   return (
     <AuthLayout title="Register">
-      <FormControl fullWidth component="form" onSubmit={handleSubmit(onSubmit)}>
+      <FormControl
+        fullWidth
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{ gap: "10px", alignItems: "center" }}
+      >
         {continueForm ? undefined : (
           <Slide direction="left" in mountOnEnter unmountOnExit>
-            <Box sx={{ gap: "10px", display: "grid" }}>
+            <Box sx={{ width: "100%", gap: "10px", display: "grid" }}>
               <InputField
                 type="text"
                 label="Username"
-                name="username"
+                name="name"
                 control={control}
               />
               <InputField
@@ -82,20 +63,49 @@ export default function RegisterPage() {
         )}
         {continueForm ? (
           <Slide direction="left" in mountOnEnter unmountOnExit>
-            <Box sx={{ gap: "10px", display: "grid" }}>
+            <Box
+              sx={{
+                width: "100%",
+                gap: "10px",
+                display: "grid",
+                alignItems: "center",
+              }}
+            >
               <InputField
                 type="password"
-                label="New Password"
-                name="newPassword"
+                label="Password"
+                name="password"
                 control={control}
               />
               <InputField
                 type="password"
-                label="Confirm New Password"
-                name="confirmNewPassword"
+                label="Confirm Password"
+                name="password2"
                 control={control}
               />
-              <PrirmaryButton label="Submit" type="submit" />
+              <FormControlLabel
+                label="I agree to the terms & conditions"
+                control={
+                  <Controller
+                    control={control}
+                    name="tc"
+                    defaultValue={false}
+                    render={({ field }) => <Checkbox {...field} />}
+                  />
+                }
+              />
+              {error && (
+                <Typography color="error" variant="caption">
+                  {error}
+                </Typography>
+              )}
+              <Box sx={{ display: "grid", placeItems: "center" }}>
+                {isLoading ? (
+                  <CircularProgress />
+                ) : (
+                  <PrirmaryButton label="Submit" type="submit" />
+                )}
+              </Box>
             </Box>
           </Slide>
         ) : undefined}

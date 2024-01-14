@@ -5,7 +5,6 @@ from django.conf import settings
 class Util:
     @staticmethod
     def send_mail(data):
-        print(data)
         email = EmailMessage(
             subject=data['email_subject'],
             body=data['email_body'],

@@ -1,29 +1,12 @@
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import type { InferType } from "yup";
-import { FormControl, Slide } from "@mui/material";
+import { CircularProgress, FormControl, Slide } from "@mui/material";
 
 import AuthLayout from "@/layouts/AuthLayout";
-import { ResetPasswordSchema } from "@/schemas/auth";
 import InputField from "@/components/Input";
 import PrirmaryButton from "@/components/PrirmaryButton";
-
-interface ResetPasswordForm {
-  newPassword: string;
-  confirmNewPassword: string;
-}
-
-type ResetPasswordSchemaType = InferType<typeof ResetPasswordSchema>;
+import { useResetPassword } from "@/hooks/auth/resetPassword";
 
 export default function ResetPasswordPage() {
-  const { handleSubmit, control, reset } = useForm<ResetPasswordSchemaType>({
-    resolver: yupResolver(ResetPasswordSchema),
-  });
-
-  const onSubmit = (data: ResetPasswordForm) => {
-    console.log(data);
-    reset();
-  };
+  const { handleSubmit, onSubmit, control, isLoading } = useResetPassword();
 
   return (
     <AuthLayout title="Reset Password">
@@ -32,21 +15,25 @@ export default function ResetPasswordPage() {
           fullWidth
           component="form"
           onSubmit={handleSubmit(onSubmit)}
-          sx={{ gap: "10px" }}
+          sx={{ gap: "10px", alignItems: "center" }}
         >
           <InputField
             type="password"
             label="New Password"
-            name="newPassword"
+            name="password"
             control={control}
           />
           <InputField
             type="password"
             label="Confirm New Password"
-            name="confirmNewPassword"
+            name="password2"
             control={control}
           />
-          <PrirmaryButton label="Reset" type="submit" />
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <PrirmaryButton label="Reset" type="submit" />
+          )}
         </FormControl>
       </Slide>
     </AuthLayout>

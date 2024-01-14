@@ -1,30 +1,14 @@
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import type { InferType } from "yup";
-import { FormControl, Slide } from "@mui/material";
+import React from "react";
+import { CircularProgress, FormControl, Slide } from "@mui/material";
 
 import AuthLayout from "@/layouts/AuthLayout";
-import { ForgotPassworrdSchema } from "@/schemas/auth";
 import InputField from "@/components/Input";
 import PrirmaryButton from "@/components/PrirmaryButton";
-import React from "react";
-import AppAlerts from "@/components/Alerts";
-
-interface ForgotPasswordForm {
-  email: string;
-}
-
-type ForgotPasswordSchemaType = InferType<typeof ForgotPassworrdSchema>;
+import { useResetPasswordEmail } from "@/hooks/auth/resetPasswordEmail";
 
 export default function ForgotPasswordPage() {
-  const { handleSubmit, control, reset } = useForm<ForgotPasswordSchemaType>({
-    resolver: yupResolver(ForgotPassworrdSchema),
-  });
-
-  const onSubmit = (data: ForgotPasswordForm) => {
-    console.log(data);
-    reset();
-  };
+  const { handleSubmit, onSubmit, control, isLoading } =
+    useResetPasswordEmail();
 
   return (
     <React.Fragment>
@@ -34,7 +18,7 @@ export default function ForgotPasswordPage() {
             fullWidth
             component="form"
             onSubmit={handleSubmit(onSubmit)}
-            sx={{ gap: "10px" }}
+            sx={{ gap: "10px", alignItems: "center" }}
           >
             <InputField
               type="email"
@@ -42,11 +26,14 @@ export default function ForgotPasswordPage() {
               name="email"
               control={control}
             />
-            <PrirmaryButton label="Send" type="submit" />
+            {isLoading ? (
+              <CircularProgress />
+            ) : (
+              <PrirmaryButton label="Send" type="submit" />
+            )}
           </FormControl>
         </Slide>
       </AuthLayout>
-      <AppAlerts label="Lost internet connection" severity="warning" />
     </React.Fragment>
   );
 }
