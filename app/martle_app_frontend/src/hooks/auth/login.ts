@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { LoginSchema } from "@/schemas/auth";
-import { useLoginMutation } from "@/services/authService";
+import { useLoginMutation } from "@/redux/features/authApiSlice";
 
 interface LoginForm {
   email: string;
@@ -23,7 +23,7 @@ export const useLogin = () => {
   const onSubmit = async (data: LoginForm) => {
     await login(data)
       .unwrap()
-      .then((res) => enqueueSnackbar(res.msg, { variant: "success" }))
+      .then(() => enqueueSnackbar("Login Successful", { variant: "success" }))
       .catch((res) =>
         enqueueSnackbar(res.data.errors.non_fields_errors[0], {
           variant: "error",

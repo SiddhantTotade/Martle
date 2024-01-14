@@ -107,6 +107,8 @@ ROOT_URLCONF = 'martle_project.urls'
 
 CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
 
+CORS_ALLOW_CREDENTIALS = True
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -208,7 +210,7 @@ AUTH_COOKIE_MAX_AGE = 60 * 60 * 24
 AUTH_COOKIE_SECURE = False
 AUTH_COOKIE_HTTP_ONLY = True
 AUTH_COOKIE_PATH = "/"
-AUTH_COOKIE_SAMESITE = "None"
+AUTH_COOKIE_SAMESITE = "Lax"
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),

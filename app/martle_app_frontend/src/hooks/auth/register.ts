@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { RegistrationSchema } from "@/schemas/auth";
-import { useRegisterMutation } from "@/services/authService";
+import { useRegisterMutation } from "@/redux/features/authApiSlice";
 
 interface RegisterForm {
   name: string;

@@ -5,7 +5,7 @@ import { SnackbarProvider } from "notistack";
 
 import App from "./App.tsx";
 import { ThemeContextProvider } from "./themes/ThemeContextProvider.tsx";
-import { store } from "./Store.ts";
+import { store } from "./redux/Store.ts";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

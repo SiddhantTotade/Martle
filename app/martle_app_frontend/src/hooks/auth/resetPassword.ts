@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { ResetPasswordSchema } from "@/schemas/auth";
-import { useResetPasswordMutation } from "@/services/authService";
+import { useResetPasswordMutation } from "@/redux/features/authApiSlice";
 
 interface ResetPasswordForm {
   password: string;
