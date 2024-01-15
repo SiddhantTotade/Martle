@@ -1,56 +1,56 @@
 import { apiSlice } from "../services/apiSlice";
 
 interface User {
+  id: string;
   name: string;
   email: string;
-  is_active: boolean;
 }
 
 const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (payload) => ({
-        url: "/login/",
+        url: "login/",
         method: "POST",
         body: payload,
       }),
     }),
     register: builder.mutation({
       query: (payload) => ({
-        url: "/register/",
+        url: "register/",
         method: "POST",
         body: payload,
       }),
     }),
     changePassword: builder.mutation({
       query: (payload) => ({
-        url: "/change-password/",
+        url: "change-password/",
         method: "POST",
         body: payload,
       }),
     }),
     resetPasswordEmail: builder.mutation({
       query: (payload) => ({
-        url: "/reset-password/",
+        url: "reset-password/",
         method: "POST",
         body: payload,
       }),
     }),
     resetPassword: builder.mutation({
       query: (payload) => ({
-        url: `/reset-password/${payload.uid}/${payload.token}`,
+        url: `reset-password/${payload.uid}/${payload.token}`,
         method: "POST",
         body: payload,
       }),
     }),
     verify: builder.query({
       query: () => ({
-        url: "/verify/",
+        url: "verify/",
         method: "POST",
       }),
     }),
     profile: builder.query<User, void>({
-      query: () => "/profile/",
+      query: () => "profile/",
     }),
   }),
 });

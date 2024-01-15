@@ -1,11 +1,11 @@
-import { Provider } from "react-redux";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import { SnackbarProvider } from "notistack";
 
 import App from "./App.tsx";
+import { store } from "./redux/store.ts";
 import { ThemeContextProvider } from "./themes/ThemeContextProvider.tsx";
-import { store } from "./redux/Store.ts";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

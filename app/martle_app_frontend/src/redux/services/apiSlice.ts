@@ -8,7 +8,7 @@ import { Mutex } from "async-mutex";
 
 import { logout, setAuth } from "../features/authSlice";
 
-const PATH = "http://127.0.0.1:8000/auth";
+const PATH = "http://127.0.0.1:8000/auth/";
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
   baseUrl: PATH,
@@ -29,7 +29,7 @@ const baseQueryWithReAuth: BaseQueryFn<
       try {
         const refreshResult = await baseQuery(
           {
-            url: "/refresh/",
+            url: "token/refresh/",
             method: "POST",
           },
           api,
