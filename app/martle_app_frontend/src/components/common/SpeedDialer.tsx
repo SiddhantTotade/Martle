@@ -21,7 +21,7 @@ export default function AppSpeedDial() {
   const handleClose = () => setOpen(false);
 
   return (
-    <Box sx={{ height: 330, flexGrow: 20, bottom: 0 }}>
+    <Box sx={{ flexGrow: 20, bottom: 0 }}>
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"
         sx={{ position: "absolute", right: 15, bottom: 15 }}

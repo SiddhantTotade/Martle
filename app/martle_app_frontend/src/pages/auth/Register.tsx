@@ -12,10 +12,10 @@ import { Controller } from "react-hook-form";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 import AuthLayout from "@/layouts/AuthLayout";
-import InputField from "@/components/Input";
-import PrirmaryButton from "@/components/PrirmaryButton";
-import AppLinks from "@/components/Links";
-import ActionContainer from "@/components/ActionContainer";
+import InputField from "@/components/common/Input";
+import PrirmaryButton from "@/components/common/PrirmaryButton";
+import AppLinks from "@/components/common/Links";
+import ActionContainer from "@/components/common/ActionContainer";
 import { useRegister } from "@/hooks/auth/register";
 
 export default function RegisterPage() {

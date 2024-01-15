@@ -6,10 +6,10 @@ import {
 } from "@mui/material";
 
 import AuthLayout from "@/layouts/AuthLayout";
-import InputField from "@/components/Input";
-import PrirmaryButton from "@/components/PrirmaryButton";
-import AppLinks from "@/components/Links";
-import ActionContainer from "@/components/ActionContainer";
+import InputField from "@/components/common/Input";
+import PrirmaryButton from "@/components/common/PrirmaryButton";
+import AppLinks from "@/components/common/Links";
+import ActionContainer from "@/components/common/ActionContainer";
 import { useLogin } from "@/hooks/auth/login";
 
 export default function LoginPage() {

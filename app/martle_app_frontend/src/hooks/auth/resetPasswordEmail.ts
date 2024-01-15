@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { ForgotPassworrdSchema } from "@/schemas/auth";
-import { useResetPasswordEmailMutation } from "@/redux/features/authApiSlice";
+import { useResetPasswordEmailMutation } from "@/redux/services/apiSlice";
 
 interface ResetPasswordEmailForm {
   email: string;

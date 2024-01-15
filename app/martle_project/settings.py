@@ -200,17 +200,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'martle_app_authentication.authentication.CustomJWTAuthentication',
     ),
-    'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer',),
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated"
+    ],
 }
-
-AUTH_COOKIE = "access"
-AUTH_COOKIE_MAX_AGE = 60 * 60 * 24
-AUTH_COOKIE_SECURE = False
-AUTH_COOKIE_HTTP_ONLY = True
-AUTH_COOKIE_PATH = "/"
-AUTH_COOKIE_SAMESITE = "Lax"
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
@@ -229,6 +224,14 @@ SIMPLE_JWT = {
     'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
 
     'JTI_CLAIM': 'jti',
+
+    'AUTH_COOKIE': 'access',
+    'AUTH_COOKIE_DOMAIN': None,
+    'AUTH_COOKIE_MAX_AGE': 60 * 60 * 24,
+    'AUTH_COOKIE_SECURE': True,
+    'AUTH_COOKIE_HTTP_ONLY': True,
+    'AUTH_COOKIE_PATH': '/',
+    'AUTH_COOKIE_SAMESITE': 'None',
 }
 
 PASSWORD_RESET_TIMEOUT = 900

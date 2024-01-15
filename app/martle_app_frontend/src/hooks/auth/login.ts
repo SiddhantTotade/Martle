@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { LoginSchema } from "@/schemas/auth";
-import { useLoginMutation } from "@/redux/features/authApiSlice";
+import { useLoginMutation } from "@/redux/services/apiSlice";
 
 interface LoginForm {
   email: string;

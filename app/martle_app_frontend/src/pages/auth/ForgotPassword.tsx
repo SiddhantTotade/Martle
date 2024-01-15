@@ -2,8 +2,8 @@ import React from "react";
 import { CircularProgress, FormControl, Slide } from "@mui/material";
 
 import AuthLayout from "@/layouts/AuthLayout";
-import InputField from "@/components/Input";
-import PrirmaryButton from "@/components/PrirmaryButton";
+import InputField from "@/components/common/Input";
+import PrirmaryButton from "@/components/common/PrirmaryButton";
 import { useResetPasswordEmail } from "@/hooks/auth/resetPasswordEmail";
 
 export default function ForgotPasswordPage() {

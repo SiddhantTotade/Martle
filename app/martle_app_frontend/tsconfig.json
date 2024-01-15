@@ -24,6 +24,6 @@
     "baseUrl": ".",
     "paths": { "@/*": ["src/*"] }
   },
-  "include": ["src"],
+  "include": ["src", "src/redux/features", "src/redux/services", "src/redux/store.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

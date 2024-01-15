@@ -2,7 +2,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import Router from "./routes";
 
 import { useThemeContext } from "./themes/ThemeContextProvider";
-import AppSpeedDial from "./components/SpeedDialer";
+import AppSpeedDial from "./components/common/SpeedDialer";
 
 function App() {
   const { theme } = useThemeContext();

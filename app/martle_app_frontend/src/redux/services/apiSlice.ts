@@ -1,60 +1,74 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type {
-  BaseQueryFn,
-  FetchArgs,
-  FetchBaseQueryError,
-} from "@reduxjs/toolkit/query";
-import { Mutex } from "async-mutex";
-
-import { logout, setAuth } from "../features/authSlice";
 
 const PATH = "http://127.0.0.1:8000/auth/";
-const mutex = new Mutex();
-const baseQuery = fetchBaseQuery({
-  baseUrl: PATH,
-  credentials: "include",
+
+export const authApi = createApi({
+  reducerPath: "authAPI",
+  baseQuery: fetchBaseQuery({
+    baseUrl: PATH,
+    credentials: "include",
+  }),
+  endpoints: (builder) => ({
+    login: builder.mutation({
+      query: (payload) => ({
+        url: "login/",
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    register: builder.mutation({
+      query: (payload) => ({
+        url: "register/",
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    changePassword: builder.mutation({
+      query: (payload) => ({
+        url: "change-password/",
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    resetPasswordEmail: builder.mutation({
+      query: (payload) => ({
+        url: "reset-password/",
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: (payload) => ({
+        url: `reset-password/${payload.uid}/${payload.token}`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    refreshToken: builder.mutation({
+      query: (payload) => ({
+        url: "token/refresh/",
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    verify: builder.query({
+      query: () => ({
+        url: "verify/",
+        method: "POST",
+      }),
+    }),
+    profile: builder.query({
+      query: () => "profile/",
+    }),
+  }),
 });
 
-const baseQueryWithReAuth: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api, extraOptions) => {
-  await mutex.waitForUnlock();
-  let result = await baseQuery(args, api, extraOptions);
-
-  if (result.error && result.error.status === 401) {
-    if (!mutex.isLocked()) {
-      const release = await mutex.acquire();
-      try {
-        const refreshResult = await baseQuery(
-          {
-            url: "token/refresh/",
-            method: "POST",
-          },
-          api,
-          extraOptions
-        );
-
-        if (refreshResult.data) {
-          api.dispatch(setAuth());
-          result = await baseQuery(args, api, extraOptions);
-        } else {
-          api.dispatch(logout());
-        }
-      } finally {
-        release();
-      }
-    } else {
-      await mutex.waitForUnlock();
-      result = await baseQuery(args, api, extraOptions);
-    }
-  }
-  return result;
-};
-
-export const apiSlice = createApi({
-  reducerPath: "api",
-  baseQuery: baseQueryWithReAuth,
-  endpoints: (builder) => ({}),
-});
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useChangePasswordMutation,
+  useResetPasswordEmailMutation,
+  useResetPasswordMutation,
+  useProfileQuery,
+  useVerifyQuery,
+} = authApi;

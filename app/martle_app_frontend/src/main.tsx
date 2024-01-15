@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { SnackbarProvider } from "notistack";
 
 import App from "./App.tsx";
-import { store } from "./redux/store.ts";
+import { store } from "@/redux/store.ts";
 import { ThemeContextProvider } from "./themes/ThemeContextProvider.tsx";
 import "./index.css";
 

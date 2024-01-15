@@ -51,6 +51,13 @@ export const getDesignTokens = (mode: PaletteMode) => {
           },
         },
       },
+      MuiLink: {
+        styleOverrides: {
+          root: {
+            textDecoration: "none",
+          },
+        },
+      },
     },
     ...appThemes[mode],
     typography: typographyVariant,
