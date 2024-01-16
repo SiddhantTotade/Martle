@@ -33,7 +33,7 @@ export default function SearchBar() {
               </InputAdornment>
             ),
           }}
-          label="What are you looking for ?"
+          label="Martle Search"
           variant="outlined"
         />
       )}

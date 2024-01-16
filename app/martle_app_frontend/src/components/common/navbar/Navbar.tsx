@@ -20,7 +20,7 @@ export default function Navbar() {
             }}
           >
             <NavDrawer />
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography fontSize={30} sx={{ flexGrow: 1 }}>
               Martle
             </Typography>
           </Box>

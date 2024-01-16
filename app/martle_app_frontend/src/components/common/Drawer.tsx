@@ -1,10 +1,7 @@
-import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
-
+import CssBaseline from "@mui/material/CssBaseline/CssBaseline";
 import {
   Box,
   Drawer,
-  CssBaseline,
   List,
   Divider,
   IconButton,
@@ -13,11 +10,13 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import * as React from "react";
+import { styled, useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import LogoutIcon from "@mui/icons-material/Logout";
+
+import { navLinks } from "./navbar/AllLinks";
 
 const drawerWidth = 240;
 
@@ -35,6 +34,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
+    marginRight: "-3rem",
   }),
 }));
 
@@ -81,38 +81,40 @@ export default function NavDrawer() {
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
+            {theme.direction === "ltr" && <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
+          {navLinks.map((link, id) => (
+            <React.Fragment key={id}>
+              {(id % 10 === 0 || id % 10 === 1 || id % 10 === 2) && (
+                <ListItem key={id} disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon>{link.icon}</ListItemIcon>
+                    <ListItemText
+                      primaryTypographyProps={{ fontSize: "small" }}
+                      primary={link.link}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              )}
+            </React.Fragment>
           ))}
         </List>
         <Divider />
         <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <LogoutIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText
+                primaryTypographyProps={{ fontSize: "small" }}
+                primary="Logout"
+              />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
       <Main open={open}>

@@ -23,7 +23,7 @@ const theme = {
 
 export const getDesignTokens = (mode: PaletteMode) => {
   const typographyVariant: ExtendTypographyOptions = {
-    fontFamily: "Segoe UI",
+    fontFamily: "Noto Serif, serif",
     appName: {
       fontSize: "2rem",
       color: getAppNameColor(mode),
