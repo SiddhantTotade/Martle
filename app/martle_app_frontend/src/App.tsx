@@ -10,8 +10,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppSpeedDial />
       <Router />
+      <AppSpeedDial />
     </ThemeProvider>
   );
 }

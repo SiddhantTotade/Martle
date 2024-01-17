@@ -1,0 +1,28 @@
+.latest-deals > div > img:hover {
+  transform: scale(1.1);
+}
+
+.shop-deals {
+  transition: 0.5s;
+}
+
+.card-content {
+  transition: 0.5s;
+}
+
+.text {
+  transition: 0.5s;
+}
+
+.image {
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.shop-deals:hover .text {
+  opacity: 0;
+}
+
+.shop-deals:hover .image {
+  opacity: 1;
+}

@@ -1,8 +1,9 @@
-import { Container, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { ReactNode } from "react";
 import Carousel from "react-multi-carousel";
 
 import "./styles/Carousel.css";
+import AppContainer from "./Container";
 import "react-multi-carousel/lib/styles.css";
 
 const responsive = {
@@ -32,7 +33,7 @@ interface Props {
 
 export default function ProductCarousel({ title, children }: Props) {
   return (
-    <Container maxWidth={false} disableGutters sx={{ width: "95%", mt: 5 }}>
+    <AppContainer>
       <Typography fontSize={20} fontWeight={500}>
         {title}
       </Typography>
@@ -46,6 +47,6 @@ export default function ProductCarousel({ title, children }: Props) {
       >
         {children}
       </Carousel>
-    </Container>
+    </AppContainer>
   );
 }

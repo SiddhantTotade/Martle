@@ -7,7 +7,7 @@ import ProductCarousel from "../common/Carousel";
 
 export default function NewArrival() {
   return (
-    <ProductCarousel title="New Arrival | Discount upto 50%">
+    <ProductCarousel title="New Arrival | Upto 50% off">
       <ProductCard
         elevation={5}
         sx={{
@@ -21,7 +21,7 @@ export default function NewArrival() {
         }}
       >
         <Image
-          src="https://images.pexels.com/photos/821651/pexels-photo-821651.jpeg?cs=srgb&dl=pexels-alex-andrews-821651.jpg&fm=jpg"
+          src="https://m.media-amazon.com/images/I/51AjohATwIL._AC_SY200_.jpg"
           alt="product_image"
           width="100%"
           height=""
@@ -30,7 +30,7 @@ export default function NewArrival() {
             width: "100%",
             borderRadius: "5px",
             border: "2px solid",
-            objectFit: "contain",
+            objectFit: "none",
           }}
         />
         <Typography
@@ -51,7 +51,7 @@ export default function NewArrival() {
             padding: 0.7,
           }}
         >
-          <Typography fontSize={15} fontWeight={500}>
+          <Typography fontSize={15} fontWeight={700}>
             ₹ 14,000
           </Typography>
           <Chip

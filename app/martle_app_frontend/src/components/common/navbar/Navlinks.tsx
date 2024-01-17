@@ -1,7 +1,7 @@
+import React from "react";
 import { Box, Link } from "@mui/material";
 
 import { navLinks } from "./AllLinks";
-import React from "react";
 
 export default function Navlinks() {
   return (
