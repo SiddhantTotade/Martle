@@ -1,3 +1,13 @@
+.hero-carousel {
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 5px;
+}
+
+.hero-carousel > ul > li {
+  border-radius: 5px;
+}
+
 .latest-deals > div > img:hover {
   transform: scale(1.1);
 }
@@ -25,4 +35,13 @@
 
 .shop-deals:hover .image {
   opacity: 1;
+}
+
+.product-nav-card > div > img:hover {
+  filter: brightness(0.3);
+}
+
+.product-nav-card:hover .product-nav-text {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-200%);
 }

@@ -4,8 +4,8 @@ import { HTMLAttributes } from "react";
 interface Props extends HTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
-  width: string;
-  height: null | string;
+  width?: string;
+  height?: null | string;
 }
 
 export default function Image({

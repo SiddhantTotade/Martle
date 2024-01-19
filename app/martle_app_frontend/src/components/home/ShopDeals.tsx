@@ -5,7 +5,10 @@ import Image from "../common/Image";
 
 export default function ShopDeals() {
   return (
-    <ProductCarousel title="Shop Deals in Top Categories | Home, Kitchen, Appliances & more">
+    <ProductCarousel
+      id="shop_deals"
+      title="Shop Deals in Top Categories | Home, Kitchen, Appliances & more"
+    >
       <ProductCard
         className="product-container shop-deals"
         elevation={5}
@@ -15,7 +18,6 @@ export default function ShopDeals() {
           width: "70%",
           position: "relative",
           transition: "0.5s",
-          height: "30vh",
           cursor: "pointer",
         }}
       >

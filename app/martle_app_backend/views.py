@@ -9,9 +9,10 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authentication import *
+from martle_app_authentication.serializers import CustomerSerializer
+from martle_app_authentication.renderers import *
 from .models import *
 from .serializers import *
-from martle_app_authentication.renderers import *
 # import pandas as pd
 
 
@@ -64,44 +65,39 @@ def SetImageView(request):
 
 
 class ProductView(APIView):
-    def get_all_products(self) -> QuerySet:
-        return Product.objects.select_related(
-            'product_category').all().order_by("?")
 
-    def get_all_brands(self) -> QuerySet:
-        return Brands.objects.all()[:20]
-
-    def get_all_products_by_product_brand(self, brand_id: QuerySet) -> list:
-        return Product.objects.filter(product_brand=brand_id).order_by("?")
-
-    def get_him_products(self) -> QuerySet:
-        return Product.objects.select_related('product_gender').filter(product_gender__in=[1, 2]).order_by("?")
-
-    def get(self, request):
+    def get(self, request, product_categories, *args, **kwargs):
         # getting all products
-        all_products = self.get_all_products()
-        all_brands_products = self.get_all_brands()
-        brand_id = Brands.objects.values_list(
-            'id', flat=True).order_by('?').first()
-        special_products = self.get_all_products_by_product_brand(brand_id)
-        special_product_brand_name_and_image = Brands.objects.filter(
-            id=special_products.values().first()['product_brand_id'])
-        wedding_products = self.get_him_products()
+        category = ProductCategoryChoices.objects.filter(
+            product_category__in=product_categories.split(','))
+        all_products = Product.objects.filter(
+            product_category__in=category).order_by("?")
+        serialized_product = ProductLightSerializer(all_products, many=True)
+        return Response(serialized_product.data, status=status.HTTP_200_OK)
 
-        # checking products exist or not
-        if all_products:
-            product_serialized_data = ProductLightSerializer(
-                all_products, many=True)
-            brand_serialized_data = BrandSerializer(
-                all_brands_products, many=True)
-            special_products_serialized_data = SpecialProductSerializer(
-                special_products, many=True)
-            special_product_image_and_name_serialized_data = BrandSerializer(
-                special_product_brand_name_and_image, many=True)
-            wedding_products_serialized_data = WeddingSerializer(
-                wedding_products, many=True)
-            return Response({"product_data": product_serialized_data.data, "brand_data": brand_serialized_data.data, "special_product_data": special_products_serialized_data.data, "special_product_image_and_name": special_product_image_and_name_serialized_data.data, 'wedding_products': wedding_products_serialized_data.data}, status=status.HTTP_200_OK)
-        return JsonResponse("NULL", safe=False)
+        # all_products = self.get_all_products()
+        # all_brands_products = self.get_all_brands()
+        # brand_id = Brands.objects.values_list(
+        #     'id', flat=True).order_by('?').first()
+        # special_products = self.get_all_products_by_product_brand(brand_id)
+        # special_product_brand_name_and_image = Brands.objects.filter(
+        #     id=special_products.values().first()['product_brand_id'])
+        # wedding_products = self.get_him_products()
+
+        # # checking products exist or not
+        # if all_products:
+        #     product_serialized_data = ProductLightSerializer(
+        #         all_products, many=True)
+        #     brand_serialized_data = BrandSerializer(
+        #         all_brands_products, many=True)
+        #     special_products_serialized_data = SpecialProductSerializer(
+        #         special_products, many=True)
+        #     special_product_image_and_name_serialized_data = BrandSerializer(
+        #         special_product_brand_name_and_image, many=True)
+        #     wedding_products_serialized_data = WeddingSerializer(
+        #         wedding_products, many=True)
+        #     return Response({"product_data": product_serialized_data.data, "brand_data": brand_serialized_data.data, "special_product_data": special_products_serialized_data.data, "special_product_image_and_name": special_product_image_and_name_serialized_data.data, 'wedding_products': wedding_products_serialized_data.data}, status=status.HTTP_200_OK)
+        # return JsonResponse("NULL", safe=False)
 
     def post(self, request):
         # getting product data which is going to be save

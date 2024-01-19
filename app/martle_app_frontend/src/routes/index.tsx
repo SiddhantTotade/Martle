@@ -1,29 +1,78 @@
+import React, { Suspense } from "react";
 import {
   createBrowserRouter,
   RouteObject,
   RouterProvider,
 } from "react-router-dom";
 
-import LoginPage from "@/pages/auth/Login";
-import RegisterPage from "@/pages/auth/Register";
-import ResetPasswordPage from "@/pages/auth/ResetPassword";
-import ForgotPasswordPage from "@/pages/auth/ForgotPassword";
-import NotFoundPage from "@/pages/404NotFound";
-import Home from "@/pages/app/Home";
+const LoginPage = React.lazy(() => import("@/pages/auth/Login"));
+const RegisterPage = React.lazy(() => import("@/pages/auth/Register"));
+const ResetPasswordPage = React.lazy(
+  () => import("@/pages/auth/ResetPassword")
+);
+const ForgotPasswordPage = React.lazy(
+  () => import("@/pages/auth/ForgotPassword")
+);
+const HomePage = React.lazy(() => import("@/pages/app/Home"));
+const NotFoundPage = React.lazy(() => import("@/pages/404NotFound"));
 
 type Route = RouteObject[] | RouteObject;
 
 const authRoutes: Route = [
-  { path: "/auth/login", element: <LoginPage /> },
-  { path: "/auth/register", element: <RegisterPage /> },
-  { path: "/auth/reset-password/*", element: <ResetPasswordPage /> },
-  { path: "/auth/forgot-password", element: <ForgotPasswordPage /> },
+  {
+    path: "/auth/login",
+    element: (
+      <Suspense>
+        <LoginPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/auth/register",
+    element: (
+      <Suspense>
+        <RegisterPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/auth/reset-password/*",
+    element: (
+      <Suspense>
+        <ResetPasswordPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/auth/forgot-password",
+    element: (
+      <Suspense>
+        <ForgotPasswordPage />
+      </Suspense>
+    ),
+  },
 ];
 
-const appRoutes: Route = [{ path: "/", element: <Home /> }];
+const appRoutes: Route = [
+  {
+    path: "/",
+    element: (
+      <Suspense>
+        <HomePage />
+      </Suspense>
+    ),
+  },
+];
 
 const router = createBrowserRouter([
-  { path: "*", element: <NotFoundPage /> },
+  {
+    path: "*",
+    element: (
+      <Suspense>
+        <NotFoundPage />
+      </Suspense>
+    ),
+  },
   ...authRoutes,
   ...appRoutes,
 ]);

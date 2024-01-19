@@ -27,13 +27,14 @@ const responsive = {
 };
 
 interface Props {
-  title: string;
+  id?: string;
+  title?: string;
   children: ReactNode;
 }
 
-export default function ProductCarousel({ title, children }: Props) {
+export default function ProductCarousel({ id, title, children }: Props) {
   return (
-    <AppContainer>
+    <AppContainer id={id}>
       <Typography fontSize={20} fontWeight={500}>
         {title}
       </Typography>
