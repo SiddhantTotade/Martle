@@ -12,13 +12,26 @@ import { red } from "@mui/material/colors";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  label: string;
+  label?: string;
+  placeholder?: string;
   type: string;
+  rows?: string;
+  multiline?: boolean;
   error?: boolean;
+  outsideValue?: number;
   control: any;
 }
 
-export default function InputField({ name, control, label, type }: InputProps) {
+export default function InputField({
+  name,
+  control,
+  label,
+  placeholder,
+  rows,
+  multiline,
+  outsideValue,
+  type,
+}: InputProps) {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
 
@@ -48,9 +61,12 @@ export default function InputField({ name, control, label, type }: InputProps) {
           }
           fullWidth
           variant="outlined"
-          label={label}
+          label={label || ""}
+          placeholder={placeholder}
+          multiline={multiline}
+          rows={rows}
           type={showPassword ? "text" : type}
-          value={value}
+          value={outsideValue !== null ? outsideValue : value}
           onChange={onChange}
           error={!!error}
           helperText={

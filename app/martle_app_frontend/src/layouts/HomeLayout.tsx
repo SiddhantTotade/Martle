@@ -21,20 +21,29 @@ export default function HomeLayout() {
   const data = useSelector((state: any) => state["product"]);
   const { onSubmit, isLoading } = useGetProducts();
 
-  console.log(data["new_arrival"]);
+  const newArrivalFetched = useSelector(
+    (state: any) => state["product"]["new_arrival"]["fetched"]
+  );
+  const newTrendingFetched = useSelector(
+    (state: any) => state["product"]["trending_deals"]["fetched"]
+  );
+
+  const fetchData = () => {
+    if (!newArrivalFetched) {
+      onSubmit({ productCategory: newArrivals, type: "new_arrival" });
+    } else if (!newTrendingFetched) {
+      onSubmit({ productCategory: trendDeals, type: "trending_deals" });
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
+      const isBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight;
 
-      if (scrollTop + windowHeight >= documentHeight) {
-        if (data["new_arrival"]["fetched"] != true) {
-          onSubmit({ productCategory: newArrivals, type: "new_arrival" });
-        } else if (data["trending_deals"]["fetched"] != true) {
-          onSubmit({ productCategory: trendDeals, type: "trending_deals" });
-        }
+      if (isBottom) {
+        fetchData();
       }
     };
 

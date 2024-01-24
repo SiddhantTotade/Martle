@@ -1,14 +1,17 @@
-import { Box } from "@mui/material";
-import { PropsWithChildren } from "react";
+import { Box, SxProps } from "@mui/material";
+import { ReactNode } from "react";
 
-export default function ActionContainer({ children }: PropsWithChildren) {
+interface Props {
+  sx?: SxProps;
+  children: ReactNode;
+}
+
+export default function ActionContainer({ children, sx }: Props) {
   return (
     <Box
       sx={{
         width: "100%",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
+        ...sx,
       }}
     >
       {children}

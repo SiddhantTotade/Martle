@@ -5,7 +5,7 @@ import Image from "../common/Image";
 import ProductCard from "../common/Card";
 import ProductCarousel from "../common/Carousel";
 import CardSkeleton from "./ui/CardSkeleton";
-import { productDiscount } from "./utils/helperFunctions";
+import { productDiscount } from "../common/utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -37,7 +37,7 @@ export default function NewArrival({ data, isLoading }: Props) {
               maxWidth: "90%",
               "&:hover": { border: "1px solid" },
             }}
-            onClick={() => navigate(product.product_slug)}
+            onClick={() => navigate(`/product/${product.product_slug}`)}
           >
             <Image
               src={`http://127.0.0.1:8000${product.product_cover_image}`}

@@ -1,0 +1,36 @@
+.container {
+  width: 30%;
+  position: fixed;
+}
+
+.left {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.left_1 {
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.img_wrap {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  border: 2px solid gainsboro;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.img_wrap img {
+  width: 100%;
+  height: auto;
+}
+
+.active {
+  border: 2px solid rgb(235, 158, 15);
+}

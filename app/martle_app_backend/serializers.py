@@ -1,5 +1,6 @@
 from .models import *
 from martle_app_authentication.helpers import *
+from martle_app_authentication.serializers import UserProfileSerializer
 from rest_framework import serializers
 
 
@@ -73,37 +74,26 @@ class CartSerializer(serializers.ModelSerializer):
 
 # --------- Rating and Review Serializer
 class RatingAndReviewSerializer(serializers.ModelSerializer):
+    user = UserProfileSerializer(read_only=True)
+
     class Meta:
         model = RatingAndReview
-        fields = ['user', 'product', 'date', 'content', 'rating']
-
-    def create(self, validated_data):
-        rating_and_review = RatingAndReview.objects.create(user=validated_data['user'],
-                                                           product=validated_data['product'], date=validated_data['date'], content=validated_data['content'], rating=validated_data['rating'])
-        rating_and_review.save()
-        return rating_and_review
+        fields = ['user', 'product', 'review', 'rating', 'date']
 
 
-# --------- Rating and Review Serializer
+# --------- Question and Answer Serializer
 class QuestionAndAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionAndAnswer
-        fields = "__all__"
-        depth = 1
+        fields = ['user', 'product', 'query']
 
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
 
-        representation.pop("product")
-        representation.pop("user")
+    #     representation.pop("product")
+    #     representation.pop("user")
 
-        return representation
-
-    def create(self, validated_data):
-        question_and_answer = QuestionAndAnswer.objects.create(
-            user=validated_data["user"], product=validated_data['product'], date=validated_data['date'], question=validated_data['question'], answer=validated_data['answer'])
-        question_and_answer.save()
-        return question_and_answer
+    #     return representation
 
 
 # --------- Order Placed Serializer

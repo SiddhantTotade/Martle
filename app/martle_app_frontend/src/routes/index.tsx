@@ -13,7 +13,9 @@ const ResetPasswordPage = React.lazy(
 const ForgotPasswordPage = React.lazy(
   () => import("@/pages/auth/ForgotPassword")
 );
+
 const HomePage = React.lazy(() => import("@/pages/app/Home"));
+const ProductPage = React.lazy(() => import("@/pages/app/Product"));
 const NotFoundPage = React.lazy(() => import("@/pages/404NotFound"));
 
 type Route = RouteObject[] | RouteObject;
@@ -59,6 +61,14 @@ const appRoutes: Route = [
     element: (
       <Suspense>
         <HomePage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/product/:slug",
+    element: (
+      <Suspense>
+        <ProductPage />
       </Suspense>
     ),
   },

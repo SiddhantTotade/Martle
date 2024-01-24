@@ -153,8 +153,8 @@ class Favorite(models.Model):
 class RatingAndReview(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=False)
-    content = models.TextField()
+    date = models.DateField(auto_now_add=True)
+    review = models.TextField()
     rating = models.DecimalField(
         null=True, blank=True, max_digits=5, decimal_places=1)
 
@@ -166,8 +166,8 @@ class RatingAndReview(models.Model):
 class QuestionAndAnswer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=False)
-    comment = models.TextField()
+    date = models.DateField(auto_now_add=True)
+    query = models.TextField()
     reply = models.ForeignKey(
         "self", null=True, blank=True, on_delete=models.CASCADE)
 

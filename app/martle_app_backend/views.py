@@ -273,21 +273,31 @@ class RatingsAndReviewsView(APIView):
             rating_and_review = RatingAndReview.objects.filter(product=pk)
             rating_and_review_serialized_data = RatingAndReviewSerializer(
                 rating_and_review, many=True)
-            return Response({"data": rating_and_review_serialized_data.data}, status=status.HTTP_200_OK)
+
+            return Response({"data": reversed(rating_and_review_serialized_data.data)}, status=status.HTTP_200_OK)
 
         except Exception as e:
             return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def post(self, request, pk):
         try:
-            rating_and_review_json_data = JSONParser().parse(request)
+            user = request.data.get('user')
+            product = request.data.get('product')
+            date = request.data.get('date')
+            review = request.data.get('review')
+            rating = request.data.get('rating')
+
+            data = {
+                "user": user, "product": product, "date": date, "review": review, "rating": rating}
+
             rating_and_review_serialized_data = RatingAndReviewSerializer(
-                data=rating_and_review_json_data)
+                data=data)
 
             if rating_and_review_serialized_data.is_valid():
                 rating_and_review_serialized_data.save()
 
-            return Response({"msg": "Rating submitted"}, status=status.HTTP_200_OK)
+                return Response({"msg": "Rating submitted"}, status=status.HTTP_200_OK)
+            return Response({"error": "Some error occured"}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({"msg": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -304,12 +314,18 @@ class QuestionAndAnswerView(APIView):
 
     def post(self, request, pk):
         try:
-            question_and_answer_json_data = JSONParser().parse(request)
+            user = request.data.get('user')
+            product = request.data.get('product')
+            query = request.data.get('query')
+
+            data = {
+                "user": user, "product": product, "query": query}
             question_and_answer_serialized_data = QuestionAndAnswerSerializer(
-                data=question_and_answer_json_data)
+                data=data)
 
             if question_and_answer_serialized_data.is_valid():
                 question_and_answer_serialized_data.save()
-            return Response({"msg": "Question submitted"}, status=status.HTTP_200_OK)
+                
+                return Response({"msg": "Question submitted"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"msg": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
