@@ -1,12 +1,27 @@
-import { AppBar, Box, Toolbar, Typography, FormControl } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  FormControl,
+  Avatar,
+  Tooltip,
+} from "@mui/material";
 
 import NavDrawer from "../Drawer";
 import PrirmaryButton from "../PrirmaryButton";
 import SearchBar from "./SearchBar";
 import Navlinks from "./Navlinks";
 import MobileSearchBar from "./MobileSearchBar";
+import { useSelector } from "react-redux";
+import { RootState } from "@reduxjs/toolkit/query";
 
 export default function Navbar() {
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+  const user = useSelector((state: RootState) => state.user);
+
   return (
     <Box>
       <AppBar
@@ -50,8 +65,16 @@ export default function Navbar() {
             <Navlinks />
           </Box>
           <Box sx={{ display: "flex", gap: "10px" }}>
-            <PrirmaryButton label="Login" />
-            <PrirmaryButton label="Register" />
+            {isAuthenticated ? (
+              <Tooltip title={`${user.name} | ${user.email}`}>
+                <Avatar />
+              </Tooltip>
+            ) : (
+              <>
+                <PrirmaryButton label="Login" />
+                <PrirmaryButton label="Register" />
+              </>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

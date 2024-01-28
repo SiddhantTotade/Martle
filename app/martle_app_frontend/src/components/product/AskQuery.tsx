@@ -56,7 +56,11 @@ export default function AskQuestion(props) {
 
   return (
     <Box>
-      <SecondaryButton variant="outlined" onClick={handleClickOpen}>
+      <SecondaryButton
+        sx={{ height: "8vh" }}
+        variant="outlined"
+        onClick={handleClickOpen}
+      >
         Ask Query
       </SecondaryButton>
       <AppDialog

@@ -1,15 +1,13 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
-from django.db.models import QuerySet
-from django.core import serializers as customer_data_serializer
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authentication import *
-from martle_app_authentication.serializers import CustomerSerializer
+from martle_app_authentication.serializers import CustomerAddressSerializer
 from martle_app_authentication.renderers import *
 from .models import *
 from .serializers import *
@@ -141,36 +139,43 @@ class BrandView(APIView):
         return JsonResponse("NULL", safe=False)
 
 
-class CustomerView(APIView):
+class CustomerAddressView(APIView):
     def get(self, request):
         # getting customers by id
-        all_customers = CustomerAddress.objects.all()
+        customers_address = CustomerAddress.objects.filter(
+            user=request.user.id)
 
         # checking customer exist or not
-        if all_customers:
-            customer_serializer = customer_data_serializer.serialize(
-                'json', all_customers)
-            return JsonResponse(customer_serializer, safe=False)
-        return JsonResponse("No customer found", safe=False)
+        if customers_address:
+            customer_serializer = CustomerAddressSerializer(
+                customers_address, many=True)
+            return Response({"data": customer_serializer.data}, status=status.HTTP_200_OK)
+        return Response("No address found", safe=False)
 
     # saving customer data
     def post(self, request):
         # getting customer data which is going to be save
-        customer_json_data = JSONParser().parse(request)
-        customer_serialized_data = CustomerSerializer(data=customer_json_data)
+        get_customer_address = CustomerAddress.objects.filter(
+            user=request.user.id)
+
+        if get_customer_address.count() == 3:
+            return Response("User can upload upto three addresses", status=status.HTTP_404_NOT_FOUND)
+
+        customer_serialized_data = CustomerAddressSerializer(
+            data=request.data)
 
         # saving customer data
         if customer_serialized_data.is_valid():
             customer_serialized_data.save()
-            return JsonResponse("Customer added successfully", safe=False)
-        return JsonResponse("Failed to add customer", safe=False)
+            return Response("Address added successfully", status=status.HTTP_200_OK)
+        return Response("Failed to add address", status=status.HTTP_404_NOT_FOUND)
 
     # updating customer using pk
     def put(self, request, pk):
         # getting customer modified data which is going to be update
         customer_json_data = JSONParser().parse(request)
         customer_by_id = CustomerAddress.objects.get(pk=pk)
-        customer_serialized_data = CustomerSerializer(
+        customer_serialized_data = CustomerAddressSerializer(
             customer_by_id, data=customer_json_data)
 
         # saving customer data
@@ -190,10 +195,8 @@ class CustomerView(APIView):
 def favorite_add(request, id):
     fav = get_object_or_404(Product, id=id)
     if fav.favourite.filter(id=request.user.id).exists():
-        print("Hello")
         fav.favourite.remove(request.user.id)
     else:
-        print("Bello")
         fav.favourite.add(request.user.id)
     return Response({"msg": "added"}, safe=False)
 
@@ -201,7 +204,6 @@ def favorite_add(request, id):
 @csrf_exempt
 def favorite_list(request):
     fav = Product.objects.filter(favourite=request.user.id)
-    print(fav)
     return HttpResponse({"fav": fav}, status.HTTP_200_OK)
 
 
@@ -325,7 +327,7 @@ class QuestionAndAnswerView(APIView):
 
             if question_and_answer_serialized_data.is_valid():
                 question_and_answer_serialized_data.save()
-                
+
                 return Response({"msg": "Question submitted"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"msg": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

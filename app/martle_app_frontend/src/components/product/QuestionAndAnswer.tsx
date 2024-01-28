@@ -6,14 +6,16 @@ import QuestionAnswerAutoComplete from "./QuestionAnswerAutoComplete";
 
 export default function QuestionAndAnswer(props) {
   return (
-    <AppContainer sx={{ mt: 2 }}>
+    <AppContainer sx={{ mt: 0 }}>
       <Typography fontWeight={"bold"} fontSize={20}>
         Questions & Answers
       </Typography>
       <AppContainer
-        sx={{ display: "flex", justifyContent: "center", gap: "10px", mt: 0 }}
+        sx={{ display: "flex", justifyContent: "center", gap: "10px", mt: 1 }}
       >
-        <Box sx={{ display: "flex", maxWidth: "100%", flexGrow: 1 }}>
+        <Box
+          sx={{ width: "80%", display: "flex", maxWidth: "90%", flexGrow: 1 }}
+        >
           <QuestionAnswerAutoComplete product_id={props.product_id} />
         </Box>
         <Box

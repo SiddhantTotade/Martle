@@ -76,7 +76,7 @@ class CustomerAddress(models.Model):
     is_active = models.BooleanField(default=False)
 
     def __str__(self):
-        return (str(self.id) + " - " + str(self.name) + " - " + str(self.user))
+        return (str(self.id) + " - " + str(self.user))
 
     def get_absolute_url(self):
         return reverse('address')

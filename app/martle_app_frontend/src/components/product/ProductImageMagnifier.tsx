@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import ReactImageMagnify from "react-image-magnify";
 
 import Image from "../common/Image";
-// import ProductAddPurchase from "./ProductAddPurchase";
 import ProductAddPurchase from "./ProductAddAndPuchase";
 import "./style/productMagnifier.css";
 

@@ -20,7 +20,7 @@ export default function QuestionAnswerAutoComplete(props) {
   }, [props.product_id]);
 
   return (
-    <Stack spacing={1} sx={{ width: "100%", mt: 2 }}>
+    <Stack spacing={1} sx={{ width: "100%", ml: 0 }}>
       <Autocomplete
         freeSolo
         id="free-solo-2-demo"

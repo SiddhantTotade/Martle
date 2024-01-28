@@ -11,7 +11,7 @@ export default function MarkDownPreview() {
       <Typography fontSize={20} fontWeight={"bold"}>
         Product Description
       </Typography>
-      <AppContainer sx={{ mt: 2 }}>
+      <AppContainer sx={{ mt: 1 }}>
         <MarkdownEditor.Markdown
           style={{
             listStyleType: "unset",

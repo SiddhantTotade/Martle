@@ -4,6 +4,9 @@ import {
   RouteObject,
   RouterProvider,
 } from "react-router-dom";
+import { ProtectedRoute } from "./ProtectedRoute";
+import { CircularProgress } from "@mui/material";
+import OrderProduct from "@/pages/app/OrderProduct";
 
 const LoginPage = React.lazy(() => import("@/pages/auth/Login"));
 const RegisterPage = React.lazy(() => import("@/pages/auth/Register"));
@@ -59,17 +62,25 @@ const appRoutes: Route = [
   {
     path: "/",
     element: (
-      <Suspense>
+      <ProtectedRoute>
         <HomePage />
-      </Suspense>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/product/:slug",
     element: (
-      <Suspense>
+      <ProtectedRoute>
         <ProductPage />
-      </Suspense>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/buy-order/proceed/:slug",
+    element: (
+      <ProtectedRoute>
+        <OrderProduct />
+      </ProtectedRoute>
     ),
   },
 ];
@@ -78,7 +89,7 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: (
-      <Suspense>
+      <Suspense fallback={<CircularProgress />}>
         <NotFoundPage />
       </Suspense>
     ),

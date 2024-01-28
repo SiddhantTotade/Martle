@@ -15,8 +15,8 @@ urlpatterns = [
             ProductView.as_view(), name="all_products"),
     re_path(r"^all-brands/$", BrandView.as_view(), name="all_brands"),
     re_path(r"^product/([0-9]+)$", ProductView.as_view()),
-    re_path(r"^customer/([0-9]+)$", CustomerView.as_view()),
-    re_path(r"^customer-save$", CustomerView.as_view()),
+    re_path(r"^address/$", CustomerAddressView.as_view()),
+    re_path(r"^address-save$", CustomerAddressView.as_view()),
 
     re_path(r"^get-description$", upload_description),
 

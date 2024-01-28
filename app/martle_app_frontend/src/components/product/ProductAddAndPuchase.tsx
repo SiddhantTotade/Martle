@@ -1,10 +1,14 @@
+import { useNavigate, useParams } from "react-router-dom";
 import { Box } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShopIcon from "@mui/icons-material/Shop";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import SecondaryButton from "../common/SecondaryButton";
 
 export default function ProductAddPurchase() {
+  const navigate = useNavigate();
+  const { slug } = useParams();
+
   return (
     <Box
       sx={{
@@ -32,6 +36,7 @@ export default function ProductAddPurchase() {
           width: "80%",
           gap: "10px",
         }}
+        onClick={() => navigate(`/buy-order/proceed/${slug}`)}
       >
         <ShopIcon />
         Buy now

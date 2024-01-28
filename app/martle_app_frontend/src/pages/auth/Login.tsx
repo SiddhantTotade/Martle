@@ -44,7 +44,9 @@ export default function LoginPage() {
             )}
           </FormControl>
         </Slide>
-        <ActionContainer>
+        <ActionContainer
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
           <AppLinks href="/auth/forgot-password">Forgot Password ?</AppLinks>
           <Typography>
             New to Martle ? <AppLinks href="/auth/register">Register</AppLinks>

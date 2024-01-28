@@ -16,7 +16,7 @@ const RatingAndReviews = (props) => {
         sx={{
           display: "flex",
           gap: "2px",
-          mt: 2,
+          mt: 1,
         }}
       >
         <Box sx={{ width: "100%" }}>

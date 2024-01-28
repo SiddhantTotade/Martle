@@ -110,7 +110,9 @@ export default function RegisterPage() {
           </Slide>
         ) : undefined}
       </FormControl>
-      <ActionContainer>
+      <ActionContainer
+        sx={{ display: "flex", justifyContent: "space-between" }}
+      >
         {continueForm && (
           <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <IconButton onClick={() => setContinueForm(false)} size="small">

@@ -37,7 +37,7 @@ export default function Specification({ data }: any) {
       <Typography fontSize={20} fontWeight={"bold"}>
         Specification
       </Typography>
-      <AppContainer sx={{ mt: 0 }}>
+      <AppContainer sx={{ mt: 1 }}>
         <TableContainer>
           <Table>
             <TableBody>

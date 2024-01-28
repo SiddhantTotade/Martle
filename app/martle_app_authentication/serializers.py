@@ -33,12 +33,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 
 # User login serilaizer
-class UserLoginSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(max_length=255)
-
-    class Meta:
-        model = User
-        fields = ['email', 'password']
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(
+        style={"input_type": "password"}, write_only=True)
 
 
 # User profile serializer
@@ -156,13 +154,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 # --------- Customer Serializer
-class CustomerSerializer(serializers.ModelSerializer):
+class CustomerAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerAddress
         fields = '__all__'
-
-    def create(self, validated_data):
-        customer = CustomerAddress.objects.create(user=validated_data['user'], name=validated_data['name'], address=validated_data['address'], locality=validated_data['locality'],
-                                                  city=validated_data['city'], state=validated_data['state'], country=validated_data['country'], zipcode=validated_data['zipcode'])
-        customer.save()
-        return customer

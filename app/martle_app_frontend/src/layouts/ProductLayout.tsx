@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { Box } from "@mui/material";
 
 import { useProductBySlugQuery } from "@/redux/services/appApiSlice";
 import Navbar from "@/components/common/navbar/Navbar";
