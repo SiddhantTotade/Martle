@@ -5,6 +5,12 @@ export const initialState = {
   questionAndAnswer: {
     open: false,
   },
+  addAddress: {
+    open: false,
+  },
+  editAddress: {
+    open: false,
+  },
 };
 
 export default function DialogActionReducer(state, action) {
@@ -12,6 +18,7 @@ export default function DialogActionReducer(state, action) {
     case "OPEN_DIALOG":
       return {
         ...state,
+
         [action.payload.dialogType]: {
           open: true,
         },

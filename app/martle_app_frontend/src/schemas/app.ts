@@ -7,10 +7,28 @@ const review = Yup.string()
 
 const query = Yup.string().required("Query is required");
 
+const id = Yup.string();
+const address = Yup.string().required("Address is required");
+const locality = Yup.string().required("Locality is required");
+const city = Yup.string().required("City is required");
+const state = Yup.string().required("State is required");
+const country = Yup.string().required("Country is required");
+const zipcode = Yup.number().required("Zipcode is required");
+
 export const AskQuerySchema = Yup.object().shape({
   query,
 });
 
 export const RatingAndReviewSchema = Yup.object().shape({
   review,
+});
+
+export const AddressSchema = Yup.object().shape({
+  id,
+  address,
+  locality,
+  city,
+  state,
+  country,
+  zipcode,
 });

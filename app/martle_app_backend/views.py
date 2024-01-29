@@ -149,7 +149,7 @@ class CustomerAddressView(APIView):
         if customers_address:
             customer_serializer = CustomerAddressSerializer(
                 customers_address, many=True)
-            return Response({"data": customer_serializer.data}, status=status.HTTP_200_OK)
+            return Response({"data": reversed(customer_serializer.data)}, status=status.HTTP_200_OK)
         return Response("No address found", safe=False)
 
     # saving customer data
@@ -171,24 +171,25 @@ class CustomerAddressView(APIView):
         return Response("Failed to add address", status=status.HTTP_404_NOT_FOUND)
 
     # updating customer using pk
-    def put(self, request, pk):
-        # getting customer modified data which is going to be update
-        customer_json_data = JSONParser().parse(request)
-        customer_by_id = CustomerAddress.objects.get(pk=pk)
-        customer_serialized_data = CustomerAddressSerializer(
-            customer_by_id, data=customer_json_data)
+    def put(self, request):
+        try:
+            # Get the existing customer address instance
+            address = CustomerAddress.objects.get(id=request.data.get("id"))
 
-        # saving customer data
-        if customer_serialized_data.is_valid():
-            customer_serialized_data.save()
-            return JsonResponse("Customer updated successfull", safe=False)
-        return JsonResponse("Failed to update customer", safe=False)
+        # Initialize the serializer with the existing instance and request data
+            updated_address_serializer = CustomerAddressSerializer(
+                address, data=request.data)
 
-    # deleting customer by pk
-    def delete(self, request, pk):
-        customer_by_id = CustomerAddress.objects.get(pk=pk)
-        customer_by_id.delete()
-        return JsonResponse("Customer deleted successfull", safe=False)
+        # Check if the serializer is valid
+            if updated_address_serializer.is_valid():
+                # Save the updated data to the existing instance
+                updated_address_serializer.save()
+                return Response("Address updated successfully", status=status.HTTP_200_OK)
+            else:
+                return Response(updated_address_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except CustomerAddress.DoesNotExist:
+            return Response("Customer address not found", status=status.HTTP_404_NOT_FOUND)
 
 
 @csrf_exempt

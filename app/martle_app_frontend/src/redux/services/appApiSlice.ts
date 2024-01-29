@@ -48,6 +48,26 @@ export const appApi = createApi({
         body: payload,
       }),
     }),
+    getAddress: builder.query({
+      query: () => ({
+        url: "address/",
+        method: "GET",
+      }),
+    }),
+    saveAddress: builder.mutation({
+      query: (payload) => ({
+        url: "address/",
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    updateAddress: builder.mutation({
+      query: (payload) => ({
+        url: "address/",
+        method: "PUT",
+        body: payload,
+      }),
+    }),
   }),
 });
 
@@ -58,4 +78,7 @@ export const {
   useGetRatingAndReviewQuery,
   useSaveQuestionAndAnswerMutation,
   useGetQuestionAndAnswerMutation,
+  useGetAddressQuery,
+  useSaveAddressMutation,
+  useUpdateAddressMutation,
 } = appApi;

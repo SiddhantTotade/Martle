@@ -5,6 +5,7 @@ import userSlice from "./features/userSlice";
 import { authApi } from "./services/authApiSlice";
 import { appApi } from "./services/appApiSlice";
 import { productSlice } from "./features/productSlice";
+import addressSlice from "./features/addressSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     [productSlice.reducerPath]: productSlice.reducer,
     auth: authSlice,
     user: userSlice,
+    address: addressSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authApi.middleware, appApi.middleware),

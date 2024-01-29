@@ -5,6 +5,7 @@ import {
   IconButton,
   InputAdornment,
   Typography,
+  SxProps,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -15,11 +16,15 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   placeholder?: string;
   type: string;
+  size?: "small" | "middle";
   rows?: string;
   multiline?: boolean;
   error?: boolean;
   outsideValue?: number;
+  defaultOutsideValue?: string;
   control: any;
+  sx?: SxProps;
+  disabled?: boolean;
 }
 
 export default function InputField({
@@ -30,7 +35,11 @@ export default function InputField({
   rows,
   multiline,
   outsideValue,
+  defaultOutsideValue,
   type,
+  size,
+  sx,
+  disabled,
 }: InputProps) {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
@@ -66,7 +75,11 @@ export default function InputField({
           multiline={multiline}
           rows={rows}
           type={showPassword ? "text" : type}
+          size={size}
+          sx={sx}
+          disabled={disabled}
           value={outsideValue !== null ? outsideValue : value}
+          defaultValue={defaultOutsideValue}
           onChange={onChange}
           error={!!error}
           helperText={

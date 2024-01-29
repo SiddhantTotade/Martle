@@ -8,6 +8,7 @@ import BusinessIcon from "@mui/icons-material/Business";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import SecondaryButton from "../common/SecondaryButton";
+import Address from "../common/order-product/Address";
 
 const steps = [
   { lable: "Select address", icon: BusinessIcon },
@@ -64,7 +65,7 @@ export default function OrderProceedStepper() {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+          {activeStep + 1 && <Address />}
           <Box
             sx={{
               display: "flex",

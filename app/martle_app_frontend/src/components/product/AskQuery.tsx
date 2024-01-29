@@ -34,26 +34,6 @@ export default function AskQuestion(props) {
     });
   };
 
-  //   const [postQuestion, responsePostQuestion] =
-  //     usePostQuestionAndAnswerAPIMutation();
-
-  // const handleSubmit = () => {
-  //   const postQuestionData = {
-  //     user: user.id,
-  //     product: props.product_id,
-  //     date: new Date().toISOString().slice(0, 10),
-  //     question: question,
-  //     answer: null,
-  //   };
-
-  // postQuestion({
-  //   access_token: access_token,
-  //   postQuestionData: postQuestionData,
-  // });
-
-  // handleClose();
-  // };
-
   return (
     <Box>
       <SecondaryButton
