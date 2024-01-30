@@ -9,16 +9,24 @@ import ActionContainer from "../../ActionContainer";
 import SecondaryButton from "../../SecondaryButton";
 import PrirmaryButton from "../../PrirmaryButton";
 import InputField from "../../Input";
-import { useUpdateAddress } from "@/hooks/app/updateAddress";
 
 interface Props {
-  userAddress: any;
+  userAddress?: any;
   handleClose: any;
+  handleSubmit: any;
+  onSubmit: any;
+  control: any;
+  isLoading: boolean;
 }
 
-export default function AddressForm({ userAddress, handleClose }: Props) {
-  const { handleSubmit, onSubmit, control, isLoading } = useUpdateAddress();
-
+export default function AddressForm({
+  userAddress,
+  handleClose,
+  handleSubmit,
+  onSubmit,
+  control,
+  isLoading,
+}: Props) {
   return (
     <FormControl fullWidth component="form" onSubmit={handleSubmit(onSubmit)}>
       <DialogContent
@@ -35,7 +43,7 @@ export default function AddressForm({ userAddress, handleClose }: Props) {
               key={index}
               name={address}
               size="small"
-              defaultOutsideValue={userAddress[`${address}`]}
+              defaultOutsideValue={userAddress ? userAddress[`${address}`] : ""}
               control={control}
               type={address === "zipcode" ? "number" : "text"}
               label={address.charAt(0).toUpperCase() + address.slice(1)}

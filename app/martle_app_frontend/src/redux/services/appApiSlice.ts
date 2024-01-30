@@ -21,6 +21,12 @@ export const appApi = createApi({
         method: "GET",
       }),
     }),
+    productForPlaceOrder: builder.query({
+      query: (payload) => ({
+        url: `product-for-place-order/${payload}/`,
+        method: "GET",
+      }),
+    }),
     saveRatingAndReview: builder.mutation({
       query: (payload) => ({
         url: `product/ratingandreview/${payload.product}/`,
@@ -41,7 +47,7 @@ export const appApi = createApi({
         body: payload,
       }),
     }),
-    getQuestionAndAnswer: builder.mutation({
+    getQuestionAndAnswer: builder.query({
       query: (payload) => ({
         url: `product/questionandanswer/${payload.id}/`,
         method: "GET",
@@ -74,6 +80,7 @@ export const appApi = createApi({
 export const {
   useLazyAllProductsQuery,
   useProductBySlugQuery,
+  useProductForPlaceOrderQuery,
   useSaveRatingAndReviewMutation,
   useGetRatingAndReviewQuery,
   useSaveQuestionAndAnswerMutation,

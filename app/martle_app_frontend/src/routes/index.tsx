@@ -4,8 +4,9 @@ import {
   RouteObject,
   RouterProvider,
 } from "react-router-dom";
-import { ProtectedRoute } from "./ProtectedRoute";
 import { CircularProgress } from "@mui/material";
+
+import { ProtectedRoute } from "./ProtectedRoute";
 import OrderProduct from "@/pages/app/OrderProduct";
 
 const LoginPage = React.lazy(() => import("@/pages/auth/Login"));

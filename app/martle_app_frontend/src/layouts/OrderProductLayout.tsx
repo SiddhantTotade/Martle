@@ -7,8 +7,11 @@ export default function OrderProductLayout() {
       sx={{
         display: "flex",
         justifyContent: "space-between",
-        width: "75%",
+        width: "85%",
         position: "relative",
+        border: "2px solid",
+        borderRadius: "5px",
+        p: 2,
         mt: "6rem",
         "@media (max-width: 1000px)": {
           display: "grid",

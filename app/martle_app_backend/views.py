@@ -129,6 +129,14 @@ class ProductView(APIView):
         return JsonResponse("Deleted successfull", safe=False)
 
 
+class ProductForPlaceOrder(APIView):
+    def get(self, request, slug):
+        product = Product.objects.filter(product_slug=slug)
+        serialized_product = ProductLightSerializer(product, many=True)
+
+        return Response({"data": serialized_product.data}, status=status.HTTP_200_OK)
+
+
 class BrandView(APIView):
     def get(self, request):
         brand = Brands.objects.all()

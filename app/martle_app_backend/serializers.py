@@ -51,6 +51,13 @@ class ProductLightSerializer(serializers.ModelSerializer):
     #     return serializer.data
 
 
+class ProductPlaceOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['product_title', 'product_cover_image',
+                  'product_brand', 'product_category']
+
+
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brands

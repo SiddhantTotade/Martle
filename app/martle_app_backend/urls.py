@@ -22,6 +22,8 @@ urlpatterns = [
 
     path("product/<slug:slug>/", GetProductBySlug.as_view(),
          name="get_specific_product"),
+    path("product-for-place-order/<slug:slug>/", ProductForPlaceOrder.as_view(),
+         name="get_specific_product"),
     re_path(r"^product/desc/([0-9]+)$", get_description),
 
     # ---------> Add and Delete Favorites Items
