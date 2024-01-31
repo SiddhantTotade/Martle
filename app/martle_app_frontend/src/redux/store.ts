@@ -2,10 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import authSlice from "./features/authSlice";
 import userSlice from "./features/userSlice";
+import addressSlice from "./features/addressSlice";
+import quantitySlice from "./features/quantitySlice";
 import { authApi } from "./services/authApiSlice";
 import { appApi } from "./services/appApiSlice";
 import { productSlice } from "./features/productSlice";
-import addressSlice from "./features/addressSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     auth: authSlice,
     user: userSlice,
     address: addressSlice,
+    quantity: quantitySlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authApi.middleware, appApi.middleware),

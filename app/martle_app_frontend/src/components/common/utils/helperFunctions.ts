@@ -1,12 +1,12 @@
 export const productDiscount = (sp: number, cp: number) => {
-  return (((sp - cp) / sp) * 100).toFixed(1);
+  return (((sp - cp) / sp) * 100).toFixed(1) as unknown as number;
 };
 
 export const productSavePrice = (sp: number, cp: number) => {
   return sp - cp;
 };
 
-export const deliveryDate = (inputDate, product_price) => {
+export const deliveryDate = (inputDate: string, product_price: string) => {
   const dateObject = new Date(inputDate);
 
   if (product_price <= "4999") {
@@ -19,4 +19,18 @@ export const deliveryDate = (inputDate, product_price) => {
   const formattedDate = dateObject.toDateString();
 
   return formattedDate;
+};
+
+export const deliveryCharges = (product_price: string) => {
+  if (product_price >= "499") {
+    return 0;
+  } else if (product_price < "499" && product_price >= "200") {
+    return 40;
+  } else if (product_price <= "199") {
+    return 60;
+  }
+};
+
+export const orderTotal = (quantity: number, product_price: number) => {
+  return quantity * product_price;
 };

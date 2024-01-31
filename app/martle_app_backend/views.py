@@ -134,7 +134,15 @@ class ProductForPlaceOrder(APIView):
         product = Product.objects.filter(product_slug=slug)
         serialized_product = ProductLightSerializer(product, many=True)
 
-        return Response({"data": serialized_product.data}, status=status.HTTP_200_OK)
+        print(request.user.id)
+
+        address = CustomerAddress.objects.filter(
+            user=request.user.id, is_active=True)
+
+        serialized_customer_address = CustomerAddressSerializer(
+            address, many=True)
+
+        return Response({"data": serialized_product.data, "address": serialized_customer_address.data}, status=status.HTTP_200_OK)
 
 
 class BrandView(APIView):
