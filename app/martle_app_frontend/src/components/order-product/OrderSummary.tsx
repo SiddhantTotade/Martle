@@ -10,16 +10,20 @@ import { RootState } from "@reduxjs/toolkit/query";
 
 export default function OrderSummary({ discount_price, selling_price }: any) {
   const quantity = useSelector((state: RootState) => state.quantity.quantity);
+  const paymentMethod = useSelector(
+    (state: RootState) => state.checkout.paymentMethod
+  );
 
   return (
     <Box sx={{ display: "grid", gap: "5px" }}>
       <Typography fontSize="small">Quantity : {quantity}</Typography>
       <Typography fontSize="small">
-        Delivery :{" "}
+        Shipping charges :{" "}
         {deliveryCharges(discount_price) === 0
           ? "Free"
           : deliveryCharges(discount_price)}
       </Typography>
+      <Typography fontSize="small">Payment method : {paymentMethod}</Typography>
       <Typography fontSize="small">
         Your Savings : ₹
         {quantity * productSavePrice(selling_price, discount_price)}
@@ -31,7 +35,8 @@ export default function OrderSummary({ discount_price, selling_price }: any) {
       </Typography>
       <Typography>
         Order Total : ₹
-        {deliveryCharges(discount_price) as number + orderTotal(quantity, discount_price)}
+        {(deliveryCharges(discount_price) as number) +
+          orderTotal(quantity, discount_price)}
       </Typography>
     </Box>
   );

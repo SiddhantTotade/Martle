@@ -1,6 +1,6 @@
 from .models import *
 from martle_app_authentication.helpers import *
-from martle_app_authentication.serializers import UserProfileSerializer
+from martle_app_authentication.serializers import UserProfileSerializer, CustomerAddressSerializer
 from rest_framework import serializers
 
 
@@ -131,3 +131,20 @@ class FavoriteProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id']
+
+
+class ProductStatusChoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductStatusChoices
+        fields = "__all__"
+
+
+# --------- Orders Serializer
+class OrderedProductSerializer(serializers.ModelSerializer):
+    address = CustomerAddressSerializer()
+    product = ProductLightSerializer()
+    status = ProductStatusChoiceSerializer()
+
+    class Meta:
+        model = OrderPlaced
+        fields = '__all__'

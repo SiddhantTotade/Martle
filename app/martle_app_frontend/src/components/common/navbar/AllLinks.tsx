@@ -5,9 +5,29 @@ import BusinessIcon from "@mui/icons-material/Business";
 import InventoryIcon from "@mui/icons-material/Inventory";
 
 export const navLinks = [
-  { link: "Profile", icon: <AccountBoxIcon fontSize="small" /> },
-  { link: "Orders", icon: <InventoryIcon fontSize="small" /> },
-  { link: "Address", icon: <BusinessIcon fontSize="small" /> },
-  { link: "Favorite", icon: <FavoriteIcon fontSize="small" /> },
-  { link: "Cart", icon: <ShoppingCartIcon fontSize="small" /> },
+  {
+    label: "Profile",
+    link: "my-profile",
+    icon: <AccountBoxIcon fontSize="small" />,
+  },
+  {
+    label: "Orders",
+    link: "my-orders",
+    icon: <InventoryIcon fontSize="small" />,
+  },
+  {
+    label: "Address",
+    link: "my-addresses",
+    icon: <BusinessIcon fontSize="small" />,
+  },
+  {
+    label: "Favorite",
+    link: "my-favorites",
+    icon: <FavoriteIcon fontSize="small" />,
+  },
+  {
+    label: "Cart",
+    link: "my-cart",
+    icon: <ShoppingCartIcon fontSize="small" />,
+  },
 ];

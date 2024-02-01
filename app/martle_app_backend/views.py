@@ -134,8 +134,6 @@ class ProductForPlaceOrder(APIView):
         product = Product.objects.filter(product_slug=slug)
         serialized_product = ProductLightSerializer(product, many=True)
 
-        print(request.user.id)
-
         address = CustomerAddress.objects.filter(
             user=request.user.id, is_active=True)
 
@@ -189,16 +187,12 @@ class CustomerAddressView(APIView):
     # updating customer using pk
     def put(self, request):
         try:
-            # Get the existing customer address instance
             address = CustomerAddress.objects.get(id=request.data.get("id"))
 
-        # Initialize the serializer with the existing instance and request data
             updated_address_serializer = CustomerAddressSerializer(
                 address, data=request.data)
 
-        # Check if the serializer is valid
             if updated_address_serializer.is_valid():
-                # Save the updated data to the existing instance
                 updated_address_serializer.save()
                 return Response("Address updated successfully", status=status.HTTP_200_OK)
             else:
@@ -206,6 +200,24 @@ class CustomerAddressView(APIView):
 
         except CustomerAddress.DoesNotExist:
             return Response("Customer address not found", status=status.HTTP_404_NOT_FOUND)
+
+
+class CustomerOrdersView(APIView):
+    def get(self, request):
+        customer = request.user.id
+        orders = OrderPlaced.objects.filter(user=customer)
+        serialized_orders = OrderedProductSerializer(orders, many=True)
+
+        return Response({"data": serialized_orders.data}, status=status.HTTP_200_OK)
+
+
+class SingleOrderView(APIView):
+    def get(self, request, pk):
+        customer = request.user.id
+        order = OrderPlaced.objects.filter(user=customer, product=pk)
+        serialized_order = OrderedProductSerializer(order, many=True)
+
+        return Response({"data": serialized_order.data}, status=status.HTTP_200_OK)
 
 
 @csrf_exempt
@@ -222,6 +234,18 @@ def favorite_add(request, id):
 def favorite_list(request):
     fav = Product.objects.filter(favourite=request.user.id)
     return HttpResponse({"fav": fav}, status.HTTP_200_OK)
+
+
+@csrf_exempt
+@api_view(["GET"])
+def change_shipping_address(request, address_id):
+    address = get_object_or_404(CustomerAddress, id=address_id)
+    address.is_active = True
+    address.save()
+
+    CustomerAddress.objects.exclude(pk=address.pk).update(is_active=False)
+
+    return HttpResponse({"msg": "Address updated"}, status.HTTP_200_OK)
 
 
 class FavoriteView(APIView):

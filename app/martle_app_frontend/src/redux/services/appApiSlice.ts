@@ -74,6 +74,24 @@ export const appApi = createApi({
         body: payload,
       }),
     }),
+    changeShippingAddress: builder.query({
+      query: (payload) => ({
+        url: `change-shipping-address/${payload}`,
+        method: "GET",
+      }),
+    }),
+    getPurchasedOrders: builder.query({
+      query: () => ({
+        url: "orders/",
+        method: "GET",
+      }),
+    }),
+    getSingleOrder: builder.query({
+      query: (payload) => ({
+        url: `orders/${payload}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -84,8 +102,11 @@ export const {
   useSaveRatingAndReviewMutation,
   useGetRatingAndReviewQuery,
   useSaveQuestionAndAnswerMutation,
-  useGetQuestionAndAnswerMutation,
+  useGetQuestionAndAnswerQuery,
   useGetAddressQuery,
   useSaveAddressMutation,
   useUpdateAddressMutation,
+  useLazyChangeShippingAddressQuery,
+  useGetPurchasedOrdersQuery,
+  useGetSingleOrderQuery,
 } = appApi;

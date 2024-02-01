@@ -129,10 +129,10 @@ class Cart(models.Model):
 # --------- Order Placed Model
 class OrderPlaced(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    customer = models.ForeignKey(CustomerAddress, on_delete=models.PROTECT)
+    address = models.ForeignKey(CustomerAddress, on_delete=models.PROTECT)
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.PositiveIntegerField(default=1)
-    ordered_datetime = models.DateTimeField(default=None)
+    ordered_datetime = models.DateTimeField(auto_now_add=True)
     status = models.ForeignKey(ProductStatusChoices, on_delete=models.PROTECT)
 
     @property

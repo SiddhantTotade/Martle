@@ -8,6 +8,9 @@ import SecondaryButton from "../common/SecondaryButton";
 import Address from "../common/order-product/Address";
 import PaymentOptions from "./PaymentOptions";
 import PlaceOrder from "./PlaceOrder";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@reduxjs/toolkit/query";
+import { unsetCheckoutPayment } from "@/redux/features/checkoutSlice";
 
 const steps = [
   { lable: "Select address", icon: BusinessIcon },
@@ -16,8 +19,10 @@ const steps = [
 ];
 
 export default function OrderProceedStepper() {
+  const dispatch = useDispatch();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
+  const checkout = useSelector((state: RootState) => state.checkout);
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
@@ -36,6 +41,9 @@ export default function OrderProceedStepper() {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if (activeStep === 2) {
+      dispatch(unsetCheckoutPayment());
+    }
   };
 
   return (
@@ -79,6 +87,15 @@ export default function OrderProceedStepper() {
                 activeStep === steps.length - 1 ? "contained" : "outlined"
               }
               onClick={handleNext}
+              disabled={
+                activeStep === 0 && checkout.address
+                  ? false
+                  : activeStep === 1 && checkout.payment
+                  ? false
+                  : activeStep === 2
+                  ? false
+                  : true
+              }
             >
               {activeStep === steps.length - 1
                 ? "Confirm & Place Order"

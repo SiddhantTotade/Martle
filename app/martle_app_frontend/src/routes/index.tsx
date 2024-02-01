@@ -7,7 +7,6 @@ import {
 import { CircularProgress } from "@mui/material";
 
 import { ProtectedRoute } from "./ProtectedRoute";
-import OrderProduct from "@/pages/app/OrderProduct";
 
 const LoginPage = React.lazy(() => import("@/pages/auth/Login"));
 const RegisterPage = React.lazy(() => import("@/pages/auth/Register"));
@@ -20,6 +19,10 @@ const ForgotPasswordPage = React.lazy(
 
 const HomePage = React.lazy(() => import("@/pages/app/Home"));
 const ProductPage = React.lazy(() => import("@/pages/app/Product"));
+const AddressPage = React.lazy(() => import("@/pages/app/Address"));
+const OrdersPage = React.lazy(() => import("@/pages/app/Orders"));
+const CheckoutPage = React.lazy(() => import("@/pages/app/OrderProduct"));
+
 const NotFoundPage = React.lazy(() => import("@/pages/404NotFound"));
 
 type Route = RouteObject[] | RouteObject;
@@ -80,7 +83,23 @@ const appRoutes: Route = [
     path: "/buy-order/proceed/:slug",
     element: (
       <ProtectedRoute>
-        <OrderProduct />
+        <CheckoutPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/my-addresses",
+    element: (
+      <ProtectedRoute>
+        <AddressPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/my-orders",
+    element: (
+      <ProtectedRoute>
+        <OrdersPage />
       </ProtectedRoute>
     ),
   },

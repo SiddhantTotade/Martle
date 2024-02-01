@@ -15,8 +15,11 @@ urlpatterns = [
             ProductView.as_view(), name="all_products"),
     re_path(r"^all-brands/$", BrandView.as_view(), name="all_brands"),
     re_path(r"^product/([0-9]+)$", ProductView.as_view()),
+
+    # ---------> add and update addresses
     re_path(r"^address/$", CustomerAddressView.as_view()),
     re_path(r"^address-save$", CustomerAddressView.as_view()),
+    re_path(r"^change-shipping-address/([0-9]+)$", change_shipping_address),
 
     re_path(r"^get-description$", upload_description),
 
@@ -44,4 +47,8 @@ urlpatterns = [
     # ---------> Question and Answer of Products
     path("product/questionandanswer/<int:pk>/",
          QuestionAndAnswerView.as_view(), name="get_and_create_question_and_answer"),
+
+    # ---------> ordered products
+    path("orders/", CustomerOrdersView.as_view(), name="orders"),
+    path("orders/<int:pk>", SingleOrderView.as_view(), name="single_order"),
 ]

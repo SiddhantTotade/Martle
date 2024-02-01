@@ -17,6 +17,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 import { navLinks } from "./navbar/AllLinks";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -48,6 +49,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function NavDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -90,11 +92,11 @@ export default function NavDrawer() {
             <React.Fragment key={id}>
               {(id % 10 === 0 || id % 10 === 1 || id % 10 === 2) && (
                 <ListItem key={id} disablePadding>
-                  <ListItemButton>
+                  <ListItemButton onClick={() => navigate(link.link)}>
                     <ListItemIcon>{link.icon}</ListItemIcon>
                     <ListItemText
                       primaryTypographyProps={{ fontSize: "small" }}
-                      primary={link.link}
+                      primary={link.label}
                     />
                   </ListItemButton>
                 </ListItem>

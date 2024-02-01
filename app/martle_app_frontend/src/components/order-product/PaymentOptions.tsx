@@ -1,17 +1,29 @@
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Box, Card, Radio, RadioGroup, Typography } from "@mui/material";
 
 import AppContainer from "../common/Container";
+import { setCheckoutPayment } from "@/redux/features/checkoutSlice";
+import { useProductForPlaceOrderQuery } from "@/redux/services/appApiSlice";
 
 export default function PaymentOptions() {
+  const dispatch = useDispatch();
+  const { slug } = useParams();
+  const { data } = useProductForPlaceOrderQuery(slug);
+
+  const handlePayment = (e) => {
+    dispatch(setCheckoutPayment({ paymentMethod: e.target.value }));
+  };
+
   return (
     <AppContainer>
-      <RadioGroup sx={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+      <RadioGroup sx={{ display: "flex", flexDirection: "row", gap: "20px" }}>
         <Card
           elevation={5}
-          sx={{ display: "flex", p: 1, alignItems: "center" }}
+          sx={{ display: "flex", p: 1, alignItems: "center", gap: "10px" }}
         >
           <Box>
-            <Radio value="martle_pay" size="small" />
+            <Radio onClick={handlePayment} value="Martlet" size="small" />
           </Box>
           <Box>
             <Typography fontSize="small" fontWeight="bold">
@@ -24,14 +36,24 @@ export default function PaymentOptions() {
         </Card>
         <Card
           elevation={5}
-          sx={{ display: "flex", p: 1, alignItems: "center" }}
+          sx={{ display: "flex", p: 1, alignItems: "center", gap: "10px" }}
         >
           <Box>
-            <Radio value="no_cost_emi" size="small" />
+            <Radio
+              onClick={handlePayment}
+              value={`EMI - ₹${Math.round(
+                data?.data[0].product_discounted_price / 3
+              )}/month`}
+              size="small"
+              disabled={
+                data?.data[0].product_discounted_price >= 6000 ? false : true
+              }
+            />
           </Box>
           <Box>
             <Typography fontSize="small" fontWeight="bold">
-              No Cost EMI
+              No Cost EMI - Starting from ₹
+              {Math.round(data?.data[0].product_discounted_price / 3)}/month
             </Typography>
             <Typography fontSize="small">
               EMI interest saving on selected credit cards. Orders above ₹6000
@@ -40,10 +62,14 @@ export default function PaymentOptions() {
         </Card>
         <Card
           elevation={5}
-          sx={{ display: "flex", p: 1, alignItems: "center" }}
+          sx={{ display: "flex", p: 1, alignItems: "center", gap: "10px" }}
         >
           <Box>
-            <Radio value="cash_on_delivery" size="small" />
+            <Radio
+              onClick={handlePayment}
+              value="Cash on delivery"
+              size="small"
+            />
           </Box>
           <Box>
             <Typography fontSize="small" fontWeight="bold">
