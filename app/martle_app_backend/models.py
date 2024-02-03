@@ -132,12 +132,15 @@ class OrderPlaced(models.Model):
     address = models.ForeignKey(CustomerAddress, on_delete=models.PROTECT)
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.PositiveIntegerField(default=1)
+    product_discounted_price = models.FloatField(null=True, blank=True)
+    product_selling_price = models.FloatField(null=True, blank=True)
+    payment_method = models.CharField(max_length=20, null=True, blank=True)
     ordered_datetime = models.DateTimeField(auto_now_add=True)
     status = models.ForeignKey(ProductStatusChoices, on_delete=models.PROTECT)
 
     @property
     def total_cost(self):
-        return self.quantity * self.product.product_discounted_price
+        return self.quantity * self.product_discounted_price
 
 
 # --------- Favorite Model

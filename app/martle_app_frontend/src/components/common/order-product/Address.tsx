@@ -1,10 +1,4 @@
-import {
-  Card,
-  Box,
-  CircularProgress,
-  Typography,
-  Divider,
-} from "@mui/material";
+import { Card, Box, CircularProgress } from "@mui/material";
 
 import { useGetAddressQuery } from "@/redux/services/appApiSlice";
 import PrirmaryButton from "../PrirmaryButton";
@@ -22,78 +16,79 @@ export default function Address() {
   useCheckoutAddress(data ? data : "");
 
   return (
-    <>
-      <Typography
-        fontSize={30}
-        sx={{ display: "flex", justifyContent: "center" }}
+    <AppContainer
+      sx={{
+        mt: 2,
+        "@media (max-width: 1190px)": {
+          width: "100%",
+        },
+      }}
+    >
+      {data?.data.length <= 2 && <SaveAddress />}
+      <AppContainer
+        sx={{
+          width: "100%",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          justifyContent: "center",
+          alignItems: "center",
+          placeItems: "center",
+          gap: "10px",
+          "@media (max-width: 760px)": {
+            gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+          },
+        }}
       >
-        Address
-      </Typography>
-      <Divider flexItem sx={{ width: "30%", margin: "auto" }} />
-      <AppContainer sx={{ mt: 2 }}>
-        {data?.data.length <= 2 && <SaveAddress />}
-        <AppContainer
-          sx={{
-            width: "100%",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            justifyContent: "center",
-            alignItems: "center",
-            placeItems: "center",
-            gap: "10px",
-          }}
-        >
-          {data?.data.map((address, index) => (
-            <Card
-              elevation={5}
-              key={index}
-              sx={{ p: 1, display: "grid", gap: "5px", border: "2px solid" }}
+        {data?.data.map((address, index) => (
+          <Card
+            elevation={5}
+            key={index}
+            sx={{ p: 1, display: "grid", gap: "5px", border: "1px solid" }}
+          >
+            <AddressCard
+              address={address.address}
+              locality={address.locality}
+              city={address.city}
+              state={address.state}
+              country={address.country}
+              zipcode={address.zipcode}
+            />
+            <Box
+              sx={{ display: "flex", gap: "10px", justifyContent: "center" }}
             >
-              <AddressCard
-                address={address.address}
-                locality={address.locality}
-                city={address.city}
-                state={address.state}
-                country={address.country}
-                zipcode={address.zipcode}
-              />
+              <EditAddress address={address} />
               <Box
-                sx={{ display: "flex", gap: "10px", justifyContent: "center" }}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  width: "50%",
+                }}
               >
-                <EditAddress address={address} />
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    width: "50%",
-                  }}
-                >
-                  {isLoading ? (
-                    <CircularProgress />
-                  ) : address.is_active ? (
-                    <PrirmaryButton
-                      disabled
-                      sx={{
-                        display: "flex",
-                        gap: "5px",
-                        background: "green",
-                      }}
-                      label="In use"
-                    />
-                  ) : (
-                    <PrirmaryButton
-                      variant="contained"
-                      sx={{ display: "flex", gap: "5px" }}
-                      label="Use this address"
-                      onClick={() => onSubmit(address.id)}
-                    />
-                  )}
-                </Box>
+                {isLoading ? (
+                  <CircularProgress />
+                ) : address.is_active ? (
+                  <PrirmaryButton
+                    disabled
+                    sx={{
+                      display: "flex",
+                      gap: "5px",
+                      background: "green",
+                    }}
+                    label="In use"
+                  />
+                ) : (
+                  <PrirmaryButton
+                    variant="contained"
+                    sx={{ display: "flex", gap: "5px" }}
+                    label="Use this address"
+                    onClick={() => onSubmit(address.id)}
+                  />
+                )}
               </Box>
-            </Card>
-          ))}
-        </AppContainer>
+            </Box>
+          </Card>
+        ))}
       </AppContainer>
-    </>
+    </AppContainer>
   );
 }

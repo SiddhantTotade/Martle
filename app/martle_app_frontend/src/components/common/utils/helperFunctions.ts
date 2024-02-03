@@ -34,3 +34,26 @@ export const deliveryCharges = (product_price: string) => {
 export const orderTotal = (quantity: number, product_price: number) => {
   return quantity * product_price;
 };
+
+export const orderStatus = (status: string) => {
+  switch (status) {
+    case "pending":
+      return 0;
+    case "dispatched":
+      return 1;
+    case "facility":
+      return 2;
+    case "on the way":
+      return 3;
+    case "delivered":
+      return 4;
+    case "return":
+      return 5;
+    case "returned":
+      return 6;
+    case "cancelled":
+      return 7;
+    default:
+      return undefined;
+  }
+};

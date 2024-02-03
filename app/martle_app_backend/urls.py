@@ -50,5 +50,5 @@ urlpatterns = [
 
     # ---------> ordered products
     path("orders/", CustomerOrdersView.as_view(), name="orders"),
-    path("orders/<int:pk>", SingleOrderView.as_view(), name="single_order"),
+    path("orders/<slug:slug>", SingleOrderView.as_view(), name="single_order"),
 ]

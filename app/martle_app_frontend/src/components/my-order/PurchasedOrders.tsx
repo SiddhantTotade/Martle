@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { TextField, Box, Card } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Box, Card } from "@mui/material";
 
 import AppContainer from "../common/Container";
 import OrderCard from "./OrderCard";
 import { useGetPurchasedOrdersQuery } from "@/redux/services/appApiSlice";
+import OrderFilter from "./OrderFilter";
 
 export default function PurchasedOrders() {
   const [elevations, setElevations] = useState({});
   const { data } = useGetPurchasedOrdersQuery(undefined);
+  const navigate = useNavigate();
 
   const handleCardHover = (index: number, elevate: number) => {
     setElevations((prevElevations) => ({
@@ -18,17 +21,41 @@ export default function PurchasedOrders() {
 
   return (
     <AppContainer
-      sx={{ width: "80%", display: "flex", gap: "20px", mt: "6rem" }}
+      sx={{
+        width: "80%",
+        display: "flex",
+        gap: "20px",
+        position: "relative",
+        mt: "6rem",
+        "@media(max-width:1360px)": {
+          width: "90%",
+        },
+        "@media(max-width:1230px)": {
+          width: "100%",
+        },
+        "@media(max-width:1080px)": {
+          display: "grid",
+          width: "95%",
+          overflow: "hidden",
+          mt: 7,
+        },
+        "@media(max-width:600px)": {
+          mt: -1,
+        },
+      }}
     >
       <Box
-        sx={{ width: "30%", border: "1px solid", borderRadius: "5px", p: 1 }}
+        sx={{
+          width: "20.8%",
+          height: "15.2vh",
+        }}
       >
-        <TextField fullWidth size="small" label="Search" />
+        <OrderFilter />
       </Box>
       <Box
         sx={{
           display: "grid",
-          width: "50%",
+          width: "600px",
           gap: "10px",
         }}
       >
@@ -44,6 +71,7 @@ export default function PurchasedOrders() {
               borderRadius: 0,
               p: 1,
             }}
+            onClick={() => navigate(order.product.product_slug)}
             onMouseEnter={() => handleCardHover(index, 5)}
             onMouseLeave={() => handleCardHover(index, 0)}
           >

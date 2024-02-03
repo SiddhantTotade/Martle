@@ -1,5 +1,17 @@
 import { Box, Typography } from "@mui/material";
 
+const styleBox = {
+  width: "100%",
+  display: "flex",
+  gap: "10px",
+};
+
+const styleTypography = {
+  width: "100%",
+  display: "flex",
+  justifyContent: "end",
+};
+
 interface Props {
   address?: string;
   locality?: string;
@@ -18,43 +30,55 @@ export default function AddressCard({
   zipcode,
 }: Props) {
   return (
-    <>
-      <Box sx={{ display: "flex", gap: 0.5 }}>
+    <Box sx={{ width: "100%" }}>
+      <Box sx={styleBox}>
         <Typography fontWeight="bold" fontSize="small">
-          Address -{" "}
+          Address
         </Typography>
-        <Typography fontSize="small">{address}</Typography>
+        <Typography sx={styleTypography} fontSize="small">
+          {address}
+        </Typography>
       </Box>
-      <Box sx={{ display: "flex", gap: 0.5 }}>
+      <Box sx={styleBox}>
         <Typography fontWeight="bold" fontSize="small">
-          Locality -{" "}
+          Locality
         </Typography>
-        <Typography fontSize="small">{locality}</Typography>
+        <Typography sx={styleTypography} fontSize="small">
+          {locality}
+        </Typography>
       </Box>
-      <Box sx={{ display: "flex", gap: 0.5 }}>
+      <Box sx={styleBox}>
         <Typography fontWeight="bold" fontSize="small">
-          City -{" "}
+          City
         </Typography>
-        <Typography fontSize="small">{city}</Typography>
+        <Typography sx={styleTypography} fontSize="small">
+          {city}
+        </Typography>
       </Box>
-      <Box sx={{ display: "flex", gap: 0.5 }}>
+      <Box sx={styleBox}>
         <Typography fontWeight="bold" fontSize="small">
-          State -{" "}
+          State
         </Typography>
-        <Typography fontSize="small">{state}</Typography>
+        <Typography sx={styleTypography} fontSize="small">
+          {state}
+        </Typography>
       </Box>
-      <Box sx={{ display: "flex", gap: 0.5 }}>
+      <Box sx={styleBox}>
         <Typography fontWeight="bold" fontSize="small">
-          Country -{" "}
+          Country
         </Typography>
-        <Typography fontSize="small">{country}</Typography>
+        <Typography sx={styleTypography} fontSize="small">
+          {country}
+        </Typography>
       </Box>
-      <Box sx={{ display: "flex", gap: 0.5 }}>
+      <Box sx={styleBox}>
         <Typography fontWeight="bold" fontSize="small">
-          Zipcode -{" "}
+          Zipcode
         </Typography>
-        <Typography fontSize="small">{zipcode}</Typography>
+        <Typography sx={styleTypography} fontSize="small">
+          {zipcode}
+        </Typography>
       </Box>
-    </>
+    </Box>
   );
 }

@@ -22,6 +22,7 @@ const ProductPage = React.lazy(() => import("@/pages/app/Product"));
 const AddressPage = React.lazy(() => import("@/pages/app/Address"));
 const OrdersPage = React.lazy(() => import("@/pages/app/Orders"));
 const CheckoutPage = React.lazy(() => import("@/pages/app/OrderProduct"));
+const SingleOrderPage = React.lazy(() => import("@/pages/app/SingleOrder"));
 
 const NotFoundPage = React.lazy(() => import("@/pages/404NotFound"));
 
@@ -100,6 +101,14 @@ const appRoutes: Route = [
     element: (
       <ProtectedRoute>
         <OrdersPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/my-orders/:slug",
+    element: (
+      <ProtectedRoute>
+        <SingleOrderPage />
       </ProtectedRoute>
     ),
   },

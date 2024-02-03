@@ -212,9 +212,10 @@ class CustomerOrdersView(APIView):
 
 
 class SingleOrderView(APIView):
-    def get(self, request, pk):
+    def get(self, request, slug):
         customer = request.user.id
-        order = OrderPlaced.objects.filter(user=customer, product=pk)
+        product = get_object_or_404(Product, product_slug=slug)
+        order = OrderPlaced.objects.filter(user=customer, product=product.id)
         serialized_order = OrderedProductSerializer(order, many=True)
 
         return Response({"data": serialized_order.data}, status=status.HTTP_200_OK)

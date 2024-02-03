@@ -24,6 +24,7 @@ export default function OrderCard({
           border: "1px solid",
           borderRadius: "3px",
           background: "#fff",
+          minWidth: "100px",
           p: 1,
         }}
       >
@@ -35,6 +36,7 @@ export default function OrderCard({
             width: "120px",
             height: "100px",
             objectFit: "scale-down",
+            maxWidth: "100%",
           }}
         />
       </Box>
