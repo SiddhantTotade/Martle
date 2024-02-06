@@ -222,16 +222,6 @@ class SingleOrderView(APIView):
 
 
 @csrf_exempt
-def favorite_add(request, id):
-    fav = get_object_or_404(Product, id=id)
-    if fav.favourite.filter(id=request.user.id).exists():
-        fav.favourite.remove(request.user.id)
-    else:
-        fav.favourite.add(request.user.id)
-    return Response({"msg": "added"}, safe=False)
-
-
-@csrf_exempt
 def favorite_list(request):
     fav = Product.objects.filter(favourite=request.user.id)
     return HttpResponse({"fav": fav}, status.HTTP_200_OK)
@@ -250,65 +240,100 @@ def change_shipping_address(request, address_id):
 
 
 class FavoriteView(APIView):
+
     def get(self, request):
         try:
-            all_favorite_products = Product.objects.filter(
-                favourite=request.user.id)
-            favorite_serialized_data = FavoriteProductSerializer(
-                all_favorite_products, many=True)
-            return JsonResponse(favorite_serialized_data.data, safe=False)
+            favorite_products = Product.objects.filter(
+                favorite=request.user.id)
+            favorite_serialized_data = ProductLightSerializer(
+                favorite_products, many=True)
+            return Response({"data": favorite_serialized_data.data}, status=status.HTTP_200_OK)
         except Exception as e:
-            return JsonResponse({"error": e}, safe=False)
+            return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
         try:
-            fav = get_object_or_404(Product, id=id)
-            if fav.favourite.filter(id=request.user.id).exists():
-                fav.favourite.remove(request.user.id)
-            else:
-                fav.favourite.add(request.user.id)
-            return Response({"msg": "added"}, safe=False)
-            # favorite_json_data = JSONParser().parse(request)
-            # favorite_serilized_data = FavoriteProductSerializer(
-            #     data=favorite_json_data)
-            # if favorite_serilized_data.is_valid():
-            #     favorite_serilized_data.save()
-            # return Response({"msg": "Added to Favorites"}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            product = get_object_or_404(
+                Product, id=request.data.get("product"))
 
-    def delete(self, request, id, pk):
+            if product.favorite.filter(id=request.user.id).exists():
+                return Response({"msg": "Already in favorites"}, status=status.HTTP_200_OK)
+
+            product.favorite.add(request.user)
+            product.save()
+
+            return Response({"msg": "Added to favorites"}, status=status.HTTP_201_CREATED)
+        except:
+            return Response({"msg": "Some error occured"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request):
         try:
-            Product.objects.get(favorite=id).delete()
-            return Response({"msg": "Item Removed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            product_ids = request.data.get('product', [])
+
+            if not isinstance(product_ids, list):
+                product_ids = [product_ids]
+
+            for product_id in product_ids:
+                product = get_object_or_404(
+                    Product, id=product_id)
+                product.favorite.remove(request.user)
+                product.save()
+
+            return Response({"msg": "Deleted from favorites"}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"msg": "Some error occured"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-# -----------> Items add to cart
 class CartView(APIView):
+
     def get(self, request):
-        all_cart_products = Cart.objects.filter(user=request.user.id)
-        cart_serialized_data = CartSerializer(all_cart_products, many=True)
-        return JsonResponse(cart_serialized_data.data, safe=False)
+        try:
+            cart_products = Product.objects.filter(
+                cart=request.user.id)
+            cart_serialized_data = ProductLightSerializer(
+                cart_products, many=True).data
+            active_address = request.user.addresses.filter(
+                is_active=True).first()
+
+            active_address_data = None
+            if active_address:
+                active_address_data = CustomerAddressSerializer(
+                    active_address).data
+
+            data = {
+                "data": cart_serialized_data,
+                "address": active_address_data
+            }
+            return Response({"data": data}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
         try:
-            cart_json_data = JSONParser().parse(request)
-            cart_serialized_data = CartSerializer(
-                data=cart_json_data)
-            if cart_serialized_data.is_valid():
-                cart_serialized_data.save()
-            return Response({"msg": "Added to Cart"}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            product = get_object_or_404(
+                Product, id=request.data.get("product"))
 
-    def delete(self, pk):
+            if product.cart.filter(id=request.user.id).exists():
+                return Response({"msg": "Already in cart"}, status=status.HTTP_200_OK)
+
+            product.cart.add(request.user)
+            product.save()
+
+            return Response({"msg": "Added to cart"}, status=status.HTTP_201_CREATED)
+        except:
+            return Response({"msg": "Some error occured"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request):
         try:
-            Cart.objects.get(id=pk).delete()
-            return Response({"msg": "Item Removed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        except Exception as e:
-            return Response({"msg": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            product = get_object_or_404(
+                Product, id=request.data.get("product"))
+
+            product.cart.remove(request.user)
+            product.save()
+
+            return Response({"msg": "Deleted from cart"}, status=status.HTTP_200_OK)
+        except:
+            return Response({"msg": "Some error occured"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class RatingsAndReviewsView(APIView):

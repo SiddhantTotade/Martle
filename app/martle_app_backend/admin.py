@@ -9,15 +9,14 @@ admin.site.register(RatingAndReview)
 admin.site.register(QuestionAndAnswer)
 
 
-# Classes for registering models
+##### Classes for registering models #####
 
-
-# -------- Product Images Admin
+# -------- product images admin
 class ProductImageAdmin(admin.StackedInline):
     model = ProductImage
 
 
-# -------- Product Admin
+# -------- product admin
 @admin.register(Product)
 class ProductModelAdmin(admin.ModelAdmin):
     list_display = ['id', 'product_title', 'product_selling_price',
@@ -49,12 +48,6 @@ class BrandsAdmin(admin.ModelAdmin):
     list_display = ['id', 'brand_slug']
 
 
-# -------- Cart Admin
-@admin.register(Cart)
-class CartModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'product', 'quantity']
-
-
 # -------- Order Placed Admin
 @admin.register(OrderPlaced)
 class OrderPlacedAdmin(admin.ModelAdmin):
@@ -65,8 +58,3 @@ class OrderPlacedAdmin(admin.ModelAdmin):
 @admin.register(Genders)
 class GendersAdmin(admin.ModelAdmin):
     list_display = ['id', 'gender']
-
-
-@admin.register(Favorite)
-class FavoriteAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'product']

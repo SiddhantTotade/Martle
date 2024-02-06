@@ -29,16 +29,11 @@ urlpatterns = [
          name="get_specific_product"),
     re_path(r"^product/desc/([0-9]+)$", get_description),
 
-    # ---------> Add and Delete Favorites Items
-    path("product/favorite/", FavoriteView.as_view(),
-         name="get_and_create_favorite"),
-    path("product/favorite/<int:id>/", favorite_add, name="delete_favorite"),
+    # ---------> add and remove favorites
+    path("favorites/", FavoriteView.as_view()),
 
-    # ---------> Add and Delete Cart Items
-    path("product/cart/",
-         CartView.as_view(), name="get_and_create_favorite"),
-    path("product/cart/<int:pk>",
-         CartView.as_view(), name="delete_favorite"),
+    # ---------> add and remove cart
+    path("cart/", CartView.as_view()),
 
     # ---------> Rating and Review of Products
     path("product/ratingandreview/<int:pk>/",

@@ -87,13 +87,16 @@ class Product(models.Model):
     product_cover_image = models.ImageField(
         upload_to="product_cover_images", default=None, null=True)
     product_gender = models.ForeignKey(Genders, on_delete=models.PROTECT)
-    favourite = models.ManyToManyField(
-        User, blank=True, default=None, related_name="favourite_items")
+    favorite = models.ManyToManyField(
+        User, blank=True, default=None, related_name="favorite_items")
+    cart = models.ManyToManyField(
+        User, blank=True, default=None, related_name="cart_items")
     product_tags = TaggableManager()
 
     def save(self, *args, **kwargs):
-        self.product_slug = slugify(
-            self.product_title) + generate_random_string()
+        if not self.pk:
+            self.product_slug = slugify(
+                self.product_title) + generate_random_string()
         return super().save(*args, **kwargs)
 
     def __str__(self):
@@ -112,20 +115,6 @@ class ProductImage(models.Model):
         return str(self.product_image.id) + " - " + str(self.product_image.product_title)
 
 
-# --------- Cart Model
-class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveBigIntegerField(default=1)
-
-    def __str__(self):
-        return str(self.id)
-
-    @property
-    def total_cost(self):
-        return self.quantity * self.product.product_discounted_price
-
-
 # --------- Order Placed Model
 class OrderPlaced(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -141,15 +130,6 @@ class OrderPlaced(models.Model):
     @property
     def total_cost(self):
         return self.quantity * self.product_discounted_price
-
-
-# --------- Favorite Model
-class Favorite(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.OneToOneField(Product, on_delete=models.CASCADE)
-
-    def __str__(self) -> str:
-        return str(self.product)
 
 
 # --------- Ratings and Reviews Model

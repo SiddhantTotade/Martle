@@ -66,7 +66,8 @@ class User(AbstractBaseUser):
 
 # --------- Customer Model
 class CustomerAddress(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='addresses')
     address = models.CharField(default=None, max_length=255)
     locality = models.CharField(max_length=255)
     city = models.CharField(max_length=255)

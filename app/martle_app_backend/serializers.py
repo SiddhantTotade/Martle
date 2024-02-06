@@ -21,14 +21,14 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 # --------- Product Serializer
 class ProductSerializer(serializers.ModelSerializer):
-
+    favorite = serializers.SerializerMethodField()
+    cart = serializers.SerializerMethodField()
     product_images = ProductImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product
         depth = 1
-        fields = ['id', 'product_title', 'product_selling_price', 'product_discounted_price',
-                  'product_description', 'product_details', 'product_brand', 'product_category', 'product_images']
+        fields = "__all__"
 
     def create(self, validated_data):
         product = Product.objects.create(product_title=validated_data['product_title'], product_selling_price=validated_data['product_selling_price'], product_discounted_price=validated_data['product_discounted_price'],
@@ -36,13 +36,23 @@ class ProductSerializer(serializers.ModelSerializer):
         product.save()
         return product
 
+    def get_favorite(self, obj):
+        return [{str(user.id): obj.id} for user in obj.favorite.all()]
+
+    def get_cart(self, obj):
+        return [{str(user.id): obj.id} for user in obj.cart.all()]
+
 
 class ProductLightSerializer(serializers.ModelSerializer):
+    favorite = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=User.objects.all(), allow_null=True)
+    cart = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=User.objects.all(), allow_null=True)
 
     class Meta:
         model = Product
         fields = ['id', 'product_title', 'product_discounted_price', 'product_selling_price',
-                  'product_brand', 'product_category', 'product_slug', 'product_cover_image']
+                  'product_brand', 'product_category', 'product_slug', 'product_cover_image', 'favorite', 'cart']
 
     # def get_favourites(self, obj):
     #     user = self.context['request'].user
@@ -68,15 +78,6 @@ class ProductBrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ''
-
-
-# --------- Cart Serializer
-class CartSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Cart
-        depth = 1
-        exclude = ['user']
-        # fields = ['product', 'quantity']
 
 
 # --------- Rating and Review Serializer
@@ -110,27 +111,17 @@ class OrderPlacedSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# --------- Specially from Serializer (Specific Categorized Product)
-class SpecialProductSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Product
-        fields = ['product_cover_image', 'product_slug']
-
-
-# --------- Wedding Serializer
-class WeddingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        depth = 2
-        fields = ['product_gender', 'product_cover_image', 'product_slug']
-
-
 # --------- Favorite Serializer
 class FavoriteProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id']
+        fields = "__all__"
+
+
+# --------- Cart Serializer
+class CartProductSerializer(serializers.Serializer):
+    cart_data = ProductLightSerializer(many=True)
+    active_address = CustomerAddressSerializer(allow_null=True)
 
 
 class ProductStatusChoiceSerializer(serializers.ModelSerializer):
