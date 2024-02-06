@@ -61,7 +61,11 @@ export default function OrderSummary({
           Payment method
         </Typography>
         <Typography sx={styleTypography} fontSize="small">
-          {paymentMethod ? paymentMethod : payment_method}
+          {paymentMethod
+            ? paymentMethod
+            : payment_method
+            ? paymentMethod
+            : "Select a payment method"}
         </Typography>
       </Box>
       <Box sx={styleBox}>
@@ -69,7 +73,7 @@ export default function OrderSummary({
           Your Savings
         </Typography>
         <Typography sx={styleTypography} fontSize="small">
-          {quantity * productSavePrice(selling_price, discount_price)}
+          ₹{String(quantity * productSavePrice(selling_price, discount_price))}
         </Typography>
       </Box>
       <Box sx={styleBox}>

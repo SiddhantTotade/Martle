@@ -23,6 +23,8 @@ const AddressPage = React.lazy(() => import("@/pages/app/Address"));
 const OrdersPage = React.lazy(() => import("@/pages/app/Orders"));
 const CheckoutPage = React.lazy(() => import("@/pages/app/OrderProduct"));
 const SingleOrderPage = React.lazy(() => import("@/pages/app/SingleOrder"));
+const FavoritesPage = React.lazy(() => import("@/pages/app/Favorites"));
+const CartPage = React.lazy(() => import("@/pages/app/Cart"));
 
 const NotFoundPage = React.lazy(() => import("@/pages/404NotFound"));
 
@@ -89,7 +91,7 @@ const appRoutes: Route = [
     ),
   },
   {
-    path: "/my-addresses",
+    path: "/addresses",
     element: (
       <ProtectedRoute>
         <AddressPage />
@@ -97,7 +99,7 @@ const appRoutes: Route = [
     ),
   },
   {
-    path: "/my-orders",
+    path: "/orders",
     element: (
       <ProtectedRoute>
         <OrdersPage />
@@ -105,10 +107,26 @@ const appRoutes: Route = [
     ),
   },
   {
-    path: "/my-orders/:slug",
+    path: "/orders/:slug",
     element: (
       <ProtectedRoute>
         <SingleOrderPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/favorites",
+    element: (
+      <ProtectedRoute>
+        <FavoritesPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/cart",
+    element: (
+      <ProtectedRoute>
+        <CartPage />
       </ProtectedRoute>
     ),
   },

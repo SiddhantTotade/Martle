@@ -1,5 +1,5 @@
-import { Typography } from "@mui/material";
 import { ReactNode } from "react";
+import { Typography } from "@mui/material";
 import Carousel from "react-multi-carousel";
 
 import "./styles/Carousel.css";
@@ -15,12 +15,16 @@ const responsive = {
     breakpoint: { max: 3000, min: 1024 },
     items: 5,
   },
-  tablet: {
+  book: {
     breakpoint: { max: 1368, min: 464 },
     items: 4,
   },
+  tablet: {
+    breakpoint: { max: 800, min: 600 },
+    items: 3,
+  },
   mobile: {
-    breakpoint: { max: 500, min: 0 },
+    breakpoint: { max: 600, min: 200 },
     items: 1,
     slidesToSlide: 1,
   },

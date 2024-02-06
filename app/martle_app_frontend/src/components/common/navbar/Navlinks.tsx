@@ -2,11 +2,8 @@ import React from "react";
 import { Box, Link } from "@mui/material";
 
 import { navLinks } from "./AllLinks";
-import { useNavigate } from "react-router-dom";
 
 export default function Navlinks() {
-  const navigate = useNavigate();
-  
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: "30px" }}>
       {navLinks.map((links, id) => (

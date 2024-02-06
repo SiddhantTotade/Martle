@@ -1,3 +1,7 @@
 .product-carousel {
   padding: 10px;
 }
+
+.product-carousel > ul {
+  gap: 10px;
+}

@@ -1,11 +1,12 @@
-import { Box } from "@mui/material";
 import { HTMLAttributes } from "react";
+import { Box, SxProps } from "@mui/material";
 
 interface Props extends HTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
   width?: string;
   height?: null | string;
+  sx?: SxProps;
 }
 
 export default function Image({
@@ -13,6 +14,7 @@ export default function Image({
   width,
   height,
   alt,
+  sx,
   ...otherProps
 }: Props) {
   return (
@@ -20,8 +22,11 @@ export default function Image({
       sx={{
         width: width,
         height: height,
+        display: "flex",
+        justifyContent: "center",
         borderRadius: "3px",
         background: "#fff",
+        ...sx,
       }}
     >
       <img src={src} alt={alt} {...otherProps} />

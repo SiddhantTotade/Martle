@@ -9,6 +9,7 @@ import { authApi } from "./services/authApiSlice";
 import { appApi } from "./services/appApiSlice";
 import { productSlice } from "./features/productSlice";
 import checkoutSlice from "./features/checkoutSlice";
+import favoriteAndCartSlice from "./features/favoriteAndCartSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     address: addressSlice,
     quantity: quantitySlice,
     checkout: checkoutSlice,
+    favorite_cart: favoriteAndCartSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authApi.middleware, appApi.middleware),

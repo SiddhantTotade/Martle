@@ -1,23 +1,40 @@
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Box, Card, Radio, RadioGroup, Typography } from "@mui/material";
+import { useParams } from "react-router-dom";
+import {
+  Box,
+  Card,
+  Radio,
+  RadioGroup,
+  SxProps,
+  Typography,
+} from "@mui/material";
 
 import AppContainer from "../common/Container";
 import { setCheckoutPayment } from "@/redux/features/checkoutSlice";
 import { useProductForPlaceOrderQuery } from "@/redux/services/appApiSlice";
 
-export default function PaymentOptions() {
+interface Props {
+  sx?: SxProps;
+}
+
+export default function PaymentOptions({ sx }: Props) {
+  const [dataLength, setDataLength] = useState();
   const dispatch = useDispatch();
   const { slug } = useParams();
   const { data } = useProductForPlaceOrderQuery(slug);
+
+  useEffect(() => {
+    setDataLength(data?.data.length);
+  }, [data]);
 
   const handlePayment = (e) => {
     dispatch(setCheckoutPayment({ paymentMethod: e.target.value }));
   };
 
   return (
-    <AppContainer>
-      <RadioGroup sx={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+    <AppContainer sx={{ ...sx }}>
+      <RadioGroup sx={{ display: "flex", flexDirection: "row", gap: "10px" }}>
         <Card
           elevation={5}
           sx={{ display: "flex", p: 1, alignItems: "center", gap: "10px" }}
@@ -41,19 +58,30 @@ export default function PaymentOptions() {
           <Box>
             <Radio
               onClick={handlePayment}
-              value={`EMI - ₹${Math.round(
-                data?.data[0].product_discounted_price / 3
-              )}/month`}
+              value={
+                dataLength
+                  ? `EMI - ₹${Math.round(
+                      data?.data[0].product_discounted_price / 3
+                    )}/month`
+                  : ""
+              }
               size="small"
               disabled={
-                data?.data[0].product_discounted_price >= 6000 ? false : true
+                dataLength
+                  ? data?.data[0].product_discounted_price >= 6000
+                    ? false
+                    : true
+                  : true
               }
             />
           </Box>
           <Box>
             <Typography fontSize="small" fontWeight="bold">
               No Cost EMI - Starting from ₹
-              {Math.round(data?.data[0].product_discounted_price / 3)}/month
+              {dataLength
+                ? Math.round(data?.data[0].product_discounted_price / 3)
+                : ""}
+              /month
             </Typography>
             <Typography fontSize="small">
               EMI interest saving on selected credit cards. Orders above ₹6000

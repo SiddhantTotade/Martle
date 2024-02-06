@@ -15,12 +15,26 @@ import Specification from "@/components/product/Specification";
 import QuestionAndAnswer from "@/components/product/QuestionAndAnswer";
 import RatingAndReviews from "@/components/product/RatingAndReviews";
 import MobileProductImage from "@/components/product/MobileProductImage";
+import { useDispatch } from "react-redux";
+import { setCart, setFavorite } from "@/redux/features/favoriteAndCartSlice";
+import { useEffect } from "react";
 // import MDEditor from "../components/MarkDown";
 // import MarkDownPreview from "../components/MarkDownPreview";
 
 export default function ProductLayout() {
+  const dispatch = useDispatch();
   const { slug } = useParams();
   const { data, isLoading } = useProductBySlugQuery(slug);
+
+  useEffect(() => {
+    dispatch(
+      setFavorite({
+        favorite: data?.[0].id,
+        favoriteToUser: data?.[0].favorite,
+      })
+    );
+    dispatch(setCart({ cart: data?.[0].id, cartToUser: data?.[0].cart }));
+  });
 
   return (
     <>
@@ -64,6 +78,8 @@ export default function ProductLayout() {
           <ProductImageMagnifier
             isLoading={isLoading}
             product_images={data?.[0].product_images}
+            product_id={data?.[0].id}
+            product_favorite={data?.[0].favorite}
           />
         </AppContainer>
         <AppContainer

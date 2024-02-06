@@ -7,27 +7,27 @@ import InventoryIcon from "@mui/icons-material/Inventory";
 export const navLinks = [
   {
     label: "Profile",
-    link: "my-profile",
+    link: "/profile",
     icon: <AccountBoxIcon fontSize="small" />,
   },
   {
     label: "Orders",
-    link: "my-orders",
+    link: "/orders",
     icon: <InventoryIcon fontSize="small" />,
   },
   {
     label: "Address",
-    link: "my-addresses",
+    link: "/addresses",
     icon: <BusinessIcon fontSize="small" />,
   },
   {
     label: "Favorite",
-    link: "my-favorites",
+    link: "/favorites",
     icon: <FavoriteIcon fontSize="small" />,
   },
   {
     label: "Cart",
-    link: "my-cart",
+    link: "/cart",
     icon: <ShoppingCartIcon fontSize="small" />,
   },
 ];

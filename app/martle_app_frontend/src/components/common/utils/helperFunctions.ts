@@ -1,3 +1,11 @@
+export const convertToINR = (price: any) => {
+  return price.toLocaleString("en-IN", {
+    maximumFractionDigits: 2,
+    style: "currency",
+    currency: "INR",
+  });
+};
+
 export const productDiscount = (sp: number, cp: number) => {
   return (((sp - cp) / sp) * 100).toFixed(1) as unknown as number;
 };
@@ -56,4 +64,9 @@ export const orderStatus = (status: string) => {
     default:
       return undefined;
   }
+};
+
+export const extractProductId = (products: any) => {
+  const productIds = products?.map((product: any) => product.id);
+  return productIds;
 };
