@@ -3,6 +3,8 @@ import { Typography, Box } from "@mui/material";
 import { RootState } from "@reduxjs/toolkit/query";
 
 import {
+  cartOrderSummary,
+  convertToINR,
   deliveryCharges,
   orderTotal,
   productDiscount,
@@ -24,26 +26,33 @@ interface Props {
   discount_price?: string | any;
   selling_price?: string | any;
   payment_method?: string | any;
+  product_id?: string;
+  orderSummaryType?: string;
 }
 
 export default function OrderSummary({
   discount_price,
   selling_price,
   payment_method,
+  product_id,
+  orderSummaryType,
 }: Props) {
-  const quantity = useSelector((state: RootState) => state.quantity.quantity);
+  const quantity = useSelector((state: RootState) => state.quantity);
   const paymentMethod = useSelector(
     (state: RootState) => state.checkout.paymentMethod
   );
+  const orderSummary = cartOrderSummary(quantity);
 
   return (
     <Box sx={{ width: "100%", display: "grid", gap: "5px" }}>
       <Box sx={styleBox}>
         <Typography sx={{ width: "100%" }} fontWeight="bold" fontSize="small">
-          Quantity
+          {orderSummaryType === "cart" ? "Items" : "Quantity"}
         </Typography>
         <Typography sx={styleTypography} fontSize="small">
-          {quantity}
+          {orderSummaryType === "cart"
+            ? orderSummary.totalItems
+            : quantity.quantity}
         </Typography>
       </Box>
       <Box sx={styleBox}>
@@ -51,7 +60,7 @@ export default function OrderSummary({
           Shipping charges
         </Typography>
         <Typography sx={styleTypography} fontSize="small">
-          {deliveryCharges(discount_price) === 0
+          {orderSummary.deliveryCharges == 0
             ? "Free"
             : deliveryCharges(discount_price)}
         </Typography>
@@ -73,7 +82,7 @@ export default function OrderSummary({
           Your Savings
         </Typography>
         <Typography sx={styleTypography} fontSize="small">
-          ₹{String(quantity * productSavePrice(selling_price, discount_price))}
+          {orderSummary.productSavePrice}
         </Typography>
       </Box>
       <Box sx={styleBox}>
@@ -81,10 +90,7 @@ export default function OrderSummary({
           Discount
         </Typography>
         <Typography sx={styleTypography} fontSize="small">
-          {(quantity * productDiscount(selling_price, discount_price)).toFixed(
-            1
-          )}
-          %
+          {orderSummary.productDiscount}%
         </Typography>
       </Box>
       <Box sx={styleBox}>
@@ -92,9 +98,7 @@ export default function OrderSummary({
           Order Total
         </Typography>
         <Typography sx={styleTypography} fontWeight="bold">
-          ₹
-          {(deliveryCharges(discount_price) as number) +
-            orderTotal(quantity, discount_price)}
+          {orderSummary.orderTotal}
         </Typography>
       </Box>
     </Box>

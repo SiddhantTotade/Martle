@@ -7,10 +7,10 @@ import Image from "../common/Image";
 import ProductCard from "../common/Card";
 import PrirmaryButton from "../common/PrirmaryButton";
 import ActionContainer from "../common/ActionContainer";
-import SkeletonProductCard from "../common/ui/skeletons/SkeletonProductCard";
 import { convertToINR } from "../common/utils/helperFunctions";
 import { useRemoveFromCart } from "@/hooks/app/removeFromCart";
 import ProductQuantity from "@/components/checkout/ProductQuantity";
+import SkeletonProductCard from "../common/ui/skeletons/SkeletonProductCard";
 
 interface Props {
   getIsLoading?: boolean;
@@ -23,7 +23,15 @@ export default function CartItems({ getIsLoading, data }: Props) {
   const { onSubmit, isLoading: removeItem } = useRemoveFromCart();
 
   return (
-    <Box sx={{ flex: "1", display: "flex", flexWrap: "wrap", gap: "10px" }}>
+    <Box
+      sx={{
+        width: "100%",
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        gap: "10px",
+        position: "relative",
+      }}
+    >
       {getIsLoading ? (
         <SkeletonProductCard />
       ) : (
@@ -33,13 +41,11 @@ export default function CartItems({ getIsLoading, data }: Props) {
               key={index}
               elevation={5}
               sx={{
-                width: "calc(20% - 40px)",
-                display: "flex",
-                flexDirection: "column",
-                flexWrap: "wrap",
-                marginLeft: "27%",
+                height: "46vh",
+                display: "grid",
+                width: "270px",
+                rowGap: "10px",
                 p: 1,
-                gap: "10px",
               }}
             >
               <Image
@@ -82,7 +88,7 @@ export default function CartItems({ getIsLoading, data }: Props) {
                 <del style={{ fontSize: "12px" }}>
                   {convertToINR(product.product_selling_price)}
                 </del>
-                <ProductQuantity />
+                <ProductQuantity product_id={product.id} />
               </Box>
               <ActionContainer>
                 {removeItem ? (

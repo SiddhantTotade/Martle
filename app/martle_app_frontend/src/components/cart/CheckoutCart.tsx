@@ -1,4 +1,6 @@
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "@reduxjs/toolkit/query";
 
 import ProductCard from "../common/Card";
 import SecondaryButton from "../common/SecondaryButton";
@@ -6,8 +8,6 @@ import AddressCard from "../common/order-product/AddressCard";
 import OrderSummary from "@/components/checkout/OrderSummary";
 import PaymentOptions from "@/components/checkout/PaymentOptions";
 import SkeletonAddressCard from "../common/ui/skeletons/SkeletonAddressCard";
-import { useSelector } from "react-redux";
-import { RootState } from "@reduxjs/toolkit/query";
 
 interface Props {
   getIsLoading?: boolean;
@@ -16,7 +16,6 @@ interface Props {
 
 export default function CheckoutCart({ data, getIsLoading }: Props) {
   const checkout = useSelector((state: RootState) => state.checkout);
-  console.log(checkout);
 
   return (
     <>
@@ -30,7 +29,6 @@ export default function CheckoutCart({ data, getIsLoading }: Props) {
             flexDirection: "column",
             flex: "0 0 25%",
             gap: "10px",
-            position: "fixed",
           }}
         >
           <ProductCard elevation={5} sx={{ p: 1, border: "1px solid" }}>
@@ -54,6 +52,8 @@ export default function CheckoutCart({ data, getIsLoading }: Props) {
           />
           <ProductCard elevation={5} sx={{ p: 1, border: "1px solid" }}>
             <OrderSummary
+              orderSummaryType="cart"
+              product_id={data?.data.data[0].id}
               discount_price={data?.data.data[0].product_discounted_price}
               selling_price={data?.data.data[0].product_selling_price}
             />

@@ -1,3 +1,9 @@
+interface CartItem {
+  product_selling_price: number;
+  product_discounted_price: number;
+  quantity: number;
+}
+
 export const convertToINR = (price: any) => {
   return price.toLocaleString("en-IN", {
     maximumFractionDigits: 2,
@@ -69,4 +75,50 @@ export const orderStatus = (status: string) => {
 export const extractProductId = (products: any) => {
   const productIds = products?.map((product: any) => product.id);
   return productIds;
+};
+
+export const extractCartData = (products: any) => {
+  return products.map((product: any) => ({
+    product_id: product.id,
+    product_discounted_price: product.product_discounted_price,
+    product_selling_price: product.product_selling_price,
+    quantity: 1,
+  }));
+};
+
+export const cartOrderSummary = (data: Record<string, CartItem>) => {
+  let totalPrice = 0;
+  let savePrice = 0;
+  let discount = 0;
+  let items = 0;
+
+  const dataArray = Object.values(data);
+
+  for (const item of dataArray) {
+    if (
+      item.product_discounted_price !== undefined &&
+      item.quantity !== undefined
+    ) {
+      items += item.quantity as number;
+      totalPrice += orderTotal(item.product_discounted_price, item.quantity);
+      savePrice += productSavePrice(
+        (item.product_selling_price * item.quantity) as number,
+        (item.product_discounted_price * item.quantity) as number
+      );
+      discount += Number(
+        productDiscount(
+          item.product_selling_price,
+          item.product_discounted_price
+        )
+      );
+    }
+  }
+
+  return {
+    orderTotal: convertToINR(totalPrice),
+    deliveryCharges: deliveryCharges(totalPrice as unknown as string),
+    productSavePrice: convertToINR(Number(savePrice.toFixed(1))),
+    productDiscount: discount,
+    totalItems: items,
+  };
 };
