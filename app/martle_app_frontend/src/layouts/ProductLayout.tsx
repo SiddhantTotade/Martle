@@ -15,14 +15,17 @@ import Specification from "@/components/product/Specification";
 import QuestionAndAnswer from "@/components/product/QuestionAndAnswer";
 import RatingAndReviews from "@/components/product/RatingAndReviews";
 import MobileProductImage from "@/components/product/MobileProductImage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCart, setFavorite } from "@/redux/features/favoriteAndCartSlice";
 import { useEffect } from "react";
+import { RootState } from "@reduxjs/toolkit/query";
+import { recommendFunction } from "@/components/common/utils/recommendFunction";
 // import MDEditor from "../components/MarkDown";
 // import MarkDownPreview from "../components/MarkDownPreview";
 
 export default function ProductLayout() {
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user.id);
   const { slug } = useParams();
   const { data, isLoading } = useProductBySlugQuery(slug);
 
@@ -35,6 +38,10 @@ export default function ProductLayout() {
     );
     dispatch(setCart({ cart: data?.[0].id, cartToUser: data?.[0].cart }));
   });
+
+  useEffect(() => {
+    recommendFunction(data, user);
+  }, []);
 
   return (
     <>

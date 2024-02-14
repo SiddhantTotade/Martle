@@ -26,7 +26,7 @@ const responsive = {
 
 export default function Hero() {
   return (
-    <AppContainer>
+    <AppContainer sx={{ mt: "6rem" }}>
       <Carousel
         className="product-carousel hero-carousel"
         itemClass="carousel"

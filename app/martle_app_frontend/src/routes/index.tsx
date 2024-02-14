@@ -6,7 +6,8 @@ import {
 } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 
-import { ProtectedRoute } from "./ProtectedRoute";
+import { RouteSuspense } from "./routeSuspense";
+import { ProtectedRoutes } from "./protectedRoutes";
 
 const LoginPage = React.lazy(() => import("@/pages/auth/Login"));
 const RegisterPage = React.lazy(() => import("@/pages/auth/Register"));
@@ -17,14 +18,14 @@ const ForgotPasswordPage = React.lazy(
   () => import("@/pages/auth/ForgotPassword")
 );
 
+const CartPage = React.lazy(() => import("@/pages/app/Cart"));
 const HomePage = React.lazy(() => import("@/pages/app/Home"));
+const OrdersPage = React.lazy(() => import("@/pages/app/Orders"));
 const ProductPage = React.lazy(() => import("@/pages/app/Product"));
 const AddressPage = React.lazy(() => import("@/pages/app/Address"));
-const OrdersPage = React.lazy(() => import("@/pages/app/Orders"));
+const FavoritesPage = React.lazy(() => import("@/pages/app/Favorites"));
 const CheckoutPage = React.lazy(() => import("@/pages/app/OrderProduct"));
 const SingleOrderPage = React.lazy(() => import("@/pages/app/SingleOrder"));
-const FavoritesPage = React.lazy(() => import("@/pages/app/Favorites"));
-const CartPage = React.lazy(() => import("@/pages/app/Cart"));
 
 const NotFoundPage = React.lazy(() => import("@/pages/404NotFound"));
 
@@ -33,35 +34,19 @@ type Route = RouteObject[] | RouteObject;
 const authRoutes: Route = [
   {
     path: "/auth/login",
-    element: (
-      <Suspense>
-        <LoginPage />
-      </Suspense>
-    ),
+    element: <RouteSuspense children={<LoginPage />} />,
   },
   {
     path: "/auth/register",
-    element: (
-      <Suspense>
-        <RegisterPage />
-      </Suspense>
-    ),
+    element: <RouteSuspense children={<RegisterPage />} />,
   },
   {
     path: "/auth/reset-password/*",
-    element: (
-      <Suspense>
-        <ResetPasswordPage />
-      </Suspense>
-    ),
+    element: <RouteSuspense children={<ResetPasswordPage />} />,
   },
   {
     path: "/auth/forgot-password",
-    element: (
-      <Suspense>
-        <ForgotPasswordPage />
-      </Suspense>
-    ),
+    element: <RouteSuspense children={<ForgotPasswordPage />} />,
   },
 ];
 
@@ -69,65 +54,59 @@ const appRoutes: Route = [
   {
     path: "/",
     element: (
-      <ProtectedRoute>
-        <HomePage />
-      </ProtectedRoute>
+      <ProtectedRoutes children={<RouteSuspense children={<HomePage />} />} />
     ),
   },
   {
     path: "/product/:slug",
     element: (
-      <ProtectedRoute>
-        <ProductPage />
-      </ProtectedRoute>
+      <ProtectedRoutes
+        children={<RouteSuspense children={<ProductPage />} />}
+      />
     ),
   },
   {
-    path: "/buy-order/proceed/:slug",
+    path: "/checkout/proceed/:slug",
     element: (
-      <ProtectedRoute>
-        <CheckoutPage />
-      </ProtectedRoute>
+      <ProtectedRoutes
+        children={<RouteSuspense children={<CheckoutPage />} />}
+      />
     ),
   },
   {
     path: "/addresses",
     element: (
-      <ProtectedRoute>
-        <AddressPage />
-      </ProtectedRoute>
+      <ProtectedRoutes
+        children={<RouteSuspense children={<AddressPage />} />}
+      />
     ),
   },
   {
     path: "/orders",
     element: (
-      <ProtectedRoute>
-        <OrdersPage />
-      </ProtectedRoute>
+      <ProtectedRoutes children={<RouteSuspense children={<OrdersPage />} />} />
     ),
   },
   {
     path: "/orders/:slug",
     element: (
-      <ProtectedRoute>
-        <SingleOrderPage />
-      </ProtectedRoute>
+      <ProtectedRoutes
+        children={<RouteSuspense children={<SingleOrderPage />} />}
+      />
     ),
   },
   {
     path: "/favorites",
     element: (
-      <ProtectedRoute>
-        <FavoritesPage />
-      </ProtectedRoute>
+      <ProtectedRoutes
+        children={<RouteSuspense children={<FavoritesPage />} />}
+      />
     ),
   },
   {
     path: "/cart",
     element: (
-      <ProtectedRoute>
-        <CartPage />
-      </ProtectedRoute>
+      <ProtectedRoutes children={<RouteSuspense children={<CartPage />} />} />
     ),
   },
 ];

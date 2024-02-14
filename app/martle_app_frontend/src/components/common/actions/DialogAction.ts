@@ -11,6 +11,9 @@ export const initialState = {
   editAddress: {
     open: false,
   },
+  changePassword: {
+    open: false,
+  },
 };
 
 export default function DialogActionReducer(state, action) {
@@ -18,7 +21,6 @@ export default function DialogActionReducer(state, action) {
     case "OPEN_DIALOG":
       return {
         ...state,
-
         [action.payload.dialogType]: {
           open: true,
         },

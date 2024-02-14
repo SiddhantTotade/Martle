@@ -1,47 +1,19 @@
 from django.db import models
 from django.urls import reverse
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-# Create your models here.
+from .manager import UserManager
+from django.contrib.auth.models import AbstractBaseUser
 
-
-class UserManager(BaseUserManager):
-    def create_user(self, email, name, tc, password=None, password2=None):
-        if not email:
-            raise ValueError("Admin must have an email address")
-
-        user = self.model(
-            email=self.normalize_email(email),
-            name=name,
-            tc=tc
-        )
-
-        user.set_password(password)
-        user.save(using=self._db)
-
-        return user
-
-    def create_superuser(self, email, name, tc, password=None, password2=None):
-        user = self.create_user(
-            email,
-            password=password,
-            name=name,
-            tc=tc
-        )
-
-        user.is_admin = True
-        user.save(using=self._db)
-
-        return user
-
-
-# User Authentication Models
 class User(AbstractBaseUser):
     email = models.EmailField(
-        verbose_name='Email Address', max_length=255, unique=True)
-    name = models.CharField(max_length=255)
-    tc = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+        verbose_name='Email Address',
+        max_length=255,
+        unique=True,
+    )
+    name = models.CharField(max_length=200)
+    tc = models.BooleanField()
+    is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -51,7 +23,7 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = ['name', 'tc']
 
     def __str__(self):
-        return str(self.id)
+        return self.email
 
     def has_perm(self, perm, obj=None):
         return self.is_admin
@@ -64,7 +36,6 @@ class User(AbstractBaseUser):
         return self.is_admin
 
 
-# --------- Customer Model
 class CustomerAddress(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='addresses')

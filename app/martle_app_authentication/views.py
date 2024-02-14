@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.core import serializers as customer_data_serializer
 from django.http.response import JsonResponse
 from django.contrib.auth.tokens import default_token_generator
+from django.conf import settings
 from django.utils.encoding import force_str
 from urllib.parse import urlencode
 from martle_app_backend.models import *
@@ -60,6 +61,7 @@ class UserRegistrationView(APIView):
 
         response.set_cookie("access", access_token, max_age=settings.AUTH_COOKIE_MAX_AGE, path=settings.AUTH_COOKIE_PATH,
                             secure=settings.AUTH_COOKIE_SECURE, httponly=settings.AUTH_COOKIE_HTTP_ONLY, samesite=settings.AUTH_COOKIE_SAMESITE)
+
         response.set_cookie("refresh", refresh_token, max_age=settings.AUTH_COOKIE_MAX_AGE, path=settings.AUTH_COOKIE_PATH,
                             secure=settings.AUTH_COOKIE_SECURE, httponly=settings.AUTH_COOKIE_HTTP_ONLY, samesite=settings.AUTH_COOKIE_SAMESITE)
 
@@ -133,6 +135,31 @@ class UserPasswordResetView(APIView):
 
         serializer.is_valid(raise_exception=True)
         return Response({'msg': 'Password reset successfully'}, status=status.HTTP_200_OK)
+
+
+# user password-reset view
+class UserLogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            refresh_token = request.COOKIES.get("refresh")
+
+            serializer = LogoutSerializer(data={"refresh": refresh_token})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+
+            response = Response(status=status.HTTP_204_NO_CONTENT)
+
+            response.set_cookie("access", None, max_age=settings.SIMPLE_JWT["AUTH_COOKIE_MAX_AGE"],   path=settings.SIMPLE_JWT["AUTH_COOKIE_PATH"],
+                                secure=settings.SIMPLE_JWT["AUTH_COOKIE_SECURE"], httponly=settings.  SIMPLE_JWT["AUTH_COOKIE_HTTP_ONLY"], samesite=settings.SIMPLE_JWT["AUTH_COOKIE_SAMESITE"])
+
+            response.set_cookie("refresh", None, max_age=settings.SIMPLE_JWT["AUTH_COOKIE_MAX_AGE"],   path=settings.SIMPLE_JWT["AUTH_COOKIE_PATH"],
+                                secure=settings.SIMPLE_JWT["AUTH_COOKIE_SECURE"], httponly=settings.  SIMPLE_JWT["AUTH_COOKIE_HTTP_ONLY"], samesite=settings.SIMPLE_JWT["AUTH_COOKIE_SAMESITE"])
+
+            return response
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class TokenRefreshView(TokenRefreshView):
@@ -275,7 +302,8 @@ class CustomerView(APIView):
     def post(self, request):
         # getting customer data which is going to be save
         customer_json_data = JSONParser().parse(request)
-        customer_serialized_data = CustomerSerializer(data=customer_json_data)
+        customer_serialized_data = CustomerAddressSerializer(
+            data=customer_json_data)
 
         # saving customer data
         if customer_serialized_data.is_valid():
@@ -288,7 +316,7 @@ class CustomerView(APIView):
         # getting customer modified data which is going to be update
         customer_json_data = JSONParser().parse(request)
         customer_by_id = CustomerAddress.objects.get(pk=pk)
-        customer_serialized_data = CustomerSerializer(
+        customer_serialized_data = CustomerAddressSerializer(
             customer_by_id, data=customer_json_data)
 
         # saving customer data

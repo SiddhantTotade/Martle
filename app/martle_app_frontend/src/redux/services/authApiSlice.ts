@@ -51,6 +51,12 @@ export const authApi = createApi({
         body: payload,
       }),
     }),
+    logout: builder.query({
+      query: () => ({
+        url: "logout/",
+        method: "GET",
+      }),
+    }),
     verify: builder.query({
       query: () => ({
         url: "verify/",
@@ -74,4 +80,5 @@ export const {
   useResetPasswordMutation,
   useVerifyQuery,
   useProfileQuery,
+  useLazyLogoutQuery,
 } = authApi;

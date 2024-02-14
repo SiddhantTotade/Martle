@@ -1,3 +1,4 @@
+import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline/CssBaseline";
 import {
   Box,
@@ -9,8 +10,10 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  CircularProgress,
 } from "@mui/material";
-import * as React from "react";
+import { useLogout } from "@/hooks/auth/logout";
+
 import { styled, useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -48,8 +51,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function NavDrawer() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
+  const { onSubmit, isLoading } = useLogout();
+  const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -106,17 +110,21 @@ export default function NavDrawer() {
         </List>
         <Divider />
         <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <LogoutIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{ fontSize: "small" }}
-                primary="Logout"
-              />
-            </ListItemButton>
-          </ListItem>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <ListItem onClick={onSubmit} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <LogoutIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{ fontSize: "small" }}
+                  primary="Logout"
+                />
+              </ListItemButton>
+            </ListItem>
+          )}
         </List>
       </Drawer>
       <Main open={open}>

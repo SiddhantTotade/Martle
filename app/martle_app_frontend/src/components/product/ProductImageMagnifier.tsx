@@ -22,15 +22,8 @@ const ProductImageMagnifier = (props) => {
     }
   };
 
-  const handleHover = (image, i) => {
+  const handleHover = (image: any) => {
     setImg(image);
-    // imgRef.current[i].classList.add("active");
-
-    for (let j = 0; j < img.length; j++) {
-      if (i !== j) {
-        // imgRef.current[j].classList.remove("active");
-      }
-    }
   };
 
   return (
@@ -38,7 +31,7 @@ const ProductImageMagnifier = (props) => {
       <div className="container">
         <div className="left">
           <div className="left_1">
-            {props.product_images?.map((image, i) => {
+            {props.product_images?.map((image: any, i: number) => {
               return (
                 <div
                   ref={addRef}
@@ -48,9 +41,16 @@ const ProductImageMagnifier = (props) => {
                 >
                   <Image
                     src={`http://127.0.0.1:8000` + image.product_img_file}
-                    alt="img"
+                    alt="product_image"
                     className="p-1"
-                    style={{ display: "flex" }}
+                    width="100%"
+                    height="10vh"
+                    sx={{ display: "flex", alignItems: "center" }}
+                    style={{
+                      display: "flex",
+                      height: "10vh",
+                      objectFit: "contain",
+                    }}
                   />
                 </div>
               );
@@ -62,8 +62,8 @@ const ProductImageMagnifier = (props) => {
                 smallImage: {
                   alt: "img",
                   src: `http://127.0.0.1:8000/${img}`,
-                  width: 400,
-                  height: 400,
+                  width: 430,
+                  height: 430,
                 },
                 largeImage: {
                   alt: "img",
@@ -72,11 +72,16 @@ const ProductImageMagnifier = (props) => {
                   height: 1800,
                 },
                 enlargedImageContainerDimensions: {
-                  width: "240%",
-                  height: "150%",
+                  width: "100%",
+                  height: "100%",
+                },
+                enlargedImageStyle: {
+                  objectFit: "scale-down",
+                  background: "#fff",
                 },
                 imageStyle: {
-                  border: "2px solid gainsboro",
+                  border: "1px  solid gainsboro",
+                  objectFit: "contain",
                 },
                 shouldUsePositiveSpaceLens: true,
               }}

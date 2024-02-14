@@ -1,7 +1,6 @@
 .hero-carousel {
-  padding: 0;
-  border: 2px solid #fff;
   border-radius: 5px;
+  z-index: 0;
 }
 
 .hero-carousel > ul > li {

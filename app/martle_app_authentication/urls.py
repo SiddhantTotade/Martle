@@ -14,5 +14,6 @@ urlpatterns = [
             UserPasswordResetView.as_view(), name='reset_password'),
     re_path(r"^verify/$", VerifyTokenView.as_view(), name="verify_token"),
     re_path(r"^token/refresh/$", jwt_views.TokenRefreshView.as_view(),
-            name="token_refresh")
+            name="token_refresh"),
+    re_path(r"^logout/$", UserLogoutView.as_view(), name="logout")
 ]

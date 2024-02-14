@@ -1,5 +1,5 @@
 import { PropsWithChildren, Suspense } from "react";
 
-export const ProtectedRoute = ({ children }: PropsWithChildren) => {
+export const RouteSuspense = ({ children }: PropsWithChildren) => {
   return <Suspense>{children}</Suspense>;
 };

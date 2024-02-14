@@ -8,7 +8,7 @@ export default function SkeletonCard() {
     <Box
       sx={{
         position: "relative",
-        left: "27%",
+        left: "44%",
         display: "flex",
         flex: "wrap",
         gap: "10px",

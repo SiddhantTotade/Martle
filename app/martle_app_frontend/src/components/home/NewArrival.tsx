@@ -45,12 +45,13 @@ export default function NewArrival({ data, isLoading }: Props) {
               width="100%"
               height=""
               style={{
+                background: "#fff",
                 display: "flex",
                 width: "100%",
                 maxWidth: "100%",
                 height: "240px",
                 borderRadius: "5px",
-                border: "2px solid",
+                border: "1px solid",
                 objectFit: "contain",
                 padding: "10px",
               }}

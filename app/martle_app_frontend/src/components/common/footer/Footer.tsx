@@ -13,8 +13,6 @@ export default function Footer() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          position: "absolute",
-          bottom: 0,
           background: "#1a237e",
         }}
       >

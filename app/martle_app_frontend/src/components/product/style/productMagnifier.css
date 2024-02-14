@@ -1,19 +1,17 @@
 .container {
-  width: 30%;
+  width: 65%;
   position: fixed;
 }
 
 .left {
   width: 100%;
   display: flex;
-  gap: 10px;
 }
 
 .left_1 {
-  width: 10%;
+  width: 70px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
 .img_wrap {
@@ -21,9 +19,10 @@
   align-items: center;
   width: 100%;
   max-width: 100%;
-  border: 2px solid gainsboro;
+  border: 1px solid gainsboro;
   padding: 3px;
   cursor: pointer;
+  background: #fff;
 }
 
 .img_wrap img {
