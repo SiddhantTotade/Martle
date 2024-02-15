@@ -398,3 +398,21 @@ class QuestionAndAnswerView(APIView):
                 return Response({"msg": "Question submitted"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"msg": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class ProductViewCountView(APIView):
+    def get(self, request, slug):
+        product = Product.objects.get(product_slug=slug)
+        product.product_view_count += 1
+        product.save()
+
+        return Response(status=status.HTTP_200_OK)
+
+
+class ProductPurchaseCountView(APIView):
+    def get(self, request, slug):
+        product = Product.objects.get(product_slug=slug)
+        product.product_purchase_count += 1
+        product.save()
+
+        return Response(status=status.HTTP_200_OK)

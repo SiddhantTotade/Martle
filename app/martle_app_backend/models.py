@@ -92,6 +92,8 @@ class Product(models.Model):
     cart = models.ManyToManyField(
         User, blank=True, default=None, related_name="cart_items")
     product_tags = TaggableManager()
+    product_view_count = models.IntegerField(default=0)
+    product_purchase_count = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -101,6 +103,9 @@ class Product(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    def get_product_tags(self):
+        return [tag.name for tag in self.product_tags.all()]
 
 
 # --------- Product Image Model

@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Dialog, DialogTitle } from "@mui/material";
 
 interface Props {
-  title: string;
+  title?: string;
   children: ReactNode;
   open: boolean;
   onClose: () => void;

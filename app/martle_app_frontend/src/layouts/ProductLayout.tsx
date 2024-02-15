@@ -6,10 +6,7 @@ import Footer from "@/components/common/footer/Footer";
 import ProductImageMagnifier from "@/components/product/ProductImageMagnifier";
 import AppContainer from "@/components/common/Container";
 import ProductDetails from "@/components/product/ProductDetails";
-// import TechnicalDetails from "../components/product_page_components/TechnicalDetails";
-// import RatingAndReviews from "../components/product_page_components/RatingAndReviews";
-// import QuestionAndAnswer from "../components/product_page_components/QuestionAndAnswer";
-import MDEditor from "@/components/product/Markdown";
+// import MDEditor from "@/components/product/Markdown";
 import MarkDownPreview from "@/components/product/MarkdownPreview";
 import Specification from "@/components/product/Specification";
 import QuestionAndAnswer from "@/components/product/QuestionAndAnswer";
@@ -20,6 +17,7 @@ import { setCart, setFavorite } from "@/redux/features/favoriteAndCartSlice";
 import { useEffect } from "react";
 import { RootState } from "@reduxjs/toolkit/query";
 import { recommendFunction } from "@/components/common/utils/recommendFunction";
+import { useViewCount } from "@/hooks/app/viewCount";
 // import MDEditor from "../components/MarkDown";
 // import MarkDownPreview from "../components/MarkDownPreview";
 
@@ -28,6 +26,17 @@ export default function ProductLayout() {
   const user = useSelector((state: RootState) => state.user.id);
   const { slug } = useParams();
   const { data, isLoading } = useProductBySlugQuery(slug);
+  const { onSubmit } = useViewCount();
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      onSubmit(slug);
+    }, 60000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   useEffect(() => {
     dispatch(

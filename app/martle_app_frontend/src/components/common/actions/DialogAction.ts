@@ -14,6 +14,9 @@ export const initialState = {
   changePassword: {
     open: false,
   },
+  searchProduct: {
+    open: false,
+  },
 };
 
 export default function DialogActionReducer(state, action) {

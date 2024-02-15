@@ -26,6 +26,7 @@ const AddressPage = React.lazy(() => import("@/pages/app/Address"));
 const FavoritesPage = React.lazy(() => import("@/pages/app/Favorites"));
 const CheckoutPage = React.lazy(() => import("@/pages/app/OrderProduct"));
 const SingleOrderPage = React.lazy(() => import("@/pages/app/SingleOrder"));
+const SearchPage = React.lazy(() => import("@/pages/app/Search"));
 
 const NotFoundPage = React.lazy(() => import("@/pages/404NotFound"));
 
@@ -107,6 +108,12 @@ const appRoutes: Route = [
     path: "/cart",
     element: (
       <ProtectedRoutes children={<RouteSuspense children={<CartPage />} />} />
+    ),
+  },
+  {
+    path: "/search",
+    element: (
+      <ProtectedRoutes children={<RouteSuspense children={<SearchPage />} />} />
     ),
   },
 ];

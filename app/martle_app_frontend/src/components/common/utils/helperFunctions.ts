@@ -122,3 +122,7 @@ export const cartOrderSummary = (data: Record<string, CartItem>) => {
     totalItems: items,
   };
 };
+
+export const shortText = (title: string, end: number) => {
+  return title.substring(0, end);
+};

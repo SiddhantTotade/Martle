@@ -15,6 +15,7 @@ import Navlinks from "./Navlinks";
 import MobileSearchBar from "./MobileSearchBar";
 import { useSelector } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/query";
+import Search from "./SearchModal";
 
 export default function Navbar() {
   const isAuthenticated = useSelector(
@@ -44,37 +45,31 @@ export default function Navbar() {
               Martle
             </Typography>
           </Box>
-          <FormControl
-            sx={{
-              flexGrow: "1",
-              "@media (max-width: 600px)": { display: "none" },
-            }}
-            component="form"
-          >
-            <SearchBar />
-          </FormControl>
-          <Box
-            sx={{
-              display: "flex",
-              gap: "30px",
-              "@media (max-width: 800px)": {
-                display: "none",
-              },
-            }}
-          >
-            <Navlinks />
-          </Box>
-          <Box sx={{ display: "flex", gap: "10px" }}>
-            {isAuthenticated ? (
-              <Tooltip title={`${user.name} | ${user.email}`}>
-                <Avatar />
-              </Tooltip>
-            ) : (
-              <>
-                <PrirmaryButton label="Login" />
-                <PrirmaryButton label="Register" />
-              </>
-            )}
+          <Box sx={{ display: "flex", gap: "100px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: "30px",
+                "@media (max-width: 800px)": {
+                  display: "none",
+                },
+              }}
+            >
+              <Search />
+              <Navlinks />
+            </Box>
+            <Box sx={{ display: "flex", gap: "10px" }}>
+              {isAuthenticated ? (
+                <Tooltip title={`${user.name} | ${user.email}`}>
+                  <Avatar />
+                </Tooltip>
+              ) : (
+                <>
+                  <PrirmaryButton label="Login" />
+                  <PrirmaryButton label="Register" />
+                </>
+              )}
+            </Box>
           </Box>
         </Toolbar>
       </AppBar>

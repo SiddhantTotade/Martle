@@ -132,6 +132,24 @@ export const appApi = createApi({
         body: payload,
       }),
     }),
+    purchaseCount: builder.query({
+      query: (payload) => ({
+        url: `purchase/${payload}`,
+        method: "GET",
+      }),
+    }),
+    viewCount: builder.query({
+      query: (payload) => ({
+        url: `view/${payload}`,
+        method: "GET",
+      }),
+    }),
+    searchProduct: builder.query({
+      query: (payload) => ({
+        url: `search/?search=${payload}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -155,4 +173,7 @@ export const {
   useGetCartQuery,
   useAddCartMutation,
   useRemoveCartMutation,
+  useLazyViewCountQuery,
+  useLazyPurchaseCountQuery,
+  useLazySearchProductQuery,
 } = appApi;

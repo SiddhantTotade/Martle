@@ -46,4 +46,9 @@ urlpatterns = [
     # ---------> ordered products
     path("orders/", CustomerOrdersView.as_view(), name="orders"),
     path("orders/<slug:slug>", SingleOrderView.as_view(), name="single_order"),
+
+    # ---------> view and purchase count
+    path("view/<slug:slug>/", ProductViewCountView.as_view(), name="view-count"),
+    path("purchase/<slug:slug>/",
+         ProductPurchaseCountView.as_view(), name="purchase-count"),
 ]
