@@ -15,7 +15,7 @@ export default function Cart() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    productData?.map((data) => {
+    productData?.map((data: any) => {
       dispatch(
         setQuantity({
           product_id: data.product_id,

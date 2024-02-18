@@ -1,11 +1,15 @@
-import { useLazySearchProductQuery } from "@/redux/services/appApiSlice";
+import { useSearchProductQuery } from "@/redux/services/appApiSlice";
 
 export const useSearchProduct = () => {
-  const [searchProduct, { isLoading, currentData }] =
-    useLazySearchProductQuery();
+  const [suggestProduct, { isLoading, data }] = useSearchProductQuery();
+
   const onSubmit = async (data: any) => {
-    await searchProduct(data).unwrap().then().catch();
+    await suggestProduct(data);
   };
 
-  return { onSubmit, isLoading, searchProduct, currentData };
+  return {
+    onSubmit,
+    isLoading,
+    data,
+  };
 };

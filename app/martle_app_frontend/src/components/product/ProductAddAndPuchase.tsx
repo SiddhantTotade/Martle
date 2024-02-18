@@ -71,7 +71,7 @@ export default function ProductAddPurchase() {
           width: "80%",
           gap: "10px",
         }}
-        onClick={() => navigate(`/buy-order/proceed/${slug}`)}
+        onClick={() => navigate(`/checkout/proceed/${slug}`)}
       >
         <ShopIcon />
         Buy now

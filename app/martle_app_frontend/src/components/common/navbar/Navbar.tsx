@@ -45,10 +45,11 @@ export default function Navbar() {
               Martle
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", gap: "100px" }}>
+          <Box sx={{ display: "flex", gap: "50px" }}>
             <Box
               sx={{
                 display: "flex",
+                alignItems: "center",
                 gap: "30px",
                 "@media (max-width: 800px)": {
                   display: "none",

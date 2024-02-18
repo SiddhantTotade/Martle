@@ -27,6 +27,9 @@ const FavoritesPage = React.lazy(() => import("@/pages/app/Favorites"));
 const CheckoutPage = React.lazy(() => import("@/pages/app/OrderProduct"));
 const SingleOrderPage = React.lazy(() => import("@/pages/app/SingleOrder"));
 const SearchPage = React.lazy(() => import("@/pages/app/Search"));
+const PaymentPage = React.lazy(() => import("@/pages/app/Payment"));
+const SuccessPage = React.lazy(() => import("@/pages/app/Success"));
+const FailedPage = React.lazy(() => import("@/pages/app/Failed"));
 
 const NotFoundPage = React.lazy(() => import("@/pages/404NotFound"));
 
@@ -111,9 +114,31 @@ const appRoutes: Route = [
     ),
   },
   {
-    path: "/search",
+    path: "/search/:query",
     element: (
       <ProtectedRoutes children={<RouteSuspense children={<SearchPage />} />} />
+    ),
+  },
+  {
+    path: "/payment/proceed",
+    element: (
+      <ProtectedRoutes
+        children={<RouteSuspense children={<PaymentPage />} />}
+      />
+    ),
+  },
+  {
+    path: "/payment/success/",
+    element: (
+      <ProtectedRoutes
+        children={<RouteSuspense children={<SuccessPage />} />}
+      />
+    ),
+  },
+  {
+    path: "/payment/failed/",
+    element: (
+      <ProtectedRoutes children={<RouteSuspense children={<FailedPage />} />} />
     ),
   },
 ];

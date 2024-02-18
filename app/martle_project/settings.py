@@ -1,10 +1,10 @@
 from pathlib import Path
 from datetime import timedelta
-from elasticsearch import Elasticsearch
 
 import os
 import certifi
 import environ
+
 
 env = environ.Env(DEBUG=(bool, False))
 
@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'martle_app_authentication',
     'martle_app_backend',
     'martle_recommendation_system',
+    'martle_app_search',
+    'martle_app_payment',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -76,6 +78,9 @@ TEMPLATES = [
         },
     },
 ]
+
+STRIPE_SECRET_KEY = env("STRIPE_SERECT_KEY")
+STRIPE_WEBHOOK_SECRET_KEY = env("STRIPE_WEBHOOK_SECRET_KEY")
 
 WSGI_APPLICATION = 'martle_project.wsgi.application'
 

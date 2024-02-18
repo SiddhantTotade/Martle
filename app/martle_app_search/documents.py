@@ -12,14 +12,12 @@ PUBLISHER_INDEX.settings(
 @PUBLISHER_INDEX.doc_type
 class ProductDocument(Document):
     product_title = fields.TextField(attr="product_title", fields={
-                                     "raw": {"type": "keyword"}})
-    product_tags = fields.KeywordField(attr="get_product_tags")
-    product_category = fields.NestedField(
-        properties={'pk': fields.IntegerField(), 'product_category': fields.TextField()})
-    product_brand = fields.NestedField(
-        properties={'pk': fields.IntegerField(), 'brand_name': fields.TextField()})
+                                     "raw": fields.TextField(analyzer='standard'),
+                                     "suggest": fields.CompletionField()})
+    product_tags = fields.KeywordField(attr="get_product_tags", fields={
+                                       "suggest": fields.CompletionField()})
 
     class Django:
         model = Product
         fields = ["id", "product_discounted_price",
-                  "product_selling_price", "product_cover_image"]
+                  "product_selling_price", "product_cover_image", "product_slug"]

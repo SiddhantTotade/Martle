@@ -8,11 +8,11 @@ class ProductDocumentSerializer(DocumentSerializer):
     class Meta:
         document = ProductDocument
         fields = ['product_title', 'product_discounted_price',
-                  'product_selling_price', 'product_cover_image']
+                  'product_selling_price', 'product_cover_image', 'product_slug']
 
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['product_title', 'product_discounted_price',
-                  'product_selling_price', 'product_cover_image']
+                  'product_selling_price', 'product_cover_image', 'product_slug']
