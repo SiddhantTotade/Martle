@@ -126,3 +126,16 @@ export const cartOrderSummary = (data: Record<string, CartItem>) => {
 export const shortText = (title: string, end: number) => {
   return title.substring(0, end);
 };
+
+export const checkIfQueryContainsNumbers = (query: string) => {
+  const numRegex = /\d/;
+  if (numRegex.test(query)) return true;
+  else return false;
+};
+
+export const extractNumbers = (query: any) => {
+  const numbersArr = query.match(/\d+/g);
+  const numbers = numbersArr ? numbersArr.map(Number) : [];
+
+  return numbers;
+};

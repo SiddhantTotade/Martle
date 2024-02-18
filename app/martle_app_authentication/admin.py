@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import *
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from .models import User, CustomerAddress
 # Register your models here.
 
 
@@ -30,5 +30,12 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 
+class UserAddress(admin.ModelAdmin):
+    list_display = ("user", "address", "locality",
+                    "city", "state", "zipcode", "country")
+    list_filter = ("user", "address")
+
+
 # Now register the new UserAdmin...
 admin.site.register(User, UserAdmin)
+admin.site.register(CustomerAddress, UserAddress)

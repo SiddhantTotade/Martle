@@ -146,8 +146,21 @@ export const appApi = createApi({
     }),
     searchProduct: builder.query({
       query: (payload) => ({
-        url: `search/?search=${payload}`,
+        url: `search/?${payload}`,
         method: "GET",
+      }),
+    }),
+    suggestProduct: builder.query({
+      query: (payload) => ({
+        url: `search/suggest/?${payload}`,
+        method: "GET",
+      }),
+    }),
+    createSubscription: builder.mutation({
+      query: (payload) => ({
+        url: "create-subscription/",
+        method: "POST",
+        body: payload,
       }),
     }),
   }),
@@ -175,5 +188,7 @@ export const {
   useRemoveCartMutation,
   useLazyViewCountQuery,
   useLazyPurchaseCountQuery,
-  useLazySearchProductQuery,
+  useSearchProductQuery,
+  useLazySuggestProductQuery,
+  useCreateSubscriptionMutation,
 } = appApi;

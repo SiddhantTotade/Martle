@@ -27,8 +27,8 @@ export default function ProductQuantity({ product_id }: Props) {
     dispatch(
       setQuantity({
         product_id: product_id,
-        price: "",
         quantity: Number(event.target.value),
+        price: "",
       })
     );
   };

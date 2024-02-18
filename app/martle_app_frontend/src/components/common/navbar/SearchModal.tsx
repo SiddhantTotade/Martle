@@ -2,7 +2,6 @@ import React, { useReducer } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 
 import AppDialog from "../Dialog";
-import SecondaryButton from "../SecondaryButton";
 import DialogActionReducer, { initialState } from "../actions/DialogAction";
 import SearchForm from "./forms/SearchForm";
 
@@ -25,10 +24,15 @@ export default function Search() {
 
   return (
     <React.Fragment>
-      <SecondaryButton variant="outlined" onClick={handleClickOpen}>
-        <SearchIcon sx={{ color: "#fff" }} />
-      </SecondaryButton>
-      <AppDialog open={state.searchProduct.open} onClose={handleClose}>
+      <SearchIcon
+        sx={{ color: "#fff", "&:hover": { cursor: "pointer" } }}
+        onClick={handleClickOpen}
+      />
+      <AppDialog
+        titleStyle={{ p: 0 }}
+        open={state.searchProduct.open}
+        onClose={handleClose}
+      >
         <SearchForm />
       </AppDialog>
     </React.Fragment>

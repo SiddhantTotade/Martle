@@ -1,17 +1,35 @@
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Card, Box, Typography, Divider } from "@mui/material";
 
-import AppContainer from "../common/Container";
-import { deliveryDate } from "../common/utils/helperFunctions";
-import { useProductForPlaceOrderQuery } from "@/redux/services/appApiSlice";
 import Image from "../common/Image";
+import OrderSummary from "./OrderSummary";
+import AppContainer from "../common/Container";
 import ProductQuantity from "./ProductQuantity";
 import AddressCard from "../common/order-product/AddressCard";
-import OrderSummary from "./OrderSummary";
+import { deliveryDate, extractCartData } from "../common/utils/helperFunctions";
+import { useProductForPlaceOrderQuery } from "@/redux/services/appApiSlice";
+import { useEffect } from "react";
+import { setQuantity } from "@/redux/features/quantitySlice";
 
 export default function PlaceOrder() {
   const { slug } = useParams();
   const { data } = useProductForPlaceOrderQuery(slug);
+  const productData = extractCartData(data?.data || []);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    productData?.map((data: any) => {
+      dispatch(
+        setQuantity({
+          product_id: data.product_id,
+          product_discounted_price: data.product_discounted_price,
+          product_selling_price: data.product_selling_price,
+          quantity: data.quantity,
+        })
+      );
+    });
+  }, [productData, dispatch]);
 
   return (
     <AppContainer>
@@ -69,7 +87,7 @@ export default function PlaceOrder() {
                 ₹{data?.data[0].product_selling_price}
               </del>
             </Box>
-            <ProductQuantity />
+            <ProductQuantity product_id={data?.data[0].id} />
           </Box>
         </Box>
         <Divider orientation="vertical" variant="middle" flexItem />
@@ -104,6 +122,7 @@ export default function PlaceOrder() {
           <OrderSummary
             discount_price={data?.data[0].product_discounted_price}
             selling_price={data?.data[0].product_selling_price}
+            orderSummaryType="place_order"
           />
         </Box>
       </Card>

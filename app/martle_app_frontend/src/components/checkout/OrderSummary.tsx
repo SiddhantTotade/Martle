@@ -4,11 +4,7 @@ import { RootState } from "@reduxjs/toolkit/query";
 
 import {
   cartOrderSummary,
-  convertToINR,
   deliveryCharges,
-  orderTotal,
-  productDiscount,
-  productSavePrice,
 } from "../common/utils/helperFunctions";
 
 const styleBox = {
@@ -32,9 +28,7 @@ interface Props {
 
 export default function OrderSummary({
   discount_price,
-  selling_price,
   payment_method,
-  product_id,
   orderSummaryType,
 }: Props) {
   const quantity = useSelector((state: RootState) => state.quantity);
@@ -50,9 +44,7 @@ export default function OrderSummary({
           {orderSummaryType === "cart" ? "Items" : "Quantity"}
         </Typography>
         <Typography sx={styleTypography} fontSize="small">
-          {orderSummaryType === "cart"
-            ? orderSummary.totalItems
-            : quantity.quantity}
+          {orderSummary.totalItems}
         </Typography>
       </Box>
       <Box sx={styleBox}>

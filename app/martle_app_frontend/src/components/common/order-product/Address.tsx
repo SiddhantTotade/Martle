@@ -29,10 +29,10 @@ export default function Address() {
         sx={{
           width: "100%",
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          justifyContent: "center",
+          gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
+          justifyContent: "start",
           alignItems: "center",
-          placeItems: "center",
+          placeItems: "start",
           gap: "10px",
           "@media (max-width: 760px)": {
             gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
@@ -53,14 +53,12 @@ export default function Address() {
               country={address.country}
               zipcode={address.zipcode}
             />
-            <Box
-              sx={{ display: "flex", gap: "10px", justifyContent: "center" }}
-            >
+            <Box sx={{ display: "flex", gap: "10px", justifyContent: "start" }}>
               <EditAddress address={address} />
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "start",
                   width: "50%",
                 }}
               >

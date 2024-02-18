@@ -285,7 +285,6 @@ class FavoriteView(APIView):
 
 
 class CartView(APIView):
-
     def get(self, request):
         try:
             cart_products = Product.objects.filter(
