@@ -1,15 +1,16 @@
-import * as React from "react";
-import { Box, Stepper, Step, StepLabel } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "@reduxjs/toolkit/query";
+import { useDispatch, useSelector } from "react-redux";
 import BusinessIcon from "@mui/icons-material/Business";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
+import { Box, Stepper, Step, StepLabel } from "@mui/material";
 
-import SecondaryButton from "../common/SecondaryButton";
-import Address from "../common/order-product/Address";
-import PaymentOptions from "./PaymentOptions";
 import PlaceOrder from "./PlaceOrder";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@reduxjs/toolkit/query";
+import PaymentOptions from "./PaymentOptions";
+import Address from "../common/order-product/Address";
+import SecondaryButton from "../common/SecondaryButton";
 import { unsetCheckoutPayment } from "@/redux/features/checkoutSlice";
 
 const steps = [
@@ -20,14 +21,23 @@ const steps = [
 
 export default function OrderProceedStepper() {
   const dispatch = useDispatch();
+  const [isButtonDisabled, setButtonDisabled] = useState(true);
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
-  const checkout = useSelector((state: RootState) => state.checkout);
+  const state = useSelector((state: RootState) => state.checkout);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setButtonDisabled(false);
+    }, 2000);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
   };
-
   const handleNext = () => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -35,10 +45,11 @@ export default function OrderProceedStepper() {
       newSkipped.delete(activeStep);
     }
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+    if (activeStep < steps.length - 1) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      setSkipped(newSkipped);
+    }
   };
-
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     if (activeStep === 2) {
@@ -83,23 +94,33 @@ export default function OrderProceedStepper() {
           </Box>
           <Box>
             <SecondaryButton
+              disabled={isButtonDisabled === true ? true : false}
+              sx={{
+                display: activeStep === steps.length - 1 ? "block" : "none",
+              }}
+              onClick={() => navigate("/payment/proceed")}
+            >
+              Confirm & Place Order
+            </SecondaryButton>
+            <SecondaryButton
+              sx={{
+                display: activeStep === steps.length - 1 ? "none" : "block",
+              }}
               variant={
                 activeStep === steps.length - 1 ? "contained" : "outlined"
               }
               onClick={handleNext}
               disabled={
-                activeStep === 0 && checkout.address
+                activeStep === 0 && state.address
                   ? false
-                  : activeStep === 1 && checkout.payment
+                  : activeStep === 1 && state.payment
                   ? false
                   : activeStep === 2
                   ? false
                   : true
               }
             >
-              {activeStep === steps.length - 1
-                ? "Confirm & Place Order"
-                : "Next"}
+              Next
             </SecondaryButton>
           </Box>
         </Box>

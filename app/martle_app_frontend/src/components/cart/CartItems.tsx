@@ -36,7 +36,7 @@ export default function CartItems({ getIsLoading, data }: Props) {
         <SkeletonProductCard />
       ) : (
         <>
-          {data?.data.data.map((product, index) => (
+          {data?.data.data.map((product: any, index: number) => (
             <ProductCard
               key={index}
               elevation={5}

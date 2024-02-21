@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "@reduxjs/toolkit/query";
 
 import ProductCard from "../common/Card";
@@ -16,6 +17,7 @@ interface Props {
 
 export default function CheckoutCart({ data, getIsLoading }: Props) {
   const checkout = useSelector((state: RootState) => state.checkout);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -53,12 +55,11 @@ export default function CheckoutCart({ data, getIsLoading }: Props) {
           <ProductCard elevation={5} sx={{ p: 1, border: "1px solid" }}>
             <OrderSummary
               orderSummaryType="cart"
-              product_id={data?.data.data[0].id}
               discount_price={data?.data.data[0].product_discounted_price}
-              selling_price={data?.data.data[0].product_selling_price}
             />
           </ProductCard>
           <SecondaryButton
+            onClick={() => navigate("/payment/proceed")}
             disabled={checkout.paymentMethod === "" ? true : false}
           >
             Proceed & Confirm

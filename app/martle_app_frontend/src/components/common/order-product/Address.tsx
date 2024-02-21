@@ -39,7 +39,7 @@ export default function Address() {
           },
         }}
       >
-        {data?.data.map((address, index) => (
+        {data?.data.map((address: any, index: number) => (
           <Card
             elevation={5}
             key={index}

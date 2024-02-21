@@ -12,6 +12,10 @@ const styleTypography = {
   justifyContent: "end",
 };
 
+type PropsType = {
+  [K in keyof Props]: K extends "address" ? string : string;
+};
+
 interface Props {
   address?: string;
   locality?: string;
@@ -29,56 +33,27 @@ export default function AddressCard({
   country,
   zipcode,
 }: Props) {
+  const propsWithType: PropsType = {
+    address: address || "",
+    locality: locality || "",
+    city: city || "",
+    state: state || "",
+    country: country || "",
+    zipcode: zipcode || "",
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
-      <Box sx={styleBox}>
-        <Typography fontWeight="bold" fontSize="small">
-          Address
-        </Typography>
-        <Typography sx={styleTypography} fontSize="small">
-          {address}
-        </Typography>
-      </Box>
-      <Box sx={styleBox}>
-        <Typography fontWeight="bold" fontSize="small">
-          Locality
-        </Typography>
-        <Typography sx={styleTypography} fontSize="small">
-          {locality}
-        </Typography>
-      </Box>
-      <Box sx={styleBox}>
-        <Typography fontWeight="bold" fontSize="small">
-          City
-        </Typography>
-        <Typography sx={styleTypography} fontSize="small">
-          {city}
-        </Typography>
-      </Box>
-      <Box sx={styleBox}>
-        <Typography fontWeight="bold" fontSize="small">
-          State
-        </Typography>
-        <Typography sx={styleTypography} fontSize="small">
-          {state}
-        </Typography>
-      </Box>
-      <Box sx={styleBox}>
-        <Typography fontWeight="bold" fontSize="small">
-          Country
-        </Typography>
-        <Typography sx={styleTypography} fontSize="small">
-          {country}
-        </Typography>
-      </Box>
-      <Box sx={styleBox}>
-        <Typography fontWeight="bold" fontSize="small">
-          Zipcode
-        </Typography>
-        <Typography sx={styleTypography} fontSize="small">
-          {zipcode}
-        </Typography>
-      </Box>
+      {Object.entries(propsWithType).map(([key, value], index) => (
+        <Box key={index} sx={styleBox}>
+          <Typography fontWeight="bold" fontSize="small">
+            {key.charAt(0).toUpperCase() + key.slice(1)}
+          </Typography>
+          <Typography sx={styleTypography} fontSize="small">
+            {value}
+          </Typography>
+        </Box>
+      ))}
     </Box>
   );
 }

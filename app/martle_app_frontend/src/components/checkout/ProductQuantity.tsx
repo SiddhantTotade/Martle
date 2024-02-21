@@ -28,7 +28,6 @@ export default function ProductQuantity({ product_id }: Props) {
       setQuantity({
         product_id: product_id,
         quantity: Number(event.target.value),
-        price: "",
       })
     );
   };

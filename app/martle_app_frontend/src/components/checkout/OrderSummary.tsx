@@ -1,11 +1,15 @@
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { Typography, Box } from "@mui/material";
 import { RootState } from "@reduxjs/toolkit/query";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   cartOrderSummary,
+  checkoutProductData,
   deliveryCharges,
 } from "../common/utils/helperFunctions";
+import { BouncingDots } from "@/assets/svg/BouncingDots";
+import { setProductData } from "@/redux/features/checkoutProductDataSlice";
 
 const styleBox = {
   width: "100%",
@@ -20,79 +24,117 @@ const styleTypography = {
 
 interface Props {
   discount_price?: string | any;
-  selling_price?: string | any;
+  product_title?: string | any;
   payment_method?: string | any;
-  product_id?: string;
   orderSummaryType?: string;
 }
 
+interface OrderSummaryData {
+  orderTotal: string;
+  deliveryCharges: number;
+  productSavePrice: string;
+  productDiscount: number;
+  totalItems: number;
+}
+
 export default function OrderSummary({
+  product_title,
   discount_price,
   payment_method,
   orderSummaryType,
 }: Props) {
+  const [loading, setLoading] = useState(true);
   const quantity = useSelector((state: RootState) => state.quantity);
   const paymentMethod = useSelector(
     (state: RootState) => state.checkout.paymentMethod
   );
-  const orderSummary = cartOrderSummary(quantity);
+  const dispatch = useDispatch();
+  const [orderSummaryData, setOrderSummaryData] =
+    useState<OrderSummaryData | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    const fetchData = async () => {
+      try {
+        const fetchedOrderSummaryData = await cartOrderSummary(quantity);
+
+        if (fetchedOrderSummaryData !== null) {
+          const typedOrderSummaryData =
+            fetchedOrderSummaryData as OrderSummaryData;
+
+          setTimeout(() => {
+            setOrderSummaryData(typedOrderSummaryData);
+            setLoading(false);
+          }, 2000);
+
+          const product_data = checkoutProductData(
+            typedOrderSummaryData.totalItems,
+            product_title,
+            discount_price,
+            typedOrderSummaryData.productSavePrice,
+            typedOrderSummaryData.productDiscount,
+            paymentMethod,
+            typedOrderSummaryData.deliveryCharges === 0
+              ? "Free"
+              : deliveryCharges(discount_price),
+            typedOrderSummaryData.orderTotal
+          );
+          setTimeout(() => {
+            dispatch(setProductData(product_data));
+          }, 3000);
+        }
+      } catch (error) {
+        return;
+      }
+    };
+    fetchData();
+  }, [quantity, product_title, discount_price, paymentMethod, dispatch]);
 
   return (
     <Box sx={{ width: "100%", display: "grid", gap: "5px" }}>
-      <Box sx={styleBox}>
-        <Typography sx={{ width: "100%" }} fontWeight="bold" fontSize="small">
-          {orderSummaryType === "cart" ? "Items" : "Quantity"}
-        </Typography>
-        <Typography sx={styleTypography} fontSize="small">
-          {orderSummary.totalItems}
-        </Typography>
-      </Box>
-      <Box sx={styleBox}>
-        <Typography sx={{ width: "100%" }} fontWeight="bold" fontSize="small">
-          Shipping charges
-        </Typography>
-        <Typography sx={styleTypography} fontSize="small">
-          {orderSummary.deliveryCharges == 0
-            ? "Free"
-            : deliveryCharges(discount_price)}
-        </Typography>
-      </Box>
-      <Box sx={styleBox}>
-        <Typography sx={{ width: "100%" }} fontWeight="bold" fontSize="small">
-          Payment method
-        </Typography>
-        <Typography sx={styleTypography} fontSize="small">
-          {paymentMethod
-            ? paymentMethod
-            : payment_method
-            ? paymentMethod
-            : "Select a payment method"}
-        </Typography>
-      </Box>
-      <Box sx={styleBox}>
-        <Typography sx={{ width: "100%" }} fontWeight="bold" fontSize="small">
-          Your Savings
-        </Typography>
-        <Typography sx={styleTypography} fontSize="small">
-          {orderSummary.productSavePrice}
-        </Typography>
-      </Box>
-      <Box sx={styleBox}>
-        <Typography sx={{ width: "100%" }} fontWeight="bold" fontSize="small">
-          Discount
-        </Typography>
-        <Typography sx={styleTypography} fontSize="small">
-          {orderSummary.productDiscount}%
-        </Typography>
-      </Box>
-      <Box sx={styleBox}>
-        <Typography sx={{ width: "100%" }} fontWeight="bold">
-          Order Total
-        </Typography>
-        <Typography sx={styleTypography} fontWeight="bold">
-          {orderSummary.orderTotal}
-        </Typography>
-      </Box>
+      {[
+        `${orderSummaryType === "cart" ? "Item" : "Quantity"}`,
+        "Shipping charges",
+        "Payment method",
+        "Your savings",
+        "Discount",
+        "Order total",
+      ].map((type: string, index: number) => (
+        <Box key={index} sx={styleBox}>
+          <Typography sx={{ width: "100%" }} fontWeight="bold" fontSize="small">
+            {type}
+          </Typography>
+          <Typography sx={styleTypography} fontSize="small">
+            {loading ? (
+              <BouncingDots />
+            ) : type.includes("Quantity") || type.includes("Item") ? (
+              orderSummaryData?.totalItems
+            ) : type.includes("charges") ? (
+              orderSummaryData?.deliveryCharges === 0 ? (
+                "Free"
+              ) : (
+                deliveryCharges(discount_price)
+              )
+            ) : type.includes("method") ? (
+              paymentMethod ? (
+                paymentMethod
+              ) : payment_method ? (
+                paymentMethod
+              ) : (
+                "Select a payment method"
+              )
+            ) : type.includes("savings") ? (
+              orderSummaryData?.productSavePrice
+            ) : type.includes("Discount") ? (
+              orderSummaryData?.productDiscount + "%"
+            ) : type.includes("total") ? (
+              orderSummaryData?.orderTotal
+            ) : (
+              ""
+            )}
+          </Typography>
+        </Box>
+      ))}
     </Box>
   );
 }

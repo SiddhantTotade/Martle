@@ -12,21 +12,31 @@ from rest_framework.permissions import IsAuthenticated
 stripe.api_key = "sk_test_51N2U8SSB843aOHbzpAJPhulzlQ0qyQGerhEhk75rx1eBzChHbNp1K0aIkvNniyIF7q2p2VnacRZG9lXwI1RFxdAK00E3O7sBvY"
 
 
+def parsed_product_cart_data(data_list):
+    data = json.dumps(data_list)
+    parsed_list = json.loads(data)
+
+    return parsed_list
+
+
 class CreateSubscription(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        product_cart_data = parsed_product_cart_data(
+            request.data.get("product_cart_data"))
+
         session = stripe.checkout.Session.create(
             line_items=[{
                 'price_data': {
                     'currency': 'inr',
                     'product_data': {
-                        'name': 'T-shirt',
+                        'name': product['product_title'],
                     },
-                    'unit_amount': 2000,
+                    'unit_amount': product['product_discounted_price'] * 100,
                 },
-                'quantity': 1,
-            }],
+                'quantity': product['product_quantity'],
+            } for product in product_cart_data],
             mode='payment',
             ui_mode='embedded',
             return_url='http://localhost:5173/checkout/return?session_id={CHECKOUT_SESSION_ID}',
