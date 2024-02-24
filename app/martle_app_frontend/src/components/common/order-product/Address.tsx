@@ -1,13 +1,13 @@
 import { Card, Box, CircularProgress } from "@mui/material";
 
-import { useGetAddressQuery } from "@/redux/services/appApiSlice";
-import PrirmaryButton from "../PrirmaryButton";
 import AppContainer from "../Container";
 import EditAddress from "./EditAddress";
 import SaveAddress from "./SaveAddress";
 import AddressCard from "./AddressCard";
-import { useChangeShippingAddress } from "@/hooks/app/changeShippingAddress";
+import PrirmaryButton from "../PrirmaryButton";
+import { useGetAddressQuery } from "@/redux/services/appApiSlice";
 import { useCheckoutAddress } from "../utils/hooks/checkCheckout";
+import { useChangeShippingAddress } from "@/hooks/app/changeShippingAddress";
 
 export default function Address() {
   const { data } = useGetAddressQuery(undefined);
@@ -27,13 +27,11 @@ export default function Address() {
       {data?.data.length <= 2 && <SaveAddress />}
       <AppContainer
         sx={{
-          width: "100%",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
+          display: "flex",
           justifyContent: "start",
           alignItems: "center",
           placeItems: "start",
-          gap: "10px",
+          gap: "20px",
           "@media (max-width: 760px)": {
             gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
           },

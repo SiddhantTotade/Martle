@@ -1,15 +1,18 @@
-import stripe
-import json
-from django.shortcuts import redirect
-from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
-# Create your views here.
+from martle_app_backend.models import OrderPlaced
 
-stripe.api_key = "sk_test_51N2U8SSB843aOHbzpAJPhulzlQ0qyQGerhEhk75rx1eBzChHbNp1K0aIkvNniyIF7q2p2VnacRZG9lXwI1RFxdAK00E3O7sBvY"
+from .models import Martlet
+from .serializers import MartletSerializer, OrderPlacedSerializer
+
+import stripe
+import json
+import os
+# Create your views here.
+stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 
 
 def parsed_product_cart_data(data_list):
@@ -93,3 +96,29 @@ class WebHook(APIView):
             print('Unhandled event type {}'.format(event_type))
 
         return Response(status=status.HTTP_200_OK)
+
+
+class MartlePayView(APIView):
+    def get(self, request):
+        martlet = Martlet.objects.get(user=request.user.id)
+        martlet_serializer = MartletSerializer(martlet)
+
+        return Response(martlet_serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        payment_method = request.data.get("payment_method")
+
+
+class PlaceOrderView(APIView):
+    def post(self, request):
+        try:
+            order_placed_serializer = OrderPlacedSerializer(
+                data=request.data)
+
+            if order_placed_serializer.is_valid():
+                order_placed_serializer.save()
+                return Response(status=status.HTTP_200_OK)
+
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        except Exception:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

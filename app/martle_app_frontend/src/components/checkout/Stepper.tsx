@@ -98,7 +98,14 @@ export default function OrderProceedStepper() {
               sx={{
                 display: activeStep === steps.length - 1 ? "block" : "none",
               }}
-              onClick={() => navigate("/payment/proceed")}
+              onClick={() => {
+                state.paymentMethod === "Cash on delivery" ||
+                state.paymentMethod === "Martlet"
+                  ? navigate("/pay/proceed")
+                  : state.paymentMethod === "Stripe"
+                  ? navigate("/payment/proceed")
+                  : "";
+              }}
             >
               Confirm & Place Order
             </SecondaryButton>

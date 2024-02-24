@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { CircularProgress, CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import Router from "@/routes/index";
+import SuspenseLoader from "./assets/svg/SuspenseLoader";
 import { setUserInfo } from "./redux/features/userSlice";
 import AppSpeedDial from "./components/common/SpeedDialer";
 import { useThemeContext } from "./themes/ThemeContextProvider";
@@ -22,7 +23,7 @@ function App() {
   }, [data, isLoading, dispatch]);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <SuspenseLoader />;
   }
 
   return (

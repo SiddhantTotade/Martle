@@ -12,6 +12,7 @@ import checkoutSlice from "./features/checkoutSlice";
 import favoriteAndCartSlice from "./features/favoriteAndCartSlice";
 import checkoutProductDataSlice from "./features/checkoutProductDataSlice";
 import checkoutQuantitySlice from "./features/checkoutQuantitySlice";
+import placeOrderSlice from "./features/placeOrderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     favorite_cart: favoriteAndCartSlice,
     checkout_product_data: checkoutProductDataSlice,
     chekout_quantity: checkoutQuantitySlice,
+    place_order: placeOrderSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authApi.middleware, appApi.middleware),

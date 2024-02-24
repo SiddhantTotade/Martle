@@ -1,46 +1,7 @@
-import type { SVGProps } from "react";
+import { bouncy } from "ldrs";
 
-export function BouncingDots(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="3em"
-      height="1em"
-      viewBox="0 0 24 24"
-      {...props}
-    >
-      <circle cx={4} cy={12} r={3} fill="#9e9e9e">
-        <animate
-          id="svgSpinners3DotsBounce0"
-          attributeName="cy"
-          begin="0;svgSpinners3DotsBounce1.end+0.25s"
-          calcMode="spline"
-          dur="0.6s"
-          keySplines=".33,.66,.66,1;.33,0,.66,.33"
-          values="12;6;12"
-        ></animate>
-      </circle>
-      <circle cx={12} cy={12} r={3} fill="#9e9e9e">
-        <animate
-          attributeName="cy"
-          begin="svgSpinners3DotsBounce0.begin+0.1s"
-          calcMode="spline"
-          dur="0.6s"
-          keySplines=".33,.66,.66,1;.33,0,.66,.33"
-          values="12;6;12"
-        ></animate>
-      </circle>
-      <circle cx={20} cy={12} r={3} fill="#9e9e9e">
-        <animate
-          id="svgSpinners3DotsBounce1"
-          attributeName="cy"
-          begin="svgSpinners3DotsBounce0.begin+0.2s"
-          calcMode="spline"
-          dur="0.6s"
-          keySplines=".33,.66,.66,1;.33,0,.66,.33"
-          values="12;6;12"
-        ></animate>
-      </circle>
-    </svg>
-  );
+bouncy.register();
+
+export function BouncingDots() {
+  return <l-bouncy size="10" speed="1.75" color="#1e88e5"></l-bouncy>;
 }

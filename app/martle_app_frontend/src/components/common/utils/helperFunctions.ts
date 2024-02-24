@@ -163,8 +163,8 @@ export const checkoutProductData = (
 ) => {
   return {
     product_quantity: product_quantity,
-    product_name: product_name,
-    product_price: product_price,
+    product_title: product_name,
+    product_discounted_price: product_price,
     product_saving: product_saving,
     product_discount: product_discount,
     product_payment_method: product_payment_method,
@@ -183,8 +183,11 @@ export const checkoutProductCartData = (data: any) => {
   };
 };
 
-export const addQuantityToProducts = (productCartData, quantityData) => {
-  return productCartData.product_cart_data.map((product) => ({
+export const addQuantityToProducts = (
+  productCartData: any,
+  quantityData: any
+) => {
+  return productCartData.product_cart_data.map((product: any) => ({
     ...product,
     product_quantity: quantityData[product.product_id]?.quantity || 0,
   }));

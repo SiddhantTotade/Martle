@@ -18,9 +18,8 @@ export default function OrderProductLayout() {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          width: "95%",
+          width: "90%",
           position: "relative",
-          border: "1px solid",
           borderRadius: "5px",
           p: 2,
           mt: 4,

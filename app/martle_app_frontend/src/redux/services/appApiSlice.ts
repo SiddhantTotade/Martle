@@ -163,6 +163,19 @@ export const appApi = createApi({
         body: payload,
       }),
     }),
+    martlePay: builder.query({
+      query: () => ({
+        url: "martle-pay/",
+        method: "GET",
+      }),
+    }),
+    placeOrder: builder.mutation({
+      query: (payload) => ({
+        url: "place-order/",
+        method: "POST",
+        body: payload,
+      }),
+    }),
   }),
 });
 
@@ -191,4 +204,6 @@ export const {
   useSearchProductQuery,
   useLazySuggestProductQuery,
   useCreateSubscriptionMutation,
+  useMartlePayQuery,
+  usePlaceOrderMutation,
 } = appApi;

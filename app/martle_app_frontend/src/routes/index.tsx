@@ -4,10 +4,11 @@ import {
   RouteObject,
   RouterProvider,
 } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
 
 import { RouteSuspense } from "./routeSuspense";
 import { ProtectedRoutes } from "./protectedRoutes";
+import SuspenseLoader from "@/assets/svg/SuspenseLoader";
+import MartleAndCODPayment from "@/pages/app/MartletAndCODPayment";
 
 const LoginPage = React.lazy(() => import("@/pages/auth/Login"));
 const RegisterPage = React.lazy(() => import("@/pages/auth/Register"));
@@ -30,6 +31,9 @@ const SearchPage = React.lazy(() => import("@/pages/app/Search"));
 const PaymentPage = React.lazy(() => import("@/pages/app/Payment"));
 const SuccessPage = React.lazy(() => import("@/pages/app/Success"));
 const FailedPage = React.lazy(() => import("@/pages/app/Failed"));
+const MartletAndCODPage = React.lazy(
+  () => import("@/pages/app/MartletAndCODPayment")
+);
 
 const NotFoundPage = React.lazy(() => import("@/pages/404NotFound"));
 
@@ -128,6 +132,14 @@ const appRoutes: Route = [
     ),
   },
   {
+    path: "/pay/proceed",
+    element: (
+      <ProtectedRoutes
+        children={<RouteSuspense children={<MartleAndCODPayment />} />}
+      />
+    ),
+  },
+  {
     path: "/payment/success/",
     element: (
       <ProtectedRoutes
@@ -147,7 +159,7 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: (
-      <Suspense fallback={<CircularProgress />}>
+      <Suspense fallback={<SuspenseLoader />}>
         <NotFoundPage />
       </Suspense>
     ),

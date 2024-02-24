@@ -16,6 +16,11 @@ import {
   deliveryDate,
   extractCartData,
 } from "../common/utils/helperFunctions";
+import {
+  setProductDiscountedPrice,
+  setProductId,
+  setProductSellingPrice,
+} from "@/redux/features/placeOrderSlice";
 
 export default function PlaceOrder() {
   const { slug } = useParams();
@@ -30,6 +35,12 @@ export default function PlaceOrder() {
     data?.address[0].country,
     data?.address[0].zipcode
   );
+
+  useEffect(() => {
+    dispatch(setProductDiscountedPrice(data?.data[0].product_discounted_price));
+    dispatch(setProductSellingPrice(data?.data[0].product_selling_price));
+    dispatch(setProductId(data?.data[0].id));
+  });
 
   useEffect(() => {
     productData?.map((data: any) => {

@@ -10,6 +10,8 @@ import {
 } from "../common/utils/helperFunctions";
 import { BouncingDots } from "@/assets/svg/BouncingDots";
 import { setProductData } from "@/redux/features/checkoutProductDataSlice";
+import { setQuantity } from "@/redux/features/placeOrderSlice";
+import { setPaymentMethod } from "@/redux/features/placeOrderSlice";
 
 const styleBox = {
   width: "100%",
@@ -51,6 +53,11 @@ export default function OrderSummary({
   const dispatch = useDispatch();
   const [orderSummaryData, setOrderSummaryData] =
     useState<OrderSummaryData | null>(null);
+
+  useEffect(() => {
+    dispatch(setQuantity(quantity));
+    dispatch(setPaymentMethod(paymentMethod));
+  });
 
   useEffect(() => {
     setLoading(true);
