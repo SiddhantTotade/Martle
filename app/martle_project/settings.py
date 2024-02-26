@@ -59,7 +59,6 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'martle_project.urls'
 
 CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
-
 CORS_ALLOW_CREDENTIALS = True
 
 TEMPLATES = [
@@ -120,11 +119,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
+
+USE_L10N = True
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 STATIC_URL = 'static/'
 
@@ -177,3 +178,7 @@ SIMPLE_JWT = {
 }
 
 PASSWORD_RESET_TIMEOUT = 900
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+CELERY_TIMEZONE = 'Asia/Kolkata'

@@ -1,5 +1,6 @@
 from django.db import models
 from martle_app_authentication.models import User
+
 # Create your models here.
 
 

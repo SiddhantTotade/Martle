@@ -3,14 +3,13 @@ import { useDispatch } from "react-redux";
 
 import { setCheckoutAddress } from "@/redux/features/checkoutSlice";
 import { setAddressId } from "@/redux/features/placeOrderSlice";
+import { extractAddressId } from "../helperFunctions";
 
 export const useCheckoutAddress = (data: any) => {
   const dispatch = useDispatch();
-  const activeAddress = data?.data?.find((address) => address.is_active);
-  const activeAddressId = activeAddress ? activeAddress.id : -1;
 
   useEffect(() => {
-    dispatch(setAddressId(activeAddressId));
+    dispatch(setAddressId(extractAddressId(data)));
   });
 
   useEffect(() => {

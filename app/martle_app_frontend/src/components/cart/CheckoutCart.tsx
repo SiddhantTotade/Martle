@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "@reduxjs/toolkit/query";
 
@@ -9,6 +9,8 @@ import AddressCard from "../common/order-product/AddressCard";
 import OrderSummary from "@/components/checkout/OrderSummary";
 import PaymentOptions from "@/components/checkout/PaymentOptions";
 import SkeletonAddressCard from "../common/ui/skeletons/SkeletonAddressCard";
+import { useEffect } from "react";
+import { setAddressId } from "@/redux/features/placeOrderSlice";
 
 interface Props {
   getIsLoading?: boolean;
@@ -17,7 +19,13 @@ interface Props {
 
 export default function CheckoutCart({ data, getIsLoading }: Props) {
   const checkout = useSelector((state: RootState) => state.checkout);
+  const proceedPayment = useSelector((state: RootState) => state.checkout);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(setAddressId(data?.data.address.id));
+  });
 
   return (
     <>
@@ -59,10 +67,17 @@ export default function CheckoutCart({ data, getIsLoading }: Props) {
             />
           </ProductCard>
           <SecondaryButton
-            onClick={() => navigate("/payment/proceed")}
+            onClick={() => {
+              proceedPayment.paymentMethod === "Martlet" ||
+              proceedPayment.paymentMethod === "Cash on delivery"
+                ? navigate("/pay/proceed")
+                : proceedPayment.paymentMethod === "Stripe"
+                ? navigate("/payment/proceed")
+                : "";
+            }}
             disabled={checkout.paymentMethod === "" ? true : false}
           >
-            Proceed & Confirm
+            Confirm & Place Order
           </SecondaryButton>
         </Box>
       )}

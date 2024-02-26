@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { usePlaceOrderMutation } from "@/redux/services/appApiSlice";
 
 export const usePlaceOrder = () => {
-  const [placeOrder, { isLoading }] = usePlaceOrderMutation();
+  const [placeOrder] = usePlaceOrderMutation();
   const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
@@ -18,5 +18,5 @@ export const usePlaceOrder = () => {
       });
   };
 
-  return { onSubmit, isLoading };
+  return { onSubmit };
 };

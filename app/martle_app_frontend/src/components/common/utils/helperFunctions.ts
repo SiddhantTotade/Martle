@@ -210,3 +210,23 @@ export const checkoutAddressData = (
     user_zipcode: user_zipcode,
   };
 };
+
+export const extractAddressId = (data: any) => {
+  const activeAddress = data?.data?.find((address: any) => address.is_active);
+  return activeAddress ? activeAddress.id : -1;
+};
+
+export const placeCartOrder = (placeCartOrder: any, user_id: number) => {
+  return Object.entries(placeCartOrder.quantity).map(
+    ([productId, productDetails]) => ({
+      user: user_id,
+      address: placeCartOrder.address,
+      payment_method: placeCartOrder.payment_method,
+      product: parseInt(productId),
+      product_discounted_price: productDetails.product_discounted_price,
+      product_selling_price: productDetails.product_selling_price,
+      quantity: productDetails.quantity,
+      status: placeCartOrder.status,
+    })
+  );
+};

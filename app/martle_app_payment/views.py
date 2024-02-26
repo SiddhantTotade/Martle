@@ -3,14 +3,20 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
-from martle_app_backend.models import OrderPlaced
+from django.utils import timezone
+from datetime import timedelta
+
+from martle_app_backend.models import OrderPlaced, Product, ProductStatusChoices
+from martle_app_authentication.models import User, CustomerAddress
 
 from .models import Martlet
-from .serializers import MartletSerializer, OrderPlacedSerializer
+from .tasks import process_order
+from .serializers import MartletSerializer
 
 import stripe
 import json
 import os
+
 # Create your views here.
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 
@@ -48,56 +54,6 @@ class CreateSubscription(APIView):
         return Response({"client_secret": session.client_secret})
 
 
-class WebHook(APIView):
-    def post(self, request):
-        """
-            This API handling the webhook .
-
-            :return: returns event details as json response .
-        """
-        request_data = json.loads(request.body)
-        if webhook_secret:
-            # Retrieve the event by verifying the signature using the raw body and secret if webhook signing is configured.
-            signature = request.META['HTTP_STRIPE_SIGNATURE']
-            try:
-                event = stripe.Webhook.construct_event(
-                    payload=request.body,
-                    sig_header=signature,
-                    secret=webhook_secret
-                )
-                data = event['data']
-            except ValueError as err:
-                raise err
-            except stripe.error.SignatureVerificationError as err:
-                raise err
-            # Get the type of webhook event sent - used to check the status of PaymentIntents.
-            event_type = event['type']
-        else:
-            data = request_data['data']
-            event_type = request_data['type']
-        data_object = data['object']
-
-        if event_type == 'checkout.session.completed':
-            # Payment is successful and the subscription is created.
-            # You should provision the subscription and save the customer ID to your database.
-            print("-----checkout.session.completed----->",
-                  data['object']['customer'])
-        elif event_type == 'invoice.paid':
-            # Continue to provision the subscription as payments continue to be made.
-            # Store the status in your database and check when a user accesses your service.
-            # This approach helps you avoid hitting rate limits.
-            print("-----invoice.paid----->", data)
-        elif event_type == 'invoice.payment_failed':
-            # The payment failed or the customer does not have a valid payment method.
-            # The subscription becomes past_due. Notify your customer and send them to the
-            # customer portal to update their payment information.
-            print("-----invoice.payment_failed----->", data)
-        else:
-            print('Unhandled event type {}'.format(event_type))
-
-        return Response(status=status.HTTP_200_OK)
-
-
 class MartlePayView(APIView):
     def get(self, request):
         martlet = Martlet.objects.get(user=request.user.id)
@@ -112,13 +68,29 @@ class MartlePayView(APIView):
 class PlaceOrderView(APIView):
     def post(self, request):
         try:
-            order_placed_serializer = OrderPlacedSerializer(
-                data=request.data)
+            order_data_list = request.data
 
-            if order_placed_serializer.is_valid():
-                order_placed_serializer.save()
-                return Response(status=status.HTTP_200_OK)
+            for order_data in order_data_list:
+                user_id = order_data.pop('user')
+                address_id = order_data.pop('address')
+                product_id = order_data.pop('product')
+                status_id = order_data.pop('status')
+                payment_method = order_data.pop('payment_method')
+                order_data['user'] = User.objects.get(pk=user_id)
+                order_data['address'] = CustomerAddress.objects.get(
+                    pk=address_id)
+                order_data['product'] = Product.objects.get(
+                    pk=product_id)
+                order_data['status'] = ProductStatusChoices.objects.get(
+                    pk=status_id)
 
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            order_instances = OrderPlaced.objects.bulk_create(
+                [OrderPlaced(**order_data) for order_data in order_data_list])
+
+            for order_instance in order_instances:
+                process_order.apply_async(
+                    args=[order_instance.id, payment_method], countdown=5)
+
+            return Response(status=status.HTTP_200_OK)
         except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)
