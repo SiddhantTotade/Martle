@@ -1,23 +1,24 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { RootState } from "@reduxjs/toolkit/query";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useProductBySlugQuery } from "@/redux/services/appApiSlice";
 import Navbar from "@/components/common/navbar/Navbar";
 import Footer from "@/components/common/footer/Footer";
-import ProductImageMagnifier from "@/components/product/ProductImageMagnifier";
 import AppContainer from "@/components/common/Container";
 import ProductDetails from "@/components/product/ProductDetails";
+import { useProductBySlugQuery } from "@/redux/services/appApiSlice";
+import ProductImageMagnifier from "@/components/product/ProductImageMagnifier";
 // import MDEditor from "@/components/product/Markdown";
-import MarkDownPreview from "@/components/product/MarkdownPreview";
-import Specification from "@/components/product/Specification";
-import QuestionAndAnswer from "@/components/product/QuestionAndAnswer";
-import RatingAndReviews from "@/components/product/RatingAndReviews";
-import MobileProductImage from "@/components/product/MobileProductImage";
-import { useDispatch, useSelector } from "react-redux";
-import { setCart, setFavorite } from "@/redux/features/favoriteAndCartSlice";
-import { useEffect } from "react";
-import { RootState } from "@reduxjs/toolkit/query";
-import { recommendFunction } from "@/components/common/utils/recommendFunction";
 import { useViewCount } from "@/hooks/app/viewCount";
+import Specification from "@/components/product/Specification";
+import MarkDownPreview from "@/components/product/MarkdownPreview";
+import RatingAndReviews from "@/components/product/RatingAndReviews";
+import QuestionAndAnswer from "@/components/product/QuestionAndAnswer";
+import MobileProductImage from "@/components/product/MobileProductImage";
+import { setCart, setFavorite } from "@/redux/features/favoriteAndCartSlice";
+import { recommendFunction } from "@/components/common/utils/recommendFunction";
+import MobileCardSkeleton from "@/components/home/ui/MobileCardSkeleton";
 // import MDEditor from "../components/MarkDown";
 // import MarkDownPreview from "../components/MarkDownPreview";
 
@@ -63,24 +64,29 @@ export default function ProductLayout() {
           position: "relative",
           mt: "6rem",
           "@media (max-width: 1000px)": {
-            display: "grid",
             width: "100%",
+            display: "grid",
+            mt: 3,
           },
         }}
       >
         <AppContainer
           sx={{
-            m: 0,
-            p: 2,
-            width: "100%",
             display: "none",
-            "@media (max-width: 1000px)": {
-              display: "block",
+            "@media(max-width: 600px)": {
+              mt: 1,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
               overflow: "auto",
             },
           }}
         >
-          <MobileProductImage />
+          {isLoading ? (
+            <MobileCardSkeleton />
+          ) : (
+            <MobileProductImage product_images={data?.[0].product_images} />
+          )}
         </AppContainer>
         <AppContainer
           sx={{

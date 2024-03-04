@@ -6,7 +6,7 @@ export const steps = [
   {
     label: "Dispatched",
     description:
-      "The order has dispatched and went for nearest facility center",
+      "The order has been dispatched and went to the nearest facility center",
   },
   {
     label: "Reached facility center",

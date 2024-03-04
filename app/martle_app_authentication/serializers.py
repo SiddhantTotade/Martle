@@ -1,8 +1,13 @@
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework import serializers
+
+from martle_app_payment.serializers import MartletSerializer
+from martle_app_payment.models import Martlet
+
 from .models import User, CustomerAddress
 from .utils import Util
 from .helpers import send_otp_to_mobile
@@ -42,9 +47,16 @@ class LoginSerializer(serializers.Serializer):
 
 # User profile serializer
 class UserProfileSerializer(serializers.ModelSerializer):
+    martlet = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['id', 'email', 'name']
+        fields = ['id', 'email', 'name', 'martlet']
+
+    def get_martlet(self, user):
+        martlet_instance = Martlet.objects.get(user=user)
+        martlet_serializer = MartletSerializer(martlet_instance)
+        return martlet_serializer.data
 
 
 # User change password serializer

@@ -15,7 +15,7 @@ export default function MarkDownPreview() {
         <MarkdownEditor.Markdown
           style={{
             listStyleType: "unset",
-            background: "#fff",
+            background: "transparent",
             color: "#000",
             textAlign: "justify",
             fontSize: 13,

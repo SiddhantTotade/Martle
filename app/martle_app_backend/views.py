@@ -218,11 +218,10 @@ class CustomerOrdersView(APIView):
 class SingleOrderView(APIView):
     def get(self, request, slug):
         customer = request.user.id
-        product = get_object_or_404(Product, product_slug=slug)
-        order = OrderPlaced.objects.filter(user=customer, product=product.id)
+        order = OrderPlaced.objects.filter(user=customer, order_slug=slug)
         serialized_order = OrderedProductSerializer(order, many=True)
 
-        return Response({"data": serialized_order.data}, status=status.HTTP_200_OK)
+        return Response(serialized_order.data, status=status.HTTP_200_OK)
 
 
 @csrf_exempt
@@ -372,6 +371,43 @@ class RatingsAndReviewsView(APIView):
             return Response({"error": "Some error occured"}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({"msg": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class CalculateRatingView(APIView):
+    def calc_rating(self, ratings, total_rating_count):
+        from collections import Counter
+
+        all_ratings = []
+
+        rounded_ratings = [round(rating) for rating in ratings]
+        ratings_counts = Counter(rounded_ratings)
+
+        for rating in range(0, 6):
+            lower_bound = rating
+            upper_bound = rating + 1
+
+            count = sum(
+                ratings_counts.get(value, 0)
+                for value in ratings
+                if lower_bound <= value < upper_bound
+            )
+
+            calc_rating_percent = (count / total_rating_count) * 100
+            all_ratings.append({int(rating): int(calc_rating_percent)})
+
+        return all_ratings
+
+    def get(self, request, pk):
+        all_ratings = []
+        total_product_ratings = RatingAndReview.objects.filter(product=pk)
+        total_rating_count = total_product_ratings.count()
+
+        for rating in total_product_ratings:
+            all_ratings.append(rating.rating)
+
+        ratings = self.calc_rating(all_ratings, total_rating_count)
+
+        return Response({"rating": ratings}, status=status.HTTP_200_OK)
 
 
 class QuestionAndAnswerView(APIView):

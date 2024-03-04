@@ -38,6 +38,8 @@ urlpatterns = [
     # ---------> Rating and Review of Products
     path("product/ratingandreview/<int:pk>/",
          RatingsAndReviewsView.as_view(), name="get_and_create_rating_and_review"),
+    path("product/calcrating/<int:pk>/",
+         CalculateRatingView.as_view(), name="calculate_rating"),
 
     # ---------> Question and Answer of Products
     path("product/questionandanswer/<int:pk>/",

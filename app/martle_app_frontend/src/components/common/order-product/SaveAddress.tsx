@@ -31,10 +31,23 @@ export default function SaveAddress({ address }: any) {
   };
 
   return (
-    <Box sx={{ width: "50%" }}>
+    <Box
+      sx={{
+        width: "50%",
+        "@media(max-width:1000px)": {
+          width: "100%",
+        },
+      }}
+    >
       <PrirmaryButton
         label="Add address"
-        sx={{ width: "30%", height: "5vh" }}
+        sx={{
+          width: "30%",
+          height: "5vh",
+          "@media(max-width:1000px)": {
+            width: "50%",
+          },
+        }}
         variant="outlined"
         onClick={() => {
           handleClickOpen(address);

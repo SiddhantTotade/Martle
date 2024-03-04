@@ -64,7 +64,15 @@ export default function NavDrawer() {
   };
 
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box
+      sx={{
+        display: "none",
+        alignItems: "center",
+        "@media(max-width:800px)": {
+          display: "flex",
+        },
+      }}
+    >
       <CssBaseline />
       <IconButton
         color="inherit"
@@ -94,17 +102,15 @@ export default function NavDrawer() {
         <List>
           {navLinks.map((link, id) => (
             <React.Fragment key={id}>
-              {(id % 10 === 0 || id % 10 === 1 || id % 10 === 2) && (
-                <ListItem key={id} disablePadding>
-                  <ListItemButton onClick={() => navigate(link.link)}>
-                    <ListItemIcon>{link.icon}</ListItemIcon>
-                    <ListItemText
-                      primaryTypographyProps={{ fontSize: "small" }}
-                      primary={link.label}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              )}
+              <ListItem key={id} disablePadding>
+                <ListItemButton onClick={() => navigate(link.link)}>
+                  <ListItemIcon>{link.icon}</ListItemIcon>
+                  <ListItemText
+                    primaryTypographyProps={{ fontSize: "small" }}
+                    primary={link.label}
+                  />
+                </ListItemButton>
+              </ListItem>
             </React.Fragment>
           ))}
         </List>

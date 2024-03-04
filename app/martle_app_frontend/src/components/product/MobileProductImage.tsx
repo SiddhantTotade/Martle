@@ -1,36 +1,28 @@
-import ProductCard from "../common/Card";
-import Carousel from "react-multi-carousel";
 import Image from "../common/Image";
 import "react-multi-carousel/lib/styles.css";
+import ProductCarousel from "../common/Carousel";
 
-const responsive = {
-  mobile: {
-    breakpoint: { max: 500, min: 0 },
-    items: 1,
-    slidesToSlide: 1,
-  },
-};
+interface Props {
+  product_images: any;
+}
 
-export default function MobileProductImage() {
+export default function MobileProductImage({ product_images }: Props) {
   return (
-    <Carousel
-      containerClass={`w-full`}
-      className="product-carousel"
-      itemClass="carousel"
-      autoPlay={false}
-      slidesToSlide={1}
-      responsive={responsive}
-      arrows={true}
-      showDots={true}
-      renderButtonGroupOutside={true}
-    >
-      <ProductCard elevation={0}>
+    <ProductCarousel>
+      {product_images?.map((product: any, index: number) => (
         <Image
-          src="https://m.media-amazon.com/images/I/41F20jeVASL._SY300_SX300_QL70_FMwebp_.jpg"
+          key={index}
+          src={`http://127.0.0.1:8000${product.product_img_file}`}
           alt="product_image"
-          style={{ width: "100%", height: "100%", objectFit: "scale-down" }}
+          width="90%"
+          sx={{ display: "flex", justifyContent: "center" }}
+          style={{
+            width: "100%",
+            height: "40vh",
+            objectFit: "scale-down",
+          }}
         />
-      </ProductCard>
-    </Carousel>
+      ))}
+    </ProductCarousel>
   );
 }

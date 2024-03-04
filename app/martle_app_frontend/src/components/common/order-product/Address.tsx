@@ -33,6 +33,7 @@ export default function Address() {
           placeItems: "start",
           gap: "20px",
           "@media (max-width: 760px)": {
+            display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
           },
         }}

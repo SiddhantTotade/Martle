@@ -2,7 +2,7 @@ import * as React from "react";
 import StarIcon from "@mui/icons-material/Star";
 import { Typography, Box, Rating } from "@mui/material";
 
-import ratingEmoji, { emojis } from "./utils/ratingEmoji";
+import ratingEmoji, { emojis } from "./ui/ratingEmoji";
 
 const ProductRating = (props) => {
   const [value, setValue] = React.useState(0.5);

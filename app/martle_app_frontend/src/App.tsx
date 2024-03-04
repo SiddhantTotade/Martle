@@ -5,15 +5,14 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import Router from "@/routes/index";
 import SuspenseLoader from "./assets/svg/SuspenseLoader";
 import { setUserInfo } from "./redux/features/userSlice";
-import AppSpeedDial from "./components/common/SpeedDialer";
 import { useThemeContext } from "./themes/ThemeContextProvider";
 import { useProfileQuery } from "./redux/services/authApiSlice";
 import { setUserAuthentication } from "./redux/features/authSlice";
 
-function App() {
+export default function App() {
+  const dispatch = useDispatch();
   const { theme } = useThemeContext();
   const { data, isLoading } = useProfileQuery(undefined);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -30,9 +29,6 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router />
-      <AppSpeedDial />
     </ThemeProvider>
   );
 }
-
-export default App;

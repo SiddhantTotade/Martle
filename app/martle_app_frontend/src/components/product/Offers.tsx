@@ -12,7 +12,6 @@ export default function Offers() {
           display: "grid",
           padding: "10px",
           cursor: "pointer",
-          ":hover": { background: "#e1f5fe" },
         }}
         elevation={3}
       >
@@ -26,11 +25,11 @@ export default function Offers() {
             Upto ₹1200.45 EMI interest saving on selected credit cards
           </Typography>
         </AppContainer>
-        <AppContainer
-          sx={{ m: 0, display: "flex", alignItems: "center", color: "#213bff" }}
-        >
-          <Typography fontSize={12}>Show more</Typography>
-          <ChevronRightIcon fontSize="small" />
+        <AppContainer sx={{ m: 0, display: "flex", alignItems: "center" }}>
+          <Typography color="primary" fontSize={12}>
+            Show more
+          </Typography>
+          <ChevronRightIcon color="primary" fontSize="small" />
         </AppContainer>
       </Paper>
       <Paper
@@ -39,7 +38,6 @@ export default function Offers() {
           display: "grid",
           padding: "10px",
           cursor: "pointer",
-          ":hover": { background: "#e1f5fe" },
         }}
         elevation={3}
       >
@@ -53,11 +51,11 @@ export default function Offers() {
             Upto ₹1200.45 EMI interest saving on selected credit cards
           </Typography>
         </AppContainer>
-        <AppContainer
-          sx={{ m: 0, display: "flex", alignItems: "center", color: "#213bff" }}
-        >
-          <Typography fontSize={12}>Show more</Typography>
-          <ChevronRightIcon fontSize="small" />
+        <AppContainer sx={{ m: 0, display: "flex", alignItems: "center" }}>
+          <Typography color="primary" fontSize={12}>
+            Show more
+          </Typography>
+          <ChevronRightIcon color="primary" fontSize="small" />
         </AppContainer>
       </Paper>
       <Paper
@@ -66,7 +64,6 @@ export default function Offers() {
           display: "grid",
           padding: "10px",
           cursor: "pointer",
-          ":hover": { background: "#e1f5fe" },
         }}
         elevation={3}
       >
@@ -80,11 +77,11 @@ export default function Offers() {
             3 months plus membership + ₹1000 welcome on first purchase
           </Typography>
         </AppContainer>
-        <AppContainer
-          sx={{ m: 0, display: "flex", alignItems: "center", color: "#213bff" }}
-        >
-          <Typography fontSize={12}>Show more</Typography>
-          <ChevronRightIcon fontSize="small" />
+        <AppContainer sx={{ m: 0, display: "flex", alignItems: "center" }}>
+          <Typography color="primary" fontSize={12}>
+            Show more
+          </Typography>
+          <ChevronRightIcon color="primary" fontSize="small" />
         </AppContainer>
       </Paper>
     </Box>

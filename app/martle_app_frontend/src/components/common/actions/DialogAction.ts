@@ -17,6 +17,9 @@ export const initialState = {
   searchProduct: {
     open: false,
   },
+  transferMoney: {
+    open: false,
+  },
 };
 
 export default function DialogActionReducer(state, action) {

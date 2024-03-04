@@ -1,7 +1,14 @@
 .product-carousel {
   padding: 10px;
+  z-index: 0;
 }
 
 .product-carousel > ul {
   gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .product-carousel {
+    padding: 20px;
+  }
 }

@@ -34,6 +34,12 @@ export const appApi = createApi({
         body: payload,
       }),
     }),
+    getCalculateRating: builder.query({
+      query: (payload) => ({
+        url: `product/calcrating/${payload}/`,
+        method: "GET",
+      }),
+    }),
     getRatingAndReview: builder.query({
       query: (payload) => ({
         url: `product/ratingandreview/${payload}`,
@@ -176,6 +182,13 @@ export const appApi = createApi({
         body: payload,
       }),
     }),
+    transferMoney: builder.mutation({
+      query: (payload) => ({
+        url: "transfer-money/",
+        method: "POST",
+        body: payload,
+      }),
+    }),
   }),
 });
 
@@ -185,6 +198,7 @@ export const {
   useProductForPlaceOrderQuery,
   useSaveRatingAndReviewMutation,
   useGetRatingAndReviewQuery,
+  useGetCalculateRatingQuery,
   useSaveQuestionAndAnswerMutation,
   useGetQuestionAndAnswerQuery,
   useGetAddressQuery,
@@ -206,4 +220,5 @@ export const {
   useCreateSubscriptionMutation,
   useMartlePayQuery,
   usePlaceOrderMutation,
+  useTransferMoneyMutation,
 } = appApi;

@@ -5,7 +5,7 @@ import { footerLinks } from "./FooterLinks";
 
 export default function Footer() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, mt: 10 }}>
       <Toolbar
         sx={{
           width: "100%",
@@ -13,13 +13,15 @@ export default function Footer() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          background: "#1a237e",
+          background: "transparent",
+          backdropFilter: "blur(10px)",
+          borderTop: "1px solid",
         }}
       >
-        <Typography color="white" fontSize={30}>
+        <Typography color="#2196f3" fontSize={30}>
           Martle
         </Typography>
-        <Typography color="white" fontSize="small">
+        <Typography color="#2196f3" fontSize="small">
           Project Website
         </Typography>
         <AppContainer
@@ -28,7 +30,7 @@ export default function Footer() {
             justifyContent: "center",
             gap: "20px",
             mt: 1,
-            color: "white",
+            color: "#2196f3",
           }}
         >
           {footerLinks.map((link, id) => (

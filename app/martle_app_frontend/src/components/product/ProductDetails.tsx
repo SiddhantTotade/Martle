@@ -9,6 +9,7 @@ import {
   productDiscount,
   productSavePrice,
 } from "../common/utils/helperFunctions";
+import ProductAddPurchase from "./ProductAddAndPuchase";
 // import ContentCollapse from "../ContentCollapse";
 
 export default function ProductDetails({ productData }: any) {
@@ -23,6 +24,7 @@ export default function ProductDetails({ productData }: any) {
     : "";
   const [expanded, setExpanded] = React.useState(false);
   const [showMore, setShowMore] = useState(false);
+  const windowSize = window.innerWidth;
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -112,6 +114,7 @@ export default function ProductDetails({ productData }: any) {
               </AppContainer>
               <Offers />
             </Box>
+            {windowSize < 600 && <ProductAddPurchase />}
             <br />
             <Box sx={{ display: "grid", gap: "10px" }}>
               <Typography fontSize={15} fontWeight={"bold"}>
@@ -120,7 +123,7 @@ export default function ProductDetails({ productData }: any) {
               <AppContainer sx={{ mt: 0 }}>
                 {Object.values(
                   productDetailsPreShow ? productDetailsPreShow : ""
-                ).map((row: string, id: number) => {
+                ).map((row: any, id: number) => {
                   return (
                     <ul key={id} className="text-sm font-medium list-disc mt-2">
                       <li style={{ textAlign: "justify", fontSize: 13 }}>

@@ -1,16 +1,18 @@
 .container {
-  width: 65%;
+  width: 33%;
   position: fixed;
 }
 
 .left {
   width: 100%;
   display: flex;
+  gap: 1px;
 }
 
 .left_1 {
   width: 70px;
   display: flex;
+  gap: 1px;
   flex-direction: column;
 }
 
@@ -19,7 +21,7 @@
   align-items: center;
   width: 100%;
   max-width: 100%;
-  border: 1px solid gainsboro;
+  border: 2px solid rgb(138, 138, 138);
   padding: 3px;
   cursor: pointer;
   background: #fff;
@@ -28,8 +30,4 @@
 .img_wrap img {
   width: 100%;
   height: auto;
-}
-
-.active {
-  border: 2px solid rgb(235, 158, 15);
 }

@@ -8,7 +8,6 @@ import {
 import { RouteSuspense } from "./routeSuspense";
 import { ProtectedRoutes } from "./protectedRoutes";
 import SuspenseLoader from "@/assets/svg/SuspenseLoader";
-import MartleAndCODPayment from "@/pages/app/MartletAndCODPayment";
 
 const LoginPage = React.lazy(() => import("@/pages/auth/Login"));
 const RegisterPage = React.lazy(() => import("@/pages/auth/Register"));
@@ -26,12 +25,13 @@ const ProductPage = React.lazy(() => import("@/pages/app/Product"));
 const AddressPage = React.lazy(() => import("@/pages/app/Address"));
 const FavoritesPage = React.lazy(() => import("@/pages/app/Favorites"));
 const CheckoutPage = React.lazy(() => import("@/pages/app/OrderProduct"));
+const ProfilePage = React.lazy(() => import("@/pages/app/Profile"));
 const SingleOrderPage = React.lazy(() => import("@/pages/app/SingleOrder"));
 const SearchPage = React.lazy(() => import("@/pages/app/Search"));
 const PaymentPage = React.lazy(() => import("@/pages/app/Payment"));
 const SuccessPage = React.lazy(() => import("@/pages/app/Success"));
 const FailedPage = React.lazy(() => import("@/pages/app/Failed"));
-const MartletAndCODPage = React.lazy(
+const MartletAndCODPaymentPage = React.lazy(
   () => import("@/pages/app/MartletAndCODPayment")
 );
 
@@ -118,6 +118,14 @@ const appRoutes: Route = [
     ),
   },
   {
+    path: "/profile",
+    element: (
+      <ProtectedRoutes
+        children={<RouteSuspense children={<ProfilePage />} />}
+      />
+    ),
+  },
+  {
     path: "/search/:query",
     element: (
       <ProtectedRoutes children={<RouteSuspense children={<SearchPage />} />} />
@@ -135,7 +143,7 @@ const appRoutes: Route = [
     path: "/pay/proceed",
     element: (
       <ProtectedRoutes
-        children={<RouteSuspense children={<MartleAndCODPayment />} />}
+        children={<RouteSuspense children={<MartletAndCODPaymentPage />} />}
       />
     ),
   },

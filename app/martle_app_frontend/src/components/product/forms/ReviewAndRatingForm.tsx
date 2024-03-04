@@ -12,7 +12,7 @@ import InputField from "@/components/common/Input";
 import ActionContainer from "@/components/common/ActionContainer";
 import SecondaryButton from "@/components/common/SecondaryButton";
 import PrirmaryButton from "@/components/common/PrirmaryButton";
-import ratingEmoji, { emojis } from "../utils/ratingEmoji";
+import ratingEmoji, { emojis } from "../ui/ratingEmoji";
 
 interface RatingFormProps {
   control: any;

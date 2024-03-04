@@ -1,9 +1,9 @@
 import Carousel from "react-multi-carousel";
 
-import { Typography, Box } from "@mui/material";
+import Image from "../common/Image";
 import ProductCard from "../common/Card";
 import AppContainer from "../common/Container";
-import Image from "../common/Image";
+import { Typography, Box } from "@mui/material";
 
 const responsive = {
   superLargeDesktop: {

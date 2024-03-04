@@ -94,3 +94,19 @@ class PlaceOrderView(APIView):
             return Response(status=status.HTTP_200_OK)
         except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class TransferAmountView(APIView):
+    def post(self, request):
+        amount = request.data.get("amount")
+
+        martlet_user = Martlet.objects.get(user=request.user.id)
+
+        if float(amount) > martlet_user.martle_bank:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        martlet_user.martle_pay += float(amount)
+        martlet_user.martle_bank -= float(amount)
+        martlet_user.save()
+
+        return Response(status=status.HTTP_200_OK)

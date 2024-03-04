@@ -37,19 +37,20 @@ export default function LatestDeals({ data, isLoading }: Props) {
               src={`http://127.0.0.1:8000${product.product_cover_image}`}
               alt="product_image"
               width="100%"
+              height="25vh"
+              sx={{ display: "flex", alignItems: "center" }}
               style={{
                 display: "flex",
                 width: "100%",
-                borderRadius: "5px",
                 objectFit: "contain",
                 height: "20vh",
-                padding: "10px",
+                padding: "5px",
                 transition: "transform .2s",
               }}
             />
             <PrirmaryButton
               label="View"
-              onClick={() => navigate(product.product_slug)}
+              onClick={() => navigate(`product/${product.product_slug}`)}
             />
           </ProductCard>
         ))

@@ -14,7 +14,7 @@ import AppDialog from "../common/Dialog";
 import PrirmaryButton from "../common/PrirmaryButton";
 import ActionContainer from "../common/ActionContainer";
 import SecondaryButton from "../common/SecondaryButton";
-import ratingEmoji, { emojis } from "./utils/ratingEmoji";
+import ratingEmoji, { emojis } from "./ui/ratingEmoji";
 import { useRatingAndReview } from "@/hooks/app/ratingAndReviews";
 import DialogActionReducer, {
   initialState,

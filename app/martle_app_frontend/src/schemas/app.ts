@@ -14,6 +14,8 @@ const state = Yup.string().required("State is required");
 const country = Yup.string().required("Country is required");
 const zipcode = Yup.number().required("Zipcode is required");
 
+const amount = Yup.string().required("Amount is required");
+
 export const AskQuerySchema = Yup.object().shape({
   query,
 });
@@ -29,4 +31,8 @@ export const AddressSchema = Yup.object().shape({
   state,
   country,
   zipcode,
+});
+
+export const AmountSchema = Yup.object().shape({
+  amount,
 });

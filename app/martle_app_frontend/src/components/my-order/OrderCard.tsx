@@ -16,10 +16,16 @@ export default function OrderCard({
   dateTime,
 }: Props) {
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        gap: "10px",
+      }}
+    >
       <Box
         sx={{
-          width: "30%",
+          width: "20%",
           display: "flex",
           border: "1px solid",
           borderRadius: "3px",
@@ -33,9 +39,9 @@ export default function OrderCard({
           alt="product_image"
           style={{
             display: "flex",
-            width: "120px",
+            width: "150px",
             height: "100px",
-            objectFit: "scale-down",
+            objectFit: "contain",
             maxWidth: "100%",
           }}
         />

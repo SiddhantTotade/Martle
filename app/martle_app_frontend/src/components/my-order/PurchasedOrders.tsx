@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Box, Card } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-import AppContainer from "../common/Container";
 import OrderCard from "./OrderCard";
-import { useGetPurchasedOrdersQuery } from "@/redux/services/appApiSlice";
 import OrderFilter from "./OrderFilter";
+import AppContainer from "../common/Container";
+import { useGetPurchasedOrdersQuery } from "@/redux/services/appApiSlice";
 
 export default function PurchasedOrders() {
-  const [elevations, setElevations] = useState({});
+  const [elevations, setElevations] = useState({} || 0);
   const { data } = useGetPurchasedOrdersQuery(undefined);
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ export default function PurchasedOrders() {
   return (
     <AppContainer
       sx={{
-        width: "80%",
+        width: "95%",
         display: "flex",
         gap: "20px",
         position: "relative",
@@ -55,7 +55,8 @@ export default function PurchasedOrders() {
       <Box
         sx={{
           display: "grid",
-          width: "600px",
+          gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))",
+          width: "100%",
           gap: "10px",
         }}
       >
@@ -64,14 +65,19 @@ export default function PurchasedOrders() {
             key={index}
             elevation={elevations[index] || 0}
             sx={{
+              width: "90%",
               display: "flex",
               alignItems: "center",
               cursor: "pointer",
-              height: "19vh",
+              border: "1px solid transparent",
               borderRadius: 0,
+              "&:hover": {
+                border: "1px solid",
+                borderRadius: 1,
+              },
               p: 1,
             }}
-            onClick={() => navigate(order.product.product_slug)}
+            onClick={() => navigate(order.order_slug)}
             onMouseEnter={() => handleCardHover(index, 5)}
             onMouseLeave={() => handleCardHover(index, 0)}
           >

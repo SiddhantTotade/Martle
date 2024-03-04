@@ -1,15 +1,16 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import getRatingColor from "./utils/ratingColors";
+import { getDarkRatingColor, getRatingColor } from "./ui/ratingColors";
 import ContentCollapse from "./ContentCollapse";
 import { useGetRatingAndReviewQuery } from "@/redux/services/appApiSlice";
 
 export default function Reviews(props) {
   const { data, isLoading } = useGetRatingAndReviewQuery(props.product_id);
   const [expanded, setExpanded] = React.useState(false);
+  const theme = useTheme();
 
   const handleExpandClick = (expand) => {
     setExpanded(expand);
@@ -44,9 +45,12 @@ export default function Reviews(props) {
                   }}
                 >
                   <AccountCircleIcon
-                    sx={{ color: "#2979ff", fontSize: "40px" }}
+                    sx={{
+                      color: "#2979ff",
+                      fontSize: "30px",
+                    }}
                   />
-                  <Typography fontSize={14}>{row.user.name}</Typography>
+                  <Typography fontSize={12}>{row.user.name}</Typography>
                 </Box>
                 <Box
                   sx={{
@@ -57,7 +61,7 @@ export default function Reviews(props) {
                   }}
                 >
                   <Box>
-                    <Typography fontSize={12}>
+                    <Typography fontSize={10}>
                       {new Date(`${row.date}`).toLocaleDateString(undefined, {
                         year: "numeric",
                         month: "short",
@@ -78,14 +82,14 @@ export default function Reviews(props) {
                   >
                     <Typography
                       sx={{ color: row.rating <= "1.5" ? "#000000" : "" }}
-                      fontSize={13}
+                      fontSize={10}
                     >
                       {row.rating}
                     </Typography>
                     <StarIcon
                       sx={{
                         color: row.rating <= "1.5" ? "#000000" : "",
-                        fontSize: "12px",
+                        fontSize: "10px",
                       }}
                     />
                   </Box>

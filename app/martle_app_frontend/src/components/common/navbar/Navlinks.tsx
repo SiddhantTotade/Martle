@@ -19,7 +19,7 @@ export default function Navlinks() {
                 color: "#e3f2fd",
               },
             }}
-            fontSize={14}
+            fontSize={11}
             color="inherit"
             href={links.link}
           >

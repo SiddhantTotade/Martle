@@ -19,9 +19,17 @@ const responsive = {
     breakpoint: { max: 1368, min: 464 },
     items: 4,
   },
-  tablet: {
-    breakpoint: { max: 800, min: 600 },
+  miniBook: {
+    breakpoint: { max: 1160, min: 464 },
     items: 3,
+  },
+  tablet: {
+    breakpoint: { max: 860, min: 800 },
+    items: 2,
+  },
+  miniTablet: {
+    breakpoint: { max: 800, min: 600 },
+    items: 2,
   },
   mobile: {
     breakpoint: { max: 600, min: 200 },
@@ -45,6 +53,7 @@ export default function ProductCarousel({ id, title, children }: Props) {
       <Carousel
         className="product-carousel"
         itemClass="carousel"
+        itemAriaLabel="productCarousel"
         slidesToSlide={3}
         responsive={responsive}
         arrows={true}

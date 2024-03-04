@@ -6,12 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   cartOrderSummary,
   checkoutProductData,
+  convertToINR,
   deliveryCharges,
+  orderTotal,
+  productDiscount,
+  productSavePrice,
 } from "../common/utils/helperFunctions";
 import { BouncingDots } from "@/assets/svg/BouncingDots";
-import { setProductData } from "@/redux/features/checkoutProductDataSlice";
 import { setQuantity } from "@/redux/features/placeOrderSlice";
 import { setPaymentMethod } from "@/redux/features/placeOrderSlice";
+import { setProductData } from "@/redux/features/checkoutProductDataSlice";
 
 const styleBox = {
   width: "100%",
@@ -26,9 +30,11 @@ const styleTypography = {
 
 interface Props {
   discount_price?: string | any;
+  selling_price?: string | any;
   product_title?: string | any;
   payment_method?: string | any;
   orderSummaryType?: string;
+  product_quantity?: string;
 }
 
 interface OrderSummaryData {
@@ -42,7 +48,9 @@ interface OrderSummaryData {
 export default function OrderSummary({
   product_title,
   discount_price,
+  selling_price,
   payment_method,
+  product_quantity,
   orderSummaryType,
 }: Props) {
   const [loading, setLoading] = useState(true);
@@ -115,27 +123,41 @@ export default function OrderSummary({
             {loading ? (
               <BouncingDots />
             ) : type.includes("Quantity") || type.includes("Item") ? (
-              orderSummaryData?.totalItems
+              orderSummaryData?.totalItems || product_quantity
             ) : type.includes("charges") ? (
               orderSummaryData?.deliveryCharges === 0 ? (
                 "Free"
               ) : (
-                deliveryCharges(discount_price)
+                convertToINR(deliveryCharges(discount_price))
               )
             ) : type.includes("method") ? (
               paymentMethod ? (
                 paymentMethod
               ) : payment_method ? (
-                paymentMethod
+                paymentMethod || payment_method
               ) : (
                 "Select a payment method"
               )
             ) : type.includes("savings") ? (
-              orderSummaryData?.productSavePrice
+              orderSummaryData?.productSavePrice.includes("0.00") ? (
+                convertToINR(productSavePrice(selling_price, discount_price))
+              ) : (
+                productSavePrice(selling_price, discount_price)
+              )
             ) : type.includes("Discount") ? (
-              orderSummaryData?.productDiscount + "%"
+              orderSummaryData?.productDiscount ||
+              productDiscount(selling_price, discount_price) + "%"
             ) : type.includes("total") ? (
-              orderSummaryData?.orderTotal
+              orderSummaryData?.orderTotal.includes("0.00") ? (
+                convertToINR(
+                  orderTotal(
+                    product_quantity as unknown as number,
+                    discount_price
+                  )
+                )
+              ) : (
+                orderSummaryData?.orderTotal
+              )
             ) : (
               ""
             )}

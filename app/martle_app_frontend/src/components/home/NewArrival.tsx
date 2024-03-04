@@ -5,7 +5,7 @@ import Image from "../common/Image";
 import ProductCard from "../common/Card";
 import ProductCarousel from "../common/Carousel";
 import CardSkeleton from "./ui/CardSkeleton";
-import { productDiscount } from "../common/utils/helperFunctions";
+import { convertToINR, productDiscount } from "../common/utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -28,7 +28,7 @@ export default function NewArrival({ data, isLoading }: Props) {
             sx={{
               mr: 3,
               p: 1,
-              width: "300px",
+              width: "100%",
               display: "grid",
               gap: "10px",
               cursor: "pointer",
@@ -81,10 +81,7 @@ export default function NewArrival({ data, isLoading }: Props) {
               }}
             >
               <Typography fontSize={15} fontWeight={700}>
-                {new Intl.NumberFormat("en-IN", {
-                  style: "currency",
-                  currency: "INR",
-                }).format(product.product_discounted_price)}
+                {convertToINR(product.product_discounted_price)}
               </Typography>
               <Chip
                 size="small"

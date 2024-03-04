@@ -1,4 +1,4 @@
-import { blueGrey, blue, teal, cyan } from "@mui/material/colors";
+import { blue, deepPurple } from "@mui/material/colors";
 
 const white = "#ffffff";
 const black = "#000000";
@@ -6,6 +6,7 @@ const black = "#000000";
 export const appThemes = {
   light: {
     palette: {
+      mode: "light",
       primary: blue,
       secondary: blue,
       background: {
@@ -20,29 +21,16 @@ export const appThemes = {
   },
   dark: {
     palette: {
+      mode: "dark",
       primary: blue,
-      secondary: blue,
+      secondary: deepPurple,
       background: {
-        default: blueGrey[900],
-        paper: blueGrey[800],
+        default: "#121212",
+        paper: "#121212",
       },
       text: {
         primary: white,
-        secondary: blueGrey[100],
-      },
-    },
-  },
-  forest: {
-    palette: {
-      primary: cyan,
-      secondary: blue,
-      background: {
-        default: teal[900],
-        paper: teal[800],
-      },
-      text: {
-        primary: white,
-        secondary: teal[100],
+        secondary: white,
       },
     },
   },
@@ -50,9 +38,6 @@ export const appThemes = {
 
 export const getAppNameColor = (mode: string) => {
   switch (mode) {
-    case "forest": {
-      return white;
-    }
     case "dark": {
       return white;
     }
@@ -67,9 +52,6 @@ export const getAppNameColor = (mode: string) => {
 
 export const getComponentTitleColor = (mode: string) => {
   switch (mode) {
-    case "forest": {
-      return white;
-    }
     case "dark": {
       return white;
     }

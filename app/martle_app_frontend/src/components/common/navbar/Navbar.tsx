@@ -3,30 +3,38 @@ import {
   Box,
   Toolbar,
   Typography,
-  FormControl,
   Avatar,
   Tooltip,
+  useTheme,
 } from "@mui/material";
 
 import NavDrawer from "../Drawer";
 import PrirmaryButton from "../PrirmaryButton";
-import SearchBar from "./SearchBar";
 import Navlinks from "./Navlinks";
 import MobileSearchBar from "./MobileSearchBar";
 import { useSelector } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/query";
 import Search from "./SearchModal";
+import ToggleThemeButton from "../ToggleThemeButton";
 
 export default function Navbar() {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
   const user = useSelector((state: RootState) => state.user);
+  const theme = useTheme();
 
   return (
     <Box>
       <AppBar
-        sx={{ position: "fixed", top: 0, zIndex: 2 }}
+        sx={{
+          position: "fixed",
+          top: 0,
+          zIndex: 2,
+          background: theme.palette.mode === "dark" ? "transparent" : "",
+          backdropFilter: theme.palette.mode === "dark" ? "blur(20px)" : "",
+          borderBottom: theme.palette.mode === "dark" ? 1 : "",
+        }}
         elevation={0}
         position="static"
       >
@@ -56,10 +64,11 @@ export default function Navbar() {
                 },
               }}
             >
-              <Search />
               <Navlinks />
             </Box>
             <Box sx={{ display: "flex", gap: "10px" }}>
+              <Search />
+              <ToggleThemeButton />
               {isAuthenticated ? (
                 <Tooltip title={`${user.name} | ${user.email}`}>
                   <Avatar />
@@ -74,7 +83,6 @@ export default function Navbar() {
           </Box>
         </Toolbar>
       </AppBar>
-      <MobileSearchBar />
     </Box>
   );
 }

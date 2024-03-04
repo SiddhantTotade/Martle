@@ -22,7 +22,7 @@ const ProductImageMagnifier = (props) => {
     }
   };
 
-  const handleHover = (image: any) => {
+  const handleHover = (image: any, index: number) => {
     setImg(image);
   };
 
@@ -31,13 +31,13 @@ const ProductImageMagnifier = (props) => {
       <div className="container">
         <div className="left">
           <div className="left_1">
-            {props.product_images?.map((image: any, i: number) => {
+            {props.product_images?.map((image: any, index: number) => {
               return (
                 <div
                   ref={addRef}
-                  onMouseOver={() => handleHover(image.product_img_file, i)}
+                  onMouseOver={() => handleHover(image.product_img_file, index)}
                   className="img_wrap"
-                  key={i}
+                  key={index}
                 >
                   <Image
                     src={`http://127.0.0.1:8000` + image.product_img_file}
@@ -49,7 +49,6 @@ const ProductImageMagnifier = (props) => {
                     style={{
                       display: "flex",
                       height: "10vh",
-                      objectFit: "contain",
                     }}
                   />
                 </div>
@@ -72,16 +71,20 @@ const ProductImageMagnifier = (props) => {
                   height: 1800,
                 },
                 enlargedImageContainerDimensions: {
-                  width: "100%",
-                  height: "100%",
+                  width: "200%",
+                  height: "130%",
+                },
+                enlargedImageContainerStyle: {
+                  border: "2px solid rgb(138, 138, 138)",
+                  zIndex: "1000000000",
                 },
                 enlargedImageStyle: {
-                  objectFit: "scale-down",
                   background: "#fff",
                 },
                 imageStyle: {
-                  border: "1px  solid gainsboro",
+                  border: "2px solid rgb(138, 138, 138)",
                   objectFit: "contain",
+                  background: "#fff",
                 },
                 shouldUsePositiveSpaceLens: true,
               }}

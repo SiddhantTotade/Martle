@@ -131,10 +131,16 @@ class OrderPlaced(models.Model):
     payment_method = models.CharField(max_length=20, null=True, blank=True)
     ordered_datetime = models.DateTimeField(auto_now_add=True)
     status = models.ForeignKey(ProductStatusChoices, on_delete=models.PROTECT)
+    order_slug = models.SlugField(max_length=300, null=True, blank=True)
 
     @property
     def total_cost(self):
         return self.quantity * self.product_discounted_price
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.order_slug = self.product.product_slug + generate_random_string()
+        return super().save(*args, **kwargs)
 
 
 # --------- Ratings and Reviews Model

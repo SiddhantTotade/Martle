@@ -1,13 +1,23 @@
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 
-import AppContainer from "../common/Container";
-import RatingBar from "../common/RatingBar";
 import Reviews from "./Reviews";
+import RatingBar from "../common/RatingBar";
+import AppContainer from "../common/Container";
 import AddReviewRating from "./AddReviewAndRating";
+import { lightRatingColors } from "./ui/ratingColors";
+import { useGetCalculateRatingQuery } from "@/redux/services/appApiSlice";
 
-const RatingAndReviews = (props) => {
-  return (
+export default function RatingAndReviews({
+  product_id,
+}: {
+  product_id: number;
+}) {
+  const { data, isLoading } = useGetCalculateRatingQuery(product_id);
+
+  return isLoading ? (
+    <CircularProgress />
+  ) : (
     <AppContainer sx={{ mt: 3 }}>
       <Typography fontWeight={"bold"} fontSize={20}>
         Ratings & Reviews
@@ -20,126 +30,53 @@ const RatingAndReviews = (props) => {
         }}
       >
         <Box sx={{ width: "100%" }}>
-          <Box
-            sx={{
-              width: "100%",
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              alignItems: "center",
-            }}
-          >
-            <RatingBar width={"100%"} value={90} color="#0277bd" />
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "start",
-                alignItems: "center",
-                gap: "1px",
-              }}
-            >
-              <Typography sx={{ color: "#0277bd" }} fontSize={15}>
-                5
-              </Typography>
-              <StarIcon sx={{ color: "#0277bd", fontSize: "12px" }} />
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              width: "100%",
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              alignItems: "center",
-            }}
-          >
-            <RatingBar width={"100%"} value={90} color="#0288d1" />
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "start",
-                alignItems: "center",
-                gap: "1px",
-              }}
-            >
-              <Typography sx={{ color: "#0288d1" }} fontSize={15}>
-                4
-              </Typography>
-              <StarIcon sx={{ color: "#0288d1", fontSize: "12px" }} />
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              width: "100%",
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              alignItems: "center",
-            }}
-          >
-            <RatingBar width={"100%"} value={90} color="#039be5" />
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "start",
-                alignItems: "center",
-                gap: "1px",
-              }}
-            >
-              <Typography sx={{ color: "#039be5" }} fontSize={15}>
-                3
-              </Typography>
-              <StarIcon sx={{ color: "#039be5", fontSize: "12px" }} />
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              width: "100%",
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              alignItems: "center",
-            }}
-          >
-            <RatingBar width={"100%"} value={90} color="#03a9f4" />
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "start",
-                alignItems: "center",
-                gap: "1px",
-              }}
-            >
-              <Typography sx={{ color: "#03a9f4" }} fontSize={15}>
-                2
-              </Typography>
-              <StarIcon sx={{ color: "#03a9f4", fontSize: "12px" }} />
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              width: "100%",
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              alignItems: "center",
-            }}
-          >
-            <RatingBar width={"100%"} value={90} color="#29b6f6" />
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "start",
-                alignItems: "center",
-                gap: "1px",
-              }}
-            >
-              <Typography sx={{ color: "#29b6f6" }} fontSize={15}>
-                1
-              </Typography>
-              <StarIcon sx={{ color: "#29b6f6", fontSize: "12px" }} />
-            </Box>
-          </Box>
+          {data?.rating?.map((ratingObj: any, index: number) => {
+            const rating = Number(Object.keys(ratingObj)[0]);
+
+            return rating === 0 ? (
+              ""
+            ) : (
+              <Box
+                key={index}
+                sx={{
+                  width: "100%",
+                  display: "grid",
+                  gridTemplateColumns: "repeat(2, 1fr)",
+                  alignItems: "center",
+                }}
+              >
+                <RatingBar
+                  width={"100%"}
+                  value={data.rating[rating][rating]}
+                  color={lightRatingColors[rating]}
+                />
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "start",
+                    alignItems: "center",
+                    gap: "1px",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: lightRatingColors[rating],
+                    }}
+                    fontSize={15}
+                  >
+                    {rating}
+                  </Typography>
+                  <StarIcon
+                    sx={{
+                      color: lightRatingColors[rating],
+                      fontSize: "12px",
+                    }}
+                  />
+                </Box>
+              </Box>
+            );
+          })}
         </Box>
         <Box
           sx={{
@@ -150,10 +87,8 @@ const RatingAndReviews = (props) => {
         </Box>
       </Box>
       <AppContainer>
-        <Reviews product_id={props.product_id ? props.product_id : ""} />
+        <Reviews product_id={product_id} />
       </AppContainer>
     </AppContainer>
   );
-};
-
-export default RatingAndReviews;
+}

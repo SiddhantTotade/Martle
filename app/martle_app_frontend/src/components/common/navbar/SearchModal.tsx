@@ -4,6 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AppDialog from "../Dialog";
 import DialogActionReducer, { initialState } from "../actions/DialogAction";
 import SearchForm from "./forms/SearchForm";
+import { IconButton } from "@mui/material";
 
 export default function Search() {
   const [state, dispatch] = useReducer(DialogActionReducer, initialState);
@@ -23,10 +24,12 @@ export default function Search() {
   };
 
   return (
-    <React.Fragment>
+    <IconButton onClick={handleClickOpen}>
       <SearchIcon
-        sx={{ color: "#fff", "&:hover": { cursor: "pointer" } }}
-        onClick={handleClickOpen}
+        sx={{
+          color: "#fff",
+          "&:hover": { cursor: "pointer" },
+        }}
       />
       <AppDialog
         titleStyle={{ p: 0 }}
@@ -35,6 +38,6 @@ export default function Search() {
       >
         <SearchForm />
       </AppDialog>
-    </React.Fragment>
+    </IconButton>
   );
 }

@@ -5,13 +5,18 @@ from rest_framework import status
 from rest_framework.parsers import JSONParser
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
+
 from django.core import serializers as customer_data_serializer
 from django.http.response import JsonResponse
 from django.contrib.auth.tokens import default_token_generator
 from django.conf import settings
 from django.utils.encoding import force_str
+
 from urllib.parse import urlencode
+
 from martle_app_backend.models import *
+from martle_app_payment.models import Martlet
+
 from .serializers import *
 from .renderers import UserRenderer
 from .helpers import *

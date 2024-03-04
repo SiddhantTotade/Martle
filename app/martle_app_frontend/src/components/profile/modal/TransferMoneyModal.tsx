@@ -6,35 +6,36 @@ import SecondaryButton from "@/components/common/SecondaryButton";
 import DialogActionReducer, {
   initialState,
 } from "@/components/common/actions/DialogAction";
+import TransferMoneyForm from "../forms/TransferMoneyForm";
 
-export default function ChangePassword() {
+export default function TransferMoney() {
   const [state, dispatch] = useReducer(DialogActionReducer, initialState);
 
   const handleClickOpen = () => {
     dispatch({
       type: "OPEN_DIALOG",
-      payload: { dialogType: "changePassword" },
+      payload: { dialogType: "transferMoney" },
     });
   };
 
   const handleClose = () => {
     dispatch({
       type: "CLOSE_DIALOG",
-      payload: { dialogType: "changePassword" },
+      payload: { dialogType: "transferMoney" },
     });
   };
 
   return (
     <React.Fragment>
       <SecondaryButton variant="outlined" onClick={handleClickOpen}>
-        Change Password
+        Transfer to Pay
       </SecondaryButton>
       <AppDialog
-        title="Change Password"
-        open={state.changePassword.open}
+        title="Transfer to Pay"
+        open={state.transferMoney.open}
         onClose={handleClose}
       >
-        <ChangePasswordForm handleClose={handleClose} />
+        <TransferMoneyForm handleClose={handleClose} />
       </AppDialog>
     </React.Fragment>
   );

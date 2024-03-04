@@ -60,37 +60,36 @@ export default function PlaceOrder() {
   });
 
   return (
-    <AppContainer>
+    <AppContainer sx={{ width: "100%" }}>
       <Card
         elevation={5}
         sx={{
           display: "flex",
           alignItems: "center",
           gap: "10px",
-          p: 2,
+          p: 1,
+          width: "100%",
           "@media (max-width: 1430px)": {
             display: "grid",
             width: "100%",
           },
         }}
       >
-        <Box sx={{ width: "100%", display: "flex", gap: "10px" }}>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              border: "1px solid",
-              borderRadius: "3px",
-              background: "#fff",
-              p: 1,
-            }}
-          >
-            <Image
-              src={`http://127.0.0.1:8000${data?.data[0].product_cover_image}`}
-              alt="product_image"
-              style={{ width: "100px" }}
-            />
-          </Box>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            gap: "10px",
+            "@media(max-width:600px)": {
+              display: "grid",
+            },
+          }}
+        >
+          <Image
+            src={`http://127.0.0.1:8000${data?.data[0].product_cover_image}`}
+            alt="product_image"
+            style={{ width: "200px", height: "200px", objectFit: "contain" }}
+          />
           <Box
             sx={{
               width: "100%",
