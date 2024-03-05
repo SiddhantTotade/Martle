@@ -250,7 +250,7 @@ class FavoriteView(APIView):
                 favorite=request.user.id)
             favorite_serialized_data = ProductLightSerializer(
                 favorite_products, many=True)
-            return Response({"data": favorite_serialized_data.data}, status=status.HTTP_200_OK)
+            return Response(favorite_serialized_data.data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
 

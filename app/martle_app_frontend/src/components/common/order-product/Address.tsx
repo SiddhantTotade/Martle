@@ -1,4 +1,4 @@
-import { Card, Box, CircularProgress } from "@mui/material";
+import { Card, Box, CircularProgress, Typography } from "@mui/material";
 
 import AppContainer from "../Container";
 import EditAddress from "./EditAddress";
@@ -18,9 +18,9 @@ export default function Address() {
   return (
     <AppContainer
       sx={{
-        mt: 2,
+        mt: 3,
         "@media (max-width: 1190px)": {
-          width: "100%",
+          width: "95%",
         },
       }}
     >
@@ -42,7 +42,15 @@ export default function Address() {
           <Card
             elevation={5}
             key={index}
-            sx={{ p: 1, display: "grid", gap: "5px", border: "1px solid" }}
+            sx={{
+              p: 1,
+              display: "grid",
+              gap: "5px",
+              border: "1px solid",
+              "@media(max-width:760px)": {
+                width: "100%",
+              },
+            }}
           >
             <AddressCard
               address={address.address}

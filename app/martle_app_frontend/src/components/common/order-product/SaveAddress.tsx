@@ -33,8 +33,10 @@ export default function SaveAddress({ address }: any) {
   return (
     <Box
       sx={{
-        width: "50%",
-        "@media(max-width:1000px)": {
+        width: "100%",
+        display: "flex",
+        justifyContent: "end",
+        "@media(max-width:600px)": {
           width: "100%",
         },
       }}
@@ -42,7 +44,7 @@ export default function SaveAddress({ address }: any) {
       <PrirmaryButton
         label="Add address"
         sx={{
-          width: "30%",
+          width: "10%",
           height: "5vh",
           "@media(max-width:1000px)": {
             width: "50%",

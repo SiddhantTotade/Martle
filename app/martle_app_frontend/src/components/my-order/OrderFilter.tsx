@@ -18,17 +18,23 @@ export default function OrderFilter() {
   return (
     <FormControl
       sx={{
+        width: "25%",
         display: "grid",
         gap: "10px",
         position: "fixed",
         overflow: "hidden",
         p: 1,
-        "@media(max-width:1080px)": {
-          display: "grid",
-          width: "95%",
-          overflow: "hidden",
-          mt: 1,
+        "@media(max-width:600px)": {
+          width: "100%",
+          position: "relative",
+          p: 1,
         },
+        // "@media(max-width:1080px)": {
+        //   display: "grid",
+        //   width: "95%",
+        //   overflow: "hidden",
+        //   mt: 1,
+        // },
       }}
     >
       <InputLabel sx={{ p: 1 }} size="small" id="demo-simple-select-label">

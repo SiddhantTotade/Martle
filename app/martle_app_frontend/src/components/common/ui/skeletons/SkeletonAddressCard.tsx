@@ -12,6 +12,9 @@ export default function SkeletonAddressCard() {
         gap: "10px",
         width: "96%",
         position: "absolute",
+        "@media(max-width:600px)": {
+          display: "none",
+        },
       }}
     >
       {[...Array(3)].map((_, index) => (

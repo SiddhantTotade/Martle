@@ -1,15 +1,16 @@
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { RootState } from "@reduxjs/toolkit/query";
-import { Box, Typography, CircularProgress } from "@mui/material";
 
 import Image from "../common/Image";
 import ProductCard from "../common/Card";
+import { useNavigate } from "react-router-dom";
+import AppContainer from "../common/Container";
+import ProductCarousel from "../common/Carousel";
 import PrirmaryButton from "../common/PrirmaryButton";
 import ActionContainer from "../common/ActionContainer";
+import ProductQuantity from "../checkout/ProductQuantity";
 import { convertToINR } from "../common/utils/helperFunctions";
 import { useRemoveFromCart } from "@/hooks/app/removeFromCart";
-import ProductQuantity from "@/components/checkout/ProductQuantity";
 import SkeletonProductCard from "../common/ui/skeletons/SkeletonProductCard";
 
 interface Props {
@@ -17,36 +18,33 @@ interface Props {
   data?: any;
 }
 
-export default function CartItems({ getIsLoading, data }: Props) {
+export default function MobileCartItems({ getIsLoading, data }: Props) {
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
   const { onSubmit, isLoading: removeItem } = useRemoveFromCart();
 
   return (
-    <Box
+    <AppContainer
       sx={{
-        width: "100%",
-        display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
-        gap: "10px",
-        position: "relative",
+        display: "none",
+        mt: 0,
         "@media(max-width:700px)": {
-          display: "none",
+          display: "flex",
+          justifyContent: "center",
         },
       }}
     >
       {getIsLoading ? (
         <SkeletonProductCard />
       ) : (
-        <>
+        <ProductCarousel>
           {data?.data.data.map((product: any, index: number) => (
             <ProductCard
               key={index}
               elevation={5}
               sx={{
-                height: "46vh",
                 display: "grid",
-                width: "270px",
+                width: "87%",
                 rowGap: "10px",
                 border: "1px solid",
                 p: 1,
@@ -59,8 +57,8 @@ export default function CartItems({ getIsLoading, data }: Props) {
                 style={{
                   width: "150px",
                   height: "150px",
+                  padding: "10px",
                   objectFit: "contain",
-                  padding: "5px",
                 }}
               />
               <Typography
@@ -109,8 +107,8 @@ export default function CartItems({ getIsLoading, data }: Props) {
               </ActionContainer>
             </ProductCard>
           ))}
-        </>
+        </ProductCarousel>
       )}
-    </Box>
+    </AppContainer>
   );
 }

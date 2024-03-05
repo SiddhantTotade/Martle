@@ -14,13 +14,12 @@ import {
 } from "@mui/material";
 import { useLogout } from "@/hooks/auth/logout";
 
-import { styled, useTheme } from "@mui/material/styles";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import LogoutIcon from "@mui/icons-material/Logout";
-
 import { navLinks } from "./navbar/AllLinks";
 import { useNavigate } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { styled, useTheme } from "@mui/material/styles";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 const drawerWidth = 240;
 
@@ -86,6 +85,7 @@ export default function NavDrawer() {
           width: drawerWidth,
           "& .MuiDrawer-paper": {
             width: drawerWidth,
+            height: "100vh",
             boxSizing: "border-box",
           },
         }}

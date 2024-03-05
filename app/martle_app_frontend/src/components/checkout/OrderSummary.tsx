@@ -62,6 +62,12 @@ export default function OrderSummary({
   const [orderSummaryData, setOrderSummaryData] =
     useState<OrderSummaryData | null>(null);
 
+  console.log(
+    convertToINR(
+      orderTotal(product_quantity as unknown as number, discount_price)
+    )
+  );
+
   useEffect(() => {
     dispatch(setQuantity(quantity));
     dispatch(setPaymentMethod(paymentMethod));
@@ -139,16 +145,19 @@ export default function OrderSummary({
                 "Select a payment method"
               )
             ) : type.includes("savings") ? (
-              orderSummaryData?.productSavePrice.includes("0.00") ? (
+              orderSummaryData?.productSavePrice.includes("₹0.00") ? (
                 convertToINR(productSavePrice(selling_price, discount_price))
               ) : (
-                productSavePrice(selling_price, discount_price)
+                orderSummaryData?.productSavePrice
               )
             ) : type.includes("Discount") ? (
-              orderSummaryData?.productDiscount ||
-              productDiscount(selling_price, discount_price) + "%"
+              orderSummaryData?.productDiscount === 0 ? (
+                productDiscount(selling_price, discount_price) + "%"
+              ) : (
+                orderSummaryData?.productDiscount + "%"
+              )
             ) : type.includes("total") ? (
-              orderSummaryData?.orderTotal.includes("0.00") ? (
+              orderSummaryData?.orderTotal.includes("₹NaN") ? (
                 convertToINR(
                   orderTotal(
                     product_quantity as unknown as number,
@@ -159,7 +168,7 @@ export default function OrderSummary({
                 orderSummaryData?.orderTotal
               )
             ) : (
-              ""
+              orderSummaryData?.orderTotal
             )}
           </Typography>
         </Box>

@@ -34,11 +34,12 @@ export default function CheckoutCart({ data, getIsLoading }: Props) {
       ) : (
         <Box
           sx={{
-            width: "25%",
+            width: "100%",
             display: "flex",
             flexDirection: "column",
             flex: "0 0 25%",
             gap: "10px",
+
           }}
         >
           <ProductCard elevation={5} sx={{ p: 1, border: "1px solid" }}>

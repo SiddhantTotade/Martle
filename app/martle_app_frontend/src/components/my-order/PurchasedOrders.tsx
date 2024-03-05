@@ -46,8 +46,16 @@ export default function PurchasedOrders() {
     >
       <Box
         sx={{
-          width: "20.8%",
-          height: "15.2vh",
+          width: "40%",
+          height: "20vh",
+          border: "1px solid",
+          borderRadius: "5px",
+          p: 2,
+          "@media(max-width:600px)": {
+            width: "85%",
+            mt: 10,
+            height: "16vh",
+          },
         }}
       >
         <OrderFilter />
@@ -55,9 +63,10 @@ export default function PurchasedOrders() {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(500px, 0fr))",
+          justifyContent: "center",
           width: "100%",
-          gap: "10px",
+          gridRowGap: "10px",
         }}
       >
         {data?.data.map((order: any, index: number) => (
@@ -65,11 +74,11 @@ export default function PurchasedOrders() {
             key={index}
             elevation={elevations[index] || 0}
             sx={{
-              width: "90%",
+              width: "85%",
               display: "flex",
               alignItems: "center",
               cursor: "pointer",
-              border: "1px solid transparent",
+              border: "1px solid black",
               borderRadius: 0,
               "&:hover": {
                 border: "1px solid",

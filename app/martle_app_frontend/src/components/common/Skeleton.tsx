@@ -1,8 +1,8 @@
 import { Stack, Skeleton, SxProps } from "@mui/material";
 
 interface Props {
-  width?: number;
-  height?: number;
+  width?: any;
+  height?: any;
   vrint: string;
   sx?: SxProps;
 }

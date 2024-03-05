@@ -14,8 +14,6 @@ export default function SingleOrder() {
   const { slug } = useParams();
   const { data, isLoading } = useGetSingleOrderQuery(slug);
 
-  console.log(data ? data?.[0].product_discounted_price : 0);
-
   return (
     <>
       <AppContainer sx={{ mt: 10 }}>

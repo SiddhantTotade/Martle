@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import NoCart from "./NoCart";
 import CartItems from "./CartItems";
@@ -11,6 +11,7 @@ import {
   checkoutProductCartData,
   extractCartData,
 } from "../common/utils/helperFunctions";
+import MobileCartItems from "./MobileCartItems";
 import { setProductCartData } from "@/redux/features/checkoutProductDataSlice";
 
 export default function Cart() {
@@ -51,13 +52,18 @@ export default function Cart() {
       ) : (
         <AppContainer
           sx={{
-            mt: "6rem",
+            mt: 10,
             display: "flex",
             gap: "20px",
+            "@media(max-width:600px)": {
+              mt: 3,
+              flexDirection: "column-reverse",
+            },
           }}
         >
           <CheckoutCart getIsLoading={getIsLoading} data={data} />
           <CartItems getIsLoading={getIsLoading} data={data} />
+          <MobileCartItems getIsLoading={getIsLoading} data={data} />
         </AppContainer>
       )}
     </>

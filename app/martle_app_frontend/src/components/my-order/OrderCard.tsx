@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 
 import Image from "../common/Image";
+import { shortText } from "../common/utils/helperFunctions";
 
 interface Props {
   product: any;
@@ -23,29 +24,19 @@ export default function OrderCard({
         gap: "10px",
       }}
     >
-      <Box
-        sx={{
-          width: "20%",
+      <Image
+        src={`http://127.0.0.1:8000${product.product_cover_image}`}
+        alt="product_image"
+        sx={{ border: "1px solid" }}
+        style={{
           display: "flex",
-          border: "1px solid",
-          borderRadius: "3px",
-          background: "#fff",
-          minWidth: "100px",
-          p: 1,
+          width: "100px",
+          height: "100px",
+          objectFit: "contain",
+          maxWidth: "100%",
+          padding: "5px",
         }}
-      >
-        <Image
-          src={`http://127.0.0.1:8000${product.product_cover_image}`}
-          alt="product_image"
-          style={{
-            display: "flex",
-            width: "150px",
-            height: "100px",
-            objectFit: "contain",
-            maxWidth: "100%",
-          }}
-        />
-      </Box>
+      />
       <Box sx={{ width: "100%", display: "grid" }}>
         <Typography fontSize="small">
           {new Date(dateTime).toDateString()}
@@ -58,7 +49,7 @@ export default function OrderCard({
             textOverflow: "ellipsis",
           }}
         >
-          {product.product_title}
+          {shortText(product.product_title, 40)}...
         </Typography>
         <Typography fontSize="small">Quantity - {quantity}</Typography>
         <Typography fontSize="small">{status}</Typography>
