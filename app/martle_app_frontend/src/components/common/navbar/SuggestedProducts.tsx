@@ -28,25 +28,21 @@ export default function SearchedProduct({ currentData }: any) {
             elevation={5}
             onClick={() => navigate(`/product/${item._source.product_slug}`)}
           >
-            <Box
+            <Image
+              src={`http://127.0.0.1:8000${item._source.product_cover_image}`}
+              alt="product_image"
               sx={{
-                width: "20%",
                 display: "flex",
                 alignItems: "center",
-                borderRadius: "3px",
+                border: "1px solid",
+                p: 1,
               }}
-            >
-              <Image
-                src={`http://127.0.0.1:8000${item._source.product_cover_image}`}
-                alt="product_image"
-                sx={{ display: "flex", alignItems: "center", p: 1 }}
-                style={{
-                  width: "70px",
-                  height: "70px",
-                  objectFit: "contain",
-                }}
-              />
-            </Box>
+              style={{
+                width: "70px",
+                height: "70px",
+                objectFit: "contain",
+              }}
+            />
             <Box sx={{ width: "100%", display: "grid", alignItems: "center" }}>
               <Typography fontSize={12}>
                 {shortText(item._source.product_title, 130)}...

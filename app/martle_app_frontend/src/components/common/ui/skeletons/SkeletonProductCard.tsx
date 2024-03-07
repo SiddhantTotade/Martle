@@ -16,8 +16,9 @@ export default function SkeletonProductCard() {
         flex: "wrap",
         gap: "10px",
         "@media(max-width:600px)": {
+          mt: 0,
           left: 0,
-          width: "51%",
+          width: "100%",
         },
       }}
     >
@@ -31,9 +32,9 @@ export default function SkeletonProductCard() {
             gap: "10px",
             p: 1,
             "@media(max-width:600px)": {
-              width: "100%",
+              width: "50.5%",
               left: 0,
-              mt: 6,
+              mt: 2,
             },
           }}
         >

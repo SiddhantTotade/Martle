@@ -28,8 +28,10 @@ export default function Favorite() {
             display: "grid",
             placeItems: "end",
             gap: "10px",
-            "@media(max-width:800px)": {
-              display: "block",
+            "@media(max-width:600px)": {
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
             },
           }}
         >

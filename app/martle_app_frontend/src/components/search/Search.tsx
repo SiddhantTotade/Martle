@@ -16,21 +16,25 @@ export default function Search() {
   const { data } = useSearchProductQuery(query);
 
   return (
-    <AppContainer sx={{ mt: "6rem", display: "flex", gap: "10px" }}>
+    <AppContainer
+      sx={{ mt: "6rem", display: "grid", gap: "10px", placeItems: "end" }}
+    >
       <Box
         sx={{
-          width: "25%",
+          width: "40%",
           display: "flex",
-          flexDirection: "column",
           gap: "30px",
+          "@media(max-width:600px)": {
+            width: "90%",
+            margin: "auto",
+            display: "grid",
+          },
         }}
       >
         <ProductPriceRangeSlider />
         <SortProduct />
       </Box>
-      <Box sx={{ width: "70%", ml: "2rem" }}>
-        <SearchedProducts data={data} />
-      </Box>
+      <SearchedProducts data={data} />
     </AppContainer>
   );
 }

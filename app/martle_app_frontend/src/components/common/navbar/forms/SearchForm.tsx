@@ -6,7 +6,6 @@ import {
   DialogContent,
   Divider,
   CircularProgress,
-  useTheme,
 } from "@mui/material";
 
 import SearchedProduct from "../SuggestedProducts";
@@ -18,9 +17,6 @@ export default function SearchForm() {
   const { onSubmit, isLoading, data } = useSuggestProduct();
   const [value, setValue] = useState("");
   const navigate = useNavigate();
-  const theme = useTheme();
-
-  console.log(theme);
 
   useEffect(() => {
     const getValue = setTimeout(() => {

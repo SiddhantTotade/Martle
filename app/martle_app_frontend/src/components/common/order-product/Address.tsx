@@ -18,7 +18,7 @@ export default function Address() {
   return (
     <AppContainer
       sx={{
-        mt: 3,
+        mt: 10,
         "@media (max-width: 1190px)": {
           width: "95%",
         },

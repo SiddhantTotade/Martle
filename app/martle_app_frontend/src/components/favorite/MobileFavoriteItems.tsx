@@ -8,6 +8,7 @@ import ProductCard from "../common/Card";
 import AppContainer from "../common/Container";
 import ProductCarousel from "../common/Carousel";
 import PrirmaryButton from "../common/PrirmaryButton";
+import { shortText } from "../common/utils/helperFunctions";
 import SkeletonProductCard from "../common/ui/skeletons/SkeletonProductCard";
 
 interface Props {
@@ -37,6 +38,7 @@ export default function MobileFavoriteItems({
             mt: 0,
             "@media(max-width:600px)": {
               display: "flex",
+              mt: -5,
             },
           }}
         >
@@ -49,41 +51,26 @@ export default function MobileFavoriteItems({
                   gap: "5px",
                   p: 1,
                   "@media(max-width:600px)": {
-                    width: "90%",
+                    width: "85%",
                   },
                 }}
                 key={index}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    border: "1px solid",
+                <Image
+                  src={`http://127.0.0.1:8000${product.product_cover_image}`}
+                  alt="product_image"
+                  sx={{ border: "1px solid", borderRadius: "5px", p: 1 }}
+                  style={{
+                    width: "150px",
+                    height: "150px",
                     borderRadius: "5px",
-                    p: 1,
+                    objectFit: "scale-down",
                   }}
-                >
-                  <Image
-                    src={`http://127.0.0.1:8000${product.product_cover_image}`}
-                    alt="product_image"
-                    style={{
-                      width: "150px",
-                      height: "150px",
-                      borderRadius: "5px",
-                      objectFit: "scale-down",
-                    }}
-                  />
-                </Box>
+                />
                 <Box sx={{ display: "grid", gap: "5px" }}>
                   <Typography
                     onClick={() => navigate(`/product/${product.product_slug}`)}
                     sx={{
-                      display: "inline-block",
-                      width: "100%",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
                       cursor: "pointer",
                       "&:hover": {
                         color: "#64b5f6",
@@ -91,34 +78,35 @@ export default function MobileFavoriteItems({
                     }}
                     fontSize="small"
                   >
-                    {product.product_title}
+                    {shortText(product.product_title, 90)}...
                   </Typography>
                   <Box
                     sx={{
                       width: "100%",
                       display: "flex",
-                      justifyContent: "space-around",
                       alignItems: "end",
-                      gap: "10px",
+                      gap: "20px",
                     }}
                   >
-                    <Typography>₹{product.product_discounted_price}</Typography>
-                    <del style={{ fontSize: "13px" }}>
+                    <Typography fontSize="large" fontWeight={600}>
+                      ₹{product.product_discounted_price}
+                    </Typography>
+                    <del style={{ fontSize: "15px" }}>
                       ₹{product.product_selling_price}
                     </del>
+                    {removeFavoriteIsLoading ? (
+                      <CircularProgress />
+                    ) : (
+                      <PrirmaryButton
+                        onClick={() =>
+                          onSubmit({ user: user.id, product: product.id })
+                        }
+                        label="Remove"
+                        variant="contained"
+                      />
+                    )}
                   </Box>
                 </Box>
-                {removeFavoriteIsLoading ? (
-                  <CircularProgress />
-                ) : (
-                  <PrirmaryButton
-                    onClick={() =>
-                      onSubmit({ user: user.id, product: product.id })
-                    }
-                    label="Remove"
-                    variant="contained"
-                  />
-                )}
               </ProductCard>
             ))}
           </ProductCarousel>

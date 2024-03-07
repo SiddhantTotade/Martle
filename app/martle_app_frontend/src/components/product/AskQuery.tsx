@@ -1,22 +1,21 @@
 import { useReducer } from "react";
 import {
-  Box,
   FormControl,
   DialogContent,
   DialogActions,
   CircularProgress,
 } from "@mui/material";
 
-import SecondaryButton from "../common/SecondaryButton";
+import AppDialog from "../common/Dialog";
+import InputField from "../common/Input";
 import PrirmaryButton from "../common/PrirmaryButton";
+import SecondaryButton from "../common/SecondaryButton";
+import ActionContainer from "../common/ActionContainer";
 import { useQuestionAndAnswer } from "@/hooks/app/askQuery";
 import { initialState } from "../common/actions/DialogAction";
 import DialogActionReducer from "../common/actions/DialogAction";
-import AppDialog from "../common/Dialog";
-import InputField from "../common/Input";
-import ActionContainer from "../common/ActionContainer";
 
-export default function AskQuestion(props) {
+export default function AskQuestion() {
   const { handleSubmit, onSubmit, control, isLoading } = useQuestionAndAnswer();
   const [state, dispatch] = useReducer(DialogActionReducer, initialState);
 
@@ -35,7 +34,7 @@ export default function AskQuestion(props) {
   };
 
   return (
-    <Box>
+    <>
       <SecondaryButton
         sx={{ height: "8vh" }}
         variant="outlined"
@@ -58,7 +57,6 @@ export default function AskQuestion(props) {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: "15px",
             }}
           >
             <InputField
@@ -95,6 +93,6 @@ export default function AskQuestion(props) {
           </DialogActions>
         </FormControl>
       </AppDialog>
-    </Box>
+    </>
   );
 }

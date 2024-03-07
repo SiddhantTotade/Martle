@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 
 import Image from "../common/Image";
@@ -9,27 +11,53 @@ import {
 } from "../common/utils/helperFunctions";
 
 export default function SearchedProducts({ data }: any) {
+  const [elevations, setElevations] = useState({} || 0);
+  const navigate = useNavigate();
+
+  const handleCardHover = (index: number, elevate: number) => {
+    setElevations((prevElevations) => ({
+      ...prevElevations,
+      [index]: elevate,
+    }));
+  };
+
   return (
-    <Box sx={{ display: "flex" }}>
-      {data?.map((product, index) => (
-        <ProductCard key={index} sx={{ width: "25%", p: 1 }} elevation={5}>
-          <Box>
-            <Image
-              src={`http://127.0.0.1:8000${product.product_cover_image}`}
-              alt="product_image"
-              style={{ width: "150px", height: "150px", objectFit: "contain" }}
-            />
-          </Box>
+    <Box sx={{ display: "flex", gap: "15px", width: "100%" }}>
+      {data?.map((product: any, index: number) => (
+        <ProductCard
+          key={index}
+          sx={{
+            width: "20%",
+            display: "grid",
+            gap: "5px",
+            cursor: "pointer",
+            p: 1,
+            mt: 5,
+          }}
+          onMouseEnter={() => handleCardHover(index, 10)}
+          onMouseLeave={() => handleCardHover(index, 0)}
+          elevation={elevations[index] || 0}
+          onClick={() => navigate("/product/" + product.product_slug)}
+        >
+          <Image
+            src={`http://127.0.0.1:8000${product.product_cover_image}`}
+            alt="product_image"
+            style={{ width: "150px", height: "150px", objectFit: "contain" }}
+          />
           <Box sx={{ display: "grid", gap: "10px", placeItems: "center" }}>
             <Typography sx={{ textAlign: "justify" }} fontSize={13}>
               {shortText(product.product_title, 120)}
               ...
             </Typography>
             <Box sx={{ display: "flex", alignItems: "end", gap: "10px" }}>
-              <Typography sx={{ textAlign: "justify" }} fontSize={13}>
+              <Typography
+                sx={{ textAlign: "justify" }}
+                fontWeight={600}
+                fontSize={15}
+              >
                 {convertToINR(product.product_discounted_price)}
               </Typography>
-              <del style={{ fontSize: "11px" }}>
+              <del style={{ fontSize: "12px" }}>
                 {convertToINR(product.product_selling_price)}
               </del>
             </Box>
@@ -47,6 +75,7 @@ export default function SearchedProducts({ data }: any) {
                 product.product_selling_price,
                 product.product_discounted_price
               )}
+              %
             </Typography>
           </Box>
         </ProductCard>
