@@ -1,5 +1,7 @@
-import * as React from "react";
+import { setProductRange } from "@/redux/features/searchPriceRange";
 import { Slider } from "@mui/material";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 const marks = [
   {
@@ -30,6 +32,11 @@ const marks = [
 
 export default function ProductPriceRangeSlider() {
   const [value, setValue] = React.useState<number[]>([0, 20]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setProductRange({ initial: value[0], final: value[1] }));
+  }, [dispatch, value]);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);

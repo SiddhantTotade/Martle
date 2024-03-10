@@ -24,5 +24,5 @@ urlpatterns = [
     re_path(r'^api/', include('martle_app_backend.urls')),
     re_path(r'^api/', include('martle_app_search.urls')),
     re_path(r'^api/', include('martle_app_payment.urls')),
-    re_path(r'^recommend/', include('martle_recommendation_system.urls')),
+    re_path(r'^api/recommend/', include('martle_recommendation_system.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

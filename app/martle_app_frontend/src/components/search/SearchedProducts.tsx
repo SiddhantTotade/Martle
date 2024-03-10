@@ -12,6 +12,7 @@ import {
 
 export default function SearchedProducts({ data }: any) {
   const [elevations, setElevations] = useState({} || 0);
+  const windowSize = window.innerWidth;
   const navigate = useNavigate();
 
   const handleCardHover = (index: number, elevate: number) => {
@@ -22,21 +23,28 @@ export default function SearchedProducts({ data }: any) {
   };
 
   return (
-    <Box sx={{ display: "flex", gap: "15px", width: "100%" }}>
+    <Box
+      sx={{
+        display: "flex",
+        gap: "10px",
+        width: "100%",
+        "@media(max-width:600px)": { display: "grid", gap: 0 },
+      }}
+    >
       {data?.map((product: any, index: number) => (
         <ProductCard
           key={index}
           sx={{
-            width: "20%",
-            display: "grid",
+            width: "18%",
             gap: "5px",
             cursor: "pointer",
             p: 1,
             mt: 5,
+            "@media(max-width:600px)": { width: "100%" },
           }}
           onMouseEnter={() => handleCardHover(index, 10)}
           onMouseLeave={() => handleCardHover(index, 0)}
-          elevation={elevations[index] || 0}
+          elevation={windowSize > 600 ? elevations[index] || 0 : 5}
           onClick={() => navigate("/product/" + product.product_slug)}
         >
           <Image

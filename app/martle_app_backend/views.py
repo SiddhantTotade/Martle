@@ -398,16 +398,19 @@ class CalculateRatingView(APIView):
         return all_ratings
 
     def get(self, request, pk):
-        all_ratings = []
-        total_product_ratings = RatingAndReview.objects.filter(product=pk)
-        total_rating_count = total_product_ratings.count()
+        try:
+            all_ratings = []
+            total_product_ratings = RatingAndReview.objects.filter(product=pk)
+            total_rating_count = total_product_ratings.count()
 
-        for rating in total_product_ratings:
-            all_ratings.append(rating.rating)
+            for rating in total_product_ratings:
+                all_ratings.append(rating.rating)
 
-        ratings = self.calc_rating(all_ratings, total_rating_count)
+            ratings = self.calc_rating(all_ratings, total_rating_count)
 
-        return Response({"rating": ratings}, status=status.HTTP_200_OK)
+            return Response({"rating": ratings}, status=status.HTTP_200_OK)
+        except Exception:
+            return Response(status=status.HTTP_200_OK)
 
 
 class QuestionAndAnswerView(APIView):

@@ -1,9 +1,11 @@
 from elasticsearch_dsl import Q, Search
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django_elasticsearch_dsl_drf.filter_backends import SuggesterFilterBackend, FilteringFilterBackend,  CompoundSearchFilterBackend
-from django_elasticsearch_dsl_drf.constants import LOOKUP_FILTER_RANGE, LOOKUP_QUERY_GTE, LOOKUP_QUERY_LTE, LOOKUP_QUERY_IN, SUGGESTER_COMPLETION
+
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
+from django_elasticsearch_dsl_drf.constants import LOOKUP_FILTER_RANGE, LOOKUP_QUERY_GTE, LOOKUP_QUERY_LTE, LOOKUP_QUERY_IN, SUGGESTER_COMPLETION
+from django_elasticsearch_dsl_drf.filter_backends import SuggesterFilterBackend, FilteringFilterBackend,  CompoundSearchFilterBackend
+
 from .documents import *
 from .serializers import ProductDocumentSerializer, ProductSerializer
 
@@ -39,7 +41,7 @@ class ProductSearchDocumentView(DocumentViewSet):
     filter_fields = {
         "id": {"field": "id", "lookups": [LOOKUP_QUERY_IN]},
         "product_title": {"field": "product_title", "lookups": [LOOKUP_QUERY_IN]},
-        "product_tags": {"field": "product_tags", "lookups": [LOOKUP_QUERY_IN]},
+        "product_tags": {"field": "product_tags", "lookups": []},
         "product_discounted_price": {"field": "product_discounted_price", "lookups": [LOOKUP_QUERY_GTE, LOOKUP_QUERY_LTE, LOOKUP_FILTER_RANGE]}
     }
 

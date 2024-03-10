@@ -13,6 +13,7 @@ import favoriteAndCartSlice from "./features/favoriteAndCartSlice";
 import checkoutProductDataSlice from "./features/checkoutProductDataSlice";
 import checkoutQuantitySlice from "./features/checkoutQuantitySlice";
 import placeOrderSlice from "./features/placeOrderSlice";
+import searchProductRangeSlice from "./features/searchPriceRange";
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     checkout_product_data: checkoutProductDataSlice,
     chekout_quantity: checkoutQuantitySlice,
     place_order: placeOrderSlice,
+    search_product_range: searchProductRangeSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authApi.middleware, appApi.middleware),

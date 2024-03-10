@@ -23,7 +23,7 @@ const removeNumberFromArray = (array: any) => {
   return array.filter((e: any) => isNaN(e));
 };
 
-export const generateSearchQuery = (query: string) => {
+export const generateSearchQuery = (query: string, range: any) => {
   let productPrice;
   let searchQuery;
 
@@ -46,6 +46,12 @@ export const generateSearchQuery = (query: string) => {
 
   if (containsGTEKeyword(query)) {
     searchQuery += `&product_discounted_price__gte=${productPrice}`;
+  }
+
+  if ((range.initial === 0 || range.initial !== 0) && range.final !== 20) {
+    searchQuery += `&product_discounted_price__range=${
+      range.initial + "000" + "__" + range.final + "000"
+    }`;
   }
 
   return searchQuery;

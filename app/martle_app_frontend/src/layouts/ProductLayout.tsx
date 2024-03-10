@@ -19,6 +19,8 @@ import MobileProductImage from "@/components/product/MobileProductImage";
 import { setCart, setFavorite } from "@/redux/features/favoriteAndCartSlice";
 import { recommendFunction } from "@/components/common/utils/recommendFunction";
 import MobileCardSkeleton from "@/components/home/ui/MobileCardSkeleton";
+import { useSaveRecommended } from "@/hooks/app/saveRecommended";
+import RecommendCarousel from "@/components/common/RecommendCarousel";
 // import MDEditor from "../components/MarkDown";
 // import MarkDownPreview from "../components/MarkDownPreview";
 
@@ -28,6 +30,17 @@ export default function ProductLayout() {
   const { slug } = useParams();
   const { data, isLoading } = useProductBySlugQuery(slug);
   const { onSubmit } = useViewCount();
+  const { onSubmit: onSubmitSaveRecommended } = useSaveRecommended();
+
+  useEffect(() => {
+    setTimeout(() => {
+      onSubmitSaveRecommended({
+        product: data?.[0].id,
+        user: user,
+        interaction_type: "purchase",
+      });
+    }, 60000);
+  }, [data, onSubmitSaveRecommended, user]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -125,6 +138,7 @@ export default function ProductLayout() {
           <RatingAndReviews product_id={data?.[0]?.id} />
         </AppContainer>
       </AppContainer>
+      <RecommendCarousel />
       <Footer />
     </>
   );

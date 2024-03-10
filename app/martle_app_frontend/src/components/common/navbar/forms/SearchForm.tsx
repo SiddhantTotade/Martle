@@ -26,23 +26,15 @@ export default function SearchForm() {
     return () => clearTimeout(getValue);
   }, [value]);
 
-  const handleClose = () => {
-    dispatch({
-      type: "CLOSE_DIALOG",
-      payload: { dialogType: "searchProduct" },
-    });
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (e.key === "Enter") {
+      navigate(`/search/${value}`);
+    }
   };
 
   return (
-    <FormControl
-      fullWidth
-      component="form"
-      onSubmit={(e) => {
-        handleClose();
-        e.preventDefault();
-        navigate(`/search/${value}`);
-      }}
-    >
+    <FormControl fullWidth component="form" onKeyUp={handleSubmit}>
       <DialogContent
         sx={{
           display: "flex",

@@ -162,6 +162,19 @@ export const appApi = createApi({
         method: "GET",
       }),
     }),
+    saveRecommended: builder.mutation({
+      query: (payload) => ({
+        url: "recommend/interaction/",
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    getRecommended: builder.query({
+      query: () => ({
+        url: "recommend/recommended_products",
+        method: "GET",
+      }),
+    }),
     createSubscription: builder.mutation({
       query: (payload) => ({
         url: "create-subscription/",
@@ -217,6 +230,8 @@ export const {
   useLazyPurchaseCountQuery,
   useSearchProductQuery,
   useLazySuggestProductQuery,
+  useSaveRecommendedMutation,
+  useGetRecommendedQuery,
   useCreateSubscriptionMutation,
   useMartlePayQuery,
   usePlaceOrderMutation,
