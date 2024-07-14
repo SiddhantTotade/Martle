@@ -161,8 +161,8 @@ class Classification(models.Model):
     product = models.ForeignKey(RatingAndReview, on_delete=models.CASCADE)
     classified_result = models.IntegerField()
 
-    def __str__(self) -> str:
-        return self.classified_result
+    def __str__(self) -> int:
+        return str(self.classified_result)
 
 
 # --------- Question and Answer Model

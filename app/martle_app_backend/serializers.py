@@ -82,7 +82,7 @@ class ProductBrandSerializer(serializers.ModelSerializer):
 
 # --------- Rating and Review Serializer
 class RatingAndReviewSerializer(serializers.ModelSerializer):
-    user = UserProfileSerializer(read_only=True)
+    # user = UserProfileSerializer(read_only=True)
 
     class Meta:
         model = RatingAndReview
@@ -92,8 +92,8 @@ class RatingAndReviewSerializer(serializers.ModelSerializer):
 # --------- Classfication Serializer
 class ClassificationSerializer(serializers.ModelSerializer):
     class Meta:
-        models = Classification
-        fields = ['classified_result']
+        model = Classification
+        fields = ['product', 'classified_result']
 
 
 # --------- Question and Answer Serializer

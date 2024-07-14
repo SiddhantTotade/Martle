@@ -376,25 +376,25 @@ class RatingsAndReviewsView(APIView):
         try:
             user = request.data.get('user')
             product = request.data.get('product')
-            date = request.data.get('date')
             review = request.data.get('review')
             rating = request.data.get('rating')
 
-            # sentiment = classify_feedback(review)
-            # sentiment_data = {"classified_result": sentiment}
-            # ClassificationSerializer(sentiment_data)
-
-            print({
-                "user": user, "product": product, "date": date, "review": review, "rating": rating})
-
             data = {
-                "user": user, "product": product, "date": date, "review": review, "rating": rating}
+                "user": user, "product": product, "review": review, "rating": rating}
 
             rating_and_review_serialized_data = RatingAndReviewSerializer(
                 data=data)
 
             if rating_and_review_serialized_data.is_valid():
                 rating_and_review_serialized_data.save()
+
+                sentiment = classify_feedback(review)
+                sentiment_data = {"product": product,
+                                  "classified_result": sentiment}
+                classified_data = ClassificationSerializer(data=sentiment_data)
+
+                if classified_data.is_valid():
+                    classified_data.save()
 
                 return Response({"msg": "Rating submitted"}, status=status.HTTP_200_OK)
             return Response({"error": "Some error occured"}, status=status.HTTP_400_BAD_REQUEST)

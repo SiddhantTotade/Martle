@@ -2,7 +2,9 @@ import { InferType } from "yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { enqueueSnackbar } from "notistack";
+import { useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { RootState } from "@reduxjs/toolkit/query";
 
 import { useSaveRatingAndReviewMutation } from "@/redux/services/appApiSlice";
 import { RatingAndReviewSchema } from "@/schemas/app";
@@ -18,6 +20,7 @@ export const useRatingAndReview = () => {
   const { handleSubmit, control, reset } = useForm<RatingAndReviewSchemaType>({
     resolver: yupResolver(RatingAndReviewSchema),
   });
+  const user = useSelector((state: RootState) => state.user);
   const [ratingAndReview, { isLoading }] = useSaveRatingAndReviewMutation();
 
   const handleRating = (data: number) => {
@@ -25,7 +28,15 @@ export const useRatingAndReview = () => {
   };
 
   const onSubmit = async (data: RatingAndReviewForm) => {
-    const newData = { ...data, user: 2, product: 2, rating: rating };
+    console.log(data);
+
+    const newData = {
+      ...data,
+      user: user.id,
+      date: new Date().toISOString().split("T")[0],
+      product: 1,
+      rating: rating,
+    };
 
     await ratingAndReview(newData)
       .unwrap()
