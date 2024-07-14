@@ -6,6 +6,7 @@ from django.utils.html import format_html
 
 # Registering Models
 admin.site.register(RatingAndReview)
+admin.site.register(Classification)
 admin.site.register(QuestionAndAnswer)
 
 

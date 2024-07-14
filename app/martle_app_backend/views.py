@@ -7,14 +7,36 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authentication import *
+from transformers import pipeline
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from martle_app_authentication.serializers import CustomerAddressSerializer
 from martle_app_authentication.renderers import *
 from .models import *
 from .serializers import *
 # import pandas as pd
 
-
 # Create your views here.
+
+model_name = "cardiffnlp/twitter-roberta-base-sentiment"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForSequenceClassification.from_pretrained(model_name)
+
+sentiment_pipeline = pipeline(
+    'sentiment-analysis', model=model, tokenizer=tokenizer)
+
+
+def classify_feedback(feedback_text):
+    result = sentiment_pipeline(feedback_text)
+    sentiment = result[0]['label']
+
+    if sentiment == "LABEL_0":
+        return 0
+    elif sentiment == "LABEL_1":
+        return 1
+    elif sentiment == "LABEL_2":
+        return 2
+
+
 def get_description(request, pk):
     product_id = Product.objects.get(id=pk)
     product_desc = eval(product_id.product_description)
@@ -357,6 +379,13 @@ class RatingsAndReviewsView(APIView):
             date = request.data.get('date')
             review = request.data.get('review')
             rating = request.data.get('rating')
+
+            # sentiment = classify_feedback(review)
+            # sentiment_data = {"classified_result": sentiment}
+            # ClassificationSerializer(sentiment_data)
+
+            print({
+                "user": user, "product": product, "date": date, "review": review, "rating": rating})
 
             data = {
                 "user": user, "product": product, "date": date, "review": review, "rating": rating}

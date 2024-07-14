@@ -9,8 +9,6 @@ import { shortText } from "./utils/helperFunctions";
 export default function RecommendCarousel() {
   const { data, isLoading } = useGetRecommendedQuery(undefined);
 
-  console.log(data);
-
   return (
     <>
       {isLoading ? (

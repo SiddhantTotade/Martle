@@ -89,6 +89,13 @@ class RatingAndReviewSerializer(serializers.ModelSerializer):
         fields = ['user', 'product', 'review', 'rating', 'date']
 
 
+# --------- Classfication Serializer
+class ClassificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        models = Classification
+        fields = ['classified_result']
+
+
 # --------- Question and Answer Serializer
 class QuestionAndAnswerSerializer(serializers.ModelSerializer):
     class Meta:

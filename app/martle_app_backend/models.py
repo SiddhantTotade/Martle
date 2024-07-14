@@ -156,6 +156,15 @@ class RatingAndReview(models.Model):
         return self.user.email
 
 
+# --------- Classification Model
+class Classification(models.Model):
+    product = models.ForeignKey(RatingAndReview, on_delete=models.CASCADE)
+    classified_result = models.IntegerField()
+
+    def __str__(self) -> str:
+        return self.classified_result
+
+
 # --------- Question and Answer Model
 class QuestionAndAnswer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
